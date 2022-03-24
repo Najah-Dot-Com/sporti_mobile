@@ -31,6 +31,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       enableLog: true,
+      defaultTransition: Transition.native,
       title: 'Sporti',
       locale:LocalizationService.localeEn,
       fallbackLocale: LocalizationService.fallbackLocale,
