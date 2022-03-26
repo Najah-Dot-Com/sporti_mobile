@@ -14,4 +14,9 @@ Map<String, String> arSU = {
   AppStrings.txtCallRequest:"يرجى ارسال الطلب ليتم التواصل معك ",
   AppStrings.txtCommunication:"التواصل ",
   AppStrings.txtCheckRevenue:"يرجى التأكد من أنك حصلت على اجمالي  \$20 فأكثر",
+  AppStrings.txtCongratulations:"مبروك الإنجاز",
+  AppStrings.txtYouDeserve:"انت تستحق",
+  AppStrings.txtEmail:"ادخل بريدك الالكتروني",
+  AppStrings.txtYorMessage:"رسالتك هنا",
+  AppStrings.txtSend:"ارسال",
 };

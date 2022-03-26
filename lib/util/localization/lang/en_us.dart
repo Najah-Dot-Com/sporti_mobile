@@ -13,4 +13,9 @@ Map<String, String> enUS = {
   AppStrings.txtCallRequest:"Please send a request to be contacted",
   AppStrings.txtCommunication:"Communication ",
   AppStrings.txtCheckRevenue:"Please make sure you get a total of \$20 or more",
+  AppStrings.txtCongratulations:"Congratulations on the achievement",
+  AppStrings.txtYouDeserve:"you deserve",
+  AppStrings.txtEmail:"Enter your email address",
+  AppStrings.txtYorMessage:"your message here",
+  AppStrings.txtSend:"Send",
 };

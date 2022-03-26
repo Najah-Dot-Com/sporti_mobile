@@ -286,6 +286,28 @@ class CustomMaterialPageRoute extends MaterialPageRoute {
         );
 }
 
+class DismissKeyboard extends StatelessWidget {
+  final Widget? child;
+
+   DismissKeyboard({this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    // screenUtil(context);
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        }
+      },
+      child: child,
+    );
+  }
+}
+
+
 bool isArabicLang() {
   return (SharedPref.instance.getAppLanguageMain() == "ar" ? true : false);
   // return isRTL;
