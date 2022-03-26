@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
+import 'package:sporti/feature/view/views/money_fail/money_fail_view.dart';
 import 'package:sporti/util/app_theme.dart';
 import 'package:sporti/util/sh_util.dart';
 
@@ -50,6 +51,7 @@ class _MyAppState extends State<MyApp> {
           ],
       ),
       theme: AppTheme.getApplicationTheme(),
+      home: const MoneyFailView(),
     );
   }
 }
