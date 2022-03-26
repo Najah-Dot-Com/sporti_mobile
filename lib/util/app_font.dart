@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class AppFont {
-  static const String fontFamily = "Montserrat";
+  static const String fontFamily = "Cairo";
 }
 
 class AppFontWeight {
