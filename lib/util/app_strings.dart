@@ -15,4 +15,5 @@ class AppStrings {
   static const String txtCurrency = "عملة";
   static const String txtCallRequest = "يرجى ارسال الطلب ليتم التواصل معك ";
   static const String txtCommunication = "التواصل ";
+  static const String txtCheckRevenue = "يرجى التأكد من أنك حصلت على اجمالي  \$20 فأكثر";
 }

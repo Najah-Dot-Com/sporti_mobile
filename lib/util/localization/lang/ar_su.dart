@@ -13,4 +13,5 @@ Map<String, String> arSU = {
   AppStrings.txtCurrency:"عملة",
   AppStrings.txtCallRequest:"يرجى ارسال الطلب ليتم التواصل معك ",
   AppStrings.txtCommunication:"التواصل ",
+  AppStrings.txtCheckRevenue:"يرجى التأكد من أنك حصلت على اجمالي  \$20 فأكثر",
 };
