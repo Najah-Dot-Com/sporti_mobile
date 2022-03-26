@@ -8,6 +8,7 @@ import 'package:sporti/util/sh_util.dart';
 
 import 'feature/view/views/money_collect/money_collect_view.dart';
 import 'feature/view/views/money_gift/money_gift_view.dart';
+import 'feature/view/views/profile/profile_view.dart';
 import 'network/api/dio_manager/dio_manage_class.dart';
 import 'util/app_shaerd_data.dart';
 import 'util/constance.dart';
@@ -55,7 +56,7 @@ class _MyAppState extends State<MyApp> {
             ],
         ),
         theme: AppTheme.getApplicationTheme(),
-        home: const MoneyGiftView(),
+        home: const ProfileView(),
       ),
     );
   }

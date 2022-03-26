@@ -23,6 +23,7 @@ class MoneyGiftView extends StatelessWidget {
   PreferredSizeWidget myAppbar(ThemeData themeData) => AppBar(
         centerTitle: true,
         backgroundColor: AppColor.white,
+        leading: Icon(Icons.arrow_back_ios ,color: AppColor.black,),
         title: CustomTextView(
           textAlign: TextAlign.center,
           txt: AppStrings.txtCongratulations.tr,

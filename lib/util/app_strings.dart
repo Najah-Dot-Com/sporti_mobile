@@ -24,4 +24,15 @@ class AppStrings {
   static const String txtEmail = "ادخل بريدك الالكتروني";
   static const String txtYorMessage = "رسالتك هنا";
   static const String txtSend = "ارسال";
+
+  //TODO: this for profile page
+  static const String txtAccount = "الحساب";
+  static const String txtCompleted = "أتممت";
+  static const String txtExercises = "تمارين";
+  static const String txtBalance = "Balance : ";
+  static const String txtVerifyAccount = "تفعيل الحساب";
+  static const String txtTermsAndConditions = "الشروط والاحكام";
+  static const String txtPrivacyPolicies = "Privacy Policies";
+  static const String txtLogout = "Logout";
+  static const String txtDeleteAccount = "Delete Account";
 }

@@ -19,4 +19,13 @@ Map<String, String> arSU = {
   AppStrings.txtEmail:"ادخل بريدك الالكتروني",
   AppStrings.txtYorMessage:"رسالتك هنا",
   AppStrings.txtSend:"ارسال",
+  AppStrings.txtAccount:"الحساب",
+  AppStrings.txtCompleted:"أتممت",
+  AppStrings.txtExercises:"تمارين",
+  AppStrings.txtBalance:"الحساب : ",
+  AppStrings.txtVerifyAccount:"تفعيل الحساب",
+  AppStrings.txtTermsAndConditions:"الشروط والاحكام",
+  AppStrings.txtPrivacyPolicies:"سياسات الخصوصية",
+  AppStrings.txtLogout:"تسجيل الخروج",
+  AppStrings.txtDeleteAccount:"حذف الحساب",
 };

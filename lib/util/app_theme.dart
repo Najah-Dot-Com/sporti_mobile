@@ -28,6 +28,7 @@ import 'app_style.dart';
             color: AppColor.white,
             shadowColor: AppColor.grey,
             elevation: AppSize.s4),
+
         // App bar theme
         appBarTheme: AppBarTheme(
             centerTitle: true,
@@ -56,7 +57,7 @@ import 'app_style.dart';
             headline1: AppTextStyle.getBoldStyle(
                 color: AppColor.darkGrey, fontSize: AppFontSize.s21),
             headline2: AppTextStyle.getSemiBoldStyle(
-                color: AppColor.darkGrey, fontSize: AppFontSize.s16),
+                color: AppColor.darkGrey, fontSize: AppFontSize.s18),
             headline3: AppTextStyle.getSemiBoldStyle(
                 color: AppColor.black, fontSize: AppFontSize.s14),
             subtitle1: AppTextStyle.getMediumStyle(

@@ -18,4 +18,14 @@ Map<String, String> enUS = {
   AppStrings.txtEmail:"Enter your email address",
   AppStrings.txtYorMessage:"your message here",
   AppStrings.txtSend:"Send",
+  AppStrings.txtAccount:"Account",
+  AppStrings.txtCompleted:"Completed",
+  AppStrings.txtExercises:"exercises",
+  AppStrings.txtBalance:"Balance : ",
+  AppStrings.txtVerifyAccount:"Verify Account",
+  AppStrings.txtTermsAndConditions:"Terms & Conditions",
+  AppStrings.txtPrivacyPolicies:"Privacy Policies",
+  AppStrings.txtLogout:"Logout",
+  AppStrings.txtDeleteAccount:"Delete Account",
+
 };

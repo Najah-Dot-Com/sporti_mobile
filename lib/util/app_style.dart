@@ -91,3 +91,38 @@ class AppBtnStyle {
   ScrollPhysics? customScrollViewIOS() =>
       const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics());
 }
+
+class AppShadow{
+  static BoxShadow? boxShadowAppTheme() {
+    return BoxShadow(
+        color: AppColor.primary.withOpacity(.3),
+        blurRadius: 5.0, // soften the shadow
+        spreadRadius: 3.0, //extend the shadow
+        offset:const Offset(
+          0.0, // Move to right 10  horizontally
+          0.10, // Move to bottom 10 Vertically
+        ));
+  }
+
+  static BoxShadow? boxShadow() {
+    return BoxShadow(
+        color: Colors.grey.withOpacity(.3),
+        blurRadius: 5.0, // soften the shadow
+        spreadRadius: 3.0, //extend the shadow
+        offset:const Offset(
+          0.0, // Move to right 10  horizontally
+          0.10, // Move to bottom 10 Vertically
+        ));
+  }
+
+  static BoxShadow? boxShadowLight() {
+    return BoxShadow(
+        color: Colors.grey.withOpacity(.15),
+        blurRadius: 5.0, // soften the shadow
+        spreadRadius: 0.0, //extend the shadow
+        offset: const Offset(
+          0.0, // Move to right 10  horizontally
+          0.10, // Move to bottom 10 Vertically
+        ));
+  }
+}
