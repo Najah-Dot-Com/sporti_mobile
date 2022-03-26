@@ -6,6 +6,7 @@ import 'package:sporti/feature/view/views/money_fail/money_fail_view.dart';
 import 'package:sporti/util/app_theme.dart';
 import 'package:sporti/util/sh_util.dart';
 
+import 'feature/view/views/money_collect/money_collect_view.dart';
 import 'network/api/dio_manager/dio_manage_class.dart';
 import 'util/constance.dart';
 import 'util/localization/localization_service.dart';
@@ -51,7 +52,7 @@ class _MyAppState extends State<MyApp> {
           ],
       ),
       theme: AppTheme.getApplicationTheme(),
-      home: const MoneyFailView(),
+      home: const MoneyCollectView(),
     );
   }
 }

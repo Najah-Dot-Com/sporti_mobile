@@ -10,4 +10,9 @@ class AppStrings {
   static const String txtCompleteExercise = "يرجى اكمال التمارين المتبقية";
   static const String txtHome = "الرئيسية";
 
+  //TODO:this for [money-collect-page]
+  static const String txtAccountBalance = "رصيد حسابك :";
+  static const String txtCurrency = "عملة";
+  static const String txtCallRequest = "يرجى ارسال الطلب ليتم التواصل معك ";
+  static const String txtCommunication = "التواصل ";
 }

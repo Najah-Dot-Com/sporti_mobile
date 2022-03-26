@@ -9,4 +9,8 @@ Map<String, String> arSU = {
   AppStrings.txtMoneyEnough:"ليس لديك عملات كافية",
   AppStrings.txtCompleteExercise:"يرجى اكمال التمارين المتبقية",
   AppStrings.txtHome:"الرئيسية",
+  AppStrings.txtAccountBalance:"رصيد حسابك :",
+  AppStrings.txtCurrency:"عملة",
+  AppStrings.txtCallRequest:"يرجى ارسال الطلب ليتم التواصل معك ",
+  AppStrings.txtCommunication:"التواصل ",
 };

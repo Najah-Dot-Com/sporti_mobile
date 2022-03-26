@@ -31,9 +31,9 @@ import 'app_style.dart';
         // App bar theme
         appBarTheme: AppBarTheme(
             centerTitle: true,
-            color: AppColor.primary,
+            color: AppColor.white,
             elevation: AppSize.s4,
-            shadowColor: AppColor.primaryOpacity70,
+            shadowColor: AppColor.white,
             titleTextStyle: AppTextStyle.getRegularStyle(
                 color: AppColor.white, fontSize: AppFontSize.s16)),
         // Button theme

@@ -4,4 +4,5 @@ class AppMedia {
 
   static const String loadingShimmer = "$IMAGE_PATH/loading_shimmer.gif";
   static const String errorMoney = "$IMAGE_PATH/error_money.svg";
+  static const String collectMoney = "$IMAGE_PATH/collectMoney.svg";
 }

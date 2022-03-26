@@ -17,7 +17,7 @@ class MoneyFailView extends StatelessWidget {
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return Scaffold(
-      backgroundColor: themeData.scaffoldBackgroundColor,
+      backgroundColor: AppColor.white,
       body: Padding(
         padding:  const EdgeInsets.symmetric(horizontal:AppPadding.p50 ),
         child: Column(

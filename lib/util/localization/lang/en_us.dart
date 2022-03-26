@@ -8,4 +8,8 @@ Map<String, String> enUS = {
   AppStrings.txtMoneyEnough:"You don't have enough coins",
   AppStrings.txtCompleteExercise:"Please complete the remaining exercises",
   AppStrings.txtHome:"Home Page",
+  AppStrings.txtAccountBalance:"Account Balance :",
+  AppStrings.txtCurrency:"Currency",
+  AppStrings.txtCallRequest:"Please send a request to be contacted",
+  AppStrings.txtCommunication:"Communication ",
 };

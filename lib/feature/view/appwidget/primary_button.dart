@@ -30,24 +30,28 @@ class PrimaryButton extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: height ?? AppSize.s60,
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSize.s40),
+         border: Border.all(color: colorText ?? AppColor.white)
       ),
-      child: ElevatedButton(
-        style: AppBtnStyle.primaryButtonStyle(color: colorBtn ?? AppColor.primary),
-        onPressed: !isLoading
-            ? () {
-                onClicked();
-              }
-            : () {},
-        child: isLoading
-            ? const ThreeSizeDot()
-            : Text(textButton,
-                style: AppTextStyle.getBoldStyle(
-                  color: colorText ?? AppColor.white,
-                  fontSize: AppFontSize.s20,
-                )),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppSize.s40),
+        child: ElevatedButton(
+          style: AppBtnStyle.primaryButtonStyle(color: colorBtn ?? AppColor.primary),
+          onPressed: !isLoading
+              ? () {
+                  onClicked();
+                }
+              : () {},
+          child: isLoading
+              ? const ThreeSizeDot()
+              : Text(textButton,
+                  style: AppTextStyle.getBoldStyle(
+                    color: colorText ?? AppColor.white,
+                    fontSize: AppFontSize.s20,
+                  )),
+        ),
       ),
     );
   }
