@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="178" height="172" viewBox="0 0 178 172">
+  <defs>
+    <filter id="Rectangle_38" x="0" y="0" width="178" height="172" filterUnits="userSpaceOnUse">
+      <feOffset dy="2" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1" result="blur"/>
+      <feFlood flood-opacity="0.071"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="error_money" transform="translate(3 1)">
+    <g id="Group_18" data-name="Group 18" transform="translate(-0.132 -0.441)" opacity="0.2">
+      <g transform="matrix(1, 0, 0, 1, -2.87, -0.56)" filter="url(#Rectangle_38)">
+        <rect id="Rectangle_38-2" data-name="Rectangle 38" width="172" height="166" rx="83" transform="translate(3 1)" fill="#c00000"/>
+      </g>
+    </g>
+    <path id="crown-svgrepo-com" d="M97.226,66.212a3.11,3.11,0,0,1-.075.885l-6.243,26.2a2.869,2.869,0,0,1-2.738,2.255l-37.456.2H13.242a2.867,2.867,0,0,1-2.753-2.258l-6.243-26.3a3.113,3.113,0,0,1-.075-.909A6.235,6.235,0,0,1,0,60.322,6.117,6.117,0,0,1,5.959,54.07a6.117,6.117,0,0,1,5.959,6.252,6.363,6.363,0,0,1-2.175,4.826l7.816,8.262a10.29,10.29,0,0,0,15.989-1.134L46.392,54.419A6.386,6.386,0,0,1,44.645,50a5.966,5.966,0,1,1,11.918,0,6.389,6.389,0,0,1-1.655,4.312l.011.014,12.752,17.9a10.485,10.485,0,0,0,8.488,4.463,10.283,10.283,0,0,0,7.492-3.256l7.865-8.251a6.359,6.359,0,0,1-2.226-4.866,5.966,5.966,0,1,1,11.918,0A6.244,6.244,0,0,1,97.226,66.212ZM90.3,105.075a2.91,2.91,0,0,0-2.838-2.977h-73.4a2.91,2.91,0,0,0-2.838,2.977v7.145a2.91,2.91,0,0,0,2.838,2.977h73.4A2.91,2.91,0,0,0,90.3,112.22Z" transform="translate(35.396 3.737)" fill="#c00000"/>
+  </g>
+</svg>

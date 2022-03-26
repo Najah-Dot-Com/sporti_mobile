@@ -6,4 +6,7 @@ Map<String, String> arSU = {
   AppStrings.fillYourPhoneNumber: "ادخل رقم الهاتف",
   AppStrings.messageMatcherEmail: "ادخل ايميل صالح",
   AppStrings.txtConnectionNote: "لا يوجد اتصال انترنت يرجى التاكد من اتصالك بالشبكة",
+  AppStrings.txtMoneyEnough:"ليس لديك عملات كافية",
+  AppStrings.txtCompleteExercise:"يرجى اكمال التمارين المتبقية",
+  AppStrings.txtHome:"الرئيسية",
 };

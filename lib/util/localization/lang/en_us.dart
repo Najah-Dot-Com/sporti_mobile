@@ -5,4 +5,7 @@ Map<String, String> enUS = {
   AppStrings.fillYourPhoneNumber: "Fill your phone number ",
   AppStrings.messageMatcherEmail: "Enter valid mail",
   AppStrings.txtConnectionNote: "Connections was interrupt please check your internet connection",
+  AppStrings.txtMoneyEnough:"You don't have enough coins",
+  AppStrings.txtCompleteExercise:"Please complete the remaining exercises",
+  AppStrings.txtHome:"Home Page",
 };

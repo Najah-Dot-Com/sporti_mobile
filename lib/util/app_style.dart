@@ -11,6 +11,7 @@ class AppTextStyle {
         fontSize: fontSize,
         fontFamily: fontFamily,
         color: color,
+        height: 1.0,
         letterSpacing: 0.23,
         fontWeight: fontWeight);
   }

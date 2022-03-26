@@ -53,7 +53,9 @@ import 'app_style.dart';
 
         // Text theme
         textTheme: TextTheme(
-            headline1: AppTextStyle.getSemiBoldStyle(
+            headline1: AppTextStyle.getBoldStyle(
+                color: AppColor.darkGrey, fontSize: AppFontSize.s21),
+            headline2: AppTextStyle.getSemiBoldStyle(
                 color: AppColor.darkGrey, fontSize: AppFontSize.s16),
             subtitle1: AppTextStyle.getMediumStyle(
                 color: AppColor.lightGrey, fontSize: AppFontSize.s14),
