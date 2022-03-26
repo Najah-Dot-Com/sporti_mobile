@@ -22,6 +22,7 @@ import 'app_style.dart';
           accentColor: AppColor.grey,
           primaryColorDark: AppColor.darkPrimary,
         ),
+        scaffoldBackgroundColor: AppColor.scaffold,
         // card view theme
         cardTheme: CardTheme(
             color: AppColor.white,

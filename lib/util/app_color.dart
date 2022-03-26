@@ -15,6 +15,7 @@ class AppColor {
   static Color error = HexColor.fromHex("#e61f34"); // red color
   static Color transparent = Colors.transparent;
   static Color black = HexColor.fromHex("#000000");
+  static Color scaffold = HexColor.fromHex("#E9F0F1");
 }
 
 extension HexColor on Color {
