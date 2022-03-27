@@ -2,6 +2,7 @@ class AppStrings {
 
   static const String errorPasswordLength = "errorPassword";
   static const String fillYourPhoneNumber = "fillYourPhoneNumber";
+  static const String fillYourVerificationCode = "fillYourVerificationCode";
   static const String messageMatcherEmail = "messageMatcherEmail";
   static const String txtConnectionNote = "txtConnectionNote";
 
@@ -35,4 +36,15 @@ class AppStrings {
   static const String txtPrivacyPolicies = "Privacy Policies";
   static const String txtLogout = "Logout";
   static const String txtDeleteAccount = "Delete Account";
+
+  //TODO: this for verify account view
+   static const String txtEnterYourMobileNumber = "EnterYourMobileNumber";
+   static const String txtMobileNumber = "MobileNumber";
+
+   //TODO: this for verify number
+  static const String txtVerifyCode = "كود التفعيل";
+  static const String txtVerifyCodeHint = "verifyCodeHint";
+  static const String txtVerify = "verify";
+  static const String txtResend = "Resend";
+  static const String txtVerifyAccountDone = "doneVerifyAccount";
 }

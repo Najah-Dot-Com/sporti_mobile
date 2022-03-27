@@ -14,4 +14,6 @@ class AppMedia {
   static const String currency = "$IMAGE_PATH/currency.svg";
   static const String deleteAccount = "$IMAGE_PATH/";
 
+  static const String doneVerify ="$IMAGE_PATH/done_verify.svg";
+
 }

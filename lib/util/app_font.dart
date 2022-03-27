@@ -20,4 +20,7 @@ class AppFontSize {
   static const double s18 = 18.0;
   static const double s20 = 20.0;
   static const double s21 = 21.1;
+  static const double s28 = 28.1;
+  static const double s34 = 34.0;
+  static const double s24 = 24.0;
 }

@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
@@ -36,6 +37,13 @@ class _MyAppState extends State<MyApp> {
     return DismissKeyboard(
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
+          supportedLocales:const [
+            Locale("ar"),
+            Locale("en"),
+          ],
+        localizationsDelegates: [
+          CountryLocalizations.delegate,
+        ],
         enableLog: true,
         defaultTransition: Transition.native,
         title: 'Sporti',

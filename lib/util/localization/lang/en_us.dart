@@ -5,6 +5,7 @@ Map<String, String> enUS = {
   AppStrings.fillYourPhoneNumber: "Fill your phone number ",
   AppStrings.messageMatcherEmail: "Enter valid mail",
   AppStrings.txtConnectionNote: "Connections was interrupt please check your internet connection",
+  AppStrings.fillYourVerificationCode: "Please enter the verification code",
   AppStrings.txtMoneyEnough:"You don't have enough coins",
   AppStrings.txtCompleteExercise:"Please complete the remaining exercises",
   AppStrings.txtHome:"Home Page",
@@ -27,5 +28,13 @@ Map<String, String> enUS = {
   AppStrings.txtPrivacyPolicies:"Privacy Policies",
   AppStrings.txtLogout:"Logout",
   AppStrings.txtDeleteAccount:"Delete Account",
+  AppStrings.txtEnterYourMobileNumber:"Enter the phone number \nto activate the account",
+  AppStrings.txtMobileNumber:"Phone number",
+  AppStrings.txtVerifyCode:"Verification Code",
+  AppStrings.txtVerifyCodeHint:"We have sent you the activation code on your phone number",
+  AppStrings.txtVerify:"verify",
+  AppStrings.txtResend:"Resend",
+  AppStrings.txtVerifyAccountDone:"The account has been successfully activated",
+
 
 };

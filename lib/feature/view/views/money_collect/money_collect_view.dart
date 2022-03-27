@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/primary_button.dart';
+import 'package:sporti/feature/view/views/money_gift/money_gift_view.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
@@ -31,8 +32,7 @@ class MoneyCollectView extends StatelessWidget {
             ),
             CustomTextView(
               txt: _balanceAccount(),
-              textStyle:
-                  themeData.textTheme.headline1?.copyWith(color: AppColor.grey),
+              textStyle: themeData.textTheme.headline1?.copyWith(color: AppColor.grey),
             ),
             const SizedBox(
               height: AppSize.s8,
@@ -49,7 +49,7 @@ class MoneyCollectView extends StatelessWidget {
             PrimaryButton(
               textButton: AppStrings.txtCommunication.tr,
               isLoading: false,
-              onClicked: _onGoHomeClicked,
+              onClicked: _onGoCommunicationClicked,
             ),
             const SizedBox(
               height: AppSize.s20,
@@ -83,5 +83,9 @@ class MoneyCollectView extends StatelessWidget {
     return AppStrings.txtAccountBalance.tr +
         " 200 " +
         AppStrings.txtCurrency.tr;
+  }
+
+  void _onGoCommunicationClicked() {
+    Get.to(()=> const MoneyGiftView());
   }
 }
