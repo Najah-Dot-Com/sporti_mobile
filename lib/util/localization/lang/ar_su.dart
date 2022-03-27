@@ -1,4 +1,31 @@
 
-Map<String, String> arSU = {
+import '../../app_strings.dart';
 
+Map<String, String> arSU = {
+  AppStrings.errorPasswordLength: "كلمة المرور يجب ان تكون ٦ حروف او اكثر",
+  AppStrings.fillYourPhoneNumber: "ادخل رقم الهاتف",
+  AppStrings.messageMatcherEmail: "ادخل ايميل صالح",
+  AppStrings.txtConnectionNote: "لا يوجد اتصال انترنت يرجى التاكد من اتصالك بالشبكة",
+  AppStrings.txtMoneyEnough:"ليس لديك عملات كافية",
+  AppStrings.txtCompleteExercise:"يرجى اكمال التمارين المتبقية",
+  AppStrings.txtHome:"الرئيسية",
+  AppStrings.txtAccountBalance:"رصيد حسابك :",
+  AppStrings.txtCurrency:"عملة",
+  AppStrings.txtCallRequest:"يرجى ارسال الطلب ليتم التواصل معك ",
+  AppStrings.txtCommunication:"التواصل ",
+  AppStrings.txtCheckRevenue:"يرجى التأكد من أنك حصلت على اجمالي  \$20 فأكثر",
+  AppStrings.txtCongratulations:"مبروك الإنجاز",
+  AppStrings.txtYouDeserve:"انت تستحق",
+  AppStrings.txtEmail:"ادخل بريدك الالكتروني",
+  AppStrings.txtYorMessage:"رسالتك هنا",
+  AppStrings.txtSend:"ارسال",
+  AppStrings.txtAccount:"الحساب",
+  AppStrings.txtCompleted:"أتممت",
+  AppStrings.txtExercises:"تمارين",
+  AppStrings.txtBalance:"الحساب : ",
+  AppStrings.txtVerifyAccount:"تفعيل الحساب",
+  AppStrings.txtTermsAndConditions:"الشروط والاحكام",
+  AppStrings.txtPrivacyPolicies:"سياسات الخصوصية",
+  AppStrings.txtLogout:"تسجيل الخروج",
+  AppStrings.txtDeleteAccount:"حذف الحساب",
 };

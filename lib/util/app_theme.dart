@@ -22,17 +22,19 @@ import 'app_style.dart';
           accentColor: AppColor.grey,
           primaryColorDark: AppColor.darkPrimary,
         ),
+        scaffoldBackgroundColor: AppColor.scaffold,
         // card view theme
         cardTheme: CardTheme(
             color: AppColor.white,
             shadowColor: AppColor.grey,
             elevation: AppSize.s4),
+
         // App bar theme
         appBarTheme: AppBarTheme(
             centerTitle: true,
-            color: AppColor.primary,
+            color: AppColor.white,
             elevation: AppSize.s4,
-            shadowColor: AppColor.primaryOpacity70,
+            shadowColor: AppColor.white,
             titleTextStyle: AppTextStyle.getRegularStyle(
                 color: AppColor.white, fontSize: AppFontSize.s16)),
         // Button theme
@@ -52,8 +54,12 @@ import 'app_style.dart';
 
         // Text theme
         textTheme: TextTheme(
-            headline1: AppTextStyle.getSemiBoldStyle(
-                color: AppColor.darkGrey, fontSize: AppFontSize.s16),
+            headline1: AppTextStyle.getBoldStyle(
+                color: AppColor.darkGrey, fontSize: AppFontSize.s21),
+            headline2: AppTextStyle.getSemiBoldStyle(
+                color: AppColor.darkGrey, fontSize: AppFontSize.s18),
+            headline3: AppTextStyle.getSemiBoldStyle(
+                color: AppColor.black, fontSize: AppFontSize.s14),
             subtitle1: AppTextStyle.getMediumStyle(
                 color: AppColor.lightGrey, fontSize: AppFontSize.s14),
             subtitle2: AppTextStyle.getMediumStyle(

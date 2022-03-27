@@ -144,7 +144,7 @@ snackError(String? title, String? body) {
   mainSnack(body: body ?? "", backgroundColor:const Color(0xFFF2AE56).withAlpha(150));
 }
 snackConnection() {
-  mainSnack(body: AppStrings.txtConnectionNote ?? "", backgroundColor:const Color(0xFF000000).withAlpha(150));
+  mainSnack(body: AppStrings.txtConnectionNote.tr, backgroundColor:const Color(0xFF000000).withAlpha(150));
 }
 
 mainSnack({String? title, required String body, Color? backgroundColor}) {
@@ -285,6 +285,28 @@ class CustomMaterialPageRoute extends MaterialPageRoute {
           fullscreenDialog: fullscreenDialog,
         );
 }
+
+class DismissKeyboard extends StatelessWidget {
+  final Widget? child;
+
+   DismissKeyboard({this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    // screenUtil(context);
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        }
+      },
+      child: child,
+    );
+  }
+}
+
 
 bool isArabicLang() {
   return (SharedPref.instance.getAppLanguageMain() == "ar" ? true : false);

@@ -14,7 +14,6 @@ class PrimaryButton extends StatelessWidget {
     required this.textButton,
     required this.isLoading,
     required this.onClicked,
-    required this.isExpanded,
     this.colorBtn,
     this.colorText,
     this.width,
@@ -22,31 +21,37 @@ class PrimaryButton extends StatelessWidget {
   }) : super(key: key);
   final String textButton;
   final Function onClicked;
-  final bool isExpanded;
   bool isLoading = false;
   final Color? colorBtn, colorText;
   final double? width, height;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: double.infinity,
-      height: height ?? AppSize.s50,
-      child: ElevatedButton(
-        style:
-            AppBtnStyle.primaryButtonStyle(color: colorBtn ?? AppColor.primary),
-        onPressed: !isLoading
-            ? () {
-                onClicked();
-              }
-            : () {},
-        child: isLoading
-            ? const ThreeSizeDot()
-            : Text(textButton,
-                style: AppTextStyle.getBoldStyle(
-                  color: colorText ?? AppColor.white,
-                  fontSize: AppFontSize.s16,
-                )),
+      height: height ?? AppSize.s60,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppSize.s40),
+         border: Border.all(color: colorText ?? AppColor.white)
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppSize.s40),
+        child: ElevatedButton(
+          style: AppBtnStyle.primaryButtonStyle(color: colorBtn ?? AppColor.primary),
+          onPressed: !isLoading
+              ? () {
+                  onClicked();
+                }
+              : () {},
+          child: isLoading
+              ? const ThreeSizeDot()
+              : Text(textButton,
+                  style: AppTextStyle.getBoldStyle(
+                    color: colorText ?? AppColor.white,
+                    fontSize: AppFontSize.s20,
+                  )),
+        ),
       ),
     );
   }
