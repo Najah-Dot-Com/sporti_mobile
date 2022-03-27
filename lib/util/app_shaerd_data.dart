@@ -144,7 +144,7 @@ snackError(String? title, String? body) {
   mainSnack(body: body ?? "", backgroundColor:const Color(0xFFF2AE56).withAlpha(150));
 }
 snackConnection() {
-  mainSnack(body: AppStrings.txtConnectionNote ?? "", backgroundColor:const Color(0xFF000000).withAlpha(150));
+  mainSnack(body: AppStrings.txtConnectionNote, backgroundColor:const Color(0xFF000000).withAlpha(150));
 }
 
 mainSnack({String? title, required String body, Color? backgroundColor}) {

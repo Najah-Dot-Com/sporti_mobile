@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
+import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
 import 'package:sporti/util/app_theme.dart';
-import 'package:sporti/util/sh_util.dart';
-
 import 'network/api/dio_manager/dio_manage_class.dart';
-import 'util/constance.dart';
 import 'util/localization/localization_service.dart';
 
 void main() {
@@ -29,6 +27,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      home: LoginView(),//test screens
       debugShowCheckedModeBanner: false,
       enableLog: true,
       defaultTransition: Transition.native,
