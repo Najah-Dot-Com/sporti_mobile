@@ -14,9 +14,6 @@ import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
 
-
-
-
 String? urlPlacholder =
     "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png";
 String? urlUserPlacholder =
@@ -84,7 +81,6 @@ phoneVaild(String value) {
   return null;
 }
 
-
 emailValid(String val) {
   if (!GetUtils.isEmail(val)) {
     return AppStrings.messageMatcherEmail.tr;
@@ -93,28 +89,32 @@ emailValid(String val) {
   }
 }
 
-Widget simplePopup() => PopupMenuButton<int>(
-      initialValue: 1,
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          value: 1,
-          child: Text("First"),
-        ),
-        PopupMenuItem(
-          value: 2,
-          child: Text("Second"),
-        ),
-      ],
-    );
+Widget simplePopup(
+    {@required context, @required String? firstLable, @required String? secondLabel}) {
+  return Builder(
+    builder: (context) {
+      return PopupMenuButton<int>(
+        initialValue: 1,
+        itemBuilder: (context) => [
+          PopupMenuItem(
+            value: 1,
+            child: Text(firstLable ?? ''),
+          ),
+          PopupMenuItem(
+            value: 2,
+            child: Text(secondLabel ?? ''),
+          ),
+        ],
+      );
+    }
+  );
+}
 
 String getDeviceLang() {
   Locale myLocale = Localizations.localeOf(Get.context!);
   String languageCode = myLocale.languageCode;
   return languageCode;
 }
-
-
-
 
 // snackSuccess(String title, String body) {
 //   Future.delayed(Duration(seconds: 0)).then((value) {
@@ -137,14 +137,21 @@ String getDeviceLang() {
 // }
 
 snackSuccess(String? title, String? body) {
-  mainSnack(body: body ?? "", backgroundColor:const Color(0xFF10C995).withAlpha(150));
+  mainSnack(
+      body: body ?? "",
+      backgroundColor: const Color(0xFF10C995).withAlpha(150));
 }
 
 snackError(String? title, String? body) {
-  mainSnack(body: body ?? "", backgroundColor:const Color(0xFFF2AE56).withAlpha(150));
+  mainSnack(
+      body: body ?? "",
+      backgroundColor: const Color(0xFFF2AE56).withAlpha(150));
 }
+
 snackConnection() {
-  mainSnack(body: AppStrings.txtConnectionNote, backgroundColor:const Color(0xFF000000).withAlpha(150));
+  mainSnack(
+      body: AppStrings.txtConnectionNote,
+      backgroundColor: const Color(0xFF000000).withAlpha(150));
 }
 
 mainSnack({String? title, required String body, Color? backgroundColor}) {
@@ -160,8 +167,6 @@ mainSnack({String? title, required String body, Color? backgroundColor}) {
     );
   });
 }
-
-
 
 showAnimatedDialog(dialog) {
   showGeneralDialog(
@@ -209,10 +214,10 @@ Widget imageNetwork({double? width, double? height, String? url, BoxFit? fit}) {
     fit: BoxFit.cover,
     placeholder: (context, String? url) {
       return Container(
-        decoration:const BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
-               AppMedia.loadingShimmer) /* CachedNetworkImageProvider(url ?? urlUserPlacholder!)*/,
+            image: AssetImage(AppMedia
+                .loadingShimmer) /* CachedNetworkImageProvider(url ?? urlUserPlacholder!)*/,
             fit: BoxFit.cover,
           ),
         ),
@@ -229,10 +234,6 @@ Widget imageNetwork({double? width, double? height, String? url, BoxFit? fit}) {
   );
 }
 
-
-
-
-
 hideFocus(context) {
   FocusScopeNode currentFocus = FocusScope.of(context ?? Get.context!);
   if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
@@ -240,8 +241,6 @@ hideFocus(context) {
     FocusManager.instance.primaryFocus!.unfocus();
   }
 }
-
-
 
 DateTime convertStringToDate(DateTime? date) {
   Logger().d("date befor ${date.toString()}");
@@ -261,11 +260,9 @@ double convertStringToDouble(String value) {
   return double.tryParse(value)!.toDouble();
 }
 
-
 updateLanguage(Locale locale) {
   Get.updateLocale(locale);
 }
-
 
 class CustomMaterialPageRoute extends MaterialPageRoute {
   @protected
@@ -303,7 +300,3 @@ Future<DateTime?> dateBiker() async {
 
   return picker;
 }
-
-
-
-

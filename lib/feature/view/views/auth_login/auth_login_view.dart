@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:sporti/feature/view/views/auth_login/widget/widget.dart';
+import 'package:get/get.dart';
+import 'package:sporti/feature/view/appwidget/appLogo.dart';
+import 'package:sporti/feature/view/appwidget/signinBtn.dart';
+import 'package:sporti/feature/view/views/auth_signup/auth_signup_view.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/app_style.dart';
+import '../../appwidget/authwellcomeRow.dart';
+import '../../appwidget/sportiTextField.dart';
+import '../../appwidget/checkBoxOfTerms.dart';
 
 // ignore: must_be_immutable
 class LoginView extends StatelessWidget {
@@ -22,68 +28,6 @@ class LoginView extends StatelessWidget {
     }
     return Colors.black;
   }
-
-  // small white logo for login screen
-  Widget get whiteLogo {
-    return const Center(
-      child: SizedBox(
-        width: 120,
-        height: 120,
-        child: Image(
-          image: AssetImage(AppMedia.sportiWhiteLogo),
-        ),
-      ),
-    );
-  }
-
-  //this for login "welcome" and "choose language" text.
-  Widget helloTextRow = Center(
-      child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: [
-      Text(
-        AppStrings.chooseLanguage,
-        style: AppTextStyle.getBoldStyle(color: Colors.white, fontSize: 16.0),
-      ),
-      Text(
-        AppStrings.hello,
-        style: AppTextStyle.getBoldStyle(color: Colors.white, fontSize: 24.0),
-      ),
-    ],
-  ));
-  //this for privacy,terms and checkBox Row
-  Widget termsAndPrivacyRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        GestureDetector(
-            onTap: () {
-              //TODO: GO TO PrivacyPolicy screen
-              //Get.to(() => const PrivacyPolicy());
-            },
-            child: Text(AppStrings.privacyAndTerms,
-                style: AppTextStyle.getMediumStyle(
-                    color: AppColor.primary, fontSize: AppFontSize.s20))),
-        const SizedBox(
-          width: 5,
-        ),
-        const Text(AppStrings.iAccept,
-            style: TextStyle(color: Colors.black, fontSize: 14)),
-        Checkbox(
-            fillColor: MaterialStateProperty.resolveWith(getColor),
-            checkColor: Colors.white,
-            value: acceptPolicy,
-            onChanged: (value) {
-              // ignore: todo
-              //TODO :need for state
-              // setState(() {
-              //   acceptPolicy = value!;
-              // });
-            }),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -92,17 +36,19 @@ class LoginView extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: AppColor.primary,
+        // appBar contains logo and welcome strings
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: AppColor.primary,
           title: Column(
             children: [
-              whiteLogo,
+              AppLogo(height: AppSize.s160, width: AppSize.s160, logoColor: AppColor.white),
               const SizedBox(height: AppSize.s20),
-              helloTextRow,
+              //this for login "welcome" and "choose language" text.
+              const WellcomeRow(),
             ],
           ),
-          toolbarHeight: 220,
+          toolbarHeight: AppSize.s220,
         ),
         body: Column(
           children: [
@@ -129,26 +75,38 @@ class LoginView extends StatelessWidget {
                     child: Column(
                       children: [
                         //this for username TextFiled
-                        sportiTextFiled(
+                        SportiTextField(
                           hint: AppStrings.username,
                           isforPass: false,
+                          // controller: , TODO:
                         ),
                         const SizedBox(height: AppSize.s50),
                         //this for password TextFiled
-                        sportiTextFiled(
+                        SportiTextField(
                           hint: AppStrings.password,
                           isforPass: true,
+                        // controller: , TODO:
                         ),
                         //this for checkBox of terms and policy
-                        termsAndPrivacyRow(),
+                        TermsAndPrivacyCheckBox(
+                          getColor: AppColor.getColor,
+                          acceptPolicy: acceptPolicy,
+                          onTap: () {
+                            //TODO: need for state for accept policy
+                          },
+                          onChange: (value) {
+                            //TODO: need for state 
+                            acceptPolicy = value;
+                          },
+                        ),
                         const SizedBox(
                           height: AppSize.s28,
                         ),
                         //this btn for signin
                         SignInButton(
-                          height: 60,
+                          height: AppSize.s60,
                           label: AppStrings.signin,
-                          width: 350,
+                          width: AppSize.s350,
                           primaryColor: AppColor.primary,
                           labelcolor: AppColor.white,
                           borderColor: AppColor.primary,
@@ -166,12 +124,13 @@ class LoginView extends StatelessWidget {
                         ),
                         //this btn for new signup
                         SignInButton(
-                          height: 60,
+                          height: AppSize.s60,
                           label: AppStrings.newSignin,
-                          width: 350,
+                          width: AppSize.s350,
                           primaryColor: AppColor.white,
                           labelcolor: AppColor.primary,
                           borderColor: AppColor.primary,
+                          onTap: ()async => await Get.offAll(SignupView()),
                         ),
                       ],
                     ),
@@ -181,54 +140,6 @@ class LoginView extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
-  }
-
-  // this for login textField name and password
-  TextField sportiTextFiled(
-      {@required String? hint, @required bool? isforPass}) {
-    const Color eyeIconColor = Colors.grey;
-    const bool obsecurPass = false;
-    return TextField(
-      style: const TextStyle(color: Colors.black, fontSize: 18),
-      keyboardType: isforPass == false
-          ? TextInputType.name
-          : TextInputType.visiblePassword,
-      obscureText: isforPass == true ? true : false,
-      textAlign: TextAlign.right,
-      decoration: InputDecoration(
-        enabledBorder: const UnderlineInputBorder(),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColor.primary),
-        ),
-        border: UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColor.primary),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.red[400]!,
-          ),
-        ),
-        hintText: hint,
-        hintStyle: const TextStyle(fontSize: AppFontSize.s16),
-        hintTextDirection: TextDirection.rtl,
-        prefixIcon: isforPass == false
-            ? const SizedBox()
-            : IconButton(
-                icon: const Icon(
-                  Icons.remove_red_eye_rounded,
-                  color: eyeIconColor,
-                ),
-                onPressed: () {
-                  // ignore: todo
-                  //TODO: need for state here
-                  obsecurPass == false ? true : false;
-                  eyeIconColor == Colors.grey
-                      ? Icons.remove_red_eye_rounded
-                      : Colors.grey;
-                },
-              ),
       ),
     );
   }

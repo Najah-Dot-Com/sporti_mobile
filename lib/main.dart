@@ -4,6 +4,7 @@ import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
 import 'package:sporti/util/app_theme.dart';
+import 'feature/view/views/auth_signup/auth_signup_view.dart';
 import 'network/api/dio_manager/dio_manage_class.dart';
 import 'util/localization/localization_service.dart';
 
@@ -27,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: LoginView(),//test screens
+      home:  SignupView(),//test screens LoginView
       debugShowCheckedModeBanner: false,
       enableLog: true,
       defaultTransition: Transition.native,
