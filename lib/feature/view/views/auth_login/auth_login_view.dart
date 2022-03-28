@@ -104,15 +104,15 @@ class LoginView extends StatelessWidget {
           ),
           toolbarHeight: 220,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: AppSize.s20,
-              ),
-              Container(
+        body: Column(
+          children: [
+            const SizedBox(
+              height: AppSize.s20,
+            ),
+            Expanded(
+              child: Container(
                 width: double.infinity,
-                height: 700,
+                height: double.infinity,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -177,9 +177,9 @@ class LoginView extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
