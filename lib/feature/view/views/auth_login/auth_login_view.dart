@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sporti/feature/view/views/auth_login/widget/widget.dart';
 import 'package:sporti/util/app_color.dart';
+import 'package:sporti/util/app_dimen.dart';
+import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/app_style.dart';
@@ -48,6 +51,38 @@ class LoginView extends StatelessWidget {
       ),
     ],
   ));
+  //this for privacy,terms and checkBox Row
+  Widget termsAndPrivacyRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        GestureDetector(
+            onTap: () {
+              //TODO: GO TO PrivacyPolicy screen
+              //Get.to(() => const PrivacyPolicy());
+            },
+            child: Text(AppStrings.privacyAndTerms,
+                style: AppTextStyle.getMediumStyle(
+                    color: AppColor.primary, fontSize: AppFontSize.s20))),
+        const SizedBox(
+          width: 5,
+        ),
+        const Text(AppStrings.iAccept,
+            style: TextStyle(color: Colors.black, fontSize: 14)),
+        Checkbox(
+            fillColor: MaterialStateProperty.resolveWith(getColor),
+            checkColor: Colors.white,
+            value: acceptPolicy,
+            onChanged: (value) {
+              // ignore: todo
+              //TODO :need for state
+              // setState(() {
+              //   acceptPolicy = value!;
+              // });
+            }),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +98,7 @@ class LoginView extends StatelessWidget {
           title: Column(
             children: [
               whiteLogo,
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSize.s20),
               helloTextRow,
             ],
           ),
@@ -73,11 +108,11 @@ class LoginView extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(
-                height: 20,
+                height: AppSize.s20,
               ),
               Container(
                 width: double.infinity,
-                height: 530,
+                height: 700,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -87,7 +122,10 @@ class LoginView extends StatelessWidget {
                 child: Form(
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 100.0, left: 50, right: 50, bottom: 20),
+                        top: AppPadding.p100,
+                        left: AppPadding.p50,
+                        right: AppPadding.p50,
+                        bottom: AppPadding.p20),
                     child: Column(
                       children: [
                         //this for username TextFiled
@@ -95,45 +133,45 @@ class LoginView extends StatelessWidget {
                           hint: AppStrings.username,
                           isforPass: false,
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: AppSize.s50),
                         //this for password TextFiled
                         sportiTextFiled(
                           hint: AppStrings.password,
                           isforPass: true,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            GestureDetector(
-                                onTap: () {
-                                  //Get.to(() => const PrivacyPolicy());
-                                },
-                                child: const Text(
-                                  'الشروط والاحكام',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      fontSize: 13),
-                                )),
-                            const Text('أوافق على',
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14)),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Checkbox(
-                                fillColor:
-                                    MaterialStateProperty.resolveWith(getColor),
-                                checkColor: Colors.white,
-                                value: acceptPolicy,
-                                onChanged: (value) {
-                                  //TODO :need for state
-                                  // setState(() {
-                                  //   acceptPolicy = value!;
-                                  // });
-                                }),
-                          ],
+                        //this for checkBox of terms and policy
+                        termsAndPrivacyRow(),
+                        const SizedBox(
+                          height: AppSize.s28,
+                        ),
+                        //this btn for signin
+                        SignInButton(
+                          height: 60,
+                          label: AppStrings.signin,
+                          width: 350,
+                          primaryColor: AppColor.primary,
+                          labelcolor: AppColor.white,
+                          borderColor: AppColor.primary,
+                        ),
+                        const SizedBox(
+                          height: AppSize.s50,
+                        ),
+                        Text(
+                          AppStrings.or,
+                          style: AppTextStyle.getSemiBoldStyle(
+                              color: AppColor.black, fontSize: AppFontSize.s22),
+                        ),
+                        const SizedBox(
+                          height: AppSize.s50,
+                        ),
+                        //this btn for new signup
+                        SignInButton(
+                          height: 60,
+                          label: AppStrings.newSignin,
+                          width: 350,
+                          primaryColor: AppColor.white,
+                          labelcolor: AppColor.primary,
+                          borderColor: AppColor.primary,
                         ),
                       ],
                     ),
@@ -147,6 +185,7 @@ class LoginView extends StatelessWidget {
     );
   }
 
+  // this for login textField name and password
   TextField sportiTextFiled(
       {@required String? hint, @required bool? isforPass}) {
     const Color eyeIconColor = Colors.grey;
@@ -172,7 +211,7 @@ class LoginView extends StatelessWidget {
           ),
         ),
         hintText: hint,
-        hintStyle: const TextStyle(fontSize: 15),
+        hintStyle: const TextStyle(fontSize: AppFontSize.s16),
         hintTextDirection: TextDirection.rtl,
         prefixIcon: isforPass == false
             ? const SizedBox()
@@ -182,6 +221,7 @@ class LoginView extends StatelessWidget {
                   color: eyeIconColor,
                 ),
                 onPressed: () {
+                  // ignore: todo
                   //TODO: need for state here
                   obsecurPass == false ? true : false;
                   eyeIconColor == Colors.grey
