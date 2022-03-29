@@ -36,4 +36,8 @@ Map<String, String> arSU = {
   AppStrings.txtVerify:"تفعيل",
   AppStrings.txtResend:"اعد ارسال ",
   AppStrings.txtVerifyAccountDone:"تم تفعيل الحساب بنجاح",
+  AppStrings.txtHello:"مرحباً",
+  AppStrings.txtProfile:"حسابي",
+  AppStrings.txtNotifications:"الاشعارات",
+  AppStrings.txtMyWork:"تماريني",
 };

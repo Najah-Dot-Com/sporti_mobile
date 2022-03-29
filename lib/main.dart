@@ -7,6 +7,7 @@ import 'package:sporti/feature/view/views/money_fail/money_fail_view.dart';
 import 'package:sporti/util/app_theme.dart';
 import 'package:sporti/util/sh_util.dart';
 
+import 'feature/view/views/home_page/home_page_view.dart';
 import 'feature/view/views/money_collect/money_collect_view.dart';
 import 'feature/view/views/money_gift/money_gift_view.dart';
 import 'feature/view/views/profile/profile_view.dart';
@@ -64,7 +65,7 @@ class _MyAppState extends State<MyApp> {
             ],
         ),
         theme: AppTheme.getApplicationTheme(),
-        home: const ProfileView(),
+        home: const HomePageView(),
       ),
     );
   }

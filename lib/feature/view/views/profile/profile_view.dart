@@ -158,11 +158,14 @@ class ProfileView extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         padding: const EdgeInsets.only(
-            top: AppSize.s50, left: AppPadding.p16, right: AppPadding.p16),
+             left: AppPadding.p16, right: AppPadding.p16),
         decoration: BoxDecoration(color: themeData.scaffoldBackgroundColor),
         child: SafeArea(
           child: ListView(
             children: [
+              const SizedBox(
+                height: AppSize.s50,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
                 child: Column(
@@ -190,7 +193,10 @@ class ProfileView extends StatelessWidget {
               _profileItem(themeData,onClick:_onPrivacyPolicy,leadingIcon:AppMedia.privacyPolicies ,title:AppStrings.txtPrivacyPolicies.tr ,trailingIcon:AppMedia.arrowIos ),
               _profileItem(themeData,onClick:_onLogout,leadingIcon:AppMedia.logout ,title:AppStrings.txtLogout.tr ,trailingIcon:AppMedia.arrowIos ),
               _profileItem(themeData,onClick:_onGetMoneyPage,leadingIcon:AppMedia.currency ,title:AppStrings.txtCurrency.tr ,trailingIcon:AppMedia.arrowIos ),
-              _profileDeleteAccount(themeData ,title: AppStrings.txtDeleteAccount.tr,trailingIcon:  AppMedia.arrowIos)
+              _profileDeleteAccount(themeData ,title: AppStrings.txtDeleteAccount.tr,trailingIcon:  AppMedia.arrowIos),
+              const SizedBox(
+                height: AppSize.s50,
+              ),
             ],
           ),
         ),

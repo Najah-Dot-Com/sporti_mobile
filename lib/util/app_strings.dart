@@ -47,4 +47,11 @@ class AppStrings {
   static const String txtVerify = "verify";
   static const String txtResend = "Resend";
   static const String txtVerifyAccountDone = "doneVerifyAccount";
+
+  //todo this for home page
+
+  static const String txtHello = "Hello";//hello
+  static const String txtProfile = "Profile";//hello
+  static const String txtNotifications = "Notifications";//hello
+  static const String txtMyWork = "MyWork";//hello
 }

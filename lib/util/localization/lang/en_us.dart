@@ -35,6 +35,10 @@ Map<String, String> enUS = {
   AppStrings.txtVerify:"verify",
   AppStrings.txtResend:"Resend",
   AppStrings.txtVerifyAccountDone:"The account has been successfully activated",
+  AppStrings.txtHello:"Hello",
+  AppStrings.txtProfile:"Profile",
+  AppStrings.txtNotifications:"Notifications",
+  AppStrings.txtMyWork:"My Exercise",
 
 
 };
