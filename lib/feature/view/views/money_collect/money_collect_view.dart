@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/primary_button.dart';
+import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
 import 'package:sporti/feature/view/views/money_gift/money_gift_view.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
@@ -77,7 +78,9 @@ class MoneyCollectView extends StatelessWidget {
     );
   }
 
-  void _onGoHomeClicked() {}
+  void _onGoHomeClicked() {
+    Get.to(()=> const HomePageView());
+  }
 
   String _balanceAccount() {
     return AppStrings.txtAccountBalance.tr +

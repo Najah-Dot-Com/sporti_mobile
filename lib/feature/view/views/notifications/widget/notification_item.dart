@@ -24,16 +24,22 @@ class NotificationItemWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          CustomTextView(
-            txt: AppStrings.txtNotifications.tr,
-            textStyle:
-            themeData.textTheme.headline1?.copyWith(color: AppColor.primary),
+          Padding(
+            padding: const EdgeInsets.all(AppSize.s10),
+            child: CustomTextView(
+              txt: AppStrings.txtNotifications.tr,
+              textStyle:
+              themeData.textTheme.headline1?.copyWith(color: AppColor.primary),
+            ),
           ),
           Divider(color: AppColor.primary,),
-          CustomTextView(
-            txt: AppStrings.txtNotifications.tr,
-            textStyle:
-            themeData.textTheme.headline2?.copyWith(color: AppColor.grey),
+          Padding(
+            padding: const EdgeInsets.all(AppSize.s10),
+            child: CustomTextView(
+              txt: AppStrings.txtNotifications.tr,
+              textStyle:
+              themeData.textTheme.headline2?.copyWith(color: AppColor.grey),
+            ),
           ),
         ],
       ) ,

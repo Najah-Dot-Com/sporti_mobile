@@ -19,8 +19,7 @@ class HomePageView extends StatefulWidget {
 
 class _HomePageViewState extends State<HomePageView>
     with SingleTickerProviderStateMixin {
-  Widget get floatingBtn =>
-      FloatingActionButton(
+  Widget get floatingBtn => FloatingActionButton(
         child: Icon(
           Icons.search,
           color: AppColor.white,
@@ -31,13 +30,11 @@ class _HomePageViewState extends State<HomePageView>
 
   Widget bottomNavBar(ThemeData themeData) => const BottomNavigationBarWidget();
 
-
-
   final List<Widget> bottomNavBarList = [
-    const HomePageTab(),//home page
-    Container(),//my work
-    const NotificationsView(),//notifications
-    const ProfileView(),//profile
+    const HomePageTab(), //home page
+    Container(), //my work
+    const NotificationsView(), //notifications
+    const ProfileView(), //profile
   ];
 
   final HomeViewModel _homeViewModel = Get.put<HomeViewModel>(HomeViewModel());
@@ -46,8 +43,10 @@ class _HomePageViewState extends State<HomePageView>
   void initState() {
     // TODO: implement initState
     // _homeViewModel.initTabController(TabController(vsync: this, length: bottomNavBarList.length,initialIndex: 0));
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      _homeViewModel.onTabChange(0);
+    });
     super.initState();
-
   }
 
   @override
@@ -61,7 +60,8 @@ class _HomePageViewState extends State<HomePageView>
         return TabBarView(
           physics: const NeverScrollableScrollPhysics(),
           controller: logic.tabController,
-          children: bottomNavBarList,);
+          children: bottomNavBarList,
+        );
       }),
     );
   }

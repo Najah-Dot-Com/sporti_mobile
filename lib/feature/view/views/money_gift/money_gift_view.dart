@@ -23,12 +23,11 @@ class MoneyGiftView extends StatelessWidget {
   PreferredSizeWidget myAppbar(ThemeData themeData) => AppBar(
         centerTitle: true,
         backgroundColor: AppColor.white,
-        leading: Icon(Icons.arrow_back_ios ,color: AppColor.black,),
+        leading: InkWell(onTap: ()=> Get.back(),child: Icon(Icons.arrow_back_ios ,color: AppColor.black,)),
         title: CustomTextView(
           textAlign: TextAlign.center,
           txt: AppStrings.txtCongratulations.tr,
-          textStyle:
-              themeData.textTheme.headline1?.copyWith(color: AppColor.primary),
+          textStyle: themeData.textTheme.headline1?.copyWith(color: AppColor.primary),
         ),
       );
 
@@ -100,8 +99,8 @@ class MoneyGiftView extends StatelessWidget {
                       label: AppStrings.txtEmail.tr,
                       keyboardType: TextInputType.emailAddress,
                       customValid: emailValid,
-                      isBorder: false,
-                      isFill: false,
+                      // isBorder: false,
+                      // isFill: false,
                       isSmallPaddingWidth: true,
                       textInputAction: TextInputAction.next,
                       maxLine: Constance.maxLineOne,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/primary_button.dart';
+import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
+import 'package:sporti/feature/view/views/home_page/widget/home_page_tab.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
@@ -36,6 +38,7 @@ class AccountSuccessVerifyView extends StatelessWidget {
           const SizedBox(height: AppSize.s60,),
           CustomTextView(
             txt: AppStrings.txtVerifyAccountDone.tr,
+            textAlign:TextAlign.center ,
             textStyle: themeData.textTheme.headline1
                 ?.copyWith(fontSize: AppFontSize.s24, color: AppColor.grey),
           ),
@@ -50,5 +53,6 @@ class AccountSuccessVerifyView extends StatelessWidget {
   }
 
   _onClicked() {
+    Get.offAll(const HomePageView());
   }
 }
