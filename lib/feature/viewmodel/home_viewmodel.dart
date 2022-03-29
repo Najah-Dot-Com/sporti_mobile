@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 class HomeViewModel extends GetxController with GetSingleTickerProviderStateMixin{
   TabController? tabController;
   int? tabControllerIndex = 0;
+  var notificationsIndex = 2;
 
   @override
   void onInit() {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/home_page/widget/bottom_navigation_bar.dart';
+import 'package:sporti/feature/view/views/home_page/widget/home_page_tab.dart';
+import 'package:sporti/feature/view/views/notifications/notifications_view.dart';
 import 'package:sporti/feature/view/views/profile/profile_view.dart';
 import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
 import 'package:sporti/util/app_color.dart';
@@ -29,35 +31,12 @@ class _HomePageViewState extends State<HomePageView>
 
   Widget bottomNavBar(ThemeData themeData) => const BottomNavigationBarWidget();
 
-  PreferredSizeWidget myAppBar(ThemeData themeData) =>
-      AppBar(
-        centerTitle: false,
-        title: CustomTextView(
-          txt: AppStrings.txtHello.tr + " Osama ",
-          textStyle: themeData.textTheme.headline2?.copyWith(
-              color: AppColor.black),
-        ),
-        actions: [
-          MaterialButton(
-            onPressed: () {
-              //logic.changeTab(1);
-              print('Event');
-            },
-            minWidth: 48,
-            child: Icon(
-              Icons.notifications_rounded, //feed_outlined
-              size: 24,
-              color: AppColor.grey,
-            ),
 
-          ),
-        ],
-      );
 
   final List<Widget> bottomNavBarList = [
-    Container(),//home page
+    const HomePageTab(),//home page
     Container(),//my work
-    Container(),//notifications
+    const NotificationsView(),//notifications
     const ProfileView(),//profile
   ];
 
@@ -75,7 +54,6 @@ class _HomePageViewState extends State<HomePageView>
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return Scaffold(
-      appBar: myAppBar(themeData),
       bottomNavigationBar: bottomNavBar(themeData),
       floatingActionButton: floatingBtn,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
