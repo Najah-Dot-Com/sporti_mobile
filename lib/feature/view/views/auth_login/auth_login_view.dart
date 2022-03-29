@@ -28,6 +28,7 @@ class LoginView extends StatelessWidget {
     }
     return Colors.black;
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -42,7 +43,10 @@ class LoginView extends StatelessWidget {
           backgroundColor: AppColor.primary,
           title: Column(
             children: [
-              AppLogo(height: AppSize.s160, width: AppSize.s160, logoColor: AppColor.white),
+              AppLogo(
+                  height: AppSize.s160,
+                  width: AppSize.s160,
+                  logoColor: AppColor.white),
               const SizedBox(height: AppSize.s20),
               //this for login "welcome" and "choose language" text.
               const WellcomeRow(),
@@ -85,7 +89,7 @@ class LoginView extends StatelessWidget {
                         SportiTextField(
                           hint: AppStrings.password,
                           isforPass: true,
-                        // controller: , TODO:
+                          // controller: , TODO:
                         ),
                         //this for checkBox of terms and policy
                         TermsAndPrivacyCheckBox(
@@ -110,6 +114,7 @@ class LoginView extends StatelessWidget {
                           primaryColor: AppColor.primary,
                           labelcolor: AppColor.white,
                           borderColor: AppColor.primary,
+                          onTap: () {},
                         ),
                         const SizedBox(
                           height: AppSize.s50,
@@ -130,7 +135,7 @@ class LoginView extends StatelessWidget {
                           primaryColor: AppColor.white,
                           labelcolor: AppColor.primary,
                           borderColor: AppColor.primary,
-                          onTap: ()async => await Get.offAll(SignupView()),
+                          onTap: () => Get.offAll(SignupView()),
                         ),
                       ],
                     ),

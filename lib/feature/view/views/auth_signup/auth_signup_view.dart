@@ -106,6 +106,7 @@ class SignupView extends StatelessWidget {
                           primaryColor: AppColor.primary,
                           labelcolor: AppColor.white,
                           borderColor: AppColor.primary,
+                          onTap: ()  => Get.offAll(LoginView()),
                         ),
                         const SizedBox(
                           height: AppSize.s20,
@@ -114,7 +115,7 @@ class SignupView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             TextButton(
-                              onPressed: () async => await Get.offAll(LoginView()),
+                              onPressed: ()  => Get.offAll(LoginView()),
                               child: Text(
                                 AppStrings.signin,
                                 style: AppTextStyle.getSemiBoldStyle(
