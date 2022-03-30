@@ -15,4 +15,7 @@ class AppStrings {
   static const String fillYourPhoneNumber = "";
   static const String messageMatcherEmail = "";
   static const String txtConnectionNote = "";
+  static const String resetYourPass = "RESET YOUR PASSWORD";
+  static const String setNewPasss = "Please set up a new password.";
+  static const String update = "UPDATE";
 }

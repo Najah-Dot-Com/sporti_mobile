@@ -111,6 +111,7 @@ class SignupView extends StatelessWidget {
                           primaryColor: AppColor.primary,
                           labelcolor: AppColor.white,
                           borderColor: AppColor.primary,
+                          isRoundedBorder: true,
                           onTap: () => Get.offAll(LoginView()),
                         ),
                         const SizedBox(
