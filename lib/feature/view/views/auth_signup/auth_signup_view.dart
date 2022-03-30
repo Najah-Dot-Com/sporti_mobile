@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sporti/feature/view/appwidget/appLogo.dart';
 import 'package:sporti/feature/view/appwidget/customButton.dart';
+import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
@@ -19,6 +20,7 @@ class SignupView extends StatelessWidget {
   bool acceptPolicy = false;
   @override
   Widget build(BuildContext context) {
+    var themeData = Theme.of(context);
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -119,23 +121,13 @@ class SignupView extends StatelessWidget {
                           children: [
                             TextButton(
                               onPressed: () => Get.offAll(LoginView()),
-                              child: Text(
-                                AppStrings.signin.tr,
-                                style: AppTextStyle.getSemiBoldStyle(
-                                    //TODO: change color
-                                    color: AppColor.black,
-                                    fontSize: AppFontSize.s18),
-                              ),
+                              child: 
+                            CustomTextView(txt: AppStrings.signin.tr,textStyle: themeData.textTheme.headline6 ?.copyWith(color: AppColor.darkYellow),),
                             ),
                             const SizedBox(
                               width: AppSize.s8,
                             ),
-                            Text(
-                              AppStrings.iHaveAccount.tr,
-                              style: AppTextStyle.getLightStyle(
-                                  color: AppColor.black,
-                                  fontSize: AppFontSize.s20),
-                            ),
+                            CustomTextView(txt: AppStrings.iHaveAccount.tr,textStyle: themeData.textTheme.subtitle2?.copyWith(color: AppColor.black),),
                           ],
                         ),
                         const SizedBox(

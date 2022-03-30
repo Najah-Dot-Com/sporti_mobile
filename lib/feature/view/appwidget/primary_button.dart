@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sporti/feature/view/appwidget/three_size_dot.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
@@ -6,6 +7,8 @@ import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_style.dart';
 
 import '../../../util/app_shaerd_data.dart';
+import '../../../util/app_strings.dart';
+import 'custome_text_view.dart';
 
 // ignore: must_be_immutable
 class PrimaryButton extends StatelessWidget {
@@ -29,6 +32,7 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeData = Theme.of(context);
     return SizedBox(
       width: double.infinity,
       height: height ?? AppSize.s50,
@@ -42,11 +46,17 @@ class PrimaryButton extends StatelessWidget {
             : () {},
         child: isLoading
             ? const ThreeSizeDot()
-            : Text(textButton,
-                style: AppTextStyle.getBoldStyle(
-                  color: colorText ?? AppColor.white,
-                  fontSize: AppFontSize.s16,
-                )),
+            : 
+            CustomTextView(
+            txt: textButton,
+            textStyle:
+                themeData.textTheme.headline6?.copyWith(color: colorText ?? AppColor.white),
+          ),
+            // Text(textButton,
+            //     style: AppTextStyle.getBoldStyle(
+            //       color: colorText ?? AppColor.white,
+            //       fontSize: AppFontSize.s16,
+            //     )),
       ),
     );
   }

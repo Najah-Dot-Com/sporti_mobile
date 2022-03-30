@@ -10,6 +10,7 @@ import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/app_style.dart';
 import '../../appwidget/authwellcomeRow.dart';
+import '../../appwidget/custome_text_view.dart';
 import '../../appwidget/sportiTextField.dart';
 import '../../appwidget/checkBoxOfTerms.dart';
 
@@ -17,8 +18,10 @@ import '../../appwidget/checkBoxOfTerms.dart';
 class LoginView extends StatelessWidget {
   LoginView({Key? key}) : super(key: key);
   bool acceptPolicy = false;
+
   @override
   Widget build(BuildContext context) {
+    var themeData = Theme.of(context);
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -107,10 +110,10 @@ class LoginView extends StatelessWidget {
                         const SizedBox(
                           height: AppSize.s50,
                         ),
-                        Text(
-                          AppStrings.or.tr,
-                          style: AppTextStyle.getSemiBoldStyle(
-                              color: AppColor.black, fontSize: AppFontSize.s22),
+                        CustomTextView(
+                          txt: AppStrings.or.tr,
+                          textStyle: themeData.textTheme.headline5
+                              ?.copyWith(color: AppColor.black),
                         ),
                         const SizedBox(
                           height: AppSize.s50,
