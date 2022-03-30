@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../util/app_color.dart';
 import '../../../util/app_font.dart';
@@ -28,17 +29,17 @@ class TermsAndPrivacyCheckBox extends StatelessWidget {
             onTap: () {
               onTap;
             },
-            child: Text(AppStrings.privacyAndTerms,
+            child: Text(AppStrings.privacyAndTerms.tr,
                 style: AppTextStyle.getMediumStyle(
                     color: AppColor.primary, fontSize: AppFontSize.s20))),
         const SizedBox(
           width: 5,
         ),
-        const Text(AppStrings.iAccept,
-            style: TextStyle(color: Colors.black, fontSize: 14)),
+         Text(AppStrings.iAccept.tr,
+            style: TextStyle(color:AppColor.black, fontSize: 14)),
         Checkbox(
             fillColor: MaterialStateProperty.resolveWith(getColor),
-            checkColor: Colors.white,
+            checkColor: AppColor.white,
             value: acceptPolicy,
             onChanged: (value) {
               onChange;

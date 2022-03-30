@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sporti/util/app_color.dart';
 import '../../../util/app_shaerd_data.dart';
 import '../../../util/app_strings.dart';
@@ -27,7 +28,7 @@ class WellcomeRow extends StatelessWidget {
             return TextButton(
               onPressed: ()=>simplePopup(context: context,firstLable: 'Ar', secondLabel: 'En'),
               child: Text(
-                AppStrings.chooseLanguage,
+                AppStrings.chooseLanguage.tr,
                   style:
                       AppTextStyle.getBoldStyle(color: Colors.white, fontSize: 16.0),
                   ),
@@ -36,7 +37,7 @@ class WellcomeRow extends StatelessWidget {
         ),
 
         Text(
-          AppStrings.hello,
+          AppStrings.hello.tr,
           style: AppTextStyle.getBoldStyle(color: Colors.white, fontSize: 24.0),
         ),
       ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sporti/feature/view/appwidget/appLogo.dart';
-import 'package:sporti/feature/view/appwidget/signinBtn.dart';
+import 'package:sporti/feature/view/appwidget/customButton.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
@@ -31,7 +31,10 @@ class SignupView extends StatelessWidget {
           backgroundColor: AppColor.primary,
           title: Column(
             children: [
-              AppLogo(height: AppSize.s160, width: AppSize.s160, logoColor: AppColor.white),
+              AppLogo(
+                  height: AppSize.s160,
+                  width: AppSize.s160,
+                  logoColor: AppColor.white),
               const SizedBox(height: AppSize.s20),
               //this for login "welcome" and "choose language" text.
               const WellcomeRow(),
@@ -65,21 +68,21 @@ class SignupView extends StatelessWidget {
                       children: [
                         //this for username TextFiled
                         SportiTextField(
-                          hint: AppStrings.username,
+                          hint: AppStrings.username.tr,
                           isforPass: false,
-                         // controller: , TODO:
+                          // controller: , TODO:
                         ),
                         const SizedBox(height: AppSize.s50),
                         //this for password TextFiled
                         SportiTextField(
-                          hint: AppStrings.password,
+                          hint: AppStrings.password.tr,
                           isforPass: true,
-                       // controller: , TODO:
+                          // controller: , TODO:
                         ),
                         const SizedBox(height: AppSize.s50),
                         //this for password TextFiled
                         SportiTextField(
-                          hint: AppStrings.repassword,
+                          hint: AppStrings.repassword.tr,
                           isforPass: true,
                           // controller: , TODO:
                         ),
@@ -99,14 +102,14 @@ class SignupView extends StatelessWidget {
                           height: AppSize.s28,
                         ),
                         //this btn for signin
-                        SignInButton(
+                        CustomButton(
                           height: AppSize.s60,
-                          label: AppStrings.justSign,
+                          label: AppStrings.justSign.tr,
                           width: AppSize.s350,
                           primaryColor: AppColor.primary,
                           labelcolor: AppColor.white,
                           borderColor: AppColor.primary,
-                          onTap: ()  => Get.offAll(LoginView()),
+                          onTap: () => Get.offAll(LoginView()),
                         ),
                         const SizedBox(
                           height: AppSize.s20,
@@ -115,19 +118,23 @@ class SignupView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             TextButton(
-                              onPressed: ()  => Get.offAll(LoginView()),
+                              onPressed: () => Get.offAll(LoginView()),
                               child: Text(
-                                AppStrings.signin,
+                                AppStrings.signin.tr,
                                 style: AppTextStyle.getSemiBoldStyle(
-                                  //TODO: change color
-                                    color: AppColor.black, fontSize: AppFontSize.s18),
+                                    //TODO: change color
+                                    color: AppColor.black,
+                                    fontSize: AppFontSize.s18),
                               ),
                             ),
-                            const SizedBox(width: AppSize.s8,),
+                            const SizedBox(
+                              width: AppSize.s8,
+                            ),
                             Text(
-                              AppStrings.iHaveAccount,
+                              AppStrings.iHaveAccount.tr,
                               style: AppTextStyle.getLightStyle(
-                                  color: AppColor.black, fontSize: AppFontSize.s20),
+                                  color: AppColor.black,
+                                  fontSize: AppFontSize.s20),
                             ),
                           ],
                         ),

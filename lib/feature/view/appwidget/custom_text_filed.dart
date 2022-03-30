@@ -148,7 +148,7 @@ class CustomTextFormFiled extends StatelessWidget /*with AppDimen, AppStyle */ {
             : UnderlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSize.s4),
                 borderSide: BorderSide(color: AppColor.grey1)),
-        fillColor: fillColor ?? Colors.white,
+        fillColor: fillColor ?? AppColor.white,
         contentPadding: EdgeInsets.only(
             left: isSmallPaddingWidth! ? AppPadding.p12 : AppSize.s40,
             right: isSmallPaddingWidth! ? AppPadding.p12 : AppSize.s28,
@@ -196,7 +196,7 @@ class CustomTextFormFiled extends StatelessWidget /*with AppDimen, AppStyle */ {
                 : UnderlineInputBorder(
                     borderRadius: BorderRadius.circular(AppSize.s4),
                     borderSide: BorderSide(color: AppColor.grey1)),
-        fillColor: fillColor ?? Colors.white,
+        fillColor: fillColor ?? AppColor.white,
         contentPadding: EdgeInsets.only(
             left: isSmallPaddingWidth! ? AppPadding.p12 : AppSize.s40,
             right: isSmallPaddingWidth! ? AppPadding.p12 : AppSize.s28,

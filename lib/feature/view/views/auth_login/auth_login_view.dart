@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sporti/feature/view/appwidget/appLogo.dart';
-import 'package:sporti/feature/view/appwidget/signinBtn.dart';
+import 'package:sporti/feature/view/appwidget/customButton.dart';
 import 'package:sporti/feature/view/views/auth_signup/auth_signup_view.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
@@ -17,18 +17,6 @@ import '../../appwidget/checkBoxOfTerms.dart';
 class LoginView extends StatelessWidget {
   LoginView({Key? key}) : super(key: key);
   bool acceptPolicy = false;
-  //this for checkBox Style
-  Color getColor(Set<MaterialState> states) {
-    const Set<MaterialState> interactiveStates = <MaterialState>{
-      MaterialState.pressed,
-      MaterialState.focused,
-    };
-    if (states.any(interactiveStates.contains)) {
-      return Colors.black;
-    }
-    return Colors.black;
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -63,9 +51,9 @@ class LoginView extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  color: AppColor.white,
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(50),
                       topRight: Radius.circular(50)),
                 ),
@@ -80,14 +68,14 @@ class LoginView extends StatelessWidget {
                       children: [
                         //this for username TextFiled
                         SportiTextField(
-                          hint: AppStrings.username,
+                          hint: AppStrings.username.tr,
                           isforPass: false,
                           // controller: , TODO:
                         ),
                         const SizedBox(height: AppSize.s50),
                         //this for password TextFiled
                         SportiTextField(
-                          hint: AppStrings.password,
+                          hint: AppStrings.password.tr,
                           isforPass: true,
                           // controller: , TODO:
                         ),
@@ -107,9 +95,9 @@ class LoginView extends StatelessWidget {
                           height: AppSize.s28,
                         ),
                         //this btn for signin
-                        SignInButton(
+                        CustomButton(
                           height: AppSize.s60,
-                          label: AppStrings.signin,
+                          label: AppStrings.signin.tr,
                           width: AppSize.s350,
                           primaryColor: AppColor.primary,
                           labelcolor: AppColor.white,
@@ -120,7 +108,7 @@ class LoginView extends StatelessWidget {
                           height: AppSize.s50,
                         ),
                         Text(
-                          AppStrings.or,
+                          AppStrings.or.tr,
                           style: AppTextStyle.getSemiBoldStyle(
                               color: AppColor.black, fontSize: AppFontSize.s22),
                         ),
@@ -128,9 +116,9 @@ class LoginView extends StatelessWidget {
                           height: AppSize.s50,
                         ),
                         //this btn for new signup
-                        SignInButton(
+                        CustomButton(
                           height: AppSize.s60,
-                          label: AppStrings.newSignin,
+                          label: AppStrings.newSignin.tr,
                           width: AppSize.s350,
                           primaryColor: AppColor.white,
                           labelcolor: AppColor.primary,

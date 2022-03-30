@@ -3,7 +3,7 @@ import 'package:sporti/util/app_style.dart';
 
 import '../../../util/app_font.dart';
 
-class SignInButton extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final double width;
   final double height;
   final String? label;
@@ -11,7 +11,7 @@ class SignInButton extends StatelessWidget {
   final Color? borderColor;
   final Color? labelcolor;
   final Function? onTap;
-  const SignInButton(
+  const CustomButton(
       {Key? key,
       required this.width,
       required this.height,
