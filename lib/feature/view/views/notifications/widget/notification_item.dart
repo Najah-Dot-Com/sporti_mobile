@@ -25,7 +25,7 @@ class NotificationItemWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.all(AppSize.s10),
+            padding: const EdgeInsets.all(AppPadding.p12),
             child: CustomTextView(
               txt: AppStrings.txtNotifications.tr,
               textStyle:
@@ -34,7 +34,7 @@ class NotificationItemWidget extends StatelessWidget {
           ),
           Divider(color: AppColor.primary,),
           Padding(
-            padding: const EdgeInsets.all(AppSize.s10),
+            padding: const EdgeInsets.all(AppPadding.p12),
             child: CustomTextView(
               txt: AppStrings.txtNotifications.tr,
               textStyle:

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
+import 'package:sporti/feature/view/views/categories_mywork_list/categories_mywork_list_view.dart';
 import 'package:sporti/feature/view/views/home_page/widget/bottom_navigation_bar.dart';
 import 'package:sporti/feature/view/views/home_page/widget/home_page_tab.dart';
 import 'package:sporti/feature/view/views/notifications/notifications_view.dart';
@@ -32,7 +33,7 @@ class _HomePageViewState extends State<HomePageView>
 
   final List<Widget> bottomNavBarList = [
     const HomePageTab(), //home page
-    Container(), //my work
+    const CategoriesMyWorkListView(), //my work
     const NotificationsView(), //notifications
     const ProfileView(), //profile
   ];

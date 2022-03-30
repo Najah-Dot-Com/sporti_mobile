@@ -40,4 +40,8 @@ Map<String, String> arSU = {
   AppStrings.txtProfile:"حسابي",
   AppStrings.txtNotifications:"الاشعارات",
   AppStrings.txtMyWork:"تماريني",
+  AppStrings.txtNewlyAddedPackages:"باقات أضيفت حديثا",
+  AppStrings.txtChooseYourFavoriteExercises:"اختر تمارينك المفضلة",
+  AppStrings.txtPackageRepeatedTimes:"يجب إعادة كل باقة 3 مرات ",
+  AppStrings.txtDetailsNote:"تنبيه: لصحة أفضل يجب استشارة الطبيب أولا خاصة بوجود امراض مزمنة",
 };

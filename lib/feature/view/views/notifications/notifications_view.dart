@@ -18,13 +18,13 @@ class NotificationsView extends StatelessWidget {
           textStyle:
               themeData.textTheme.headline2?.copyWith(color: AppColor.black),
         ),
-        leading: IconButton(
-          onPressed: () => Get.back(),
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: AppColor.black,
-          ),
-        ),
+        // leading: IconButton(
+        //   onPressed: () => Get.back(),
+        //   icon: Icon(
+        //     Icons.arrow_back_ios,
+        //     color: AppColor.black,
+        //   ),
+        // ),
       );
 
   @override

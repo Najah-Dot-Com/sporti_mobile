@@ -88,7 +88,11 @@ class AppBtnStyle {
   //     shape: MaterialStateProperty.all(
   //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))));
   //
-  ScrollPhysics? customScrollViewIOS() =>
+
+}
+
+class AppStyleScroll{
+  static ScrollPhysics? customScrollViewIOS() =>
       const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics());
 }
 

@@ -49,9 +49,12 @@ class AppStrings {
   static const String txtVerifyAccountDone = "doneVerifyAccount";
 
   //todo this for home page
-
-  static const String txtHello = "Hello";//hello
-  static const String txtProfile = "Profile";//hello
-  static const String txtNotifications = "Notifications";//hello
-  static const String txtMyWork = "MyWork";//hello
+  static const String txtHello = "Hello";//
+  static const String txtProfile = "Profile";//
+  static const String txtNotifications = "Notifications";//
+  static const String txtMyWork = "MyWork";//
+  static const String txtNewlyAddedPackages = "باقات أضيفت حديثا";//
+  static const String txtChooseYourFavoriteExercises = "اختر تمارينك المفضلة";//
+  static const String txtPackageRepeatedTimes = "يجب إعادة كل باقة 3 مرات ";//
+  static const String txtDetailsNote = "تنبيه: لصحة أفضل يجب استشارة الطبيب أولا خاصة بوجود امراض مزمنة";//
 }

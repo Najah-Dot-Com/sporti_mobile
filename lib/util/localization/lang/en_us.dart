@@ -39,6 +39,8 @@ Map<String, String> enUS = {
   AppStrings.txtProfile:"Profile",
   AppStrings.txtNotifications:"Notifications",
   AppStrings.txtMyWork:"My Exercise",
-
-
+  AppStrings.txtNewlyAddedPackages:"Newly Added Packages",
+  AppStrings.txtChooseYourFavoriteExercises:"Choose Your Favorite Exercises",
+  AppStrings.txtPackageRepeatedTimes:"Each package must be repeated 3 times",
+  AppStrings.txtDetailsNote:"Caution: For better health, you must consult a doctor first, especially in the presence of chronic diseases",
 };
