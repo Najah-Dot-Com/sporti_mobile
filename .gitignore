@@ -31,6 +31,7 @@
 .pub/
 /build/
 .lock
+#ignore pubspec.lock
 pubspec.lock
 
 # Web related
