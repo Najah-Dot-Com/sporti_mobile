@@ -57,4 +57,14 @@ class AppStrings {
   static const String txtChooseYourFavoriteExercises = "اختر تمارينك المفضلة";//
   static const String txtPackageRepeatedTimes = "يجب إعادة كل باقة 3 مرات ";//
   static const String txtDetailsNote = "تنبيه: لصحة أفضل يجب استشارة الطبيب أولا خاصة بوجود امراض مزمنة";//
+
+  //todo this for CategoriyExerciseDetailsView page
+  static const String txtTargetMuscle = "Target Muscle ";
+  static const String txtPlay = "Play";
+
+  //todo this for search view
+  static const String txtSearch = "اكتب اسم التمرين المطلوب";
+  static const String txtPackage = "الباقات";
+  static const String txtExercise = "التمارين";
+
 }

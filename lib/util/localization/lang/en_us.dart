@@ -43,4 +43,9 @@ Map<String, String> enUS = {
   AppStrings.txtChooseYourFavoriteExercises:"Choose Your Favorite Exercises",
   AppStrings.txtPackageRepeatedTimes:"Each package must be repeated 3 times",
   AppStrings.txtDetailsNote:"Caution: For better health, you must consult a doctor first, especially in the presence of chronic diseases",
+  AppStrings.txtTargetMuscle:"Target Muscle ",
+  AppStrings.txtPlay:"Start",
+  AppStrings.txtSearch:"Type the name of the exercise or the rest",
+  AppStrings.txtPackage:"Packages",
+  AppStrings.txtExercise:"Exercise",
 };

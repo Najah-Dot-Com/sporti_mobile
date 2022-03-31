@@ -44,4 +44,9 @@ Map<String, String> arSU = {
   AppStrings.txtChooseYourFavoriteExercises:"اختر تمارينك المفضلة",
   AppStrings.txtPackageRepeatedTimes:"يجب إعادة كل باقة 3 مرات ",
   AppStrings.txtDetailsNote:"تنبيه: لصحة أفضل يجب استشارة الطبيب أولا خاصة بوجود امراض مزمنة",
+  AppStrings.txtTargetMuscle:"العضلات المستهدفة ",
+  AppStrings.txtPlay:"ابدا",
+  AppStrings.txtSearch:"اكتب اسم التمرين او الباقة",
+  AppStrings.txtPackage:"الباقات",
+  AppStrings.txtExercise:"التمارين",
 };

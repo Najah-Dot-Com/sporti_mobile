@@ -19,4 +19,6 @@ class AppMedia {
   static const String notComplete="$IMAGE_PATH/not_complete.svg";
   static const String complete="$IMAGE_PATH/compleate.svg";
 
+  static String play = "$IMAGE_PATH/play.png";
+
 }

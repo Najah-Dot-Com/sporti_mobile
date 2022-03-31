@@ -5,6 +5,7 @@ import 'package:sporti/feature/view/views/home_page/widget/bottom_navigation_bar
 import 'package:sporti/feature/view/views/home_page/widget/home_page_tab.dart';
 import 'package:sporti/feature/view/views/notifications/notifications_view.dart';
 import 'package:sporti/feature/view/views/profile/profile_view.dart';
+import 'package:sporti/feature/view/views/search/search_view.dart';
 import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
@@ -26,7 +27,7 @@ class _HomePageViewState extends State<HomePageView>
           color: AppColor.white,
         ),
         backgroundColor: AppColor.primary,
-        onPressed: () {},
+        onPressed: _onSearchClick,
       );
 
   Widget bottomNavBar(ThemeData themeData) => const BottomNavigationBarWidget();
@@ -65,5 +66,9 @@ class _HomePageViewState extends State<HomePageView>
         );
       }),
     );
+  }
+
+  void _onSearchClick() {
+    Get.to(const SearchView());
   }
 }
