@@ -8,6 +8,7 @@ import 'package:sporti/util/app_theme.dart';
 import 'feature/view/views/auth_forgetpassword/auth_forgetpassword_view.dart';
 import 'feature/view/views/auth_resetpassword/auth_resetpassword_view.dart';
 import 'feature/view/views/auth_signup/auth_signup_view.dart';
+import 'feature/view/views/categoriy_exercise/categoriy_exercise_view.dart';
 import 'network/api/dio_manager/dio_manage_class.dart';
 import 'util/localization/localization_service.dart';
 
@@ -31,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home:   LoginView(),//test screens ForgetPasswordView LoginView ResetPasswordView SignupView
+      home:   CategoryExerciseView(exerciseTitle: 'exircise_one',),//CategoryExerciseView test screens ForgetPasswordView LoginView ResetPasswordView SignupView
       debugShowCheckedModeBanner: false,
       enableLog: true,
       defaultTransition: Transition.native,

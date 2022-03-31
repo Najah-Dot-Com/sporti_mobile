@@ -7,6 +7,7 @@ class AppColor {
   static Color lightGrey = HexColor.fromHex("#9E9E9E");
   static Color primaryOpacity70 = HexColor.fromHex("#B3ED9728");
   static Color darkYellow = HexColor.fromHex("#CDAD0A");
+  static Color lightBlue = HexColor.fromHex("#E9F0F1");
 
   // new colors
   static Color darkPrimary = HexColor.fromHex("#d17d11");

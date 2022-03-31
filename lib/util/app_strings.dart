@@ -22,4 +22,9 @@ class AppStrings {
   static const String update = "UPDATE";
   static const String verify = "VERIFY";
   static const String email = "Email"; // "Email" "الايميل"
+  //CategoryExerciseView
+  static const String rememberMeToRepeatExcercise = "ذكرني لاعادة التمرين"; 
+  static const String iFinishedExcercise = "أتمت التمرين"; 
+  static const String hour = "ساعة"; 
+  static const String minute = "دقيقة"; 
 }
