@@ -5,20 +5,14 @@ import 'package:sporti/feature/view/appwidget/customButton.dart';
 import 'package:sporti/feature/view/views/auth_signup/auth_signup_view.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
-import 'package:sporti/util/app_font.dart';
-import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_strings.dart';
-import 'package:sporti/util/app_style.dart';
 import '../../appwidget/authwellcomeRow.dart';
 import '../../appwidget/custome_text_view.dart';
 import '../../appwidget/sportiTextField.dart';
-import '../../appwidget/checkBoxOfTerms.dart';
 
 // ignore: must_be_immutable
 class LoginView extends StatelessWidget {
   LoginView({Key? key}) : super(key: key);
-  bool acceptPolicy = false;
-
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
@@ -83,17 +77,6 @@ class LoginView extends StatelessWidget {
                           // controller: , TODO:
                         ),
                         //this for checkBox of terms and policy
-                        TermsAndPrivacyCheckBox(
-                          getColor: AppColor.getColor,
-                          acceptPolicy: acceptPolicy,
-                          onTap: () {
-                            //TODO: need for state for accept policy
-                          },
-                          onChange: (value) {
-                            //TODO: need for state 
-                            acceptPolicy = value;
-                          },
-                        ),
                         const SizedBox(
                           height: AppSize.s28,
                         ),

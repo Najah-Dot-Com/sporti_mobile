@@ -5,7 +5,6 @@ import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/sportiTextField.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_media.dart';
-
 import '../../../../util/app_color.dart';
 import '../../../../util/app_strings.dart';
 

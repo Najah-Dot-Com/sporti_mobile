@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../util/app_color.dart';
-import '../../../util/app_font.dart';
-import '../../../util/app_strings.dart';
-import '../../../util/app_style.dart';
-import 'custome_text_view.dart';
+import '../../../../../util/app_color.dart';
+import '../../../../../util/app_font.dart';
+import '../../../../../util/app_strings.dart';
+import '../../../../../util/app_style.dart';
+import '../../../appwidget/custome_text_view.dart';
 
 // ignore: must_be_immutable
 class TermsAndPrivacyCheckBox extends StatelessWidget {
@@ -24,7 +24,7 @@ class TermsAndPrivacyCheckBox extends StatelessWidget {
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
             onTap: () {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../util/app_color.dart';
 import '../../../util/app_font.dart';
 
@@ -9,38 +8,44 @@ class SportiTextField extends StatelessWidget {
   bool obsecurPass = false;
   bool? isforPass = false;
   String? hint = '';
+  TextInputType? textInputType;
   TextEditingController? controller;
-  SportiTextField({Key? key, @required this.hint, @required this.isforPass,@required this.controller})
-      : super(key: key);
+  SportiTextField({
+    Key? key,
+    @required this.hint,
+    @required this.isforPass,
+    @required this.controller,
+    @required this.textInputType,
+  }) : super(key: key);
   @override
-  Widget build(BuildContext context) {  
+  Widget build(BuildContext context) {
     return TextField(
       controller: controller,
       style: const TextStyle(color: Colors.black, fontSize: 18),
-      keyboardType: isforPass == false
-          ? TextInputType.name
-          : TextInputType.visiblePassword,
+      keyboardType: textInputType ?? TextInputType.text,
       obscureText: isforPass == true ? true : false,
-      textAlign: TextAlign.right,
+      textAlign: hint!.contains('a') == true
+          ? TextAlign.left
+          : TextAlign.left, //TODO: dependes on language
       decoration: InputDecoration(
-        enabledBorder: const UnderlineInputBorder(),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColor.primary),
-        ),
-        border: UnderlineInputBorder(
-          borderSide: BorderSide(color: AppColor.primary),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.red[400]!,
+          hintTextDirection: hint!.contains('a') == true
+              ? TextDirection.ltr
+              : TextDirection.rtl, //TODO: dependes on language
+          enabledBorder: const UnderlineInputBorder(),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: AppColor.primary),
           ),
-        ),
-        hintText: hint,
-        hintStyle: const TextStyle(fontSize: AppFontSize.s16),
-        hintTextDirection: TextDirection.rtl,
-        prefixIcon: isforPass == false
-            ? const SizedBox()
-            : IconButton(
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(color: AppColor.primary),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.red[400]!,
+            ),
+          ),
+          hintText: hint,
+          hintStyle: const TextStyle(fontSize: AppFontSize.s16),
+          prefixIcon: isforPass == true ? IconButton(
                 icon: Icon(
                   Icons.remove_red_eye_rounded,
                   color: eyeIconColor,
@@ -53,8 +58,9 @@ class SportiTextField extends StatelessWidget {
                       ? Icons.remove_red_eye_rounded
                       : Colors.grey;
                 },
-              ),
-      ),
+              ):null
+          
+          ),
     );
   }
 }

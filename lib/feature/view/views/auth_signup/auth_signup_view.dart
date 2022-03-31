@@ -11,7 +11,7 @@ import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/app_style.dart';
 import '../../appwidget/authwellcomeRow.dart';
 import '../../appwidget/sportiTextField.dart';
-import '../../appwidget/checkBoxOfTerms.dart';
+import 'widget/checkBoxOfTerms.dart';
 import '../auth_login/auth_login_view.dart';
 
 // ignore: must_be_immutable
@@ -88,18 +88,6 @@ class SignupView extends StatelessWidget {
                           isforPass: true,
                           // controller: , TODO:
                         ),
-                        //this for checkBox of terms and policy
-                        TermsAndPrivacyCheckBox(
-                          getColor: AppColor.getColor,
-                          acceptPolicy: acceptPolicy,
-                          onTap: () {
-                            //TODO: need for state for accept policy
-                          },
-                          onChange: (value) {
-                            //TODO: need for state 
-                            acceptPolicy = value;
-                          },
-                        ),
                         const SizedBox(
                           height: AppSize.s28,
                         ),
@@ -117,22 +105,41 @@ class SignupView extends StatelessWidget {
                         const SizedBox(
                           height: AppSize.s20,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextButton(
-                              onPressed: () => Get.offAll(LoginView()),
-                              child: 
-                            CustomTextView(txt: AppStrings.signin.tr,textStyle: themeData.textTheme.headline6 ?.copyWith(color: AppColor.darkYellow),),
-                            ),
-                            const SizedBox(
-                              width: AppSize.s8,
-                            ),
-                            CustomTextView(txt: AppStrings.iHaveAccount.tr,textStyle: themeData.textTheme.subtitle2?.copyWith(color: AppColor.black),),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: AppSize.s50,
+                        SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  TextButton(
+                                    onPressed: () => Get.offAll(LoginView()),
+                                    child: 
+                                  CustomTextView(txt: AppStrings.signin.tr,textStyle: themeData.textTheme.headline6 ?.copyWith(color: AppColor.darkYellow),),
+                                  ),
+                                  const SizedBox(
+                                    width: AppSize.s8,
+                                  ),
+                                  CustomTextView(txt: AppStrings.iHaveAccount.tr,textStyle: themeData.textTheme.subtitle2?.copyWith(color: AppColor.black),),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: AppSize.s50,
+                              ),
+                              //this for checkBox of terms and policy
+                              TermsAndPrivacyCheckBox(
+                                getColor: AppColor.getColor,
+                                acceptPolicy: acceptPolicy,
+                                onTap: () {
+                                  //TODO: need for state for to change checkedBox
+                                },
+                                onChange: (value) {
+                                  //TODO: need for state 
+                                  acceptPolicy = value;
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
