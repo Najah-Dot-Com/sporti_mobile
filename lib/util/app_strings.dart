@@ -1,4 +1,5 @@
 class AppStrings {
+  static const String appTitle = "Sporti";
   static const String hello = "! مرحبا";
   static const String chooseLanguage = "اختر اللغة";
   static const String username = "username"; // "username" اسم المستخدم

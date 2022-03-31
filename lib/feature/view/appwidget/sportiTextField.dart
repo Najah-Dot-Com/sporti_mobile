@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sporti/util/app_dimen.dart';
 import '../../../util/app_color.dart';
 import '../../../util/app_font.dart';
 
@@ -28,6 +29,7 @@ class SportiTextField extends StatelessWidget {
           ? TextAlign.left
           : TextAlign.left, //TODO: dependes on language
       decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(AppPadding.p20),
           hintTextDirection: hint!.contains('a') == true
               ? TextDirection.ltr
               : TextDirection.rtl, //TODO: dependes on language
@@ -45,22 +47,22 @@ class SportiTextField extends StatelessWidget {
           ),
           hintText: hint,
           hintStyle: const TextStyle(fontSize: AppFontSize.s16),
-          prefixIcon: isforPass == true ? IconButton(
-                icon: Icon(
-                  Icons.remove_red_eye_rounded,
-                  color: eyeIconColor,
-                ),
-                onPressed: () {
-                  // ignore: todo
-                  //TODO: need for state here
-                  obsecurPass == false ? true : false;
-                  eyeIconColor == Colors.grey
-                      ? Icons.remove_red_eye_rounded
-                      : Colors.grey;
-                },
-              ):null
-          
-          ),
+          prefixIcon: isforPass == true
+              ? IconButton(
+                  icon: Icon(
+                    Icons.remove_red_eye_rounded,
+                    color: eyeIconColor,
+                  ),
+                  onPressed: () {
+                    // ignore: todo
+                    //TODO: need for state here
+                    obsecurPass == false ? true : false;
+                    eyeIconColor == Colors.grey
+                        ? Icons.remove_red_eye_rounded
+                        : Colors.grey;
+                  },
+                )
+              : null),
     );
   }
 }

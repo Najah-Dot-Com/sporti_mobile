@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
+import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/app_theme.dart';
 import 'feature/view/views/auth_forgetpassword/auth_forgetpassword_view.dart';
 import 'feature/view/views/auth_resetpassword/auth_resetpassword_view.dart';
@@ -30,11 +31,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home:   SignupView(),//test screens ForgetPasswordView LoginView ResetPasswordView SignupView
+      home:   LoginView(),//test screens ForgetPasswordView LoginView ResetPasswordView SignupView
       debugShowCheckedModeBanner: false,
       enableLog: true,
       defaultTransition: Transition.native,
-      title: 'Sporti',
+      title: AppStrings.appTitle,
       locale:LocalizationService.localeEn,
       fallbackLocale: LocalizationService.fallbackLocale,
       translations: LocalizationService(),
