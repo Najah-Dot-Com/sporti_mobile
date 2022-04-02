@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
+import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_media.dart';
+
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
 
@@ -11,21 +13,43 @@ class SplashView extends StatefulWidget {
   State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView> {
-  // app logo widget
-  Widget get splashLogo => const Center(
-    child: Image(
-      image: AssetImage(AppMedia.sportiGreenLogo),
-    ),
-  );
+class _SplashViewState extends State<SplashView>
+    with SingleTickerProviderStateMixin {
+  var _visible = true;
+
+  AnimationController? animationController;
+  Animation<double>? animation;
+
+
 
   @override
-  initState(){
+  void initState() {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      Timer(const Duration(seconds: 3), () => {Get.offAll(const LoginView())});
+       Timer(const Duration(seconds: 3), () => {Get.offAll(const LoginView())});
     });
     super.initState();
+
+    animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    animation = CurvedAnimation(parent: animationController!, curve: Curves.easeOut);
+
+    animation?.addListener(() => setState(() {}));
+    animationController?.forward();
+
+    setState(() {
+      _visible = !_visible;
+    });
+
   }
+
+  // app logo widget
+  Widget get splashLogo =>  Center(
+        child: Image(
+          image: const AssetImage(AppMedia.sportiGreenLogo),
+          width: animation!.value * AppSize.s300,
+          height: animation!.value * AppSize.s300,
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
