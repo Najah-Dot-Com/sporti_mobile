@@ -48,4 +48,5 @@ Map<String, String> enUS = {
   AppStrings.txtSearch:"Type the name of the exercise or the rest",
   AppStrings.txtPackage:"Packages",
   AppStrings.txtExercise:"Exercise",
+  AppStrings.txtForgetPassword: "Forget Password ?"
 };

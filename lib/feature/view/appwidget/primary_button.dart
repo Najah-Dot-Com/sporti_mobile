@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sporti/feature/view/appwidget/three_size_dot.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
@@ -6,6 +7,8 @@ import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_style.dart';
 
 import '../../../util/app_shaerd_data.dart';
+import '../../../util/app_strings.dart';
+import 'custome_text_view.dart';
 
 // ignore: must_be_immutable
 class PrimaryButton extends StatelessWidget {

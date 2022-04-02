@@ -6,6 +6,8 @@ class AppColor {
   static Color grey = HexColor.fromHex("#737477");
   static Color lightGrey = HexColor.fromHex("#9E9E9E");
   static Color primaryOpacity70 = HexColor.fromHex("#B326C3AE");
+  static Color darkYellow = HexColor.fromHex("#CDAD0A");
+  static Color lightBlue = HexColor.fromHex("#E9F0F1");
 
   // new colors
   static Color darkPrimary = HexColor.fromHex("#26C3AE");
@@ -16,6 +18,17 @@ class AppColor {
   static Color transparent = Colors.transparent;
   static Color black = HexColor.fromHex("#000000");
   static Color scaffold = HexColor.fromHex("#E9F0F1");
+  //this for checkBox style
+ static Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.focused,
+    };
+    if (states.any(interactiveStates.contains)) {
+      return Colors.black;
+    }
+    return Colors.black;
+  }
 }
 
 extension HexColor on Color {

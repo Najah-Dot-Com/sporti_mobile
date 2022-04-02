@@ -143,6 +143,7 @@ snackSuccess(String? title, String? body) {
 snackError(String? title, String? body) {
   mainSnack(body: body ?? "", backgroundColor:const Color(0xFFF2AE56).withAlpha(150));
 }
+
 snackConnection() {
   mainSnack(body: AppStrings.txtConnectionNote.tr, backgroundColor:const Color(0xFF000000).withAlpha(150));
 }

@@ -29,6 +29,9 @@ class LocalizationService extends Translations {
     Locale('en', 'US'),
   ];
 
+  static var arIndex = 0;
+  static var enIndex = 1;
+
 
 
   // Keys and their translations

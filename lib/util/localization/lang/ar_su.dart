@@ -49,4 +49,5 @@ Map<String, String> arSU = {
   AppStrings.txtSearch:"اكتب اسم التمرين او الباقة",
   AppStrings.txtPackage:"الباقات",
   AppStrings.txtExercise:"التمارين",
+  AppStrings.txtForgetPassword: "نسيت كلمة المرور ؟"
 };
