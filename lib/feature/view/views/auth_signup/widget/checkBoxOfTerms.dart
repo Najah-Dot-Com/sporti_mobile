@@ -26,6 +26,15 @@ class TermsAndPrivacyCheckBox extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+         CustomTextView(
+          txt: AppStrings.iAccept.tr,
+          textStyle:
+              themeData.textTheme.headline1?.copyWith(color: AppColor.black),
+        ),
+        
+        const SizedBox(
+          width: 5,
+        ),
         GestureDetector(
             onTap: () {
               onTap;
@@ -37,14 +46,6 @@ class TermsAndPrivacyCheckBox extends StatelessWidget {
                 themeData.textTheme.headline6?.copyWith(color: AppColor.primary),
           ),
           ),
-        const SizedBox(
-          width: 5,
-        ),
-        CustomTextView(
-          txt: AppStrings.iAccept.tr,
-          textStyle:
-              themeData.textTheme.headline1?.copyWith(color: AppColor.black),
-        ),
         Checkbox(
             fillColor: MaterialStateProperty.resolveWith(getColor),
             checkColor: AppColor.white,

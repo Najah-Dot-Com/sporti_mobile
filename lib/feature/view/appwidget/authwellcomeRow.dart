@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sporti/util/app_color.dart';
+import '../../../util/app_media.dart';
 import '../../../util/app_shaerd_data.dart';
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
@@ -19,13 +20,20 @@ class WelcomeRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        TextButton(
+        IconButton(
+          icon: Image.asset(AppMedia.translating_icon),
+          iconSize: 40,
           onPressed: () {
             Get.bottomSheet(const LanguageBottomSheet());
           },
-          child:
-          CustomTextView(txt: AppStrings.chooseLanguage.tr,textStyle: themeData.textTheme.headline1?.copyWith(color: AppColor.white),),
         ),
+        // TextButton(
+        //   onPressed: () {
+        //     Get.bottomSheet(const LanguageBottomSheet());
+        //   },
+        //   child:
+        //   CustomTextView(txt: AppStrings.chooseLanguage.tr,textStyle: themeData.textTheme.headline1?.copyWith(color: AppColor.white),),
+        // ),
         CustomTextView(txt: AppStrings.hello.tr,textStyle: themeData.textTheme.headline4?.copyWith(color: AppColor.white),),
       ],
     ));

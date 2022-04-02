@@ -81,10 +81,11 @@ class CategoryExerciseView extends StatelessWidget {
                     _remindMetoRepeatExercise = true;
                   },
                   title: CustomTextView(
-                    txt: AppStrings.rememberMeToRepeatExcercise,
+                    txt: AppStrings.rememberMeToRepeatExcercise.tr,
                     textStyle: themeData.textTheme.headline5,
                     textAlign: TextAlign.right,
                   ),
+                  // this for convert box direction
                   controlAffinity: ListTileControlAffinity.trailing,
                   contentPadding: const EdgeInsets.all(0),
                 ),
@@ -115,7 +116,7 @@ class CategoryExerciseView extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomTextView(
-                            txt: AppStrings.hour,
+                            txt: AppStrings.hour.tr,
                             textStyle: themeData.textTheme.headline1,
                           ),
                         )
@@ -144,7 +145,7 @@ class CategoryExerciseView extends StatelessWidget {
                                   color: AppColor.black,
                                   style: BorderStyle.solid,
                                   width: 1.0)),
-                          width: AppSize.s50,
+                          width:  AppSize.s50,
                           height: AppSize.s50,
                           child: Center(
                               child: CustomTextView(
@@ -155,7 +156,7 @@ class CategoryExerciseView extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomTextView(
-                            txt: AppStrings.minute,
+                            txt: AppStrings.minute.tr,
                             textStyle: themeData.textTheme.headline1,
                           ),
                         )

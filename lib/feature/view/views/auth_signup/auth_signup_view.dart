@@ -138,7 +138,7 @@ class SignupView extends StatelessWidget {
                       const SizedBox(
                         height: AppSize.s20,
                       ),
-                      //this btn for signin
+                      //this btn for signup
                       CustomButton(
                         height: AppSize.s60,
                         label: AppStrings.justSign.tr,
@@ -147,7 +147,7 @@ class SignupView extends StatelessWidget {
                         labelcolor: AppColor.white,
                         borderColor: AppColor.primary,
                         isRoundedBorder: true,
-                        onTap: () => Get.offAll(LoginView()),
+                        onTap: () => Get.offAll(const LoginView()),
                       ),
                       const SizedBox(
                         height: AppSize.s20,
@@ -159,7 +159,7 @@ class SignupView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               TextButton(
-                                onPressed: () => Get.offAll(LoginView()),
+                                onPressed: () => Get.offAll(const LoginView()),
                                 child:
                               CustomTextView(txt: AppStrings.signin.tr,textStyle: themeData.textTheme.headline6 ?.copyWith(color: AppColor.darkYellow),),
                               ),
