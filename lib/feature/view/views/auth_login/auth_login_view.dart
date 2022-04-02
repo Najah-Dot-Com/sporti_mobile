@@ -56,7 +56,7 @@ class LoginView extends StatelessWidget {
               InkWell(
                 onTap: _onTermsClick,
                 child: CustomTextView(
-                  txt: "terms and conditions",
+                  txt: AppStrings.txtTermsAndConditions.tr,
                   textStyle: themeData.textTheme.subtitle2
                       ?.copyWith(color: AppColor.black),
                 ),
@@ -71,7 +71,7 @@ class LoginView extends StatelessWidget {
               InkWell(
                 onTap: _onPrivacyClick,
                 child: CustomTextView(
-                  txt: "privacy policy",
+                  txt: AppStrings.txtPrivacyPolicies.tr,
                   textStyle: themeData.textTheme.subtitle2
                       ?.copyWith(color: AppColor.black),
                 ),
