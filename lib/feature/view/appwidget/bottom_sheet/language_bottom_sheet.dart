@@ -55,7 +55,7 @@ class LanguageBottomSheet extends StatelessWidget {
               textButton: "العربية",
               width: double.infinity,
               onClicked: _onArClick,
-              isExpanded: true),
+              ),
           const SizedBox(
             height: AppSize.s10,
           ),
@@ -66,7 +66,7 @@ class LanguageBottomSheet extends StatelessWidget {
               textButton: "English",
               width: double.infinity,
               onClicked: _onEnClick,
-              isExpanded: true),
+              ),
 
           const SizedBox(
             height: AppSize.s40,

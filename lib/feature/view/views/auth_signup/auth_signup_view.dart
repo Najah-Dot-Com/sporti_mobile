@@ -184,7 +184,7 @@ class SignupView extends StatelessWidget {
   }
 
   void _onPrivacyClick() {
-    Get.to(const PrivacyPolicyView());
+    Get.to(const PrivacyPolicyWidget());
   }
 
   void _onTermsClick() {

@@ -82,10 +82,6 @@ class AppStrings {
   static const String txtForgetPassword = "نسيت كلمة المرور ؟";
   static const String or = "او";
   static const String iHaveAccount = "لدي حساب";
-  static const String errorPasswordLength = "";
-  static const String fillYourPhoneNumber = "";
-  static const String messageMatcherEmail = "";
-  static const String txtConnectionNote = "";
   static const String resetYourPass = "RESET YOUR PASSWORD";
   static const String setNewPasss = "Please set up a new password.";
   static const String setYourEmail = "Enter the email address associated with your account to reset your password. ";

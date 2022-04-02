@@ -24,8 +24,9 @@ import 'util/app_shaerd_data.dart';
 import 'util/constance.dart';
 import 'util/localization/localization_service.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await SharedPref.instance.init();
   DioManagerClass.getInstance.init();
   runApp(MyApp());
 }
@@ -46,17 +47,17 @@ class _MyAppState extends State<MyApp> {
     return DismissKeyboard(
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
-          supportedLocales:const [
-            Locale("ar"),
-            Locale("en"),
-          ],
+          // supportedLocales:const [
+          //   Locale("ar"),
+          //   Locale("en"),
+          // ],
         localizationsDelegates: [
           CountryLocalizations.delegate,
         ],
         enableLog: true,
         defaultTransition: Transition.native,
-        title: 'Sporti',
-        locale:LocalizationService.localeEn,
+        title: AppStrings.appTitle.tr,
+        locale:SharedPref.instance.getAppLanguageMain(),
         fallbackLocale: LocalizationService.fallbackLocale,
         translations: LocalizationService(),
         builder: (context, widget) => ResponsiveWrapper.builder(
@@ -73,7 +74,7 @@ class _MyAppState extends State<MyApp> {
             ],
         ),
         theme: AppTheme.getApplicationTheme(),
-        home: const HomePageView(),
+        home: const SplashView(),
       ),
     );
   }

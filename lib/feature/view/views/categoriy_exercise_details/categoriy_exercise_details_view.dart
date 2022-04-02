@@ -102,6 +102,6 @@ class CategoriyExerciseDetailsView extends StatelessWidget {
 
 
   void _onStartBtnClick() {
-      Get.to(const CategoryExerciseView());
+      Get.to( CategoryExerciseView());
   }
 }

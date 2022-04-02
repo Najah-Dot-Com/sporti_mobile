@@ -79,11 +79,11 @@ class SharedPref {
        }else if(string != null && string == LocalizationService.langs[LocalizationService.arIndex]){
          return LocalizationService.localeEn;
        }else{
-         return LocalizationService.localeAr;
+         return LocalizationService.localeEn;
        }
     } catch (e) {
       printError(info:e.toString());
-      return LocalizationService.localeAr;
+      return LocalizationService.localeEn;
     }
   }
 

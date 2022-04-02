@@ -21,7 +21,7 @@ class ResetPasswordView extends StatelessWidget {
         backgroundColor: AppColor.white,
         leading: IconButton(
           icon: Icon(
-            Icons.arrow_back,
+            Icons.arrow_back_ios,
             color: AppColor.black,
           ),
           onPressed: () {
