@@ -45,7 +45,7 @@ class ResetPasswordView extends StatelessWidget {
                   )),
               CustomTextView(
                 txt: AppStrings.resetYourPass.tr,
-                textStyle: themeData.textTheme.titleLarge,
+                textStyle: themeData.textTheme.headline1,
               ),
               const SizedBox(
                 height: AppSize.s8,

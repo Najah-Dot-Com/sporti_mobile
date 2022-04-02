@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sporti/feature/view/appwidget/customButton.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/sportiTextField.dart';
+import 'package:sporti/feature/view/views/auth_resetpassword/auth_resetpassword_view.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_media.dart';
 import '../../../../util/app_color.dart';
@@ -45,7 +46,7 @@ class ForgetPasswordView extends StatelessWidget {
                   )),
               CustomTextView(
                 txt: AppStrings.resetYourPass.tr,
-                textStyle: themeData.textTheme.titleLarge,
+                textStyle: themeData.textTheme.headline1,
               ),
               const SizedBox(
                 height: AppSize.s8,
@@ -74,11 +75,16 @@ class ForgetPasswordView extends StatelessWidget {
                 labelcolor: AppColor.white,
                 isRoundedBorder: false,
                 primaryColor: AppColor.primary,
+                onTap: _onVerifyClick,
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  _onVerifyClick() {
+    Get.to(const ResetPasswordView());
   }
 }

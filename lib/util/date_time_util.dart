@@ -452,6 +452,59 @@ class DateUtility {
       return DateFormat('MMMM d, y', (isArabicLang() ? "ar" : "en")).format(DateTime.parse(txtDate!));
   }
 
+
+  //todo abdallah mansoure
+  //TODO add locale
+  static String dateToFormattedDate(String date, bool showYear) {
+    DateTime dateTime = DateTime.parse(date);
+    String formattedDate;
+    showYear
+        ? formattedDate = DateFormat.yMMMd().format(dateTime)
+        : formattedDate = DateFormat.MMMd().format(dateTime);
+    return formattedDate;
+  }
+
+  static String dateToDayOfMonth(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    return DateFormat.d().format(dateTime);
+  }
+
+  static String dateToMonth(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    return DateFormat.MMM().format(dateTime);
+  }
+
+  static String dateToHourMinute(String date) {
+    DateTime dateTime = DateTime.parse(date);
+    return DateFormat.Hm().format(dateTime);
+  }
+
+  static String timeAgo(String date, {bool numericDates = false}) {
+    DateTime dateTime = DateTime.parse(date);
+    Duration diff = DateTime.now().difference(dateTime);
+    if (diff.inMinutes < 60) {
+      return numericDates
+          ? "${diff.inMinutes}'m"
+          : DateFormat.Hm().format(dateTime);
+    }
+    if (diff.inHours < 24) {
+      return numericDates
+          ? "${diff.inHours}h"
+          : DateFormat.Hm().format(dateTime);
+    }
+    if (diff.inDays < 2) {
+      return numericDates ? 'one_day' : 'yesterday';
+    }
+    if (diff.inDays < 3) {
+      return numericDates ? 'two_days' : 'two_days_ago';
+    }
+    if (diff.inDays < 4) {
+      return numericDates ? 'three_days' : 'three_days_ago';
+    }
+    if (diff.inDays < 365) return DateFormat('d MMM').format(dateTime);
+    return DateFormat.yMMMd().format(dateTime);
+  }
+
 }
 
 

@@ -4,10 +4,11 @@ import 'package:sporti/util/app_color.dart';
 import '../../../util/app_shaerd_data.dart';
 import '../../../util/app_strings.dart';
 import '../../../util/app_style.dart';
+import 'bottom_sheet/language_bottom_sheet.dart';
 import 'custome_text_view.dart';
 
-class WellcomeRow extends StatelessWidget {
-  const WellcomeRow({Key? key,}) : super(key: key);
+class WelcomeRow extends StatelessWidget {
+  const WelcomeRow({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,23 +17,14 @@ class WellcomeRow extends StatelessWidget {
     return Center(
         child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-          //  GestureDetector(
-          //    onTap:() => simplePopup(firstLable: 'Ar', secondLabel: 'En'),
-          //    child: Text(
-              // AppStrings.chooseLanguage,
-              // style:
-              //     AppTextStyle.getBoldStyle(color: Colors.white, fontSize: 16.0),
-              // ),
-          //  ),
-        Builder(
-          builder: (context) {
-            return TextButton(
-              onPressed: ()=>simplePopup(context: context,firstLable: 'Ar', secondLabel: 'En'),
-              child:
-              CustomTextView(txt: AppStrings.chooseLanguage.tr,textStyle: themeData.textTheme.headline1?.copyWith(color: AppColor.white),),
-              );
-          }
+        TextButton(
+          onPressed: () {
+            Get.bottomSheet(const LanguageBottomSheet());
+          },
+          child:
+          CustomTextView(txt: AppStrings.chooseLanguage.tr,textStyle: themeData.textTheme.headline1?.copyWith(color: AppColor.white),),
         ),
         CustomTextView(txt: AppStrings.hello.tr,textStyle: themeData.textTheme.headline4?.copyWith(color: AppColor.white),),
       ],

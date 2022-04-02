@@ -10,6 +10,7 @@ class AppStrings {
   static const String signin = "تسجيل الدخول";
   static const String newSignin = "تسجيل جديد";
   static const String justSign = "تسجيل ";
+  static const String txtForgetPassword = "نسيت كلمة المرور ؟";
   static const String or = "او";
   static const String iHaveAccount = "لدي حساب";
   static const String errorPasswordLength = "";

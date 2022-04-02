@@ -43,7 +43,7 @@ class TermsAndPrivacyCheckBox extends StatelessWidget {
         CustomTextView(
           txt: AppStrings.iAccept.tr,
           textStyle:
-              themeData.textTheme.labelLarge?.copyWith(color: AppColor.black),
+              themeData.textTheme.headline1?.copyWith(color: AppColor.black),
         ),
         Checkbox(
             fillColor: MaterialStateProperty.resolveWith(getColor),

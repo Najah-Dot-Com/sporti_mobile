@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class PrivacyPolicyWidget extends StatelessWidget {
-  const PrivacyPolicyWidget({Key? key}) : super(key: key);
+class PrivacyPolicyView extends StatelessWidget {
+  const PrivacyPolicyView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold();
   }
 }

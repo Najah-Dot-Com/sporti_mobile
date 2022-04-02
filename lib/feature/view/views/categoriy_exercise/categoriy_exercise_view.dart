@@ -29,7 +29,7 @@ class CategoryExerciseView extends StatelessWidget {
         backgroundColor: AppColor.white,
         title: CustomTextView(
           txt: exerciseTitle,
-          textStyle: themeData.textTheme.titleLarge,
+          textStyle: themeData.textTheme.headline1,
         ),
         leading: IconButton(
           icon: Icon(
@@ -109,14 +109,14 @@ class CategoryExerciseView extends StatelessWidget {
                           child: Center(
                               child: CustomTextView(
                             txt: '$exeirciseHour',
-                            textStyle: themeData.textTheme.titleLarge,
+                            textStyle: themeData.textTheme.headline1,
                           )),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomTextView(
                             txt: AppStrings.hour,
-                            textStyle: themeData.textTheme.titleLarge,
+                            textStyle: themeData.textTheme.headline1,
                           ),
                         )
                       ],
@@ -149,14 +149,14 @@ class CategoryExerciseView extends StatelessWidget {
                           child: Center(
                               child: CustomTextView(
                             txt: '$exeirciseMinutes',
-                            textStyle: themeData.textTheme.titleLarge,
+                            textStyle: themeData.textTheme.headline1,
                           )),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: CustomTextView(
                             txt: AppStrings.minute,
-                            textStyle: themeData.textTheme.titleLarge,
+                            textStyle: themeData.textTheme.headline1,
                           ),
                         )
                       ],
