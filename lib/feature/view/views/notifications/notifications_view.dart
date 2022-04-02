@@ -21,7 +21,7 @@ class NotificationsView extends StatelessWidget {
         // leading: IconButton(
         //   onPressed: () => Get.back(),
         //   icon: Icon(
-        //     Icons.arrow_back_ios,
+        //     Platform.isIOS? Icons.arrow_back_ios:Icons.arrow_back,
         //     color: AppColor.black,
         //   ),
         // ),

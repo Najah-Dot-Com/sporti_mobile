@@ -20,6 +20,7 @@ class CustomTextView extends StatelessWidget {
       overflow: textOverflow,
       textAlign: textAlign,
       style: textStyle,
+      softWrap: false,
       maxLines: maxLine,
     );
   }
