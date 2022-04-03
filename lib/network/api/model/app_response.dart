@@ -1,67 +1,41 @@
-
 // ignore_for_file: prefer_if_null_operators
 
 import 'package:get/utils.dart';
 import 'package:logger/logger.dart';
 
 class AppResponse {
-  Status? status;
-  dynamic data;
+  dynamic statusCode;
+  dynamic result;
+  dynamic message;
+  dynamic status;
 
-  AppResponse({this.status, this.data});
+  AppResponse({this.statusCode, this.result, this.message, this.status});
 
   factory AppResponse.fromJson(var map) {
     try {
-      
-      if (GetUtils.isNull(map["data"])) {
-        return AppResponse(
-          status: Status.fromJson(map["status"]),
-        );
-      } else {
-        return AppResponse(
-          status: Status.fromJson(map["status"]),
-          data: map["data"] == null ? null : map["data"],
-        );
-      }
+      return AppResponse(
+        statusCode: map["StatusCode"] == null ? 0 : map["StatusCode"],
+        result: map["Result"] == null ? null : map["Result"],
+        message: map["Message"] == null ? null : map["Message"],
+        status: map["Status"] == null ? null : map["Status"],
+      );
     } catch (e) {
-      return AppResponse(status: Status(
-        message: "$e",
-        code: 403,
-        success: false,
-      ));
+      return AppResponse(
+          statusCode: 0, result: null, message: "", status: false);
     }
   }
 
   Map<String, dynamic> toJson() {
     try {
-      return {"status": status?.toJson(), "data": data};
+      return {
+        "StatusCode": statusCode  == null ? null:statusCode,
+        "Result": result  == null ? null:result,
+        "Message": message  == null ? null:message,
+        "Status": status  == null ? null:status
+      };
     } catch (e) {
       Logger().e(e);
       return {"": ""};
     }
   }
-}
-
-class Status {
-  Status({
-    this.message,
-    this.code,
-    this.success,
-  });
-
-  String? message;
-  int? code;
-  bool? success;
-
-  factory Status.fromJson(Map<String, dynamic> json) => Status(
-        message: json["message"].toString(),
-        code: json["code"] ?? "",
-        success: json["success"] ?? "",
-      );
-
-  Map<String, dynamic> toJson() => {
-        "message": message ?? "",
-        "code": code ?? "",
-        "success": success ?? "",
-      };
 }

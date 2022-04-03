@@ -11,14 +11,14 @@ import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_strings.dart';
 
-class AccountOtpView extends StatefulWidget {
-  const AccountOtpView({Key? key}) : super(key: key);
+class ForgetOtpView extends StatefulWidget {
+  const ForgetOtpView({Key? key}) : super(key: key);
 
   @override
-  State<AccountOtpView> createState() => _AccountOtpViewState();
+  State<ForgetOtpView> createState() => _ForgetOtpViewState();
 }
 
-class _AccountOtpViewState extends State<AccountOtpView> {
+class _ForgetOtpViewState extends State<ForgetOtpView> {
   bool hasError = false;
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static final TextEditingController _pinCodeController =

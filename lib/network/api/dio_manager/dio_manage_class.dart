@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'dart:async';
 
 import 'package:logger/logger.dart';
+import 'package:sporti/network/utils/constance_netwoek.dart';
 
 class DioManagerClass {
   DioManagerClass._();
@@ -13,7 +14,7 @@ class DioManagerClass {
   Dio init() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: "",
+        baseUrl: ConstanceNetwork.baseUrl,
         connectTimeout: 2000 * 60,
         receiveTimeout: 2000 * 60,
         sendTimeout: 2000 * 60,

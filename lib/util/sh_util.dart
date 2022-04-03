@@ -5,6 +5,7 @@ import 'package:get/utils.dart';
 
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sporti/feature/model/user_data.dart';
 
 import 'localization/localization_service.dart';
 
@@ -17,7 +18,8 @@ class SharedPref {
   final String fcmKey = "fcm";
   final String tokenKey = "token";
   final String langKey = "langKey";
-
+  final String userDataKey = "userData";
+  final String loginKey = "login";
 
   static SharedPreferences? _prefs;
 
@@ -79,13 +81,51 @@ class SharedPref {
        }else if(string != null && string == LocalizationService.langs[LocalizationService.arIndex]){
          return LocalizationService.localeEn;
        }else{
-         return LocalizationService.localeEn;
+         return LocalizationService.localeAr;
        }
     } catch (e) {
       printError(info:e.toString());
-      return LocalizationService.localeEn;
+      return LocalizationService.localeAr;
     }
   }
 
+  setUserData(String profileData) async {
+    try {
+      await _prefs?.setString(userDataKey, profileData.toString());
+    } catch (e) {
+      Logger().e(e);
+      return "$e";
+    }
+  }
+
+  UserData getUserData() {
+    try {
+      var string = _prefs?.getString(userDataKey) ?? "";
+      var decode = json.decode(string);
+      UserData profileData = UserData.fromJson(decode);
+      return profileData;
+    } catch (e) {
+      Logger().e(e);
+      return UserData();
+    }
+  }
+
+  setUserLogin(bool isUserLogin) async {
+    try {
+      await _prefs?.setBool(loginKey, isUserLogin);
+    } catch (e) {
+      Logger().e(e);
+      return "$e";
+    }
+  }
+
+  bool getIsUserLogin() {
+    try {
+      return _prefs?.getBool(loginKey) ?? false;
+    } catch (e) {
+      Logger().e(e);
+      return false;
+    }
+  }
 
 }
