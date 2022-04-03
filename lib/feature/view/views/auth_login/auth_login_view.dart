@@ -248,7 +248,7 @@ class LoginView extends StatelessWidget {
   }
 
   void _onForgetPassClick() {
-    Get.to(const ForgetPasswordView());
+    Get.to(ForgetPasswordView());
   }
 
   void _onPrivacyClick() {
