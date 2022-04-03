@@ -72,6 +72,7 @@ class AppStrings {
   static const String hello = "! مرحبا";
   static const String chooseLanguage = "اختر اللغة";
   static const String username = "username"; // "username" اسم المستخدم
+  static const String txtFullName = "fullName"; // "username" اسم المستخدم
   static const String password = "password";  // "password" كلمة المرور
   static const String repassword = "Repeat Password"; //"con Password" تأكيد كلمة المرور
   static const String privacyAndTerms = 'الشروط والاحكام';

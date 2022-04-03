@@ -5,8 +5,7 @@ import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_style.dart';
 
-
-class CustomTextFormFiled extends StatelessWidget /*with AppDimen, AppStyle */ {
+class CustomTextFormFiled extends StatefulWidget /*with AppDimen, AppStyle */ {
   final String? label;
   final TextInputType? keyboardType;
   final bool? obscureText, isBorder, isFill, isInputFormatters;
@@ -24,8 +23,9 @@ class CustomTextFormFiled extends StatelessWidget /*with AppDimen, AppStyle */ {
   final FocusNode? focusNode, nexFocusNode;
   final bool? autoFocus;
   final TextStyle? hintStyle;
-  final IconData? icon;
+  final IconData? icon, suffixIcon;
   final double? iconSize;
+  final bool? isSuffixIcon;
 
   /// you can use Theme.of(context).textTheme.bodyText1 for text
   /// you can use Theme.of(context).inputDecorationTheme.enabledBorder border ...
@@ -60,63 +60,83 @@ class CustomTextFormFiled extends StatelessWidget /*with AppDimen, AppStyle */ {
       this.autoFocus = false,
       this.icon,
       this.iconSize,
-      this.enabledBorderColor})
+      this.enabledBorderColor,
+      this.isSuffixIcon = false,
+      this.suffixIcon})
       : super(key: key);
 
   @override
+  State<CustomTextFormFiled> createState() => _CustomTextFormFiledState();
+}
+
+class _CustomTextFormFiledState extends State<CustomTextFormFiled> {
+ bool obscureText =false;
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    obscureText =   widget.obscureText!;
+  }
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      maxLength: maxLength,
-      autofocus: autoFocus!,
-      focusNode: focusNode,
-      onTap: fun,
+      maxLength: widget.maxLength,
+      autofocus: widget.autoFocus!,
+      focusNode: widget.focusNode,
+      onTap: widget.fun,
       cursorColor: AppColor.primary,
       textAlignVertical: TextAlignVertical.top,
-      textAlign: textAlign ?? TextAlign.start,
-      controller: controller,
-      obscureText: obscureText!,
+      textAlign: widget.textAlign ?? TextAlign.start,
+      controller: widget.controller,
+      obscureText:obscureText /*widget.obscureText!*/,
       obscuringCharacter: '*',
-      maxLines: maxLine ?? 1,
-      minLines: minLine ?? 1,
-      readOnly: isReadOnly ?? false,
-      style: AppTextStyle.getRegularStyle(color: AppColor.black,
-          fontSize: AppFontSize.s16,),
+      maxLines: widget.maxLine ?? 1,
+      minLines: widget.minLine ?? 1,
+      readOnly: widget.isReadOnly ?? false,
+      style: AppTextStyle.getRegularStyle(
+        color: AppColor.black,
+        fontSize: AppFontSize.s16,
+      ),
       // textDirection: TextDirection.ltr,
       // textDirection:obscureText!?TextDirection.ltr:TextDirection.rtl ,
-      textInputAction: textInputAction ?? TextInputAction.newline,
+      textInputAction: widget.textInputAction ?? TextInputAction.newline,
       // ignore: missing_return
       validator: (String? value) {
         if (value!.isEmpty || value == "") {
           // return messageFiled?.tr;
-        } else if (customValid != null) {
-          return customValid!(value);
+        } else if (widget.customValid != null) {
+          return widget.customValid!(value);
         } else {
           return null;
         }
-         return null;
+        return null;
       },
       onChanged: (value) {
-        if (onChange != null) onChange!(value);
+        if (widget.onChange != null) widget.onChange!(value);
       },
       onFieldSubmitted: (value) {
         try {
-          focusNode?.unfocus();
-          FocusScope.of(context).requestFocus(nexFocusNode /*?? FocusNode()*/);
-          onSubmitted!(value);
+          widget.focusNode?.unfocus();
+          FocusScope.of(context).requestFocus(widget.nexFocusNode /*?? FocusNode()*/);
+          widget.onSubmitted!(value);
         } catch (e) {
-          focusNode?.unfocus();
+          widget.focusNode?.unfocus();
         }
       },
       onSaved: (newValue) {
-        focusNode?.unfocus();
+        widget.focusNode?.unfocus();
         FocusScope.of(context)
-            .requestFocus(nexFocusNode /*?? FocusNode()*/); //remo
+            .requestFocus(widget.nexFocusNode /*?? FocusNode()*/); //remo
       },
-      decoration: icon == null ? inputDecoration() : inputDecorationWithIcon(),
+      decoration: (widget.icon == null && widget.suffixIcon == null)
+          ? inputDecoration()
+          : widget.icon != null
+              ? inputDecorationWithIcon()
+              : inputDecorationWithSuffixIcon(),
 
-      keyboardType: keyboardType ?? TextInputType.emailAddress,
+      keyboardType: widget.keyboardType ?? TextInputType.emailAddress,
 
-      inputFormatters: isInputFormatters!
+      inputFormatters: widget.isInputFormatters!
           ? [FilteringTextInputFormatter.digitsOnly, CustomInputFormatter()]
           : [],
     );
@@ -125,11 +145,11 @@ class CustomTextFormFiled extends StatelessWidget /*with AppDimen, AppStyle */ {
   InputDecoration inputDecorationWithIcon() {
     return InputDecoration(
         prefixIcon: Icon(
-          icon,
-          color: iconColor,
-          size: iconSize,
+          widget.icon,
+          color: widget.iconColor,
+          size: widget.iconSize,
         ),
-        prefixIconConstraints: icon == null
+        prefixIconConstraints: widget.icon == null
             ? const BoxConstraints(maxWidth: 0, minWidth: 0)
             : const BoxConstraints(
                 minWidth: 38,
@@ -137,40 +157,106 @@ class CustomTextFormFiled extends StatelessWidget /*with AppDimen, AppStyle */ {
               ),
         counterText: "",
         isDense: true,
-        filled: isFill,
+        filled: widget.isFill,
         errorStyle: const TextStyle(
             /*  height: 0,*/ /*backgroundColor: Colors.white*/
             ),
-        enabledBorder: isFill!
+        enabledBorder: widget.isFill!
             ? UnderlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSize.s4),
                 borderSide: BorderSide(color: AppColor.black))
             : UnderlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSize.s4),
                 borderSide: BorderSide(color: AppColor.grey1)),
-        fillColor: fillColor ?? AppColor.white,
+        fillColor: widget.fillColor ?? AppColor.white,
         contentPadding: EdgeInsets.only(
-            left: isSmallPaddingWidth! ? AppPadding.p12 : AppSize.s40,
-            right: isSmallPaddingWidth! ? AppPadding.p12 : AppSize.s28,
-            top: isSmallPadding! ? AppPadding.p12 : AppPadding.p20,
-            bottom: isSmallPadding! ? AppPadding.p12 : AppPadding.p20),
-        hintText: label,
-        hintStyle:
-            hintStyle ?? AppTextStyle.getRegularStyle(color: AppColor.grey1,
-              fontSize: AppFontSize.s14,),
-        focusedBorder: isBorder!
+            left: widget.isSmallPaddingWidth! ? AppPadding.p12 : AppSize.s40,
+            right: widget.isSmallPaddingWidth! ? AppPadding.p12 : AppSize.s28,
+            top: widget.isSmallPadding! ? AppPadding.p12 : AppPadding.p20,
+            bottom: widget.isSmallPadding! ? AppPadding.p12 : AppPadding.p20),
+        hintText: widget.label,
+        hintStyle: widget.hintStyle ??
+            AppTextStyle.getRegularStyle(
+              color: AppColor.grey1,
+              fontSize: AppFontSize.s14,
+            ),
+        focusedBorder: widget.isBorder!
             ? UnderlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSize.s4),
                 borderSide:
-                    BorderSide(color: fillColor ?? AppColor.primary, width: 2))
+                    BorderSide(color: widget.fillColor ?? AppColor.primary, width: 2))
             : InputBorder.none,
-        errorBorder: isBorder!
+        errorBorder: widget.isBorder!
             ? UnderlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSize.s4),
                 borderSide:
-                    BorderSide(color: fillColor ?? AppColor.primary, width: 2))
+                    BorderSide(color: widget.fillColor ?? AppColor.primary, width: 2))
             : InputBorder.none,
-        border: isBorder!
+        border: widget.isBorder!
+            ? UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(AppSize.s4),
+                borderSide: BorderSide(color: AppColor.grey1))
+            : InputBorder.none);
+  }
+
+  InputDecoration inputDecorationWithSuffixIcon() {
+    return InputDecoration(
+        suffixIcon: InkWell(
+          onTap: (){
+            setState(() {
+              obscureText = !obscureText;
+            });
+          },
+          child: Icon(
+           !obscureText ? Icons.visibility_off: Icons.visibility_outlined,
+            color: widget.iconColor??AppColor.grey,
+            size: widget.iconSize,
+          ),
+        ),
+        suffixIconConstraints: widget.suffixIcon == null
+            ? const BoxConstraints(maxWidth: 0, minWidth: 0)
+            : const BoxConstraints(
+                minWidth: 38,
+                minHeight: 25,
+              ),
+        counterText: "",
+        isDense: true,
+        filled: widget.isFill,
+        errorStyle: const TextStyle(
+            /*  height: 0,*/ /*backgroundColor: Colors.white*/
+            ),
+        enabledBorder: widget.isFill!
+            ? UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(AppSize.s4),
+                borderSide: BorderSide(color: AppColor.black))
+            : UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(AppSize.s4),
+                borderSide: BorderSide(color: AppColor.grey1)),
+        fillColor: widget.fillColor ?? AppColor.white,
+        contentPadding: EdgeInsets.only(
+            left: widget.isSmallPaddingWidth! ? AppPadding.p12 : AppSize.s40,
+            right: widget.isSmallPaddingWidth! ? AppPadding.p12 : AppSize.s28,
+            top: widget.isSmallPadding! ? AppPadding.p12 : AppPadding.p20,
+            bottom: widget.isSmallPadding! ? AppPadding.p12 : AppPadding.p20),
+        hintText: widget.label,
+        hintStyle: widget.hintStyle ??
+            AppTextStyle.getRegularStyle(
+              color: AppColor.grey1,
+              fontSize: AppFontSize.s14,
+            ),
+        focusedBorder: widget.isBorder!
+            ? UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(AppSize.s4),
+                borderSide:
+                    BorderSide(color: widget.fillColor ?? AppColor.primary, width: 2))
+            : InputBorder.none,
+        errorBorder: widget.isBorder!
+            ? UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(AppSize.s4),
+                borderSide:
+                    BorderSide(color: widget.fillColor ?? AppColor.primary, width: 2))
+            : InputBorder.none,
+        border: widget.isBorder!
             ? UnderlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSize.s4),
                 borderSide: BorderSide(color: AppColor.grey1))
@@ -181,43 +267,46 @@ class CustomTextFormFiled extends StatelessWidget /*with AppDimen, AppStyle */ {
     return InputDecoration(
         counterText: "",
         isDense: true,
-        filled: isFill,
+        filled: widget.isFill,
         errorStyle: const TextStyle(
             /*  height: 0,*/ /*backgroundColor: Colors.white*/
             ),
-        enabledBorder: enabledBorderColor != null
+        enabledBorder: widget.enabledBorderColor != null
             ? OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSize.s4),
-                borderSide: BorderSide(color: enabledBorderColor!))
-            : isFill!
+                borderSide: BorderSide(color: widget.enabledBorderColor!))
+            : widget.isFill!
                 ? UnderlineInputBorder(
                     borderRadius: BorderRadius.circular(AppSize.s4),
                     borderSide: BorderSide(color: AppColor.transparent))
                 : UnderlineInputBorder(
                     borderRadius: BorderRadius.circular(AppSize.s4),
                     borderSide: BorderSide(color: AppColor.grey1)),
-        fillColor: fillColor ?? AppColor.white,
+        fillColor: widget.fillColor ?? AppColor.white,
         contentPadding: EdgeInsets.only(
-            left: isSmallPaddingWidth! ? AppPadding.p12 : AppSize.s40,
-            right: isSmallPaddingWidth! ? AppPadding.p12 : AppSize.s28,
-            top: isSmallPadding! ? AppPadding.p12 : AppPadding.p20,
-            bottom: isSmallPadding! ? AppPadding.p12 : AppPadding.p20),
-        hintText: label,
-        hintStyle: hintStyle ?? AppTextStyle.getRegularStyle(color: AppColor.grey1,
-          fontSize: AppFontSize.s14,),
-        errorBorder: isBorder!
+            left: widget.isSmallPaddingWidth! ? AppPadding.p12 : AppSize.s40,
+            right: widget.isSmallPaddingWidth! ? AppPadding.p12 : AppSize.s28,
+            top: widget.isSmallPadding! ? AppPadding.p12 : AppPadding.p20,
+            bottom: widget.isSmallPadding! ? AppPadding.p12 : AppPadding.p20),
+        hintText: widget.label,
+        hintStyle: widget.hintStyle ??
+            AppTextStyle.getRegularStyle(
+              color: AppColor.grey1,
+              fontSize: AppFontSize.s14,
+            ),
+        errorBorder: widget.isBorder!
             ? UnderlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSize.s4),
                 borderSide:
-                    BorderSide(color: fillColor ?? AppColor.primary, width: 2))
+                    BorderSide(color: widget.fillColor ?? AppColor.primary, width: 2))
             : InputBorder.none,
-        focusedBorder: isBorder!
+        focusedBorder: widget.isBorder!
             ? UnderlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSize.s4),
                 borderSide:
-                    BorderSide(color: fillColor ?? AppColor.primary, width: 2))
+                    BorderSide(color: widget.fillColor ?? AppColor.primary, width: 2))
             : InputBorder.none,
-        border: isBorder!
+        border: widget.isBorder!
             ? UnderlineInputBorder(
                 borderRadius: BorderRadius.circular(AppSize.s4),
                 borderSide: BorderSide(color: AppColor.grey1))
@@ -235,7 +324,7 @@ class CustomInputFormatter extends TextInputFormatter {
       return newValue;
     }
 
-    var buffer =  StringBuffer();
+    var buffer = StringBuffer();
     for (int i = 0; i < text.length; i++) {
       buffer.write(text[i]);
       var nonZeroIndex = i + 1;

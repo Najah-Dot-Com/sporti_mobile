@@ -11,7 +11,7 @@ import '../../../appwidget/custome_text_view.dart';
 class TermsAndPrivacyCheckBox extends StatelessWidget {
   bool? acceptPolicy = false;
   dynamic getColor;
-  Function? onTap;
+  final Function? onTap;
   Function? onChange;
   TermsAndPrivacyCheckBox({
     Key? key,
@@ -36,9 +36,7 @@ class TermsAndPrivacyCheckBox extends StatelessWidget {
           width: 5,
         ),
         GestureDetector(
-            onTap: () {
-              onTap;
-            },
+            onTap: ()=> onTap!(),
             child: 
             CustomTextView(
             txt: AppStrings.privacyAndTerms.tr,

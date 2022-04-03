@@ -72,4 +72,5 @@ Map<String, String> arSU = {
   AppStrings.iFinishedExcercise: "أتمت التمرين",
   AppStrings.hour: "ساعة",
   AppStrings.minute: "دقيقة",
+  AppStrings.txtFullName: "الاسم بالكامل",
 };

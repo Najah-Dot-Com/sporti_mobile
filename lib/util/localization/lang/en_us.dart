@@ -71,4 +71,5 @@ Map<String, String> enUS = {
   AppStrings.iFinishedExcercise: "Done the exercise",
   AppStrings.hour: "hour",
   AppStrings.minute: "minute",
+  AppStrings.txtFullName: "Full Name",
 };
