@@ -9,8 +9,10 @@ import '../../../../util/app_color.dart';
 import '../../../../util/app_strings.dart';
 
 class ResetPasswordView extends StatelessWidget {
-  const ResetPasswordView({Key? key}) : super(key: key);
-
+  ResetPasswordView({Key? key}) : super(key: key);
+  TextEditingController _newPassController = TextEditingController();
+  TextEditingController _repeatPassController = TextEditingController();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
@@ -33,55 +35,60 @@ class ResetPasswordView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(
             vertical: AppPadding.p60, horizontal: AppPadding.p50),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                  width: AppSize.s100,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                    width: AppSize.s100,
+                    height: AppSize.s100,
+                    child: Image(
+                      image: AssetImage(AppMedia.lockIcon),
+                    )),
+                CustomTextView(
+                  txt: AppStrings.resetYourPass.tr,
+                  textStyle: themeData.textTheme.headline1,
+                ),
+                const SizedBox(
+                  height: AppSize.s8,
+                ),
+                CustomTextView(
+                  txt: AppStrings.setNewPasss.tr,
+                  textStyle: themeData.textTheme.bodyText2,
+                ),
+                const SizedBox(
+                  height: AppSize.s50,
+                ),
+                SportiTextField(
+                  hint: AppStrings.password.tr,
+                  isforPass: true,
+                  controller: _newPassController,
+                  textInputType: TextInputType.visiblePassword,
+                ),
+                const SizedBox(
+                  height: AppSize.s20,
+                ),
+                SportiTextField(
+                  hint: AppStrings.repassword.tr,
+                  isforPass: true, 
+                  controller: _repeatPassController,
+                  textInputType: TextInputType.visiblePassword,
+                ),
+                const SizedBox(
                   height: AppSize.s100,
-                  child: Image(
-                    image: AssetImage(AppMedia.lockIcon),
-                  )),
-              CustomTextView(
-                txt: AppStrings.resetYourPass.tr,
-                textStyle: themeData.textTheme.headline1,
-              ),
-              const SizedBox(
-                height: AppSize.s8,
-              ),
-              CustomTextView(
-                txt: AppStrings.setNewPasss.tr,
-                textStyle: themeData.textTheme.bodyText2,
-              ),
-              const SizedBox(
-                height: AppSize.s50,
-              ),
-              SportiTextField(
-                hint: AppStrings.password.tr,
-                isforPass: true,
-                 /* controller:  */
-              ),
-              const SizedBox(
-                height: AppSize.s20,
-              ),
-              SportiTextField(
-                hint: AppStrings.repassword.tr,
-                isforPass: true, 
-                /* controller:  */
-              ),
-              const SizedBox(
-                height: AppSize.s100,
-              ),
-              CustomButton(
-                width: double.infinity,
-                height: AppSize.s60,
-                label: AppStrings.update.tr,
-                labelcolor: AppColor.white,
-                isRoundedBorder: false,
-                primaryColor: AppColor.primary,
-              ),
-            ],
+                ),
+                CustomButton(
+                  width: double.infinity,
+                  height: AppSize.s60,
+                  label: AppStrings.update.tr,
+                  labelcolor: AppColor.white,
+                  isRoundedBorder: false,
+                  primaryColor: AppColor.primary,
+                ),
+              ],
+            ),
           ),
         ),
       ),
