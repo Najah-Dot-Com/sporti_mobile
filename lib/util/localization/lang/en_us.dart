@@ -3,6 +3,7 @@ import 'package:sporti/util/app_strings.dart';
 Map<String, String> enUS = {
   AppStrings.errorPasswordLength: "Password length must be 8 or grater than character",
   AppStrings.errorPasswordMatches: "Passwords are not the same please check it",
+  AppStrings.txtFiledRequired: "This filed is required please fill it",
   AppStrings.acceptPolicyConditions: "You must agree to the Terms and Conditions and Privacy Policies",
   AppStrings.fillYourPhoneNumber: "Fill your phone number ",
   AppStrings.messageMatcherEmail: "Enter valid mail",

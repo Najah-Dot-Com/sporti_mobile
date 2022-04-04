@@ -7,6 +7,7 @@ class AppStrings {
   static const String fillYourVerificationCode = "fillYourVerificationCode";
   static const String messageMatcherEmail = "messageMatcherEmail";
   static const String txtConnectionNote = "txtConnectionNote";
+  static const String txtFiledRequired = "txtFiledRequired";
 
   //TODO:this for  [money fail page]
   static const String txtMoneyEnough = "ليس لديك عملات كافية";

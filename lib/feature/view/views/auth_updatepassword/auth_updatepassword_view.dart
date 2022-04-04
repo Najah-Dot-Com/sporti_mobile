@@ -157,6 +157,10 @@ class UpdatePasswordView extends StatelessWidget {
   }
 
   _onUpdateClick(AuthViewModel logic) {
-    logic.resetPassword(_oldPassController , _newPassController , _repeatPassController);
+    bool isValid = _formKey.currentState!.validate();
+    if(isValid) {
+      _formKey.currentState!.save();
+      logic.resetPassword(_oldPassController, _newPassController, _repeatPassController);
+    }
   }
 }

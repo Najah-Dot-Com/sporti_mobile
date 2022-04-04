@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
+import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/app_style.dart';
+import 'package:get/get.dart';
 
 class CustomTextFormFiled extends StatefulWidget /*with AppDimen, AppStyle */ {
   final String? label;
@@ -104,7 +106,7 @@ class _CustomTextFormFiledState extends State<CustomTextFormFiled> {
       // ignore: missing_return
       validator: (String? value) {
         if (value!.isEmpty || value == "") {
-          // return messageFiled?.tr;
+          return AppStrings.txtFiledRequired.tr;
         } else if (widget.customValid != null) {
           return widget.customValid!(value);
         } else {

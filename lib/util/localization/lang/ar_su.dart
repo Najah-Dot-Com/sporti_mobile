@@ -3,6 +3,7 @@ import '../../app_strings.dart';
 
 Map<String, String> arSU = {
   AppStrings.errorPasswordLength: "كلمة المرور يجب ان تكون 8 حروف او اكثر",
+  AppStrings.txtFiledRequired: "هذا الحقل مطلوب يرجى تعبئته",
   AppStrings.errorPasswordMatches: "كلمات المرور ليست متشابهة يرجى التحقق من ذلك",
   AppStrings.acceptPolicyConditions: "يجب الموافقة على الشروط والاحكام وسياسات الخصوصية ",
   AppStrings.fillYourPhoneNumber: "ادخل رقم الهاتف",
