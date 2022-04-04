@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sporti/feature/view/appwidget/bottom_sheet/logout_bottom_sheet.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/account_verfiy/account_verfiy_view.dart';
+import 'package:sporti/feature/view/views/auth_updatepassword/auth_updatepassword_view.dart';
 import 'package:sporti/feature/view/views/money_collect/money_collect_view.dart';
 import 'package:sporti/feature/view/views/privacy_policy/privacy_policy_view.dart';
 import 'package:sporti/feature/view/views/terms_conditions/terms_conditions_view.dart';
@@ -196,6 +197,7 @@ class ProfileView extends StatelessWidget {
               _profileItem(themeData,onClick:_onPrivacyPolicy,leadingIcon:AppMedia.privacyPolicies ,title:AppStrings.txtPrivacyPolicies.tr ,trailingIcon:AppMedia.arrowIos ),
               _profileItem(themeData,onClick:_onLogout,leadingIcon:AppMedia.logout ,title:AppStrings.txtLogout.tr ,trailingIcon:AppMedia.arrowIos ),
               _profileItem(themeData,onClick:_onGetMoneyPage,leadingIcon:AppMedia.currency ,title:AppStrings.txtCurrency.tr ,trailingIcon:AppMedia.arrowIos ),
+              _profileItem(themeData,onClick:_onUpdatePassword,leadingIcon:AppMedia.currency ,title:AppStrings.resetYourPass.tr ,trailingIcon:AppMedia.arrowIos ),
               _profileDeleteAccount(themeData ,title: AppStrings.txtDeleteAccount.tr,trailingIcon:  AppMedia.arrowIos),
               const SizedBox(
                 height: AppSize.s50,
@@ -237,5 +239,9 @@ class ProfileView extends StatelessWidget {
 
   void _onGetMoneyPage() {
     Get.to(()=> const MoneyCollectView());
+  }
+
+  _onUpdatePassword() {
+    Get.to(()=> const UpdatePasswordView());
   }
 }

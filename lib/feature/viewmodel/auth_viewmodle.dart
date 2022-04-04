@@ -165,4 +165,53 @@ class AuthViewModel extends GetxController{
       update();
     }
   }
+
+  void resetPassword(TextEditingController oldPassController,
+      TextEditingController newPassController,
+      TextEditingController repeatPassController) {
+
+    if(newPassController.text != repeatPassController.text){
+      snackError("", AppStrings.errorPasswordMatches.tr);
+      return;
+    }
+
+    Map<String, dynamic> map = {
+      ConstanceNetwork.passwordKey: oldPassController.text.toString(),
+      ConstanceNetwork.passwordNewKey: newPassController.text.toString(),
+      ConstanceNetwork.passwordConfirmKey: repeatPassController.text.toString(),
+    };
+    _resetPassword(map);
+  }
+
+  Future<void> _resetPassword(Map<String, dynamic> map) async{
+    try {
+      isLoading = true;
+      update();
+      await AuthFeature.getInstance.resetUserPassword(map).then((value) async {
+        //handle object from value || [save in sharedPreferences]
+        Logger().d(value.toJson());
+        if (value.status) {
+          //TODO: if verification and success go to home page
+          isLoading = false;
+          update();
+          snackSuccess("", value.message);
+        } else {
+          isLoading = false;
+          update();
+        }
+      }).catchError((onError) {
+        //handle error from value
+        snackError("", onError.toString());
+        Logger().d(onError.toString());
+        isLoading = false;
+        update();
+      });
+    } catch (e) {
+      Logger().d(e.toString());
+      isLoading = false;
+      update();
+    }
+  }
+
+
 }

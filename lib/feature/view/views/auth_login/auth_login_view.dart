@@ -168,6 +168,7 @@ class LoginView extends StatelessWidget {
                           customValid: passwordValid,
                           textInputAction: TextInputAction.next,
                           isSmallPaddingWidth: true,
+                          obscureText: true,
                           controller: _passController,
                           focusNode: _passFocusNode,
                           isSuffixIcon: true,

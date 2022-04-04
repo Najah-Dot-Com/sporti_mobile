@@ -76,4 +76,6 @@ Map<String, String> enUS = {
   AppStrings.txtFullName: "Full Name",
   AppStrings.txtCancel: "Cancel",
   AppStrings.txtLogoutHint: "Are you sure you want to log out",
+  AppStrings.txtOldPassword: "Old Password",
+  AppStrings.txtNewPassword: "New Password",
 };

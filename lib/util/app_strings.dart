@@ -100,5 +100,9 @@ class AppStrings {
   static const String hour = "ساعة";
   static const String minute = "دقيقة";
 
+ //todo this for update password
+  static const String txtOldPassword = "oldPassword";
+  static const String txtNewPassword = "newPassword";
+
 
 }

@@ -209,7 +209,7 @@ class _CustomTextFormFiledState extends State<CustomTextFormFiled> {
             });
           },
           child: Icon(
-           !obscureText ? Icons.visibility_off: Icons.visibility_outlined,
+           obscureText ? Icons.visibility_off: Icons.visibility_outlined,
             color: widget.iconColor??AppColor.grey,
             size: widget.iconSize,
           ),

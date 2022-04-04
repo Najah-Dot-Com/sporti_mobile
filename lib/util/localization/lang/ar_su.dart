@@ -67,7 +67,7 @@ Map<String, String> arSU = {
   AppStrings.resetYourPass: "اعد ضبط كلمه السر",
   AppStrings.setNewPasss: "يرجى إعداد كلمة مرور جديدة.",
   AppStrings.setYourEmail: "أدخل عنوان البريد الإلكتروني المرتبط بحسابك لإعادة تعيين كلمة المرور الخاصة بك. ",
-  AppStrings.update: "تعديل",
+  AppStrings.update: "تحديث",
   AppStrings.verify: "تحقق",
   AppStrings.email: "البريد الالكتروني",
   AppStrings.rememberMeToRepeatExcercise: "ذكرني لاعادة التمرين",
@@ -77,4 +77,6 @@ Map<String, String> arSU = {
   AppStrings.txtFullName: "الاسم بالكامل",
   AppStrings.txtCancel: "الغاء",
   AppStrings.txtLogoutHint: "هل انت متاكد من انك تريد تسجيل الخروج",
+  AppStrings.txtOldPassword: "كلمة المرور القديمة",
+  AppStrings.txtNewPassword: "كلمة المرور الجديدة",
 };

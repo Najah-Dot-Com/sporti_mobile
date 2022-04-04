@@ -18,6 +18,7 @@ class ForgetPasswordView extends StatelessWidget {
     var themeData = Theme.of(context);
     return Scaffold(
       backgroundColor: AppColor.white,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColor.white,

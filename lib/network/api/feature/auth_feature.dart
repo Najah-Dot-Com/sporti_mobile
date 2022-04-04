@@ -61,4 +61,20 @@ class AuthFeature {
     }
   }
 
+  Future<AppResponse> resetUserPassword(Map<String, dynamic> body) async{
+    var appResponse = await AuthUseCase.getInstance.resetUserPassword(
+        body:body,
+        url: ConstanceNetwork.changePasswordApi,
+        header: ConstanceNetwork.header(1)
+    );
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return appResponse;
+    } else {
+      snackError("",  appResponse.message??appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      Logger().d("else ${appResponse.toJson()}");
+      return appResponse;
+    }
+  }
+
 }

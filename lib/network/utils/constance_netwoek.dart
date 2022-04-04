@@ -14,11 +14,15 @@ abstract class ConstanceNetwork {
   static String fullNameKey = "fullname";
   static String emailKey = "email";
   static String passwordConfirmKey = "password_confirm";
+  static String passwordNewKey = "password_new";
 
   ///todo here insert end Point
   static String loginApi = "login";
   static String signUpApi = "create_account";
   static String logoutApi = "logout";
+  static String changePasswordApi = "change_password";
+
+
 
 
 
@@ -34,12 +38,15 @@ abstract class ConstanceNetwork {
       };
     } else if (typeToken == 1) {
       headers = {
+        'Authorization': 'Bearer ${SharedPref.instance.getUserData().token}',
         'Content-Type': 'application/x-www-form-urlencoded',
         'Language': Get.locale.toString().split("_")[0],
+        'Accept': 'application/json',
       };
     } else if (typeToken == 2) {
       headers = {
         'Authorization': 'Bearer ${SharedPref.instance.getUserData().token}',
+        'Language': Get.locale.toString().split("_")[0],
         'Accept': 'application/json',
       };
     } else if (typeToken == 3) {
