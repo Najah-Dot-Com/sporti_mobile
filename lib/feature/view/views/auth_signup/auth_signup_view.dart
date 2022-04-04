@@ -151,7 +151,7 @@ class SignupView extends StatelessWidget {
                                 }
                               },
                             ),
-                            const SizedBox(height: AppSize.s30),
+                            const SizedBox(height: AppSize.s24),
                             CustomTextFormFiled(
                               label: AppStrings.username.tr,
                               keyboardType: TextInputType.emailAddress,
@@ -168,7 +168,7 @@ class SignupView extends StatelessWidget {
                                 }
                               },
                             ),
-                            const SizedBox(height: AppSize.s30),
+                            const SizedBox(height: AppSize.s24),
                             CustomTextFormFiled(
                               label: AppStrings.txtEmail.tr,
                               keyboardType: TextInputType.emailAddress,
@@ -185,7 +185,7 @@ class SignupView extends StatelessWidget {
                                 }
                               },
                             ),
-                            const SizedBox(height: AppSize.s30),
+                            const SizedBox(height: AppSize.s24),
                             //this for password TextFiled
                             CustomTextFormFiled(
                               label: AppStrings.password.tr,
@@ -211,7 +211,7 @@ class SignupView extends StatelessWidget {
                             //   isforPass: true,
                             //   // controller: , TODO:
                             // ),
-                            const SizedBox(height: AppSize.s30),
+                            const SizedBox(height: AppSize.s24),
                             //this for password TextFiled
                             // SportiTextField(
                             //   hint: AppStrings.repassword.tr,
@@ -300,7 +300,7 @@ class SignupView extends StatelessWidget {
                                           ?.copyWith(color: AppColor.black),),
                                   ],
                                 ),
-
+                                const SizedBox(height: AppSize.s24),
                               ],
                             ),
                           ],
