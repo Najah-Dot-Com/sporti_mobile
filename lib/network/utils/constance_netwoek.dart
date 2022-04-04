@@ -21,6 +21,7 @@ abstract class ConstanceNetwork {
   static String signUpApi = "create_account";
   static String logoutApi = "logout";
   static String changePasswordApi = "change_password";
+  static String verifyEmailApi = "verifi_email";
 
 
 
