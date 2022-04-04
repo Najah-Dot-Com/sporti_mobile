@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:sporti/util/sh_util.dart';
 
 abstract class ConstanceNetwork {
   ///todo here insert base_url
@@ -10,9 +11,14 @@ abstract class ConstanceNetwork {
   //this for login keys
   static String userNameKey = "username";
   static String passwordKey = "password";
+  static String fullNameKey = "fullname";
+  static String emailKey = "email";
+  static String passwordConfirmKey = "password_confirm";
 
   ///todo here insert end Point
   static String loginApi = "login";
+  static String signUpApi = "create_account";
+  static String logoutApi = "logout";
 
 
 
@@ -33,7 +39,8 @@ abstract class ConstanceNetwork {
       };
     } else if (typeToken == 2) {
       headers = {
-        //    'Authorization': '${SharedPref.instance.getToken().toString()}',
+        'Authorization': 'Bearer ${SharedPref.instance.getUserData().token}',
+        'Accept': 'application/json',
       };
     } else if (typeToken == 3) {
       headers = {
@@ -44,7 +51,7 @@ abstract class ConstanceNetwork {
       };
     } else if (typeToken == 4) {
       headers = {
-        'Authorization': 'Bearer {SharedPref.instance.getUserToken()}',
+        'Authorization': 'Bearer ${SharedPref.instance.getUserData().token}',
         'Content-Type': 'application/json',
         'Language': Get.locale.toString().split("_")[0],
         'Accept': 'application/json',

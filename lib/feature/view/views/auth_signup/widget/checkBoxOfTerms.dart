@@ -12,7 +12,7 @@ class TermsAndPrivacyCheckBox extends StatelessWidget {
   bool? acceptPolicy = false;
   dynamic getColor;
   final Function? onTap;
-  Function? onChange;
+  Function(bool)? onChange;
   TermsAndPrivacyCheckBox({
     Key? key,
     @required this.acceptPolicy,
@@ -49,7 +49,7 @@ class TermsAndPrivacyCheckBox extends StatelessWidget {
             checkColor: AppColor.white,
             value: acceptPolicy,
             onChanged: (value) {
-              onChange;
+              onChange!(value!);
               // ignore: todo
               //TODO :need for state
               // setState(() {

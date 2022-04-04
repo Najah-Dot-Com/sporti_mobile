@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sporti/feature/view/appwidget/bottom_sheet/logout_bottom_sheet.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/account_verfiy/account_verfiy_view.dart';
 import 'package:sporti/feature/view/views/money_collect/money_collect_view.dart';
@@ -16,6 +17,8 @@ import 'package:sporti/util/app_style.dart';
 import 'package:sporti/util/constance.dart';
 import 'package:sporti/util/localization/localization_service.dart';
 import 'dart:math' as math;
+
+import 'package:sporti/util/sh_util.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({Key? key}) : super(key: key);
@@ -43,7 +46,7 @@ class ProfileView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             CustomTextView(
-              txt: "User name",
+              txt: SharedPref.instance.getUserData().fullname,
               maxLine: Constance.maxLineOne,
               textAlign: TextAlign.start,
               textOverflow:TextOverflow.ellipsis ,
@@ -229,6 +232,7 @@ class ProfileView extends StatelessWidget {
   }
 
   void _onLogout() {
+    Get.bottomSheet(const LogoutBottomSheet());
   }
 
   void _onGetMoneyPage() {

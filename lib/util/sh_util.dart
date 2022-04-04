@@ -16,7 +16,6 @@ class SharedPref {
   factory SharedPref()=> instance;
 
   final String fcmKey = "fcm";
-  final String tokenKey = "token";
   final String langKey = "langKey";
   final String userDataKey = "userData";
   final String loginKey = "login";
@@ -42,25 +41,6 @@ class SharedPref {
     return _prefs!.getString(fcmKey) ?? "";
   }
 
-  setUserToken(String token) async {
-    Logger().i("msg_sett_user_token $token");
-    try {
-      if (!GetUtils.isNull(token)) {
-        _prefs?.setString(tokenKey, token);
-      }
-    } catch (e) {
-      printError(info:e.toString());
-    }
-  }
-
-  getUserToken() {
-    try {
-      return _prefs?.getString(tokenKey);
-    } catch (e) {
-      printError(info:e.toString());
-      return "";
-    }
-  }
 
   Future<void> setAppLang(String lang)async{
     try {
@@ -126,6 +106,12 @@ class SharedPref {
       Logger().e(e);
       return false;
     }
+  }
+
+  //clear
+  clear() async{
+    _prefs?.remove(userDataKey);
+    _prefs?.remove(fcmKey);
   }
 
 }

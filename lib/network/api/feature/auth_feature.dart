@@ -13,19 +13,19 @@ class AuthFeature {
 
 
 
-  Future<AppResponse> signUpUser(Map<String, dynamic> body) async {
+  Future<UserData> signUpUser(Map<String, dynamic> body) async {
     var appResponse = await AuthUseCase.getInstance.signUpRequest(body:
     body,
-        //url: ConstanceNetwork.signUpUserEndPoint,
-        header: ConstanceNetwork.header(0)
+        url: ConstanceNetwork.signUpApi,
+        header: ConstanceNetwork.header(3)
     );
     if (appResponse.status == true) {
       Logger().d("if ${appResponse.toJson()}");
-      return appResponse;
+      return UserData.fromJson(appResponse.result??{});
     } else {
       snackError("",  appResponse.message??appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
-      return appResponse;
+      return UserData.fromJson(appResponse.result??{});
     }
   }
 
@@ -43,6 +43,21 @@ class AuthFeature {
       snackError("",  appResponse.message??appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return UserData.fromJson(appResponse.result??{});
+    }
+  }
+
+  Future<AppResponse> logoutUser() async {
+    var appResponse = await AuthUseCase.getInstance.logoutRequest(
+        url: ConstanceNetwork.logoutApi,
+        header: ConstanceNetwork.header(2)
+    );
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return appResponse;
+    } else {
+      snackError("",  appResponse.message??appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      Logger().d("else ${appResponse.toJson()}");
+      return appResponse;
     }
   }
 

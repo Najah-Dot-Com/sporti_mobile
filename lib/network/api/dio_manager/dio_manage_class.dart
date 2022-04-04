@@ -30,7 +30,7 @@ class DioManagerClass {
     print("msg_request_url : $url");
     print("msg_request_header : $header");
     return await _dio!.get(url,
-        options: Options(headers: header), queryParameters: queryParameters);
+        options: Options(headers: header), queryParameters: queryParameters??{});
   }
 
   Future<Response> dioPostMethod(

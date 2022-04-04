@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
 import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
 import 'package:sporti/network/api/feature/auth_feature.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
+import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
 
 class AuthViewModel extends GetxController{
   bool isLoading = false;
+
+  var acceptPolicy = false;
   @override
   void onInit() {
     super.onInit();
@@ -46,11 +50,6 @@ class AuthViewModel extends GetxController{
           //TODO: if verification and success go to home page
           await SharedPref.instance.setUserLogin(true);
           Get.offAll( const HomePageView());
-          // if (value.verified!) {
-          //   Get.offAll( const HomePageView());
-          // } else {
-          //    snackError("", txtNotConfirmEmail.toString());
-          // }
           isLoading = false;
           update();
         } else {
@@ -71,4 +70,99 @@ class AuthViewModel extends GetxController{
     }
   }
 
+
+  onAcceptChange(){
+    acceptPolicy = !acceptPolicy;
+    update();
+  }
+  //click on sign in btn on login page
+  void signUpValid(TextEditingController userNameController,
+      TextEditingController passwordController,
+      TextEditingController passwordConfirmationController,
+      TextEditingController fullNameController,
+      TextEditingController emailController,) {
+
+    if(passwordController.text != passwordConfirmationController.text){
+      snackError("", AppStrings.errorPasswordMatches.tr);
+      return;
+    }
+    if(!acceptPolicy){
+      snackError("", AppStrings.acceptPolicyConditions.tr);
+      return;
+    }
+    Map<String, dynamic> map = {
+      ConstanceNetwork.userNameKey: userNameController.text.toString(),
+      ConstanceNetwork.passwordKey: passwordController.text.toString(),
+      ConstanceNetwork.passwordConfirmKey: passwordConfirmationController.text.toString(),
+      ConstanceNetwork.emailKey: emailController.text.toString(),
+      ConstanceNetwork.fullNameKey: fullNameController.text.toString(),
+    };
+    _signUp(map);
+  }
+
+  //make signIn methode
+  Future<void> _signUp(Map<String, dynamic> map) async {
+    try {
+      isLoading = true;
+      update();
+      await AuthFeature.getInstance.signUpUser(map).then((value) async {
+        //handle object from value || [save in sharedPreferences]
+        Logger().d(value.toJson());
+        if (value.token != null) {
+          //TODO: if verification and success go to home page
+          await SharedPref.instance.setUserLogin(true);
+          Get.offAll( const HomePageView());
+          isLoading = false;
+          update();
+        } else {
+          isLoading = false;
+          update();
+        }
+      }).catchError((onError) {
+        //handle error from value
+        snackError("", onError.toString());
+        Logger().d(onError.toString());
+        isLoading = false;
+        update();
+      });
+    } catch (e) {
+      Logger().d(e.toString());
+      isLoading = false;
+      update();
+    }
+  }
+
+
+  Future<void> logoutUser()async{
+    try {
+      isLoading = true;
+      update();
+      await AuthFeature.getInstance.logoutUser().then((value) async {
+        //handle object from value || [save in sharedPreferences]
+        Logger().d(value.toJson());
+        if (value.status) {
+          //TODO: if verification and success go to home page
+          await SharedPref.instance.setUserLogin(false);
+          Get.offAll( const LoginView());
+          isLoading = false;
+          update();
+          await SharedPref.instance.clear();
+          snackSuccess("", value.message);
+        } else {
+          isLoading = false;
+          update();
+        }
+      }).catchError((onError) {
+        //handle error from value
+        snackError("", onError.toString());
+        Logger().d(onError.toString());
+        isLoading = false;
+        update();
+      });
+    } catch (e) {
+      Logger().d(e.toString());
+      isLoading = false;
+      update();
+    }
+  }
 }

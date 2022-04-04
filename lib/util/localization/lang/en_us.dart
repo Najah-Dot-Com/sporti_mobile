@@ -1,7 +1,9 @@
 import 'package:sporti/util/app_strings.dart';
 
 Map<String, String> enUS = {
-  AppStrings.errorPasswordLength: "Password length must be 6 or grater than character",
+  AppStrings.errorPasswordLength: "Password length must be 8 or grater than character",
+  AppStrings.errorPasswordMatches: "Passwords are not the same please check it",
+  AppStrings.acceptPolicyConditions: "You must agree to the Terms and Conditions and Privacy Policies",
   AppStrings.fillYourPhoneNumber: "Fill your phone number ",
   AppStrings.messageMatcherEmail: "Enter valid mail",
   AppStrings.txtConnectionNote: "Connections was interrupt please check your internet connection",
@@ -72,4 +74,6 @@ Map<String, String> enUS = {
   AppStrings.hour: "hour",
   AppStrings.minute: "minute",
   AppStrings.txtFullName: "Full Name",
+  AppStrings.txtCancel: "Cancel",
+  AppStrings.txtLogoutHint: "Are you sure you want to log out",
 };

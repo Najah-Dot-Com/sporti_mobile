@@ -76,6 +76,7 @@ class _CustomTextFormFiledState extends State<CustomTextFormFiled> {
     // TODO: implement initState
     super.initState();
     obscureText =   widget.obscureText!;
+    setState(() {});
   }
   @override
   Widget build(BuildContext context) {

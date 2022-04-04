@@ -68,7 +68,7 @@ void portraitOrientation() {
 }
 
 passwordValid(String val) {
-  if (val.length < 6) {
+  if (val.length < 8) {
     return AppStrings.errorPasswordLength.tr; //key67
   } else {
     return null;

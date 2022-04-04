@@ -9,7 +9,7 @@ class AppResponse {
   dynamic message;
   dynamic status;
 
-  AppResponse({this.statusCode, this.result, this.message, this.status});
+  AppResponse({this.statusCode, this.result, this.message, this.status = false});
 
   factory AppResponse.fromJson(var map) {
     try {
@@ -17,7 +17,7 @@ class AppResponse {
         statusCode: map["StatusCode"] == null ? 0 : map["StatusCode"],
         result: map["Result"] == null ? null : map["Result"],
         message: map["Message"] == null ? null : map["Message"],
-        status: map["Status"] == null ? null : map["Status"],
+        status: map["Status"] == null ? false : map["Status"],
       );
     } catch (e) {
       return AppResponse(
@@ -31,7 +31,7 @@ class AppResponse {
         "StatusCode": statusCode  == null ? null:statusCode,
         "Result": result  == null ? null:result,
         "Message": message  == null ? null:message,
-        "Status": status  == null ? null:status
+        "Status": status  == null ? false:status
       };
     } catch (e) {
       Logger().e(e);

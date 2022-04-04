@@ -2,7 +2,9 @@
 import '../../app_strings.dart';
 
 Map<String, String> arSU = {
-  AppStrings.errorPasswordLength: "كلمة المرور يجب ان تكون ٦ حروف او اكثر",
+  AppStrings.errorPasswordLength: "كلمة المرور يجب ان تكون 8 حروف او اكثر",
+  AppStrings.errorPasswordMatches: "كلمات المرور ليست متشابهة يرجى التحقق من ذلك",
+  AppStrings.acceptPolicyConditions: "يجب الموافقة على الشروط والاحكام وسياسات الخصوصية ",
   AppStrings.fillYourPhoneNumber: "ادخل رقم الهاتف",
   AppStrings.messageMatcherEmail: "ادخل ايميل صالح",
   AppStrings.txtConnectionNote: "لا يوجد اتصال انترنت يرجى التاكد من اتصالك بالشبكة",
@@ -73,4 +75,6 @@ Map<String, String> arSU = {
   AppStrings.hour: "ساعة",
   AppStrings.minute: "دقيقة",
   AppStrings.txtFullName: "الاسم بالكامل",
+  AppStrings.txtCancel: "الغاء",
+  AppStrings.txtLogoutHint: "هل انت متاكد من انك تريد تسجيل الخروج",
 };

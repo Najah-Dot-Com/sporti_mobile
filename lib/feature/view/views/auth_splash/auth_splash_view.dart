@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
+import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_media.dart';
+import 'package:sporti/util/sh_util.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);
@@ -25,7 +27,13 @@ class _SplashViewState extends State<SplashView>
   @override
   void initState() {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-       Timer(const Duration(seconds: 3), () => {Get.offAll(const LoginView())});
+       Timer(const Duration(seconds: 3), () {
+         if(SharedPref.instance.getIsUserLogin()){
+           Get.offAll(const HomePageView());
+         }else {
+           Get.offAll(const LoginView());
+         }
+       });
     });
     super.initState();
 

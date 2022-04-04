@@ -1,6 +1,8 @@
 class AppStrings {
 
   static const String errorPasswordLength = "errorPassword";
+  static const String errorPasswordMatches = "errorPasswordMatches";
+  static const String acceptPolicyConditions = "acceptPolicyConditions";
   static const String fillYourPhoneNumber = "fillYourPhoneNumber";
   static const String fillYourVerificationCode = "fillYourVerificationCode";
   static const String messageMatcherEmail = "messageMatcherEmail";
@@ -36,6 +38,8 @@ class AppStrings {
   static const String txtPrivacyPolicies = "Privacy Policies";
   static const String txtLogout = "Logout";
   static const String txtDeleteAccount = "Delete Account";
+  static const String txtCancel = "cancel";
+  static const String txtLogoutHint = "LogoutHint";
 
   //TODO: this for verify account view
    static const String txtEnterYourMobileNumber = "EnterYourMobileNumber";
@@ -95,4 +99,6 @@ class AppStrings {
   static const String iFinishedExcercise = "أتمت التمرين";
   static const String hour = "ساعة";
   static const String minute = "دقيقة";
+
+
 }
