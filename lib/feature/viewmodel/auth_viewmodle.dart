@@ -10,6 +10,8 @@ import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
 
+import '../view/views/account_otp/account_otp_view.dart';
+
 class AuthViewModel extends GetxController {
   bool isLoading = false;
 
@@ -212,22 +214,24 @@ class AuthViewModel extends GetxController {
   }
 
   void verifyEmail(TextEditingController emailController) {
-    var parameters = {
-      ConstanceNetwork.emailKey: emailController.text.toString(),
-    };
+    var parameters = emailController.text.toString();
+
     _verifyEmail(parameters);
   }
+
 // mam.farra2030@gmail.com
   Future<void> _verifyEmail(var parameters) async {
     try {
       isLoading = true;
       update();
-      await AuthFeature.getInstance.verifyUserEmail(parameters).then((value) async {
+      await AuthFeature.getInstance
+          .verifyUserEmail(parameters)
+          .then((value) async {
         //handle object from value || [save in sharedPreferences]
         Logger().d(value.toJson());
         if (value.status) {
           //TODO: if verification and success go to home page
-          // Get.to(ResetPasswordView());
+          await Get.to(AccountOtpView());
           isLoading = false;
           update();
           snackSuccess("", value.message);

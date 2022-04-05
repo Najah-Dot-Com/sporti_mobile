@@ -3,10 +3,11 @@ import 'package:sporti/util/sh_util.dart';
 
 abstract class ConstanceNetwork {
   ///todo here insert base_url
-  static String baseUrl = "https://sportiapp.com/api/";
+  // static String baseUrl = "https://sportiapp.com/api/v1";
+  static String baseUrl = "https://sportiapp.com/api/v1/";
 
   ///todo here insert key Of Request
-  static String  resultKey = "Result";
+  static String resultKey = "Result";
 
   //this for login keys
   static String userNameKey = "username";
@@ -21,13 +22,7 @@ abstract class ConstanceNetwork {
   static String signUpApi = "create_account";
   static String logoutApi = "logout";
   static String changePasswordApi = "change_password";
-  static String verifyEmailApi = "verifi_email";
-
-
-
-
-
-
+  static String verifyEmailApi = "verifi_email?email=";
 
   static Map<String, String> header(int typeToken) {
     Map<String, String> headers = {};

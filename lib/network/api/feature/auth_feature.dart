@@ -86,9 +86,10 @@ class AuthFeature {
 
   Future<AppResponse> verifyUserEmail(var parameters) async {
     var appResponse = await AuthUseCase.getInstance.verifyUserEmail(
-        url: ConstanceNetwork.verifyEmailApi,
-        header: ConstanceNetwork.header(0),
-        parameters: parameters);
+        url: ConstanceNetwork.verifyEmailApi+parameters,
+        // "https://sportiapp.com/api/v1/verifi_email?email=$parameters",
+        header: ConstanceNetwork.header(5),
+        );
     if (appResponse.status == true) {
       Logger().d("if ${appResponse.toJson()}");
       return appResponse;
