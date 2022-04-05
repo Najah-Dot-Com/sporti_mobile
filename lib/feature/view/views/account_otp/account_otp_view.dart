@@ -150,7 +150,7 @@ class _AccountOtpViewState extends State<AccountOtpView> {
             height: AppSize.s12,
           ),
           CustomTextView(
-            txt: AppStrings.txtVerifyCodeHint.tr,
+            txt: AppStrings.txtVerifyPhoneCodeHint.tr,
             textStyle: themeData.textTheme.headline2
                 ?.copyWith(fontSize: AppFontSize.s24, color: AppColor.grey),
           ),

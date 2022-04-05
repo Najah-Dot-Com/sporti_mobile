@@ -11,6 +11,7 @@ import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
 
 import '../view/views/account_otp/account_otp_view.dart';
+import '../view/views/auth_forget_otp/auth_otp_view.dart';
 
 class AuthViewModel extends GetxController {
   bool isLoading = false;
@@ -230,8 +231,8 @@ class AuthViewModel extends GetxController {
         //handle object from value || [save in sharedPreferences]
         Logger().d(value.toJson());
         if (value.status) {
-          //TODO: if verification and success go to home page
-          await Get.to(AccountOtpView());
+          //TODO: if verification and success go to ForgetOtpView page
+          await Get.to(AuthOTPView(email: parameters,)); 
           isLoading = false;
           update();
           snackSuccess("", value.message);

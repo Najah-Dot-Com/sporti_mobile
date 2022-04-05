@@ -121,11 +121,7 @@ class ForgetPasswordView extends StatelessWidget {
   _onVerifyClick(AuthViewModel logic) {
     bool isValidate = _formKey.currentState!.validate();
     if (isValidate) {
-      // _formKey.currentState?.save();
       logic.verifyEmail(_emailController);
     }
   }
-  // _onVerifyClick() {
-  //   Get.to(ResetPasswordView());
-  // }
 }
