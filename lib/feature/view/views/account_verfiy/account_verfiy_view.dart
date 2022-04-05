@@ -119,6 +119,6 @@ class AccountVerifyView extends StatelessWidget {
 
   void _onSendClick() {
     _formKey.currentState!.validate();
-    Get.to(()=>const AccountOtpView());
+    Get.to(()=> AccountOtpView(userPhoneNumer: _phoneNumberController.text.toString()));
   }
 }

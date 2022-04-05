@@ -6,13 +6,15 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/primary_button.dart';
 import 'package:sporti/feature/view/views/account_success_virefy/account_success_virefy_view.dart';
+import 'package:sporti/feature/viewmodel/auth_viewmodle.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_strings.dart';
 
 class AccountOtpView extends StatefulWidget {
-  const AccountOtpView({Key? key}) : super(key: key);
+  String? userPhoneNumer = '00000';
+  AccountOtpView({Key? key, @required this.userPhoneNumer}) : super(key: key);
 
   @override
   State<AccountOtpView> createState() => _AccountOtpViewState();
@@ -114,7 +116,6 @@ class _AccountOtpViewState extends State<AccountOtpView> {
     );
   }
 
-
   //this for verifications code
   Widget _resendVerificationsCode(ThemeData themeData) {
     return RichText(
@@ -123,12 +124,14 @@ class _AccountOtpViewState extends State<AccountOtpView> {
           children: [
             TextSpan(
                 text: AppStrings.txtVerifyCode.tr,
-                style: themeData.textTheme.headline2?.copyWith(color: AppColor.primary)),
+                style: themeData.textTheme.headline2
+                    ?.copyWith(color: AppColor.primary)),
           ],
           style: themeData.textTheme.headline2),
       textAlign: TextAlign.center,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
@@ -158,7 +161,7 @@ class _AccountOtpViewState extends State<AccountOtpView> {
             height: AppSize.s12,
           ),
           CustomTextView(
-            txt: "555555555",
+            txt: widget.userPhoneNumer,
             textStyle: themeData.textTheme.headline2
                 ?.copyWith(fontSize: AppFontSize.s18, color: AppColor.primary),
           ),
@@ -182,10 +185,9 @@ class _AccountOtpViewState extends State<AccountOtpView> {
     );
   }
 
-
-
   void _onVerifyClick() {
-    Get.to(()=>const AccountSuccessVerifyView());
+   AuthViewModel().verifyAccount(userPhoneNumber: widget.userPhoneNumer);
+    //Get.to(() => const AccountSuccessVerifyView());
   }
 
   // this for on complete code
@@ -201,7 +203,5 @@ class _AccountOtpViewState extends State<AccountOtpView> {
     return true;
   }
 
-  void _onCodeSubmit(String value) {
-
-  }
+  void _onCodeSubmit(String value) {}
 }

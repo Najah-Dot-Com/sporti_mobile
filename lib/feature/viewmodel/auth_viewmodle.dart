@@ -253,4 +253,69 @@ class AuthViewModel extends GetxController {
       update();
     }
   }
+  //click on confirmEmail in btn on login page
+  void confirmEmail(var pinCode) {
+    Map<String, dynamic> map = {
+        ConstanceNetwork.Confirm_virify_email_code : pinCode.toString(),
+    };
+    _confirmEmail(map);
+  }
+  //make _confirmEmail methode
+  Future<void> _confirmEmail(Map<String, dynamic> map) async {
+    try {
+      isLoading = true;
+      update();
+      await AuthFeature.getInstance.confirmEmail(map).then((value) async {
+        //handle object from value || [save in sharedPreferences]
+        Logger().d(value.toJson());
+          isLoading = false;
+          snackSuccess("", value.message);
+          update();
+        }
+      ).catchError((onError) {
+        //handle error from value
+        snackError("", onError.toString());
+        Logger().d(onError.toString());
+        isLoading = false;
+        update();
+      });
+    } catch (e) {
+      Logger().d(e.toString());
+      isLoading = false;
+      update();
+    }
+  }
+  //click on confirmEmail in btn on login page
+  void verifyAccount({@required var userPhoneNumber}) {
+    Map<String, dynamic> map = {
+        ConstanceNetwork.userPhoneNumer : userPhoneNumber.toString(),
+    };
+    _verifyAccount(map);
+  }
+  //make _confirmEmail methode
+  Future<void> _verifyAccount(Map<String, dynamic> map) async {
+    try {
+      isLoading = true;
+      update();
+      await AuthFeature.getInstance.confirmEmail(map).then((value) async {
+        //handle object from value || [save in sharedPreferences]
+        Logger().d(value.toJson());
+          isLoading = false;
+          snackSuccess("", value.message);
+          update();
+        }
+      ).catchError((onError) {
+        //handle error from value
+        snackError("", onError.toString());
+        Logger().d(onError.toString());
+        isLoading = false;
+        update();
+      });
+    } catch (e) {
+      Logger().d(e.toString());
+      isLoading = false;
+      update();
+    }
+  }
+
 }

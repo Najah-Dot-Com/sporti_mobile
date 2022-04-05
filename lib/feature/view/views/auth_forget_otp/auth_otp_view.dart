@@ -5,13 +5,14 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/primary_button.dart';
 import 'package:sporti/feature/view/views/account_success_virefy/account_success_virefy_view.dart';
+import 'package:sporti/feature/viewmodel/auth_viewmodle.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_strings.dart';
 
 class AuthOTPView extends StatefulWidget {
-  String? email = 'mam';
+  String? email = 'example@gmail.com';
   AuthOTPView({Key? key, @required this.email}) : super(key: key);
 
   @override
@@ -54,6 +55,7 @@ class _AuthOTPViewState extends State<AuthOTPView> {
       child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),
           child: PinCodeTextField(
+            
             autoFocus: true,
             autoDismissKeyboard: true,
             enablePinAutofill: true,
@@ -184,7 +186,8 @@ class _AuthOTPViewState extends State<AuthOTPView> {
   }
 
   void _onVerifyClick() {
-    Get.to(() => const AccountSuccessVerifyView());
+    AuthViewModel().confirmEmail(_pinCodeController.text.toString());
+    //Get.to(() => const AccountSuccessVerifyView());
   }
 
   // this for on complete code
@@ -200,5 +203,6 @@ class _AuthOTPViewState extends State<AuthOTPView> {
     return true;
   }
 
-  void _onCodeSubmit(String value) {}
+  void _onCodeSubmit(String value) {
+  }
 }
