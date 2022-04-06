@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/category_details/categories_details_view.dart';
 import 'package:sporti/util/app_color.dart';
@@ -11,7 +12,8 @@ import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/constance.dart';
 
 class SelectYourWorkWidget extends StatelessWidget {
-  const SelectYourWorkWidget({Key? key}) : super(key: key);
+  const SelectYourWorkWidget({Key? key, this.package, }) : super(key: key);
+  final ExercisesData? package;
   final String fakeImage ="https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/07/1377301-1183869-The-8-Best-Weight-Benches-of-2021-1296x728-Header-c0dcdf.jpg?w=1575";
 
   @override
@@ -66,14 +68,14 @@ class SelectYourWorkWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomTextView(
-                    txt: "Breathing Package" ,
+                    txt: package?.title.toString() ,
                     maxLine: Constance.maxLineOne,
                     textOverflow: TextOverflow.ellipsis,
                     textStyle: themeData.textTheme.headline2?.copyWith(color: AppColor.black,fontSize: AppFontSize.s16),
                   ),
                   const SizedBox(height: AppSize.s6,),
                   CustomTextView(
-                    txt: "Breathing Package" ,
+                    txt: package?.description.toString(),
                     maxLine: Constance.maxLineOne,
                     textOverflow: TextOverflow.ellipsis,
                     textStyle: themeData.textTheme.subtitle2?.copyWith(color: AppColor.grey),
@@ -83,7 +85,7 @@ class SelectYourWorkWidget extends StatelessWidget {
             ),
             const SizedBox(width: AppSize.s20,),
             CustomTextView(
-              txt: "25 min" ,
+              txt: "${package?.time.toString()} min" ,
               textStyle: themeData.textTheme.subtitle2?.copyWith(color: AppColor.grey,fontSize: AppFontSize.s16),
             ),
             const SizedBox(width: AppSize.s20,),
@@ -95,6 +97,6 @@ class SelectYourWorkWidget extends StatelessWidget {
   }
 
   void _onItemClick() {
-    Get.to(const CategoriesDetailsView());
+    Get.to( CategoriesDetailsView(id:  "1",title: package?.title.toString(), ));
   }
 }

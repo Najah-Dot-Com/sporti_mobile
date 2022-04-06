@@ -12,6 +12,7 @@ import 'package:sporti/util/app_strings.dart';
 import 'package:get/get.dart';
 import 'package:sporti/util/app_style.dart';
 import 'package:sporti/util/constance.dart';
+import 'package:sporti/util/sh_util.dart';
 
 class CategoriesMyWorkListView extends StatelessWidget {
   const CategoriesMyWorkListView({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class CategoriesMyWorkListView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomTextView(
-          txt: AppStrings.txtHello.tr + " Osama ",
+          txt: AppStrings.txtHello.tr + " ${SharedPref.instance.getUserData().fullname} ",
           textStyle: themeData.textTheme.headline2?.copyWith(color: AppColor.black),
         ),
         // const SizedBox(height: AppSize.s10,),

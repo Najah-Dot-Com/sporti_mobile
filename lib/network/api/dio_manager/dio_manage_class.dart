@@ -1,10 +1,13 @@
 // ignore_for_file: avoid_print
 
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' as getx;
 import 'dart:async';
 
 import 'package:logger/logger.dart';
+import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
+import 'package:sporti/util/sh_util.dart';
 
 class DioManagerClass {
   DioManagerClass._();
@@ -99,5 +102,9 @@ class ApiInterceptors extends Interceptor {
   void onError(DioError err, ErrorInterceptorHandler handler) {
     super.onError(err, handler);
     Logger().d("onError : ${err.message}");
+    if(err.message.contains("401")){
+      SharedPref.instance.setUserLogin(false);
+      getx.Get.offAll(const LoginView());
+    }
   }
 }

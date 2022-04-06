@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/categoriy_exercise_details/categoriy_exercise_details_view.dart';
 import 'package:sporti/util/app_color.dart';
@@ -9,7 +10,8 @@ import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/constance.dart';
 
 class CategoriesListItemWidget extends StatelessWidget {
-  const CategoriesListItemWidget({Key? key}) : super(key: key);
+  const CategoriesListItemWidget({Key? key, this.packageDetails, }) : super(key: key);
+  final ExercisesData? packageDetails;
   final String fakeImage = "https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/07/1377301-1183869-The-8-Best-Weight-Benches-of-2021-1296x728-Header-c0dcdf.jpg?w=1575";
 
   @override
@@ -52,7 +54,7 @@ class CategoriesListItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomTextView(
-                    txt: "Breathing Package",
+                    txt: packageDetails?.title.toString(),
                     maxLine: Constance.maxLineOne,
                     textOverflow: TextOverflow.ellipsis,
                     textStyle: themeData.textTheme.headline2?.copyWith(

@@ -3,7 +3,7 @@ import 'package:sporti/util/sh_util.dart';
 
 abstract class ConstanceNetwork {
   ///todo here insert base_url
-  static String baseUrl = "https://sportiapp.com/api/";
+  static String baseUrl = "https://sportiapp.com/api/v1/";
 
   ///todo here insert key Of Request
   static String  resultKey = "Result";
@@ -16,11 +16,21 @@ abstract class ConstanceNetwork {
   static String passwordConfirmKey = "password_confirm";
   static String passwordNewKey = "password_new";
 
+  //this for home page
+  static String parentIdKey = "parent_id";
+  static String exerciseIdKey = "exercise_id";
+
   ///todo here insert end Point
+  //auth end point
   static String loginApi = "login";
   static String signUpApi = "create_account";
   static String logoutApi = "logout";
   static String changePasswordApi = "change_password";
+
+  //exercises end point
+  static String exercisesApi = "exercises";
+  static String topExercisesApi = "top_exercises";
+  static String isFavoriteApi = "is_favorite";
 
 
 
