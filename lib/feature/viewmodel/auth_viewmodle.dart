@@ -143,19 +143,22 @@ class AuthViewModel extends GetxController {
         Logger().d(value.toJson());
         if (value.status) {
           //TODO: if verification and success go to home page
-          await SharedPref.instance.setUserLogin(false);
           Get.offAll(const LoginView());
+          await SharedPref.instance.setUserLogin(false);
           isLoading = false;
           update();
           await SharedPref.instance.clear();
-          snackSuccess("", value.message);
+         // snackSuccess("", value.message??"");
         } else {
           isLoading = false;
           update();
+          Get.offAll(const LoginView());
+          await SharedPref.instance.setUserLogin(false);
+          await SharedPref.instance.clear();
         }
       }).catchError((onError) {
         //handle error from value
-        snackError("", onError.toString());
+        // snackError("", onError.toString());
         Logger().d(onError.toString());
         isLoading = false;
         update();

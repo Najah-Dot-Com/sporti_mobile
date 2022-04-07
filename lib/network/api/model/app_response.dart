@@ -16,7 +16,7 @@ class AppResponse {
       return AppResponse(
         statusCode: map["StatusCode"] == null ? 0 : map["StatusCode"],
         result: map["Result"] == null ? null : map["Result"],
-        message: map["Message"] == null ? null : map["Message"],
+        message: map["Message"] == null ? "" : map["Message"],
         status: map["Status"] == null ? false : map["Status"],
       );
     } catch (e) {

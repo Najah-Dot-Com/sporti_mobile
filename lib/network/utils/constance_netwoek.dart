@@ -67,6 +67,11 @@ abstract class ConstanceNetwork {
         'Language': Get.locale.toString().split("_")[0],
         'Accept': 'application/json',
       };
+    }else if (typeToken == 5) {
+      headers = {
+        'Authorization': 'Bearer ${SharedPref.instance.getUserData().token}',
+        'Accept': 'application/json',
+      };
     }
 
     return headers;

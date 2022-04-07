@@ -50,17 +50,16 @@ class AuthFeature {
 
   Future<AppResponse> logoutUser() async {
     var appResponse = await AuthUseCase.getInstance.logoutRequest(
-        url: ConstanceNetwork.logoutApi, header: ConstanceNetwork.header(2));
+        url: ConstanceNetwork.logoutApi, header: ConstanceNetwork.header(5));
     if (appResponse.status == true) {
       Logger().d("if ${appResponse.toJson()}");
       return appResponse;
     } else {
-      snackError(
-          "",
-          appResponse.message ??
-              appResponse.message ??
-              "" /*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
-      Logger().d("else ${appResponse.toJson()}");
+      // snackError(
+      //     "",
+      //     appResponse.message ??
+      //         "" /*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      // Logger().d("else ${appResponse.toJson()}");
       return appResponse;
     }
   }
