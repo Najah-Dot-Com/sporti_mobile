@@ -26,4 +26,5 @@ class AppMedia {
   static const String lockIcon = "$IMAGE_PATH/icon_lock.png";
   static const String exircise_one = "$IMAGE_PATH/exircise_one.png";
   static const String translating_icon = "$IMAGE_PATH/globe.png";
+  static const String remove = "$IMAGE_PATH/remove.svg";
 }

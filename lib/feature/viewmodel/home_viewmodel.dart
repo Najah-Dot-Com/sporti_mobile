@@ -13,6 +13,7 @@ class HomeViewModel extends GetxController with GetSingleTickerProviderStateMixi
   var notificationsIndex = 2;
 
   bool isLoading = false;
+  bool isLoadingAddMyWork = false;
   List<ExercisesData> exercisesListAll = [];//packages
   List<ExercisesData> packageDetailsExercisesList = [];//packages
   List<ExercisesData> exercisesListRecentlyAll = [];//packages
@@ -143,30 +144,33 @@ class HomeViewModel extends GetxController with GetSingleTickerProviderStateMixi
   //this for  add to my work
   Future<void> addToMyWork(var id)async{
     try {
-      isLoading = true;
+      isLoadingAddMyWork = true;
       update();
       await ExercisesFeature.getInstance.addToMyWork({ConstanceNetwork.exerciseIdKey : id}).then((value) async {
         //handle object from value || [save in sharedPreferences]
         Logger().d(value);
         if (value.status??false) {
           snackSuccess("", value.message);
-          isLoading = false;
+          isLoadingAddMyWork = false;
           update();
+          allPackagesExercises();
+          allPackagesTopExercises();
+          Get.back();
         } else {
           snackError("", value.message);
-          isLoading = false;
+          isLoadingAddMyWork = false;
           update();
         }
       }).catchError((onError) {
         //handle error from value
         snackError("", onError.toString());
         Logger().d(onError.toString());
-        isLoading = false;
+        isLoadingAddMyWork = false;
         update();
       });
     } catch (e) {
       Logger().d(e.toString());
-      isLoading = false;
+      isLoadingAddMyWork = false;
       update();
     }
   }

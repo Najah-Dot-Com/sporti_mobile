@@ -80,4 +80,6 @@ Map<String, String> arSU = {
   AppStrings.txtLogoutHint: "هل انت متاكد من انك تريد تسجيل الخروج",
   AppStrings.txtOldPassword: "كلمة المرور القديمة",
   AppStrings.txtNewPassword: "كلمة المرور الجديدة",
+  AppStrings.txtOk: "موافق",
+  AppStrings.txtAddToMyWork: "اضافة الى تماريني",
 };

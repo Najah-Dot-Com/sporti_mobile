@@ -79,4 +79,6 @@ Map<String, String> enUS = {
   AppStrings.txtLogoutHint: "Are you sure you want to log out",
   AppStrings.txtOldPassword: "Old Password",
   AppStrings.txtNewPassword: "New Password",
+  AppStrings.txtOk: "Ok",
+  AppStrings.txtAddToMyWork: "Add To My Exercise",
 };

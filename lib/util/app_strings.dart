@@ -40,6 +40,7 @@ class AppStrings {
   static const String txtLogout = "Logout";
   static const String txtDeleteAccount = "Delete Account";
   static const String txtCancel = "cancel";
+  static const String txtOk = "ok";
   static const String txtLogoutHint = "LogoutHint";
 
   //TODO: this for verify account view
@@ -62,6 +63,8 @@ class AppStrings {
   static const String txtChooseYourFavoriteExercises = "اختر تمارينك المفضلة";//
   static const String txtPackageRepeatedTimes = "يجب إعادة كل باقة 3 مرات ";//
   static const String txtDetailsNote = "تنبيه: لصحة أفضل يجب استشارة الطبيب أولا خاصة بوجود امراض مزمنة";//
+  static const String txtAddToMyWork = "AddToMyWork";
+
 
   //todo this for CategoriyExerciseDetailsView page
   static const String txtTargetMuscle = "Target Muscle ";
@@ -104,6 +107,8 @@ class AppStrings {
  //todo this for update password
   static const String txtOldPassword = "oldPassword";
   static const String txtNewPassword = "newPassword";
+
+
 
 
 }

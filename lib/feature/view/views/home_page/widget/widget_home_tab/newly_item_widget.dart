@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sporti/feature/model/exercises_package_data.dart';
+import 'package:sporti/feature/view/appwidget/bottom_sheet/gloable_bottom_sheet.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/category_details/categories_details_view.dart';
+import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_media.dart';
@@ -32,7 +34,7 @@ class NewlyItemWidget extends StatelessWidget {
             height: AppSize.s120,
             clipBehavior: Clip.hardEdge,
             decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(AppSize.s30)),
+            BoxDecoration(borderRadius: BorderRadius.circular(AppSize.s30)),
             child: Stack(
               children: [
                 imageNetwork(
@@ -60,16 +62,31 @@ class NewlyItemWidget extends StatelessWidget {
             end: 0,
             child: InkWell(
                 onTap: _onAddToMyWork,
-                child: SvgPicture.asset(AppMedia.iconsAdd)),
+                child: SvgPicture.asset(packages!.isFavorite! ? AppMedia.remove:AppMedia.iconsAdd,
+                  width:packages!.isFavorite!? AppSize.s28:AppSize.s35 , height: packages!.isFavorite!?AppSize.s28:AppSize.s35 ,),),
           ),
         ],
       ),
     );
   }
 
-  void _onAddToMyWork() {}
+  void _onAddToMyWork() {
+    Get.bottomSheet(GetBuilder<HomeViewModel>(
+        init: HomeViewModel(),
+        builder: (logic) {
+      return GlobalBottomSheet(
+        title:AppStrings.txtAddToMyWork.tr,
+        isLoading: logic.isLoadingAddMyWork,
+        onOkBtnClick: () {
+          logic.addToMyWork(packages?.id.toString());
+        },
+        onCancelBtnClick: () => Get.back(),
+      );
+    }), isScrollControlled: true);
+  }
 
   void _onItemClick() {
-    Get.to( CategoriesDetailsView(id:  "1",title: packages?.title.toString(), ));
+    Get.to(CategoriesDetailsView(
+      id: packages?.parentId.toString(), title: packages?.title.toString(),));
   }
 }

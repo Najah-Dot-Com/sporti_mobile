@@ -23,49 +23,55 @@ class BottomNavigationBarWidget extends StatelessWidget {
           elevation: AppSize.s20,
           color: AppColor.white,
           shape: const CircularNotchedRectangle(),
-          notchMargin: AppSize.s8,
+          notchMargin: AppSize.s12,
           child: Padding(
             padding: const EdgeInsets.all(AppSize.s6),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IconNavBar(
-                        title: AppStrings.txtProfile.tr,
-                        icon: Icons.person,
-                        color: logic.tabControllerIndex == 3
-                            ? AppColor.primary
-                            : AppColor.grey,
-                        onIconClick: () => _onProfileClick(logic)),
-                    IconNavBar(
-                        title: AppStrings.txtNotifications.tr,
-                        icon: Icons.notifications_rounded,
-                        color: logic.tabControllerIndex == 2
-                            ? AppColor.primary
-                            : AppColor.grey,
-                        onIconClick: () => _onNotificationClick(logic)),
-                  ],
+                FittedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconNavBar(
+                          title: AppStrings.txtProfile.tr,
+                          icon: Icons.person,
+                          color: logic.tabControllerIndex == 3
+                              ? AppColor.primary
+                              : AppColor.grey,
+                          onIconClick: () => _onProfileClick(logic)),
+                      const SizedBox(height: AppSize.s10,),
+                      IconNavBar(
+                          title: AppStrings.txtNotifications.tr,
+                          icon: Icons.notifications_rounded,
+                          color: logic.tabControllerIndex == 2
+                              ? AppColor.primary
+                              : AppColor.grey,
+                          onIconClick: () => _onNotificationClick(logic)),
+                    ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IconNavBar(
-                        title: AppStrings.txtMyWork.tr,
-                        icon: Icons.list_alt_rounded,
-                        color: logic.tabControllerIndex == 1
-                            ? AppColor.primary
-                            : AppColor.grey,
-                        onIconClick: () => _onMyWorkClick(logic)),
-                    IconNavBar(
-                        title: AppStrings.txtHome.tr,
-                        icon: Icons.home_filled,
-                        color: logic.tabControllerIndex == 0
-                            ? AppColor.primary
-                            : AppColor.grey,
-                        onIconClick: () => _onHomePageClick(logic)),
-                  ],
+                FittedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconNavBar(
+                          title: AppStrings.txtMyWork.tr,
+                          icon: Icons.list_alt_rounded,
+                          color: logic.tabControllerIndex == 1
+                              ? AppColor.primary
+                              : AppColor.grey,
+                          onIconClick: () => _onMyWorkClick(logic)),
+                      const SizedBox(height: AppSize.s10,),
+                      IconNavBar(
+                          title: AppStrings.txtHome.tr,
+                          icon: Icons.home_filled,
+                          color: logic.tabControllerIndex == 0
+                              ? AppColor.primary
+                              : AppColor.grey,
+                          onIconClick: () => _onHomePageClick(logic)),
+                    ],
+                  ),
                 )
               ],
             ),
