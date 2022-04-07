@@ -104,6 +104,6 @@ class ResetPasswordView extends StatelessWidget {
   void _onVerifyClick() {
     FocusManager.instance.primaryFocus?.unfocus();
     AuthViewModel().confirmEmail(pinCode: pinCodeController,passwordNew: _newPassController,passwordConfirm: _repeatPassController);
-    Get.to(() => const  LoginView()); 
+    Get.offAll(() => const  LoginView());
   }
 }
