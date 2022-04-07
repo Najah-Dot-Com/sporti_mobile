@@ -143,7 +143,7 @@ class AuthViewModel extends GetxController {
         Logger().d(value.toJson());
         if (value.status) {
           //TODO: if verification and success go to home page
-          Get.offAll(const LoginView());
+          Get.offAll( LoginView());
           await SharedPref.instance.setUserLogin(false);
           isLoading = false;
           update();
@@ -152,7 +152,7 @@ class AuthViewModel extends GetxController {
         } else {
           isLoading = false;
           update();
-          Get.offAll(const LoginView());
+          Get.offAll( LoginView());
           await SharedPref.instance.setUserLogin(false);
           await SharedPref.instance.clear();
         }
@@ -260,10 +260,10 @@ class AuthViewModel extends GetxController {
   }
 
   //click on confirmEmail in btn on auth OTP page
-  void confirmEmail(
+  void confirmEmail (
       {TextEditingController? pinCode,
       TextEditingController? passwordNew,
-      TextEditingController? passwordConfirm}) {
+      TextEditingController? passwordConfirm}) async{
     Map<String, dynamic> map = {
       ConstanceNetwork.Confirm_virify_email_code:
           pinCode?.text.toString() ?? '',
@@ -271,7 +271,13 @@ class AuthViewModel extends GetxController {
       ConstanceNetwork.passwordConfirmKey:
           passwordConfirm?.text.toString() ?? '',
     };
-    _confirmEmail(map);
+    await _confirmEmail(map);
+    //this check for decide which screen to move to.
+    if(passwordConfirm==null){
+      Get.to(() => ResetPasswordView(pinCodeController: pinCode,));
+    }else{
+      Get.offAll(() => LoginView());
+    }
   }
 
   //make _confirmEmail methode
@@ -287,6 +293,7 @@ class AuthViewModel extends GetxController {
           isLoading = false;
           update();
           await snackSuccess("", value.message);
+          // Get.to(page)
         } else {
           isLoading = false;
           update();

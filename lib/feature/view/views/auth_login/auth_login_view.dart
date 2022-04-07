@@ -21,14 +21,14 @@ import '../../appwidget/sportiTextField.dart';
 // ignore: must_be_immutable
 class LoginView extends StatelessWidget {
 
-  const LoginView({Key? key}) : super(key: key);
+   LoginView({Key? key}) : super(key: key);
 
 
   static final TextEditingController _passController = TextEditingController();
   static final TextEditingController _userNameController = TextEditingController();
   static final FocusNode _userNameFocusNode = FocusNode();
   static final FocusNode _passFocusNode = FocusNode();
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   // AuthViewModel get viewModel => Get.put<AuthViewModel>(AuthViewModel());
 

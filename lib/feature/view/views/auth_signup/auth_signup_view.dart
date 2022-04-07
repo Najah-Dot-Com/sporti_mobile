@@ -267,7 +267,7 @@ class SignupView extends StatelessWidget {
                                     ),
                                     TextButton(
                                       onPressed: () =>
-                                          Get.offAll(const LoginView()),
+                                          Get.offAll( LoginView()),
                                       child:
                                       CustomTextView(txt: AppStrings.signin.tr,
                                         textStyle: themeData.textTheme.headline6

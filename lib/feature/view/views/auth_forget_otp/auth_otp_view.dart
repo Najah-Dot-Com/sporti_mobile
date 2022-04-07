@@ -188,8 +188,9 @@ class _AuthOTPViewState extends State<AuthOTPView> {
   }
 
   void _onVerifyClick() {
+    FocusManager.instance.primaryFocus?.unfocus();
     AuthViewModel().confirmEmail(pinCode: _pinCodeController);
-    Get.to(() => ResetPasswordView(pinCodeController: _pinCodeController,));
+    // Get.to(() => ResetPasswordView(pinCodeController: _pinCodeController,));
   }
 
   // this for on complete code
