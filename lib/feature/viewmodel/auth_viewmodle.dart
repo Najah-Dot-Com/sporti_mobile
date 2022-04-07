@@ -151,11 +151,15 @@ class AuthViewModel extends GetxController{
         } else {
           isLoading = false;
           update();
+          await SharedPref.instance.setUserLogin(false);
+          Get.offAll( const LoginView());
+          await SharedPref.instance.clear();
         }
       }).catchError((onError) {
         //handle error from value
         snackError("", onError.toString());
         Logger().d(onError.toString());
+
         isLoading = false;
         update();
       });
