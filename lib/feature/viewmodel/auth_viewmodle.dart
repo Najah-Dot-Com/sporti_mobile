@@ -232,10 +232,12 @@ class AuthViewModel extends GetxController {
         Logger().d(value.toJson());
         if (value.status) {
           //TODO: if verification and success go to ForgetOtpView page
-          await Get.to(AuthOTPView(email: parameters,)); 
           isLoading = false;
           update();
-          snackSuccess("", value.message);
+          await snackSuccess("", value.message);
+          await Get.to(AuthOTPView(
+            email: parameters,
+          ));
         } else {
           isLoading = false;
           update();
@@ -253,13 +255,22 @@ class AuthViewModel extends GetxController {
       update();
     }
   }
-  //click on confirmEmail in btn on login page
-  void confirmEmail(var pinCode) {
+
+  //click on confirmEmail in btn on auth OTP page
+  void confirmEmail(
+      {TextEditingController? pinCode,
+      TextEditingController? passwordNew,
+      TextEditingController? passwordConfirm}) {
     Map<String, dynamic> map = {
-        ConstanceNetwork.Confirm_virify_email_code : pinCode.toString(),
+      ConstanceNetwork.Confirm_virify_email_code:
+          pinCode?.text.toString() ?? '',
+      ConstanceNetwork.passwordNewKey: passwordNew?.text.toString() ?? '',
+      ConstanceNetwork.passwordConfirmKey:
+          passwordConfirm?.text.toString() ?? '',
     };
     _confirmEmail(map);
   }
+
   //make _confirmEmail methode
   Future<void> _confirmEmail(Map<String, dynamic> map) async {
     try {
@@ -268,11 +279,16 @@ class AuthViewModel extends GetxController {
       await AuthFeature.getInstance.confirmEmail(map).then((value) async {
         //handle object from value || [save in sharedPreferences]
         Logger().d(value.toJson());
+        if (value.status) {
+          //TODO: if verification and success go to ForgetOtpView page
           isLoading = false;
-          snackSuccess("", value.message);
+          update();
+          await snackSuccess("", value.message);
+        } else {
+          isLoading = false;
           update();
         }
-      ).catchError((onError) {
+      }).catchError((onError) {
         //handle error from value
         snackError("", onError.toString());
         Logger().d(onError.toString());
@@ -285,8 +301,8 @@ class AuthViewModel extends GetxController {
       update();
     }
   }
-  //click on confirmEmail in btn on login page
-  void verifyAccount({@required var userPhoneNumber}) {
+  //click on verifyAccount in btn on login page
+  /* void verifyAccount({@required var userPhoneNumber}) {
     Map<String, dynamic> map = {
         ConstanceNetwork.userPhoneNumer : userPhoneNumber.toString(),
     };
@@ -297,11 +313,11 @@ class AuthViewModel extends GetxController {
     try {
       isLoading = true;
       update();
-      await AuthFeature.getInstance.confirmEmail(map).then((value) async {
+      await AuthFeature.getInstance.verifyAccount(map).then((value) async {
         //handle object from value || [save in sharedPreferences]
         Logger().d(value.toJson());
           isLoading = false;
-          snackSuccess("", value.message);
+          snackSuccess("", value.message??"");
           update();
         }
       ).catchError((onError) {
@@ -317,5 +333,5 @@ class AuthViewModel extends GetxController {
       update();
     }
   }
-
+ */
 }

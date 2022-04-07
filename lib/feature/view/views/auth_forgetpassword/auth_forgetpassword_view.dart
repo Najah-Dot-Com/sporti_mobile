@@ -99,15 +99,6 @@ class ForgetPasswordView extends StatelessWidget {
                       colorText: AppColor.white,
                       isLoading: logic.isLoading,
                       onClicked:()=> _onVerifyClick(logic)),
-                    // CustomButton(
-                    //   width: double.infinity,
-                    //   height: AppSize.s60,
-                    //   label: AppStrings.verify.tr,
-                    //   labelcolor: AppColor.white,
-                    //   isRoundedBorder: false,
-                    //   primaryColor: AppColor.primary,
-                    //   onTap: _onVerifyClick(logic),
-                    // ),
                   ],
                 ),
               ),
@@ -119,6 +110,7 @@ class ForgetPasswordView extends StatelessWidget {
   }
 
   _onVerifyClick(AuthViewModel logic) {
+    FocusManager.instance.primaryFocus?.unfocus();
     bool isValidate = _formKey.currentState!.validate();
     if (isValidate) {
       logic.verifyEmail(_emailController);

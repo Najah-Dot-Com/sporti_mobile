@@ -186,7 +186,7 @@ class _AccountOtpViewState extends State<AccountOtpView> {
   }
 
   void _onVerifyClick() {
-   AuthViewModel().verifyAccount(userPhoneNumber: widget.userPhoneNumer);
+  // AuthViewModel().verifyAccount(userPhoneNumber: widget.userPhoneNumer);
     //Get.to(() => const AccountSuccessVerifyView());
   }
 

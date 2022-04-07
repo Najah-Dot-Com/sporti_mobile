@@ -20,13 +20,7 @@ class WelcomeRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        IconButton(
-          icon: Image.asset(AppMedia.translating_icon),
-          iconSize: 40,
-          onPressed: () {
-            Get.bottomSheet(const LanguageBottomSheet());
-          },
-        ),
+         CustomTextView(txt: AppStrings.hello.tr,textStyle: themeData.textTheme.headline4?.copyWith(color: AppColor.white),),
         // TextButton(
         //   onPressed: () {
         //     Get.bottomSheet(const LanguageBottomSheet());
@@ -34,7 +28,13 @@ class WelcomeRow extends StatelessWidget {
         //   child:
         //   CustomTextView(txt: AppStrings.chooseLanguage.tr,textStyle: themeData.textTheme.headline1?.copyWith(color: AppColor.white),),
         // ),
-        CustomTextView(txt: AppStrings.hello.tr,textStyle: themeData.textTheme.headline4?.copyWith(color: AppColor.white),),
+         IconButton(
+          icon: Image.asset(AppMedia.translating_icon),
+          iconSize: 25,
+          onPressed: () {
+            Get.bottomSheet(const LanguageBottomSheet());
+          },
+        ),
       ],
     ));
   }

@@ -92,7 +92,7 @@ class AuthUseCase{
       return AppResponse.fromJson(message??{});
     }
   }
-  Future<AppResponse> virifyAccount({var url, var header,var body}) async{
+  /* Future<AppResponse> virifyAccount({var url, var header,var body}) async{
     try{
       var response = await DioManagerClass.getInstance
           .dioPostMethod(url: url, header: header,body: body);
@@ -102,5 +102,5 @@ class AuthUseCase{
       Logger().e(message);
       return AppResponse.fromJson(message??{});
     }
-  }
+  } */
 }

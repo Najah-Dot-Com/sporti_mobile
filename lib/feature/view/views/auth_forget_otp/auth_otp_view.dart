@@ -11,6 +11,8 @@ import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_strings.dart';
 
+import '../auth_resetpassword/auth_resetpassword_view.dart';
+
 class AuthOTPView extends StatefulWidget {
   String? email = 'example@gmail.com';
   AuthOTPView({Key? key, @required this.email}) : super(key: key);
@@ -186,8 +188,8 @@ class _AuthOTPViewState extends State<AuthOTPView> {
   }
 
   void _onVerifyClick() {
-    AuthViewModel().confirmEmail(_pinCodeController.text.toString());
-    //Get.to(() => const AccountSuccessVerifyView());
+    AuthViewModel().confirmEmail(pinCode: _pinCodeController);
+    Get.to(() => ResetPasswordView(pinCodeController: _pinCodeController,));
   }
 
   // this for on complete code

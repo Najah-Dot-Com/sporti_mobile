@@ -24,12 +24,25 @@ class TermsAndPrivacyCheckBox extends StatelessWidget {
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-         CustomTextView(
+         
+        Checkbox(
+            fillColor: MaterialStateProperty.resolveWith(getColor),
+            checkColor: AppColor.white,
+            value: acceptPolicy,
+            onChanged: (value) {
+              onChange!(value!);
+              // ignore: todo
+              //TODO :need for state
+              // setState(() {
+              //   acceptPolicy = value!;
+              // });
+            }),
+            CustomTextView(
           txt: AppStrings.iAccept.tr,
           textStyle:
-              themeData.textTheme.headline1?.copyWith(color: AppColor.black),
+              themeData.textTheme.bodyText2?.copyWith(color: AppColor.black),
         ),
         
         const SizedBox(
@@ -44,18 +57,6 @@ class TermsAndPrivacyCheckBox extends StatelessWidget {
                 themeData.textTheme.headline6?.copyWith(color: AppColor.primary),
           ),
           ),
-        Checkbox(
-            fillColor: MaterialStateProperty.resolveWith(getColor),
-            checkColor: AppColor.white,
-            value: acceptPolicy,
-            onChanged: (value) {
-              onChange!(value!);
-              // ignore: todo
-              //TODO :need for state
-              // setState(() {
-              //   acceptPolicy = value!;
-              // });
-            }),
       ],
     );
   }
