@@ -175,5 +175,46 @@ class HomeViewModel extends GetxController with GetSingleTickerProviderStateMixi
     }
   }
 
+  addEventExercises(var id ,var type){
+    Map<String , dynamic> map = {
+      ConstanceNetwork.exerciseIdKey : id,
+      ConstanceNetwork.typeKey:type //typeDoneKey || typeReturnKey
+    };
+    _addEventExercises(map);
+  }
+
+
+  //this for  add to my work
+  Future<void> _addEventExercises(Map<String, dynamic> map)async{
+    try {
+
+      isLoading = true;
+      update();
+      await ExercisesFeature.getInstance.addEventExercises(map).then((value) async {
+        //handle object from value || [save in sharedPreferences]
+        Logger().d(value);
+        if (value.status??false) {
+          snackSuccess("", value.message);
+          isLoading = false;
+          update();
+        } else {
+          snackError("", value.message);
+          isLoading = false;
+          update();
+        }
+      }).catchError((onError) {
+        //handle error from value
+        snackError("", onError.toString());
+        Logger().d(onError.toString());
+        isLoading = false;
+        update();
+      });
+    } catch (e) {
+      Logger().d(e.toString());
+      isLoading = false;
+      update();
+    }
+  }
+
 
 }

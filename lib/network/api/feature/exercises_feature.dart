@@ -26,7 +26,7 @@ class ExercisesFeature {
       List<ExercisesData> data = result.map((e) => ExercisesData.fromJson(e)).toList();
       return data;
     } else {
-      snackError("",  appResponse.message??appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return [];
     }
@@ -43,7 +43,7 @@ class ExercisesFeature {
       List<ExercisesData> data = result.map((e) => ExercisesData.fromJson(e)).toList();
       return data;
     } else {
-      snackError("",  appResponse.message??appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return [];
     }
@@ -60,7 +60,23 @@ class ExercisesFeature {
       Logger().d("if ${appResponse.toJson()}");
       return appResponse;
     } else {
-      snackError("",  appResponse.message??appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      Logger().d("else ${appResponse.toJson()}");
+      return appResponse;
+    }
+  }
+
+  Future<AppResponse> addEventExercises(Map<String, dynamic> body) async{
+    var appResponse = await ExercisesUseCase.getInstance.addEventExercises(
+        body:body,
+        url: ConstanceNetwork.eventExercisesApi,
+        header: ConstanceNetwork.header(1)
+    );
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return appResponse;
+    } else {
+      snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return appResponse;
     }

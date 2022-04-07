@@ -19,6 +19,9 @@ abstract class ConstanceNetwork {
   //this for home page
   static String parentIdKey = "parent_id";
   static String exerciseIdKey = "exercise_id";
+  static String typeKey = "type";
+  static String typeDoneKey = "done";
+  static String typeReturnKey = "return";
 
   ///todo here insert end Point
   //auth end point
@@ -31,6 +34,7 @@ abstract class ConstanceNetwork {
   static String exercisesApi = "exercises";
   static String topExercisesApi = "top_exercises";
   static String isFavoriteApi = "is_favorite";
+  static String eventExercisesApi = "event_exercises";
 
 
 
