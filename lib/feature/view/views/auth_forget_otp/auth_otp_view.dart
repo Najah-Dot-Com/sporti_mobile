@@ -70,7 +70,7 @@ class _AuthOTPViewState extends State<AuthOTPView> {
               color: AppColor.black,
               fontWeight: FontWeight.bold,
             ),
-            length: 5,
+            length: 6,
             obscureText: false,
             obscuringCharacter: '*',
             animationType: AnimationType.fade,
