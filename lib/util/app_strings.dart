@@ -32,6 +32,9 @@ class AppStrings {
   //TODO: this for profile page
   static const String txtAccount = "الحساب";
   static const String txtCompleted = "أتممت";
+  static const String txtDone = "تمت";
+  static const String txtNotCompleted = "لم تتم";
+  static const String txtInCompleted = "جاري الاتمام";
   static const String txtExercises = "تمارين";
   static const String txtBalance = "Balance : ";
   static const String txtVerifyAccount = "تفعيل الحساب";
@@ -62,6 +65,7 @@ class AppStrings {
   static const String txtNewlyAddedPackages = "باقات أضيفت حديثا";//
   static const String txtChooseYourFavoriteExercises = "اختر تمارينك المفضلة";//
   static const String txtPackageRepeatedTimes = "يجب إعادة كل باقة 3 مرات ";//
+  static const String txtTimes = "مرات";//
   static const String txtDetailsNote = "تنبيه: لصحة أفضل يجب استشارة الطبيب أولا خاصة بوجود امراض مزمنة";//
   static const String txtAddToMyWork = "AddToMyWork";
 

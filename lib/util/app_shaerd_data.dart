@@ -14,6 +14,8 @@ import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
 
+import 'localization/localization_service.dart';
+
 
 
 
@@ -310,7 +312,7 @@ class DismissKeyboard extends StatelessWidget {
 
 
 bool isArabicLang() {
-  return (SharedPref.instance.getAppLanguageMain() == "ar" ? true : false);
+  return (SharedPref.instance.getAppLanguageMain() == LocalizationService.localeAr ? true : false);
   // return isRTL;
 }
 
@@ -328,5 +330,16 @@ Future<DateTime?> dateBiker() async {
 }
 
 
-
+String formatStringWithCurrency(var data/*, String currency*/) {
+  try {
+    var number = data.toString().replaceAll("\$", "").replaceAll(",", "");
+    number =
+    "\$ ${NumberFormat("#0.00", "en_US").format(double.parse(number))}";
+    //var numbers = "${currency}${double.parse(number).toStringAsFixed(2)}";
+    return number.toString();
+  } catch (e) {
+    print(e);
+    return "0.00";
+  }
+}
 

@@ -81,4 +81,8 @@ Map<String, String> enUS = {
   AppStrings.txtNewPassword: "New Password",
   AppStrings.txtOk: "Ok",
   AppStrings.txtAddToMyWork: "Add To My Exercise",
+  AppStrings.txtTimes: "times",
+  AppStrings.txtNotCompleted: "Not Completed",
+  AppStrings.txtInCompleted: "Completing",
+  AppStrings.txtDone: "Done",
 };

@@ -16,8 +16,8 @@ class AppMedia {
   static const String transparentImage = "$IMAGE_PATH/trasnparnt_image.svg";
   static const String iconsAdd = "$IMAGE_PATH/icons_add.svg";
 
-  static const String notComplete="$IMAGE_PATH/not_complete.svg";
-  static const String complete="$IMAGE_PATH/compleate.svg";
+  static const String notComplete = "$IMAGE_PATH/not_complete.svg";
+  static const String complete = "$IMAGE_PATH/compleate.svg";
 
   static String play = "$IMAGE_PATH/play.png";
 
@@ -27,4 +27,6 @@ class AppMedia {
   static const String exircise_one = "$IMAGE_PATH/exircise_one.png";
   static const String translating_icon = "$IMAGE_PATH/globe.png";
   static const String remove = "$IMAGE_PATH/remove.svg";
+
+  static const String resetPassword = "$IMAGE_PATH/reset_password.svg";
 }

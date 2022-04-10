@@ -13,12 +13,17 @@ class AppResponse {
 
   factory AppResponse.fromJson(var map) {
     try {
-      return AppResponse(
-        statusCode: map["StatusCode"] == null ? 0 : map["StatusCode"],
-        result: map["Result"] == null ? null : map["Result"],
-        message: map["Message"] == null ? null : map["Message"],
-        status: map["Status"] == null ? false : map["Status"],
-      );
+      if(map == null || map == {}){
+        return AppResponse(
+            statusCode: 0, result: null, message: "", status: false);
+      }else {
+        return AppResponse(
+          statusCode: map["StatusCode"] == null ? 0 : map["StatusCode"],
+          result: map["Result"] == null ? null : map["Result"],
+          message: map["Message"] == null ? null : map["Message"],
+          status: map["Status"] == null ? false : map["Status"],
+        );
+      }
     } catch (e) {
       return AppResponse(
           statusCode: 0, result: null, message: "", status: false);

@@ -9,11 +9,13 @@ class ExercisesData {
     this.id,
     this.parentId,
     this.isDone= false,
-    this.isRetuen= false
+    this.isRetuen= false,
+    this.countFinish = 0
   });
 
   int? id;
   int? parentId;
+  int? countFinish;
   bool? isDone;
   bool? isRetuen;
   String? title;
@@ -34,11 +36,13 @@ class ExercisesData {
     isFavorite: json["isFavorite"] == null ? false:json["isFavorite"],
     image: json["image"] == null ? null:json["image"],
     updatedAt: json["updated_at"] == null ? null:json["updated_at"],
+    countFinish: json["countFinish"] == null ? 0:json["countFinish"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id == null ? null : id,
     "parent_id": parentId == null ? null : parentId,
+    "countFinish": countFinish == null ? null : countFinish,
     "title": title == null ? null: title,
     "description": description == null ? null: description,
     "time": time == null ? null: time,

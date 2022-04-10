@@ -197,7 +197,7 @@ class ProfileView extends StatelessWidget {
               _profileItem(themeData,onClick:_onPrivacyPolicy,leadingIcon:AppMedia.privacyPolicies ,title:AppStrings.txtPrivacyPolicies.tr ,trailingIcon:AppMedia.arrowIos ),
               _profileItem(themeData,onClick:_onLogout,leadingIcon:AppMedia.logout ,title:AppStrings.txtLogout.tr ,trailingIcon:AppMedia.arrowIos ),
               _profileItem(themeData,onClick:_onGetMoneyPage,leadingIcon:AppMedia.currency ,title:AppStrings.txtCurrency.tr ,trailingIcon:AppMedia.arrowIos ),
-              _profileItem(themeData,onClick:_onUpdatePassword,leadingIcon:AppMedia.currency ,title:AppStrings.resetYourPass.tr ,trailingIcon:AppMedia.arrowIos ),
+              _profileItem(themeData,onClick:_onUpdatePassword,leadingIcon:AppMedia.resetPassword ,title:AppStrings.resetYourPass.tr ,trailingIcon:AppMedia.arrowIos ),
               _profileDeleteAccount(themeData ,title: AppStrings.txtDeleteAccount.tr,trailingIcon:  AppMedia.arrowIos),
               const SizedBox(
                 height: AppSize.s50,
@@ -213,11 +213,11 @@ class ProfileView extends StatelessWidget {
 
 
  String _completedConcatenations() {
-    return AppStrings.txtCompleted.tr + " 5 " + AppStrings.txtExercises.tr;
+    return AppStrings.txtCompleted.tr + " ${SharedPref.instance.getUserData().finish} " + AppStrings.txtExercises.tr;
  }
 
   String _balanceConcatenations() {
-    return AppStrings.txtBalance.tr + " 5 " + AppStrings.txtCurrency.tr;
+    return AppStrings.txtBalance.tr + " ${formatStringWithCurrency( SharedPref.instance.getUserData().balance.toString())} " /*+ AppStrings.txtCurrency.tr*/;
   }
 
   void _verifyAccount() {

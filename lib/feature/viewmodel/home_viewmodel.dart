@@ -6,6 +6,7 @@ import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/network/api/feature/exercises_feature.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
+import 'package:sporti/util/sh_util.dart';
 
 class HomeViewModel extends GetxController with GetSingleTickerProviderStateMixin{
   TabController? tabController;
@@ -17,6 +18,7 @@ class HomeViewModel extends GetxController with GetSingleTickerProviderStateMixi
   List<ExercisesData> exercisesListAll = [];//packages
   List<ExercisesData> packageDetailsExercisesList = [];//packages
   List<ExercisesData> exercisesListRecentlyAll = [];//packages
+  List<ExercisesData> exercisesListFavorite = [];//packages
   @override
   void onInit() {
     super.onInit();
@@ -216,5 +218,67 @@ class HomeViewModel extends GetxController with GetSingleTickerProviderStateMixi
     }
   }
 
+
+  //this for all packages
+  Future<void> getFavoriteExercises()async{
+    try {
+      isLoading = true;
+      update();
+      await ExercisesFeature.getInstance.getFavoriteExercises().then((value) async {
+        //handle object from value || [save in sharedPreferences]
+        Logger().d(value);
+        if (value != null && value.isNotEmpty) {
+          exercisesListFavorite.clear();
+          exercisesListFavorite = value;
+          isLoading = false;
+          update();
+        } else {
+          isLoading = false;
+          update();
+        }
+      }).catchError((onError) {
+        //handle error from value
+        // snackError("", onError.toString());
+        Logger().d(onError.toString());
+        isLoading = false;
+        update();
+      });
+    } catch (e) {
+      Logger().d(e.toString());
+      isLoading = false;
+      update();
+    }
+  }
+
+
+//this for all packages
+  Future<void> getBalanceUser()async{
+    try {
+      isLoading = true;
+      update();
+      await ExercisesFeature.getInstance.getBalanceUser().then((value) async {
+        //handle object from value || [save in sharedPreferences]
+        Logger().d(value);
+        if (value != null) {
+         SharedPref.instance.setUserBalance(value);
+          isLoading = false;
+          update();
+        } else {
+          isLoading = false;
+          update();
+        }
+      }).catchError((onError) {
+        //handle error from value
+        // snackError("", onError.toString());
+        Logger().d(onError.toString());
+        isLoading = false;
+        update();
+      });
+    } catch (e) {
+      Logger().d(e.toString());
+      isLoading = false;
+      update();
+    }
+  }
 
 }

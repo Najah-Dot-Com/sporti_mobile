@@ -82,4 +82,8 @@ Map<String, String> arSU = {
   AppStrings.txtNewPassword: "كلمة المرور الجديدة",
   AppStrings.txtOk: "موافق",
   AppStrings.txtAddToMyWork: "اضافة الى تماريني",
+  AppStrings.txtTimes: "مرات",
+  AppStrings.txtNotCompleted: "لم تتم",
+  AppStrings.txtInCompleted: "جاري الاتمام",
+  AppStrings.txtDone: "تمت",
 };

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/category_details/categories_details_view.dart';
 import 'package:sporti/util/app_color.dart';
@@ -8,13 +9,14 @@ import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
+import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/constance.dart';
 
 class MyWorkListItemWidget extends StatelessWidget {
-  const MyWorkListItemWidget({Key? key,required this.index}) : super(key: key);
+  const MyWorkListItemWidget({Key? key,required this.index,required this.favorite}) : super(key: key);
   final String fakeImage = "https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/07/1377301-1183869-The-8-Best-Weight-Benches-of-2021-1296x728-Header-c0dcdf.jpg?w=1575";
   final int? index;
-
+  final ExercisesData? favorite;
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
@@ -59,7 +61,7 @@ class MyWorkListItemWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomTextView(
-                        txt: "Breathing Package",
+                        txt: favorite?.title?.toString()??"",
                         maxLine: Constance.maxLineOne,
                         textOverflow: TextOverflow.ellipsis,
                         textStyle: themeData.textTheme.headline2?.copyWith(
@@ -69,7 +71,7 @@ class MyWorkListItemWidget extends StatelessWidget {
                         height: AppSize.s6,
                       ),
                       CustomTextView(
-                        txt: "times 1",
+                        txt: "${AppStrings.txtTimes.tr} ${favorite?.countFinish}",
                         maxLine: Constance.maxLineOne,
                         textOverflow: TextOverflow.ellipsis,
                         textStyle: themeData.textTheme.subtitle2
@@ -92,17 +94,46 @@ class MyWorkListItemWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CustomTextView(
-                  txt: "Completing",
-                  maxLine: Constance.maxLineOne,
-                  textOverflow: TextOverflow.ellipsis,
-                  textStyle: themeData.textTheme.headline2?.copyWith(
-                      color: AppColor.black, fontSize: AppFontSize.s16),
-                ),
-                const SizedBox(
-                  width: AppSize.s20,
-                ),
-                SvgPicture.asset(AppMedia.notComplete)
+                if(favorite?.countFinish == 0)...[
+                  //todo this for not complete
+                  CustomTextView(
+                    txt: AppStrings.txtNotCompleted.tr,
+                    maxLine: Constance.maxLineOne,
+                    textOverflow: TextOverflow.ellipsis,
+                    textStyle: themeData.textTheme.headline2?.copyWith(
+                        color: AppColor.black, fontSize: AppFontSize.s16),
+                  ),
+                  const SizedBox(
+                    width: AppSize.s20,
+                  ),
+                  SvgPicture.asset(AppMedia.notComplete)
+                ]else if(favorite!.countFinish! > 0 && favorite!.countFinish!<3)...[
+                  //todo this for in the way to complete
+                  CustomTextView(
+                    txt: AppStrings.txtInCompleted.tr,
+                    maxLine: Constance.maxLineOne,
+                    textOverflow: TextOverflow.ellipsis,
+                    textStyle: themeData.textTheme.headline2?.copyWith(
+                        color: AppColor.black, fontSize: AppFontSize.s16),
+                  ),
+                  const SizedBox(
+                    width: AppSize.s20,
+                  ),
+                  SvgPicture.asset(AppMedia.notComplete)
+                ]else...[
+                  //todo this for complete
+                  CustomTextView(
+                    txt: AppStrings.txtDone.tr,
+                    maxLine: Constance.maxLineOne,
+                    textOverflow: TextOverflow.ellipsis,
+                    textStyle: themeData.textTheme.headline2?.copyWith(
+                        color: AppColor.black, fontSize: AppFontSize.s16),
+                  ),
+                  const SizedBox(
+                    width: AppSize.s20,
+                  ),
+                  SvgPicture.asset(AppMedia.complete)
+                ]
               ],
             ),
           ],

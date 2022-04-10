@@ -21,6 +21,7 @@ class MoneyCollectView extends StatelessWidget {
     var themeData = Theme.of(context);
     return Scaffold(
       backgroundColor: AppColor.white,
+      appBar: AppBar(elevation: 0,leading: InkWell(onTap: (){Get.back();}, child: Icon(Icons.arrow_back_ios , color: AppColor.black,)),),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppPadding.p50),
         child: Column(

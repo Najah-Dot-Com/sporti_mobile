@@ -5,6 +5,7 @@ import 'package:get/utils.dart';
 
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sporti/feature/model/balance_data.dart';
 import 'package:sporti/feature/model/user_data.dart';
 
 import 'localization/localization_service.dart';
@@ -18,6 +19,7 @@ class SharedPref {
   final String fcmKey = "fcm";
   final String langKey = "langKey";
   final String userDataKey = "userData";
+  final String userBalanceKey = "userBalanceKey";
   final String loginKey = "login";
 
   static SharedPreferences? _prefs;
@@ -69,6 +71,18 @@ class SharedPref {
     }
   }
 
+   setUserBalance(BalanceData value) async{
+    try {
+      var userData = getUserData();
+      userData.balance = value.balance;
+      userData.finish = value.finish;
+      await _prefs?.setString(userBalanceKey, jsonEncode(userData.toJson()));
+    } catch (e) {
+    Logger().e(e);
+    return "$e";
+    }
+  }
+
   setUserData(String profileData) async {
     try {
       await _prefs?.setString(userDataKey, profileData.toString());
@@ -113,5 +127,7 @@ class SharedPref {
     _prefs?.remove(userDataKey);
     _prefs?.remove(fcmKey);
   }
+
+
 
 }

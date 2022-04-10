@@ -116,6 +116,7 @@ class HomePageTab extends StatelessWidget {
             WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
               state.controller?.allPackagesExercises();
               state.controller?.allPackagesTopExercises();
+              state.controller?.getBalanceUser();
             });
           },
           builder: (logic) {
