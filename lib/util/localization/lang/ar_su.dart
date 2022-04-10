@@ -40,7 +40,7 @@ Map<String, String> arSU = {
   AppStrings.txtVerifyPhoneCodeHint: "لقد ارسلنا لك كود التفعيل على رقم هاتفك",
   AppStrings.txtVerifyEmailCodeHint: "لقد ارسلنا لك كود التفعيل \n على بريدك الالكتروني",
   AppStrings.txtVerify: "تفعيل",
-  AppStrings.txtResend: "اعد ارسال ",
+  AppStrings.txtResend: "اعد ارسال",
   AppStrings.txtVerifyAccountDone: "تم تفعيل الحساب بنجاح",
   AppStrings.txtHello: "مرحباً",
   AppStrings.txtProfile: "حسابي",

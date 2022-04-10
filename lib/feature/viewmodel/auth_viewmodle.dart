@@ -262,39 +262,38 @@ class AuthViewModel extends GetxController {
 
   //click on confirmEmail in btn on auth OTP page
   void confirmEmail(
-      {TextEditingController? pinCode,
+      {
+      TextEditingController? pinCode,
       TextEditingController? passwordNew,
       TextEditingController? passwordConfirm}) async {
-    Map<String, dynamic> map = {
+      Map<String, dynamic> map = {
       ConstanceNetwork.code: pinCode?.text.toString() ?? '',
       ConstanceNetwork.passwordNewKey: passwordNew?.text.toString() ?? '',
       ConstanceNetwork.passwordConfirmKey:
           passwordConfirm?.text.toString() ?? '',
     };
-    await _confirmEmail(map);
-    //this check for decide which screen to move to.
-    if (passwordConfirm == null) {
-      Get.to(() => ResetPasswordView(
-            pinCodeController: pinCode,
-          ));
-    } else {
-      Get.offAll(() => LoginView());
-    }
+    await _confirmEmail(map:map,pinCode: pinCode,newPAss: passwordNew,confirmPass: passwordConfirm);
+    
   }
-
-  Future<void> _confirmEmail(Map<String, dynamic> map) async {
+  Future<void> _confirmEmail({Map<String, dynamic>? map,var pinCode,var newPAss,var confirmPass}) async {
     try {
       isLoading = true;
       update();
-      await AuthFeature.getInstance.confirmEmail(map).then((value) async {
-        //handle object from value || [save in sharedPreferences]
+      await AuthFeature.getInstance.confirmEmail(map!).then((value) async {
         Logger().d(value.toJson());
         if (value.status) {
-          //TODO: if verification and success go to ForgetOtpView page
+          //TODO: if verification and success go to ResetPasswordView page
           isLoading = false;
           update();
           await snackSuccess("", value.message);
-          // Get.to(page)
+          //this check for decide which screen to move to.
+          if (confirmPass == null) {
+            Get.to(() => ResetPasswordView(
+                  pinCodeController: pinCode,
+                ));
+          } else {
+            Get.offAll(() => LoginView());
+          }
         } else {
           isLoading = false;
           update();

@@ -34,10 +34,10 @@ class _AuthOTPViewState extends State<AuthOTPView> {
     super.initState();
   }
 
-  void dispose() {
-    _errorController?.close();
-    super.dispose();
-  }
+  // void dispose() {
+  //   _errorController?.close();
+  //   // super.dispose();
+  // }
 
   PreferredSizeWidget get myAppbar => AppBar(
         backgroundColor: AppColor.white,
@@ -57,7 +57,6 @@ class _AuthOTPViewState extends State<AuthOTPView> {
       child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),
           child: PinCodeTextField(
-            
             autoFocus: true,
             autoDismissKeyboard: true,
             enablePinAutofill: true,
