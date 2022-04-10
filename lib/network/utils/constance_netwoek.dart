@@ -19,7 +19,7 @@ abstract class ConstanceNetwork {
   static String passwordConfirmKey = "password_confirm";
   static String passwordNewKey = "password_new";
   //this for auth keys
-  static String Confirm_virify_email_code = 'code';
+  static String code = 'code';
   //this for account verify keys
   static String userPhoneNumer = 'phone';
 
@@ -31,6 +31,7 @@ abstract class ConstanceNetwork {
   static String verifyEmailApi = "verifi_email?email=";
   static String confirmEmailApi = "confirm_verifi_email";
   static String verifyAccount = "verifi_account";
+  static String confirmAccount = "confirm_verifi_code";
 
   static Map<String, String> header(int typeToken) {
     Map<String, String> headers = {};

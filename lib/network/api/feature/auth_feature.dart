@@ -115,7 +115,7 @@ class AuthFeature {
     }
   }
 
-  /* Future<AppResponse> verifyAccount(Map<String, dynamic> body) async {
+  Future<AppResponse> verifyAccount(Map<String, dynamic> body) async {
     var appResponse = await AuthUseCase.getInstance.virifyAccount(
       url: ConstanceNetwork.verifyAccount,
       header: ConstanceNetwork.header(2),
@@ -129,5 +129,20 @@ class AuthFeature {
       Logger().d("else ${appResponse.toJson()}");
       return appResponse;
     }
-  } */
+  }
+  Future<AppResponse> confirmAccount(Map<String, dynamic> body) async {
+    var appResponse = await AuthUseCase.getInstance.confirmUseraccount(
+      url: ConstanceNetwork.confirmAccount,
+      header: ConstanceNetwork.header(2),
+      body: body,
+    );
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return appResponse;
+    } else {
+      snackError("", appResponse.message ?? "");
+      Logger().d("else ${appResponse.toJson()}");
+      return appResponse;
+    }
+  }
 }

@@ -11,6 +11,7 @@ import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
 
 import '../view/views/account_otp/account_otp_view.dart';
+import '../view/views/account_success_virefy/account_success_virefy_view.dart';
 import '../view/views/auth_forget_otp/auth_otp_view.dart';
 
 class AuthViewModel extends GetxController {
@@ -143,16 +144,16 @@ class AuthViewModel extends GetxController {
         Logger().d(value.toJson());
         if (value.status) {
           //TODO: if verification and success go to home page
-          Get.offAll( LoginView());
+          Get.offAll(LoginView());
           await SharedPref.instance.setUserLogin(false);
           isLoading = false;
           update();
           await SharedPref.instance.clear();
-         // snackSuccess("", value.message??"");
+          // snackSuccess("", value.message??"");
         } else {
           isLoading = false;
           update();
-          Get.offAll( LoginView());
+          Get.offAll(LoginView());
           await SharedPref.instance.setUserLogin(false);
           await SharedPref.instance.clear();
         }
@@ -260,27 +261,27 @@ class AuthViewModel extends GetxController {
   }
 
   //click on confirmEmail in btn on auth OTP page
-  void confirmEmail (
+  void confirmEmail(
       {TextEditingController? pinCode,
       TextEditingController? passwordNew,
-      TextEditingController? passwordConfirm}) async{
+      TextEditingController? passwordConfirm}) async {
     Map<String, dynamic> map = {
-      ConstanceNetwork.Confirm_virify_email_code:
-          pinCode?.text.toString() ?? '',
+      ConstanceNetwork.code: pinCode?.text.toString() ?? '',
       ConstanceNetwork.passwordNewKey: passwordNew?.text.toString() ?? '',
       ConstanceNetwork.passwordConfirmKey:
           passwordConfirm?.text.toString() ?? '',
     };
     await _confirmEmail(map);
     //this check for decide which screen to move to.
-    if(passwordConfirm==null){
-      Get.to(() => ResetPasswordView(pinCodeController: pinCode,));
-    }else{
+    if (passwordConfirm == null) {
+      Get.to(() => ResetPasswordView(
+            pinCodeController: pinCode,
+          ));
+    } else {
       Get.offAll(() => LoginView());
     }
   }
 
-  //make _confirmEmail methode
   Future<void> _confirmEmail(Map<String, dynamic> map) async {
     try {
       isLoading = true;
@@ -311,26 +312,33 @@ class AuthViewModel extends GetxController {
       update();
     }
   }
+
   //click on verifyAccount in btn on login page
-  /* void verifyAccount({@required var userPhoneNumber}) {
+  void verifyAccount({@required var userPhoneNumber}) {
     Map<String, dynamic> map = {
-        ConstanceNetwork.userPhoneNumer : userPhoneNumber.toString(),
+      ConstanceNetwork.userPhoneNumer: userPhoneNumber,
     };
-    _verifyAccount(map);
+    Logger().d(map);
+    _verifyAccount(map, userPhoneNumber);
   }
-  //make _confirmEmail methode
-  Future<void> _verifyAccount(Map<String, dynamic> map) async {
+
+  Future<void> _verifyAccount(Map<String, dynamic> map, var phoneNumber) async {
+    Logger().d(phoneNumber);
     try {
       isLoading = true;
       update();
       await AuthFeature.getInstance.verifyAccount(map).then((value) async {
-        //handle object from value || [save in sharedPreferences]
-        Logger().d(value.toJson());
+        if (value.status) {
+          // if success go to AccountOtpView page
+          Logger().d(value.toJson());
           isLoading = false;
-          snackSuccess("", value.message??"");
+          await snackSuccess("", value.message ?? "");
           update();
+          // Get.to(page)
+          Logger().d(phoneNumber);
+          Get.to(() => AccountOtpView(userPhoneNumer: phoneNumber));
         }
-      ).catchError((onError) {
+      }).catchError((onError) {
         //handle error from value
         snackError("", onError.toString());
         Logger().d(onError.toString());
@@ -343,5 +351,45 @@ class AuthViewModel extends GetxController {
       update();
     }
   }
- */
+
+  //click on confirmEmail in btn on account OTP page
+  void confirmAccount({
+    TextEditingController? pinCode,
+  }) async {
+    Map<String, dynamic> map = {
+      ConstanceNetwork.code: pinCode?.text.toString() ?? '',
+    };
+    await _confirmAccount(map);
+  }
+
+  Future<void> _confirmAccount(Map<String, dynamic> map) async {
+    try {
+      isLoading = true;
+      update();
+      await AuthFeature.getInstance.confirmAccount(map).then((value) async {
+        //handle object from value || [save in sharedPreferences]
+        Logger().d(value.toJson());
+        if (value.status) {
+          //TODO: if verification and success go to ForgetOtpView page
+          isLoading = false;
+          update();
+          await snackSuccess("", value.message);
+          Get.to(const AccountSuccessVerifyView());
+        } else {
+          isLoading = false;
+          update();
+        }
+      }).catchError((onError) {
+        //handle error from value
+        snackError("", onError.toString());
+        Logger().d(onError.toString());
+        isLoading = false;
+        update();
+      });
+    } catch (e) {
+      Logger().d(e.toString());
+      isLoading = false;
+      update();
+    }
+  }
 }

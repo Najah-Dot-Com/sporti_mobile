@@ -68,7 +68,7 @@ class _AccountOtpViewState extends State<AccountOtpView> {
               color: AppColor.black,
               fontWeight: FontWeight.bold,
             ),
-            length: 4,
+            length: 6,
             obscureText: false,
             obscuringCharacter: '*',
             animationType: AnimationType.fade,
@@ -160,6 +160,7 @@ class _AccountOtpViewState extends State<AccountOtpView> {
           const SizedBox(
             height: AppSize.s12,
           ),
+          //htis text show user Phone Number
           CustomTextView(
             txt: widget.userPhoneNumer,
             textStyle: themeData.textTheme.headline2
@@ -186,7 +187,8 @@ class _AccountOtpViewState extends State<AccountOtpView> {
   }
 
   void _onVerifyClick() {
-  // AuthViewModel().verifyAccount(userPhoneNumber: widget.userPhoneNumer);
+    FocusManager.instance.primaryFocus?.unfocus();
+    AuthViewModel().confirmAccount(pinCode: _pinCodeController);
     //Get.to(() => const AccountSuccessVerifyView());
   }
 
