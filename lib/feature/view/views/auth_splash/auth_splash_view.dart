@@ -31,7 +31,7 @@ class _SplashViewState extends State<SplashView>
          if(SharedPref.instance.getIsUserLogin()){
            Get.offAll(const HomePageView());
          }else {
-           Get.offAll(const LoginView());
+           Get.offAll( LoginView());
          }
        });
     });

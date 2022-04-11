@@ -1,24 +1,27 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/primary_button.dart';
 import 'package:sporti/feature/view/views/account_success_virefy/account_success_virefy_view.dart';
+import 'package:sporti/feature/viewmodel/auth_viewmodle.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_strings.dart';
 
-class ForgetOtpView extends StatefulWidget {
-  const ForgetOtpView({Key? key}) : super(key: key);
+import '../auth_resetpassword/auth_resetpassword_view.dart';
+
+class AuthOTPView extends StatefulWidget {
+  String? email = 'example@gmail.com';
+  AuthOTPView({Key? key, @required this.email}) : super(key: key);
 
   @override
-  State<ForgetOtpView> createState() => _ForgetOtpViewState();
+  State<AuthOTPView> createState() => _AuthOTPViewState();
 }
 
-class _ForgetOtpViewState extends State<ForgetOtpView> {
+class _AuthOTPViewState extends State<AuthOTPView> {
   bool hasError = false;
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static final TextEditingController _pinCodeController =
@@ -31,10 +34,10 @@ class _ForgetOtpViewState extends State<ForgetOtpView> {
     super.initState();
   }
 
-  void dispose() {
-    _errorController?.close();
-    super.dispose();
-  }
+  // void dispose() {
+  //   _errorController?.close();
+  //   // super.dispose();
+  // }
 
   PreferredSizeWidget get myAppbar => AppBar(
         backgroundColor: AppColor.white,
@@ -66,7 +69,7 @@ class _ForgetOtpViewState extends State<ForgetOtpView> {
               color: AppColor.black,
               fontWeight: FontWeight.bold,
             ),
-            length: 4,
+            length: 6,
             obscureText: false,
             obscuringCharacter: '*',
             animationType: AnimationType.fade,
@@ -114,7 +117,6 @@ class _ForgetOtpViewState extends State<ForgetOtpView> {
     );
   }
 
-
   //this for verifications code
   Widget _resendVerificationsCode(ThemeData themeData) {
     return RichText(
@@ -123,12 +125,14 @@ class _ForgetOtpViewState extends State<ForgetOtpView> {
           children: [
             TextSpan(
                 text: AppStrings.txtVerifyCode.tr,
-                style: themeData.textTheme.headline2?.copyWith(color: AppColor.primary)),
+                style: themeData.textTheme.headline2
+                    ?.copyWith(color: AppColor.primary)),
           ],
           style: themeData.textTheme.headline2),
       textAlign: TextAlign.center,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
@@ -150,15 +154,15 @@ class _ForgetOtpViewState extends State<ForgetOtpView> {
             height: AppSize.s12,
           ),
           CustomTextView(
-            txt: AppStrings.txtVerifyCodeHint.tr,
-            textStyle: themeData.textTheme.headline2
+            txt: AppStrings.txtVerifyEmailCodeHint.tr,
+            textStyle: themeData.textTheme.subtitle2
                 ?.copyWith(fontSize: AppFontSize.s24, color: AppColor.grey),
           ),
           const SizedBox(
             height: AppSize.s12,
           ),
           CustomTextView(
-            txt: "555555555",
+            txt: widget.email,
             textStyle: themeData.textTheme.headline2
                 ?.copyWith(fontSize: AppFontSize.s18, color: AppColor.primary),
           ),
@@ -182,10 +186,10 @@ class _ForgetOtpViewState extends State<ForgetOtpView> {
     );
   }
 
-
-
   void _onVerifyClick() {
-    Get.to(()=>const AccountSuccessVerifyView());
+    FocusManager.instance.primaryFocus?.unfocus();
+    AuthViewModel().confirmEmail(pinCode: _pinCodeController);
+    // Get.to(() => ResetPasswordView(pinCodeController: _pinCodeController,));
   }
 
   // this for on complete code
@@ -202,6 +206,5 @@ class _ForgetOtpViewState extends State<ForgetOtpView> {
   }
 
   void _onCodeSubmit(String value) {
-
   }
 }

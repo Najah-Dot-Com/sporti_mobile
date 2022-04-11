@@ -6,6 +6,7 @@ import 'package:sporti/feature/view/appwidget/custom_text_filed.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/primary_button.dart';
 import 'package:sporti/feature/view/views/account_otp/account_otp_view.dart';
+import 'package:sporti/feature/viewmodel/auth_viewmodle.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
@@ -14,9 +15,11 @@ import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/constance.dart';
 
 class AccountVerifyView extends StatelessWidget {
-  const AccountVerifyView({Key? key}) : super(key: key);
+  AccountVerifyView({Key? key}) : super(key: key);
 
-  static final TextEditingController _phoneNumberController = TextEditingController();
+  static final TextEditingController _phoneNumberController =
+      TextEditingController();
+  String counteryCode = "";
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   PreferredSizeWidget get myAppbar => AppBar(
@@ -30,7 +33,6 @@ class AccountVerifyView extends StatelessWidget {
           ),
         ),
       );
-
 
   //this for phone number widget
   Widget _phoneNumberWidget(ThemeData themeData) {
@@ -50,12 +52,13 @@ class AccountVerifyView extends StatelessWidget {
             // optional. Shows only country name and flag when popup is closed.
             showOnlyCountryWhenClosed: false,
             // optional. aligns the flag and the Text left
-            padding: const EdgeInsets.only(top: AppPadding.p12),
+            padding: const EdgeInsets.only(top: AppPadding.p12,left: AppPadding.p18),
             alignLeft: false,
+
           ),
-          const SizedBox(
-            width: AppSize.s12,
-          ),
+          // const SizedBox(
+          //   width: AppSize.s12,
+          // ),
           Expanded(
               child: CustomTextFormFiled(
             controller: _phoneNumberController,
@@ -68,7 +71,6 @@ class AccountVerifyView extends StatelessWidget {
             onSubmitted: (value) {
               if (value.isNotEmpty) hideFocus(Get.context);
             },
-
           )),
         ],
       ),
@@ -107,18 +109,25 @@ class AccountVerifyView extends StatelessWidget {
           const SizedBox(
             height: AppSize.s60,
           ),
-          PrimaryButton(textButton: AppStrings.txtSend.tr, isLoading: false, onClicked: _onSendClick),
+          PrimaryButton(
+              textButton: AppStrings.txtSend.tr,
+              isLoading: false,
+              onClicked: _onSendClick),
         ],
       ),
     );
   }
 
   void _onChangeCountryCode(CountryCode value) {
-    Logger().i(value);
+    Logger().i("country code " '$value');
+    counteryCode = value.toString();
+    Logger().i("counteryCode " '$value');
   }
 
   void _onSendClick() {
     _formKey.currentState!.validate();
-    Get.to(()=>const AccountOtpView());
+    String userPhoneNumAndCode = '$counteryCode${_phoneNumberController.text.toString()}';
+    Logger().i('userPhoneNumAndCode : $userPhoneNumAndCode');
+    AuthViewModel().verifyAccount(userPhoneNumber: userPhoneNumAndCode);
   }
 }

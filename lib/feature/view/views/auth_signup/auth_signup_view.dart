@@ -87,16 +87,19 @@ class SignupView extends StatelessWidget {
         backgroundColor: AppColor.primary,
         leadingWidth: 0,
         leading: const SizedBox.shrink(),
-        title: Column(
-          children: [
-            AppLogo(
-                height: AppSize.s120,
-                width: AppSize.s120,
-                logoColor: AppColor.white),
-            // const SizedBox(height: AppSize.s20),
-            //this for login "welcome" and "choose language" text.
-            const WelcomeRow(),
-          ],
+        title: Padding(
+          padding: const EdgeInsets.only(top:13.0),
+          child: Column(
+            children: [
+              AppLogo(
+                  height: AppSize.s110,
+                  width: AppSize.s110,
+                  logoColor: AppColor.white),
+              // const SizedBox(height: AppSize.s20),
+              //this for login "welcome" and "choose language" text.
+              const WelcomeRow(),
+            ],
+          ),
         ),
         toolbarHeight: AppSize.s160,
       ),
@@ -130,12 +133,6 @@ class SignupView extends StatelessWidget {
                         key: _formKey,
                         child: Column(
                           children: [
-                            //this for username TextFiled
-                            // SportiTextField(
-                            //   hint: AppStrings.username.tr,
-                            //   isforPass: false,
-                            //   // controller: , TODO:
-                            // ),
                             CustomTextFormFiled(
                               label: AppStrings.txtFullName.tr,
                               keyboardType: TextInputType.name,
@@ -206,18 +203,7 @@ class SignupView extends StatelessWidget {
                                 }
                               },
                             ),
-                            // SportiTextField(
-                            //   hint: AppStrings.password.tr,
-                            //   isforPass: true,
-                            //   // controller: , TODO:
-                            // ),
                             const SizedBox(height: AppSize.s24),
-                            //this for password TextFiled
-                            // SportiTextField(
-                            //   hint: AppStrings.repassword.tr,
-                            //   isforPass: true,
-                            //   // controller: , TODO:
-                            // ),
                             CustomTextFormFiled(
                               label: AppStrings.repassword.tr,
                               keyboardType: TextInputType.text,
@@ -263,16 +249,6 @@ class SignupView extends StatelessWidget {
                                 colorText: AppColor.white,
                                 isLoading: logic.isLoading,
                                 onClicked:()=> _onSignUpClick(logic)),
-                            // CustomButton(
-                            //   height: AppSize.s60,
-                            //   label: AppStrings.justSign.tr,
-                            //   width: AppSize.s350,
-                            //   primaryColor: AppColor.primary,
-                            //   labelcolor: AppColor.white,
-                            //   borderColor: AppColor.primary,
-                            //   isRoundedBorder: true,
-                            //   onTap: () => Get.offAll(const LoginView()),
-                            // ),
                             const SizedBox(
                               height: AppSize.s20,
                             ),
@@ -282,25 +258,25 @@ class SignupView extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+                                    CustomTextView(
+                                      txt: AppStrings.iHaveAccount.tr,
+                                      textStyle: themeData.textTheme.subtitle2
+                                          ?.copyWith(color: AppColor.black),),
+                                    const SizedBox(
+                                      width: AppSize.s8,
+                                    ),
                                     TextButton(
                                       onPressed: () =>
-                                          Get.offAll(const LoginView()),
+                                          Get.offAll( LoginView()),
                                       child:
                                       CustomTextView(txt: AppStrings.signin.tr,
                                         textStyle: themeData.textTheme.headline6
                                             ?.copyWith(
                                             color: AppColor.darkYellow),),
                                     ),
-                                    const SizedBox(
-                                      width: AppSize.s8,
-                                    ),
-                                    CustomTextView(
-                                      txt: AppStrings.iHaveAccount.tr,
-                                      textStyle: themeData.textTheme.subtitle2
-                                          ?.copyWith(color: AppColor.black),),
                                   ],
                                 ),
-                                const SizedBox(height: AppSize.s24),
+                                const SizedBox(height: AppSize.s60),
                               ],
                             ),
                           ],

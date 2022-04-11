@@ -72,6 +72,22 @@ class AuthFeature {
       return appResponse;
     } else {
       snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      snackError("", appResponse.message ?? appResponse.message ?? "");
+      Logger().d("else ${appResponse.toJson()}");
+      return appResponse;
+    }
+  }
+  Future<AppResponse> confirmAccount(Map<String, dynamic> body) async {
+    var appResponse = await AuthUseCase.getInstance.confirmUseraccount(
+      url: ConstanceNetwork.confirmAccount,
+      header: ConstanceNetwork.header(2),
+      body: body,
+    );
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return appResponse;
+    } else {
+      snackError("", appResponse.message ?? "");
       Logger().d("else ${appResponse.toJson()}");
       return appResponse;
     }

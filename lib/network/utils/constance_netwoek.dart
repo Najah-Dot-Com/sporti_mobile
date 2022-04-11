@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:get/get.dart';
 import 'package:sporti/util/sh_util.dart';
 
@@ -15,6 +17,10 @@ abstract class ConstanceNetwork {
   static String emailKey = "email";
   static String passwordConfirmKey = "password_confirm";
   static String passwordNewKey = "password_new";
+  //this for auth keys
+  static String code = 'code';
+  //this for account verify keys
+  static String userPhoneNumer = 'phone';
 
   //this for home page
   static String parentIdKey = "parent_id";
@@ -43,6 +49,10 @@ abstract class ConstanceNetwork {
 
 
 
+  static String verifyEmailApi = "verifi_email?email=";
+  static String confirmEmailApi = "confirm_verifi_email";
+  static String verifyAccount = "verifi_account";
+  static String confirmAccount = "confirm_verifi_code";
 
   static Map<String, String> header(int typeToken) {
     Map<String, String> headers = {};
@@ -77,6 +87,11 @@ abstract class ConstanceNetwork {
         'Authorization': 'Bearer ${SharedPref.instance.getUserData().token}',
         'Content-Type': 'application/json',
         'Language': Get.locale.toString().split("_")[0],
+        'Accept': 'application/json',
+      };
+    }else if (typeToken == 5) {
+      headers = {
+        'Authorization': 'Bearer ${SharedPref.instance.getUserData().token}',
         'Accept': 'application/json',
       };
     }

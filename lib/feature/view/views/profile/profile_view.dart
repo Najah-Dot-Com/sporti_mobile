@@ -221,7 +221,7 @@ class ProfileView extends StatelessWidget {
   }
 
   void _verifyAccount() {
-      Get.to(()=> const AccountVerifyView());
+      Get.to(()=> AccountVerifyView());
   }
 
 
