@@ -18,6 +18,7 @@ class AuthViewModel extends GetxController {
   bool isLoading = false;
 
   var acceptPolicy = false;
+
   @override
   void onInit() {
     super.onInit();
@@ -82,19 +83,19 @@ class AuthViewModel extends GetxController {
       TextEditingController passwordConfirmationController,
       TextEditingController fullNameController,
       TextEditingController emailController,) {
-
-    if(passwordController.text != passwordConfirmationController.text){
+    if (passwordController.text != passwordConfirmationController.text) {
       snackError("", AppStrings.errorPasswordMatches.tr);
       return;
     }
-    if(!acceptPolicy){
+    if (!acceptPolicy) {
       snackError("", AppStrings.acceptPolicyConditions.tr);
       return;
     }
     Map<String, dynamic> map = {
       ConstanceNetwork.userNameKey: userNameController.text.toString(),
       ConstanceNetwork.passwordKey: passwordController.text.toString(),
-      ConstanceNetwork.passwordConfirmKey: passwordConfirmationController.text.toString(),
+      ConstanceNetwork.passwordConfirmKey: passwordConfirmationController.text
+          .toString(),
       ConstanceNetwork.emailKey: emailController.text.toString(),
       ConstanceNetwork.fullNameKey: fullNameController.text.toString(),
     };
@@ -112,7 +113,7 @@ class AuthViewModel extends GetxController {
         if (value.token != null) {
           //TODO: if verification and success go to home page
           await SharedPref.instance.setUserLogin(true);
-          Get.offAll( const HomePageView());
+          Get.offAll(const HomePageView());
           isLoading = false;
           update();
         } else {
@@ -134,7 +135,7 @@ class AuthViewModel extends GetxController {
   }
 
 
-  Future<void> logoutUser()async{
+  Future<void> logoutUser() async {
     try {
       isLoading = true;
       update();
@@ -144,7 +145,7 @@ class AuthViewModel extends GetxController {
         if (value.status) {
           //TODO: if verification and success go to home page
           await SharedPref.instance.setUserLogin(false);
-          Get.offAll( const LoginView());
+          Get.offAll(LoginView());
           isLoading = false;
           update();
           await SharedPref.instance.clear();
@@ -153,7 +154,7 @@ class AuthViewModel extends GetxController {
           isLoading = false;
           update();
           await SharedPref.instance.setUserLogin(false);
-          Get.offAll(  LoginView());
+          Get.offAll(LoginView());
           await SharedPref.instance.clear();
         }
       }).catchError((onError) {
@@ -173,8 +174,7 @@ class AuthViewModel extends GetxController {
   void resetPassword(TextEditingController oldPassController,
       TextEditingController newPassController,
       TextEditingController repeatPassController) {
-
-    if(newPassController.text != repeatPassController.text){
+    if (newPassController.text != repeatPassController.text) {
       snackError("", AppStrings.errorPasswordMatches.tr);
       return;
     }
@@ -187,7 +187,7 @@ class AuthViewModel extends GetxController {
     _resetPassword(map);
   }
 
-  Future<void> _resetPassword(Map<String, dynamic> map) async{
+  Future<void> _resetPassword(Map<String, dynamic> map) async {
     try {
       isLoading = true;
       update();
@@ -260,21 +260,24 @@ class AuthViewModel extends GetxController {
   }
 
   //click on confirmEmail in btn on auth OTP page
-  void confirmEmail(
-      {
-      TextEditingController? pinCode,
-      TextEditingController? passwordNew,
-      TextEditingController? passwordConfirm}) async {
-      Map<String, dynamic> map = {
+  void confirmEmail({
+    TextEditingController? pinCode,
+    TextEditingController? passwordNew,
+    TextEditingController? passwordConfirm}) async {
+    Map<String, dynamic> map = {
       ConstanceNetwork.code: pinCode?.text.toString() ?? '',
       ConstanceNetwork.passwordNewKey: passwordNew?.text.toString() ?? '',
       ConstanceNetwork.passwordConfirmKey:
-          passwordConfirm?.text.toString() ?? '',
+      passwordConfirm?.text.toString() ?? '',
     };
-    await _confirmEmail(map:map,pinCode: pinCode,newPAss: passwordNew,confirmPass: passwordConfirm);
-
+    await _confirmEmail(map: map,
+        pinCode: pinCode,
+        newPAss: passwordNew,
+        confirmPass: passwordConfirm);
   }
-  Future<void> _confirmEmail({Map<String, dynamic>? map,var pinCode,var newPAss,var confirmPass}) async {
+
+  Future<void> _confirmEmail({Map<String,
+      dynamic>? map, var pinCode, var newPAss, var confirmPass}) async {
     try {
       isLoading = true;
       update();
@@ -287,7 +290,8 @@ class AuthViewModel extends GetxController {
           await snackSuccess("", value.message);
           //this check for decide which screen to move to.
           if (confirmPass == null) {
-            Get.to(() => ResetPasswordView(
+            Get.to(() =>
+                ResetPasswordView(
                   pinCodeController: pinCode,
                 ));
           } else {
@@ -390,6 +394,4 @@ class AuthViewModel extends GetxController {
       update();
     }
   }
-}
-
 }

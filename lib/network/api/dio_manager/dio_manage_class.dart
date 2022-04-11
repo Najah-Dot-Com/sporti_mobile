@@ -104,7 +104,7 @@ class ApiInterceptors extends Interceptor {
     Logger().d("onError : ${err.message}");
     if(err.message.contains("401")){
       SharedPref.instance.setUserLogin(false);
-      getx.Get.offAll(const LoginView());
+      getx.Get.offAll( LoginView());
     }
   }
 }

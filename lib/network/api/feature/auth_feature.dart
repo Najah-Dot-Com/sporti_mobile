@@ -49,7 +49,7 @@ class AuthFeature {
   Future<AppResponse> logoutUser() async {
     var appResponse = await AuthUseCase.getInstance.logoutRequest(
         url: ConstanceNetwork.logoutApi,
-        header: ConstanceNetwork.header(2)
+        header: ConstanceNetwork.header(5)
     );
     if (appResponse.status == true) {
       Logger().d("if ${appResponse.toJson()}");
@@ -72,6 +72,53 @@ class AuthFeature {
       return appResponse;
     } else {
       snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      snackError("", appResponse.message ?? appResponse.message ?? "");
+      Logger().d("else ${appResponse.toJson()}");
+      return appResponse;
+    }
+  }
+  Future<AppResponse> verifyUserEmail(var parameters) async {
+    var appResponse = await AuthUseCase.getInstance.verifyUserEmail(
+      url: ConstanceNetwork.verifyEmailApi + parameters,
+      // "https://sportiapp.com/api/v1/verifi_email?email=$parameters",
+      header: ConstanceNetwork.header(5),
+    );
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return appResponse;
+    } else {
+      snackError("", appResponse.message ?? appResponse.message ?? "");
+      Logger().d("else ${appResponse.toJson()}");
+      return appResponse;
+    }
+  }
+
+  Future<AppResponse> confirmEmail(Map<String, dynamic> body) async {
+    var appResponse = await AuthUseCase.getInstance.confirmUserEmail(
+      url: ConstanceNetwork.confirmEmailApi,
+      header: ConstanceNetwork.header(5),
+      body: body,
+    );
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return appResponse;
+    } else {
+      snackError("", appResponse.message ?? "");
+      Logger().d("else ${appResponse.toJson()}");
+      return appResponse;
+    }
+  }
+
+  Future<AppResponse> verifyAccount(Map<String, dynamic> body) async {
+    var appResponse = await AuthUseCase.getInstance.virifyAccount(
+      url: ConstanceNetwork.verifyAccount,
+      header: ConstanceNetwork.header(2),
+      body: body,
+    );
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return appResponse;
+    } else {
       snackError("", appResponse.message ?? appResponse.message ?? "");
       Logger().d("else ${appResponse.toJson()}");
       return appResponse;
