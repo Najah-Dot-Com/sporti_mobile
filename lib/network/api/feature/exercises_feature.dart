@@ -27,7 +27,7 @@ class ExercisesFeature {
       List<ExercisesData> data = result.map((e) => ExercisesData.fromJson(e)).toList();
       return data;
     } else {
-      snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      //snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return [];
     }
@@ -110,7 +110,7 @@ class ExercisesFeature {
       Logger().d("if ${appResponse.toJson()}");
       return BalanceData.fromJson(appResponse.result??{});
     } else {
-      snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      // snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return BalanceData.fromJson({});
     }

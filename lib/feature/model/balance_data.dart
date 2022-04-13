@@ -1,11 +1,11 @@
 class BalanceData {
   BalanceData({
     this.finish,
-    this.balance,
+    this.balance ,
   });
 
   int? finish;
-  String? balance;
+  dynamic balance;
 
   factory BalanceData.fromJson(Map<String, dynamic> json) => BalanceData(
     finish: json["finish"] == null ? 0 : json["finish"],

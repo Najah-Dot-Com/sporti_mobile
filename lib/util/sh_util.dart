@@ -47,7 +47,7 @@ class SharedPref {
   Future<void> setAppLang(String lang)async{
     try {
       if (!GetUtils.isNull(lang)) {
-        await _prefs?.setString(langKey, langKey);
+        await _prefs?.setString(langKey, lang);
         LocalizationService().changeLocale(lang);
       }
     } catch (e) {
@@ -60,7 +60,7 @@ class SharedPref {
        var string = _prefs?.getString(langKey);
        if(string != null && string == LocalizationService.langs[LocalizationService.arIndex]){
          return LocalizationService.localeAr;
-       }else if(string != null && string == LocalizationService.langs[LocalizationService.arIndex]){
+       }else if(string != null && string == LocalizationService.langs[LocalizationService.enIndex]){
          return LocalizationService.localeEn;
        }else{
          return LocalizationService.localeAr;
@@ -74,7 +74,7 @@ class SharedPref {
    setUserBalance(BalanceData value) async{
     try {
       var userData = getUserData();
-      userData.balance = value.balance;
+      userData.balance = value.balance.toString();
       userData.finish = value.finish;
       await _prefs?.setString(userBalanceKey, jsonEncode(userData.toJson()));
     } catch (e) {
