@@ -91,4 +91,7 @@ Map<String, String> arSU = {
   AppStrings.txtNotCompleted: "لم تتم",
   AppStrings.txtInCompleted: "جاري الاتمام",
   AppStrings.txtDone: "تمت",
+  AppStrings.txtAttentions: "انتباه",
+  AppStrings.txtAttentionsHint: "انت لم تكمل التمرين بعد في حال اردت تجاهل التغيرات يمكنك الضغط على موافق والخروج من التمرين",
+  AppStrings.txtAttentionsHintNotComplete: "انت لم تكمل التمرين بعد لم تتمكن من اتمامه حاليا يرجى انتظار التمرين حتى يكتمل",
 };

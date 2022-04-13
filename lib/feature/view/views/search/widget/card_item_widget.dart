@@ -65,6 +65,6 @@ class CardItemWidget extends StatelessWidget {
   }
 
   void _onItemClick() {
-    Get.to( const CategoriesDetailsView(id: "1",title: "",));
+    Get.to( const CategoriesDetailsView(id: "1",title: "",package: null,));
   }
 }

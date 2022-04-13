@@ -87,6 +87,6 @@ class CategoriesListItemWidget extends StatelessWidget {
   }
 
   void _onExerciseClick() {
-    Get.to(const CategoriyExerciseDetailsView());
+    Get.to( CategoriyExerciseDetailsView(packageDetails:packageDetails));
   }
 }

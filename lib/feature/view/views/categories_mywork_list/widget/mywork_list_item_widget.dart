@@ -143,6 +143,6 @@ class MyWorkListItemWidget extends StatelessWidget {
   }
 
   void _onItemClick() {
-    Get.to( const CategoriesDetailsView(id: "1",title: "",));
+    Get.to(  CategoriesDetailsView(id: favorite!.id.toString(),title: favorite!.title,package: favorite!,));
   }
 }

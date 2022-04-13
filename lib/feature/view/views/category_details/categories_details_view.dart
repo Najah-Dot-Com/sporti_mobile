@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/category_details/widget/categories_list_item_widget.dart';
 import 'package:sporti/feature/view/views/category_details/widget/shimmer_categories_list_item_widget.dart';
@@ -13,9 +14,10 @@ import 'package:sporti/util/app_style.dart';
 import 'package:sporti/util/constance.dart';
 
 class CategoriesDetailsView extends StatelessWidget {
-  const CategoriesDetailsView({Key? key, required this.title,required this.id}) : super(key: key);
+  const CategoriesDetailsView({Key? key, required this.title,required this.id,required this.package, }) : super(key: key);
   final String? title;
   final String? id;
+  final ExercisesData? package;
 
   final String fakeImage =
       "https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/07/1377301-1183869-The-8-Best-Weight-Benches-of-2021-1296x728-Header-c0dcdf.jpg?w=1575";
@@ -60,16 +62,17 @@ class CategoriesDetailsView extends StatelessWidget {
         });
   }
 
+
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return Scaffold(
       appBar: myAppbar(themeData),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColor.primary,
+        backgroundColor: package!.isFavorite!?AppColor.error:AppColor.primary,
         onPressed: _onAddBtnClick,
         child: Icon(
-          Icons.add,
+          package!.isFavorite!?Icons.remove: Icons.add,
           color: AppColor.white,
         ),
       ),

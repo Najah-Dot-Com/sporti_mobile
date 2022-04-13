@@ -151,6 +151,7 @@ class SelectYourWorkWidget extends StatelessWidget {
     Get.to(CategoriesDetailsView(
       id: package?.parentId.toString(),
       title: package?.title.toString(),
+      package: package,
     ));
   }
 }

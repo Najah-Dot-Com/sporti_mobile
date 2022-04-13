@@ -2,173 +2,278 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+import 'package:sporti/feature/model/exercise_details_data.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
+import 'package:sporti/feature/view/appwidget/dialog/gloable_dialog_widget.dart';
+import 'package:sporti/feature/view/appwidget/viedo_player.dart';
+import 'package:sporti/feature/viewmodel/details_exercise_view_model.dart';
+import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_media.dart';
+import 'package:sporti/util/app_shaerd_data.dart';
 
 import '../../../../util/app_color.dart';
 import '../../../../util/app_dimen.dart';
 import '../../../../util/app_strings.dart';
 
 // ignore: must_be_immutable
-class CategoryExerciseView extends StatelessWidget {
-  String? exerciseTitle = '';
-  int val = -1;
-  bool _isExerciseDone = false;
-  bool? _remindMetoRepeatExercise = false;
-  int? exeirciseHour = 3;
-  int? exeirciseMinutes = 25;
-  CategoryExerciseView({Key? key, @required this.exerciseTitle}) : super(key: key);
+class CategoryExerciseView extends StatefulWidget {
+  const CategoryExerciseView({
+    Key? key,
+    required this.exerciseDetailsData,
+  }) : super(key: key);
+
+  final ExerciseDetailsData? exerciseDetailsData;
+
+  @override
+  State<CategoryExerciseView> createState() => _CategoryExerciseViewState();
+}
+
+class _CategoryExerciseViewState extends State<CategoryExerciseView> {
+  final DetailsExerciseViewModel _detailsExerciseViewModel =
+      Get.put(DetailsExerciseViewModel());
+
+  @override
+  initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      _detailsExerciseViewModel.startTimer(widget.exerciseDetailsData);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
-    return Scaffold(
-      backgroundColor: AppColor.lightBlue,
-      appBar: AppBar(
-        elevation: 0.0,
-        centerTitle: true,
-        backgroundColor: AppColor.white,
-        title: CustomTextView(
-          txt: exerciseTitle,
-          textStyle: themeData.textTheme.headline1,
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
-            color: AppColor.black,
+    return WillPopScope(
+      onWillPop: () {
+        if (!_detailsExerciseViewModel.isStartVideo &&
+            _detailsExerciseViewModel.isEndVideo) {
+          return Future.value(true);
+        } else {
+          showCustomDialog();
+        }
+        Logger().d(_detailsExerciseViewModel.timeExercise);
+        return Future.value(false);
+      },
+      child: Scaffold(
+        backgroundColor: AppColor.lightBlue,
+        appBar: AppBar(
+          elevation: 0.0,
+          centerTitle: true,
+          backgroundColor: AppColor.white,
+          title: CustomTextView(
+            txt: widget.exerciseDetailsData?.title,
+            textStyle: themeData.textTheme.headline1,
           ),
-          onPressed: () {
-            Get.back();
-          },
+          leading: IconButton(
+            icon: Icon(
+              Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back,
+              color: AppColor.black,
+            ),
+            onPressed: () {
+              if (!_detailsExerciseViewModel.isStartVideo &&
+                  _detailsExerciseViewModel.isEndVideo) {
+                Get.back();
+              } else {
+                showCustomDialog();
+              }
+
+              Logger().d(_detailsExerciseViewModel.timeExercise);
+            },
+          ),
         ),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(
-            width: double.infinity,
-            child: Image(image: AssetImage(AppMedia.exircise_one))),
-          Padding(
-            padding: const EdgeInsets.only(right: AppPadding.p100, left: AppPadding.p100,top: AppPadding.p100),
-            child: Column(
-              children: [
-                RadioListTile(
-                  selected: _isExerciseDone,
-                  value: 1,
-                  groupValue: val,
-                  onChanged: (value) {
-                    // ignore: todo
-                    //TODO:
-                    // val = value;
-                    _isExerciseDone = true;
-                  },
-                  title: CustomTextView(
-                    txt: AppStrings.iFinishedExcercise,
-                    textStyle: themeData.textTheme.headline5,
-                    textAlign: TextAlign.right,
-                  ),
-                  controlAffinity: ListTileControlAffinity.trailing,
-                  contentPadding: const EdgeInsets.all(0),
-                ),
-                RadioListTile(
-                  selected: _remindMetoRepeatExercise!,
-                  value: 1,
-                  groupValue: val,
-                  activeColor: AppColor.black,
-                  onChanged: (value) {
-                    // ignore: todo
-                    //TODO:
-                    // val = value;
-                    _remindMetoRepeatExercise = true;
-                  },
-                  title: CustomTextView(
-                    txt: AppStrings.rememberMeToRepeatExcercise.tr,
-                    textStyle: themeData.textTheme.headline5,
-                    textAlign: TextAlign.right,
-                  ),
-                  // this for convert box direction
-                  controlAffinity: ListTileControlAffinity.trailing,
-                  contentPadding: const EdgeInsets.all(0),
-                ),
-                const SizedBox(
-                  height: AppSize.s14,
-                ),
-                Row(
+        body: GetBuilder<DetailsExerciseViewModel>(builder: (logic) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // const SizedBox(
+              //     width: double.infinity,
+              //     child: Image(image: AssetImage(AppMedia.exircise_one))),
+              VideoPlayer(
+                videoUrl:
+                    "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
+                onVideoChangeCallback: (controller) {
+                  controller.addListener(() => checkVideo(controller));
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    right: AppPadding.p20,
+                    left: AppPadding.p20,
+                    top: AppPadding.p60),
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: AppColor.white,
-                              border: Border.all(
-                                  color: AppColor.black,
-                                  style: BorderStyle.solid,
-                                  width: 1.0)),
-                          width: AppSize.s50,
-                          height: AppSize.s50,
-                          child: Center(
-                              child: CustomTextView(
-                            txt: '$exeirciseHour',
-                            textStyle: themeData.textTheme.headline1,
-                          )),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CustomTextView(
-                            txt: AppStrings.hour.tr,
-                            textStyle: themeData.textTheme.headline1,
+                    InkWell(
+                      onTap: () => onDoneClick(logic),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Icon(logic.isExerciseDone!
+                              ? Icons.radio_button_checked
+                              : Icons.radio_button_off),
+                          const SizedBox(
+                            width: AppSize.s12,
                           ),
-                        )
-                      ],
+                          CustomTextView(
+                            txt: AppStrings.iFinishedExcercise.tr,
+                            textStyle: themeData.textTheme.headline5,
+                            textAlign: TextAlign.right,
+                          )
+                        ],
+                      ),
                     ),
-                    const SizedBox(
-                      width: AppSize.s20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: CustomTextView(
-                        txt: ':',
-                        textStyle: themeData.textTheme.headline5,
+                    InkWell(
+                      onTap: () => onRemindClick(logic),
+                      child: Row(
+                        children: [
+                          Icon(logic.remindMeToRepeatExercise!
+                              ? Icons.radio_button_checked
+                              : Icons.radio_button_off),
+                          const SizedBox(
+                            width: AppSize.s12,
+                          ),
+                          CustomTextView(
+                            txt: AppStrings.rememberMeToRepeatExcercise.tr,
+                            textStyle: themeData.textTheme.headline5,
+                            textAlign: TextAlign.right,
+                          )
+                        ],
                       ),
                     ),
                     const SizedBox(
-                      width: AppSize.s20,
+                      height: AppSize.s14,
                     ),
-                    //for Hour timer
-                    Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: AppColor.white,
-                              border: Border.all(
-                                  color: AppColor.black,
-                                  style: BorderStyle.solid,
-                                  width: 1.0)),
-                          width:  AppSize.s50,
-                          height: AppSize.s50,
-                          child: Center(
+                        Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: AppColor.white,
+                                  border: Border.all(
+                                      color: AppColor.black,
+                                      style: BorderStyle.solid,
+                                      width: 1.0)),
+                              width: AppSize.s50,
+                              height: AppSize.s50,
+                              child: Center(
+                                  child: CustomTextView(
+                                txt: '0',
+                                textStyle: themeData.textTheme.headline1,
+                              )),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: CustomTextView(
-                            txt: '$exeirciseMinutes',
-                            textStyle: themeData.textTheme.headline1,
-                          )),
+                                txt: AppStrings.hour.tr,
+                                textStyle: themeData.textTheme.headline1,
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          width: AppSize.s20,
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.only(bottom: 20.0),
                           child: CustomTextView(
-                            txt: AppStrings.minute.tr,
-                            textStyle: themeData.textTheme.headline1,
+                            txt: ':',
+                            textStyle: themeData.textTheme.headline5,
                           ),
-                        )
+                        ),
+                        const SizedBox(
+                          width: AppSize.s20,
+                        ),
+                        //for Hour timer
+                        Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: AppColor.white,
+                                  border: Border.all(
+                                      color: AppColor.black,
+                                      style: BorderStyle.solid,
+                                      width: 1.0)),
+                              width: AppSize.s50,
+                              height: AppSize.s50,
+                              child: Center(
+                                  child: CustomTextView(
+                                txt: '0',
+                                textStyle: themeData.textTheme.headline1,
+                              )),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CustomTextView(
+                                txt: AppStrings.minute.tr,
+                                textStyle: themeData.textTheme.headline1,
+                              ),
+                            )
+                          ],
+                        ),
                       ],
-                    ),
+                    )
                   ],
-                )
-              ],
-            ),
-          ),
-        ],
+                ),
+              ),
+            ],
+          );
+        }),
       ),
     );
+  }
+
+  void showCustomDialog() {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      showAnimatedDialog(GlobalDialogWidget(
+        title: AppStrings.txtAttentions.tr,
+        subTitle: AppStrings.txtAttentionsHint.tr,
+        isLoading: false,
+        isTwoBtn: true,
+        onCancelBtnClick: () => Get.back(),
+        onOkBtnClick: () {
+          Get.back();
+          Get.back();
+        },
+      ));
+    });
+  }
+
+  void checkVideo(videoPlayerController) {
+    // Implement your calls inside these conditions' bodies :
+    _detailsExerciseViewModel.onVideoChange(videoPlayerController);
+  }
+
+  onDoneClick(DetailsExerciseViewModel logic) {
+
+    if (!_detailsExerciseViewModel.isStartVideo &&
+        _detailsExerciseViewModel.isEndVideo) {
+      logic.isDoneChange();
+      if(logic.isExerciseDone!) {
+        logic.addEventExercises(widget.exerciseDetailsData?.id, ConstanceNetwork.typeDoneKey);
+      }
+    }else{
+      showCustomDialogNotComplete();
+    }
+  }
+
+  onRemindClick(DetailsExerciseViewModel logic) {
+    logic.isRemindChange();
+  }
+
+  void showCustomDialogNotComplete() {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      showAnimatedDialog(GlobalDialogWidget(
+        title: AppStrings.txtAttentions.tr,
+        subTitle: AppStrings.txtAttentionsHintNotComplete.tr,
+        isLoading: false,
+        isTwoBtn: false,
+        onOkBtnClick: () => Get.back(),
+      ));
+    });
   }
 }

@@ -96,4 +96,7 @@ Map<String, String> enUS = {
   AppStrings.txtNotCompleted: "Not Completed",
   AppStrings.txtInCompleted: "Completing",
   AppStrings.txtDone: "Done",
+  AppStrings.txtAttentions: "Attentions",
+  AppStrings.txtAttentionsHint: "You have not completed the exercise yet. If you want to ignore the changes, you can press OK and exit the exercise",
+  AppStrings.txtAttentionsHintNotComplete: "You have not completed the exercise yet, you cannot complete it now, please wait for the exercise to complete",
 };

@@ -1,5 +1,6 @@
 import 'package:logger/logger.dart';
 import 'package:sporti/feature/model/balance_data.dart';
+import 'package:sporti/feature/model/exercise_details_data.dart';
 import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/feature/model/user_data.dart';
 import 'package:sporti/network/api/model/app_response.dart';
@@ -44,7 +45,7 @@ class ExercisesFeature {
       List<ExercisesData> data = result.map((e) => ExercisesData.fromJson(e)).toList();
       return data;
     } else {
-      snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      // snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return [];
     }
@@ -113,6 +114,22 @@ class ExercisesFeature {
       // snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return BalanceData.fromJson({});
+    }
+  }
+
+
+  Future<ExerciseDetailsData?> getDetailsExercisesApi(var id) async{
+    var appResponse = await ExercisesUseCase.getInstance.getDetailsExercisesApi(
+        url: ConstanceNetwork.detailsExercisesApi+id.toString(),
+        header: ConstanceNetwork.header(2)
+    );
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return ExerciseDetailsData.fromJson(appResponse.result??{});
+    } else {
+      // snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      Logger().d("else ${appResponse.toJson()}");
+      return ExerciseDetailsData.fromJson({});
     }
   }
 

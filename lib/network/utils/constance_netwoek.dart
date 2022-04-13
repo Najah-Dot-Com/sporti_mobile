@@ -43,6 +43,8 @@ abstract class ConstanceNetwork {
   static String eventExercisesApi = "event_exercises";
   static String favoriteExercisesApi = "favorite_exercises";
   static String balanceUserApi = "balance_user";
+  static String detailsExercisesApi = "details_exercises?seq=";
+
 
 
 

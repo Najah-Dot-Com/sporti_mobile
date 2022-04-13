@@ -168,19 +168,25 @@ mainSnack({String? title, required String body, Color? backgroundColor}) {
 
 showAnimatedDialog(dialog) {
   showGeneralDialog(
-    barrierDismissible: true,
+    barrierDismissible: false,
+    barrierLabel: '',
     barrierColor: Colors.black.withOpacity(0.5),
-    transitionDuration: Duration(milliseconds: 700),
+    transitionDuration:const Duration(milliseconds: 700),
     context: Get.context!,
     pageBuilder: (context, anim1, anim2) {
-      return Align(
-        alignment: Alignment.bottomCenter,
-        child: dialog,
+      return WillPopScope(
+        onWillPop: (){
+          return Future.value(false);
+        },
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: dialog,
+        ),
       );
     },
     transitionBuilder: (context, anim1, anim2, child) {
       return SlideTransition(
-        position: Tween(begin: Offset(0, 1), end: Offset(0, 0)).animate(anim1),
+        position: Tween(begin:const Offset(0, 1), end:const Offset(0, 0)).animate(anim1),
         child: child,
       );
     },
