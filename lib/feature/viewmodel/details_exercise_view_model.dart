@@ -6,6 +6,7 @@ import 'package:sporti/feature/model/exercise_details_data.dart';
 import 'package:sporti/network/api/feature/exercises_feature.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
+import 'package:sporti/util/date_time_util.dart';
 
 class DetailsExerciseViewModel extends GetxController {
   bool isLoading = false;
@@ -17,6 +18,9 @@ class DetailsExerciseViewModel extends GetxController {
 
   bool? isExerciseDone = false;
   bool? remindMeToRepeatExercise = false;
+
+  String currentSelectedDate = "";
+  String currentSelectedTime = "";
 
 
   @override
@@ -123,10 +127,19 @@ class DetailsExerciseViewModel extends GetxController {
         if (value.status??false) {
           snackSuccess("", value.message);
           isLoading = false;
+          isExerciseDone = false;
+          currentSelectedDate = "";
+          currentSelectedTime = "";
+          remindMeToRepeatExercise = false;
           update();
+          Get.back();
         } else {
           snackError("", value.message);
           isLoading = false;
+          isExerciseDone = false;
+          currentSelectedDate = "";
+          currentSelectedTime = "";
+          remindMeToRepeatExercise = false;
           update();
         }
       }).catchError((onError) {
@@ -134,12 +147,52 @@ class DetailsExerciseViewModel extends GetxController {
         snackError("", onError.toString());
         Logger().d(onError.toString());
         isLoading = false;
+        isExerciseDone = false;
+        currentSelectedDate = "";
+        currentSelectedTime = "";
+        remindMeToRepeatExercise = false;
         update();
       });
     } catch (e) {
       Logger().d(e.toString());
       isLoading = false;
+      isExerciseDone = false;
+      currentSelectedDate = "";
+      currentSelectedTime = "";
+      remindMeToRepeatExercise = false;
       update();
+    }
+  }
+
+  void showPickerDate()async {
+    var dateTimePicker = await dateBiker();
+    if (!GetUtils.isNull(dateTimePicker)) {
+     Logger().d(DateUtility.convertDateToYMDDate(dateTimePicker!) );
+     currentSelectedDate = DateUtility.convertDateToYMDDate(dateTimePicker);
+    }
+    update();
+  }
+
+  void showPickerTime() async{
+    var timePicker = await timeBiker();
+    if (!GetUtils.isNull(timePicker)) {
+      Logger().d(DateUtility.convertTimeTo24(timePicker!));
+      currentSelectedTime = "${DateUtility.convertTimeTo24(timePicker).hour}:${DateUtility.convertTimeTo24(timePicker).minute}";
+    }
+    update();
+  }
+
+  Future<void> returnExercise(ExerciseDetailsData exerciseDetailsData) async{
+
+    Map<String , dynamic> map = {
+      ConstanceNetwork.exerciseIdKey : exerciseDetailsData.id,
+      ConstanceNetwork.returnDateKey : currentSelectedDate,
+      ConstanceNetwork.returnTimeKey : currentSelectedTime,
+      ConstanceNetwork.typeKey:ConstanceNetwork.typeReturnKey //typeDoneKey || typeReturnKey
+    };
+
+    if(currentSelectedDate.isNotEmpty && currentSelectedTime.isNotEmpty) {
+      _addEventExercises(map);
     }
   }
 

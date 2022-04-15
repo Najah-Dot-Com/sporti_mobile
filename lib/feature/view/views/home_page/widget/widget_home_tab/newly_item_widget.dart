@@ -87,6 +87,6 @@ class NewlyItemWidget extends StatelessWidget {
 
   void _onItemClick() {
     Get.to(CategoriesDetailsView(
-      id: packages?.parentId.toString(), title: packages?.title.toString(),package:packages));
+      id: packages?.id.toString(), title: packages?.title.toString(),package:packages));
   }
 }

@@ -18,10 +18,16 @@ import 'app_style.dart';
         // ripple color
         splashColor: AppColor.primaryOpacity70,
         // accentColor: AppColor.grey,
-        colorScheme: ColorScheme.fromSwatch(
-          accentColor: AppColor.grey,
-          primaryColorDark: AppColor.darkPrimary,
-        ),
+      pageTransitionsTheme: const PageTransitionsTheme(builders: {
+        TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+      }),
+        //
+        colorScheme: ColorScheme.light(primary: AppColor.primary),//best
+        // colorScheme: ColorScheme.fromSwatch(
+        //   accentColor: AppColor.grey,
+        //   primaryColorDark: AppColor.darkPrimary,
+        // ),
         scaffoldBackgroundColor: AppColor.scaffold,
         // card view theme
         cardTheme: CardTheme(

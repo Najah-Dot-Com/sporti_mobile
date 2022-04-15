@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/category_details/categories_details_view.dart';
@@ -19,6 +20,7 @@ class MyWorkListItemWidget extends StatelessWidget {
   final ExercisesData? favorite;
   @override
   Widget build(BuildContext context) {
+    Logger().d(favorite?.toJson());
     var themeData = Theme.of(context);
 
     return InkWell(
@@ -50,7 +52,7 @@ class MyWorkListItemWidget extends StatelessWidget {
                       width: AppSize.s150,
                       height: AppSize.s120,
                       fit: BoxFit.cover,
-                      url: fakeImage),
+                      url: favorite?.image??fakeImage),
                 ),
                 const SizedBox(
                   width: AppSize.s20,

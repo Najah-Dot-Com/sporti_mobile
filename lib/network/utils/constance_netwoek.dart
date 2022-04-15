@@ -28,6 +28,8 @@ abstract class ConstanceNetwork {
   static String typeKey = "type";
   static String typeDoneKey = "done";
   static String typeReturnKey = "return";
+  static String returnDateKey = "return_date";
+  static String returnTimeKey = "return_time";
 
   ///todo here insert end Point
   //auth end point
@@ -46,15 +48,12 @@ abstract class ConstanceNetwork {
   static String detailsExercisesApi = "details_exercises?seq=";
 
 
-
-
-
-
-
   static String verifyEmailApi = "verifi_email?email=";
   static String confirmEmailApi = "confirm_verifi_email";
   static String verifyAccount = "verifi_account";
   static String confirmAccount = "confirm_verifi_code";
+
+
 
   static Map<String, String> header(int typeToken) {
     Map<String, String> headers = {};

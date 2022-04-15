@@ -6,6 +6,7 @@ import 'package:logger/logger.dart';
 import 'package:sporti/feature/model/exercise_details_data.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/dialog/gloable_dialog_widget.dart';
+import 'package:sporti/feature/view/appwidget/primary_button.dart';
 import 'package:sporti/feature/view/appwidget/viedo_player.dart';
 import 'package:sporti/feature/viewmodel/details_exercise_view_model.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
@@ -145,78 +146,60 @@ class _CategoryExerciseViewState extends State<CategoryExerciseView> {
                     const SizedBox(
                       height: AppSize.s14,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: AppColor.white,
-                                  border: Border.all(
-                                      color: AppColor.black,
-                                      style: BorderStyle.solid,
-                                      width: 1.0)),
-                              width: AppSize.s50,
-                              height: AppSize.s50,
-                              child: Center(
-                                  child: CustomTextView(
-                                txt: '0',
-                                textStyle: themeData.textTheme.headline1,
-                              )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+                    if (logic.remindMeToRepeatExercise!) ...[
+                      InkWell(
+                        onTap: () => _onDatePickerClick(logic),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppColor.white,
+                              borderRadius: BorderRadius.circular(AppSize.s12),
+                              border: Border.all(
+                                  color: AppColor.lightGrey,
+                                  style: BorderStyle.solid,
+                                  width: 1.0)),
+                          width: double.infinity,
+                          height: AppSize.s50,
+                          child: Center(
                               child: CustomTextView(
-                                txt: AppStrings.hour.tr,
-                                textStyle: themeData.textTheme.headline1,
-                              ),
-                            )
-                          ],
+                            txt: logic.currentSelectedDate.isEmpty
+                                ? AppStrings.txtReturnDate.tr
+                                : logic.currentSelectedDate,
+                            textStyle: themeData.textTheme.headline1,
+                          )),
                         ),
-                        const SizedBox(
-                          width: AppSize.s20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20.0),
-                          child: CustomTextView(
-                            txt: ':',
-                            textStyle: themeData.textTheme.headline5,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: AppSize.s20,
-                        ),
-                        //for Hour timer
-                        Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: AppColor.white,
-                                  border: Border.all(
-                                      color: AppColor.black,
-                                      style: BorderStyle.solid,
-                                      width: 1.0)),
-                              width: AppSize.s50,
-                              height: AppSize.s50,
-                              child: Center(
-                                  child: CustomTextView(
-                                txt: '0',
-                                textStyle: themeData.textTheme.headline1,
-                              )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+                      ),
+                      const SizedBox(
+                        height: AppSize.s14,
+                      ),
+                      InkWell(
+                        onTap: () => _onTimePickerClick(logic),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: AppColor.white,
+                              borderRadius: BorderRadius.circular(AppSize.s12),
+                              border: Border.all(
+                                  color: AppColor.lightGrey,
+                                  style: BorderStyle.solid,
+                                  width: 1.0)),
+                          width: double.infinity,
+                          height: AppSize.s50,
+                          child: Center(
                               child: CustomTextView(
-                                txt: AppStrings.minute.tr,
-                                textStyle: themeData.textTheme.headline1,
-                              ),
-                            )
-                          ],
+                            txt: logic.currentSelectedTime.isEmpty
+                                ? AppStrings.txtReturnTime.tr
+                                : logic.currentSelectedTime,
+                            textStyle: themeData.textTheme.headline1,
+                          )),
                         ),
-                      ],
-                    )
+                      ),
+                      const SizedBox(
+                        height: AppSize.s28,
+                      ),
+                      PrimaryButton(
+                          textButton: AppStrings.txtSend.tr,
+                          isLoading: logic.isLoading,
+                          onClicked: () => _onReturnBtnClick(logic))
+                    ]
                   ],
                 ),
               ),
@@ -249,14 +232,14 @@ class _CategoryExerciseViewState extends State<CategoryExerciseView> {
   }
 
   onDoneClick(DetailsExerciseViewModel logic) {
-
     if (!_detailsExerciseViewModel.isStartVideo &&
         _detailsExerciseViewModel.isEndVideo) {
       logic.isDoneChange();
-      if(logic.isExerciseDone!) {
-        logic.addEventExercises(widget.exerciseDetailsData?.id, ConstanceNetwork.typeDoneKey);
+      if (logic.isExerciseDone!) {
+        logic.addEventExercises(
+            widget.exerciseDetailsData?.id, ConstanceNetwork.typeDoneKey);
       }
-    }else{
+    } else {
       showCustomDialogNotComplete();
     }
   }
@@ -275,5 +258,17 @@ class _CategoryExerciseViewState extends State<CategoryExerciseView> {
         onOkBtnClick: () => Get.back(),
       ));
     });
+  }
+
+  _onReturnBtnClick(DetailsExerciseViewModel logic) {
+    logic.returnExercise(widget.exerciseDetailsData!);
+  }
+
+  _onDatePickerClick(DetailsExerciseViewModel logic) {
+    logic.showPickerDate();
+  }
+
+  _onTimePickerClick(DetailsExerciseViewModel logic) {
+    logic.showPickerTime();
   }
 }

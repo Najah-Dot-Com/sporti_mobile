@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/category_details/widget/categories_list_item_widget.dart';
@@ -14,7 +15,9 @@ import 'package:sporti/util/app_style.dart';
 import 'package:sporti/util/constance.dart';
 
 class CategoriesDetailsView extends StatelessWidget {
-  const CategoriesDetailsView({Key? key, required this.title,required this.id,required this.package, }) : super(key: key);
+  const CategoriesDetailsView(
+      {Key? key, required this.title, required this.id, required this.package,})
+      : super(key: key);
   final String? title;
   final String? id;
   final ExercisesData? package;
@@ -22,13 +25,14 @@ class CategoriesDetailsView extends StatelessWidget {
   final String fakeImage =
       "https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/07/1377301-1183869-The-8-Best-Weight-Benches-of-2021-1296x728-Header-c0dcdf.jpg?w=1575";
 
-  PreferredSizeWidget myAppbar(ThemeData themeData) => AppBar(
+  PreferredSizeWidget myAppbar(ThemeData themeData) =>
+      AppBar(
         backgroundColor: AppColor.white,
         centerTitle: true,
         title: CustomTextView(
           txt: title,
           textStyle:
-              themeData.textTheme.headline2?.copyWith(color: AppColor.black),
+          themeData.textTheme.headline2?.copyWith(color: AppColor.black),
         ),
         leading: IconButton(
           onPressed: () => Get.back(),
@@ -39,8 +43,8 @@ class CategoriesDetailsView extends StatelessWidget {
         ),
       );
 
-  Widget myPackageList(HomeViewModel logic){
-    if(logic.isLoading){
+  Widget myPackageList(HomeViewModel logic) {
+    if (logic.isLoading) {
       return ListView.builder(
           itemCount: 7,
           shrinkWrap: true,
@@ -48,19 +52,20 @@ class CategoriesDetailsView extends StatelessWidget {
           itemBuilder: (context, index) {
             return const ShimmerCategoriesListItemWidget();
           });
-
-    }else if(!logic.isLoading && logic.packageDetailsExercisesList.isEmpty){
+    } else if (!logic.isLoading && logic.packageDetailsExercisesList.isEmpty) {
       //todo:// here we will add empty state widget
       return const SizedBox.shrink();
     }
-    return  ListView.builder(
+    return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount:logic.packageDetailsExercisesList.length,
+        itemCount: logic.packageDetailsExercisesList.length,
         itemBuilder: (context, index) {
-          return  CategoriesListItemWidget(packageDetails :logic.packageDetailsExercisesList[index] );
+          return CategoriesListItemWidget(
+              packageDetails: logic.packageDetailsExercisesList[index]);
         });
   }
+
 
 
   @override
@@ -68,14 +73,23 @@ class CategoriesDetailsView extends StatelessWidget {
     var themeData = Theme.of(context);
     return Scaffold(
       appBar: myAppbar(themeData),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: package!.isFavorite!?AppColor.error:AppColor.primary,
-        onPressed: _onAddBtnClick,
-        child: Icon(
-          package!.isFavorite!?Icons.remove: Icons.add,
-          color: AppColor.white,
-        ),
-      ),
+      floatingActionButton: GetBuilder<HomeViewModel>(builder: (logic) {
+        if(logic.packageDetailsExercisesList.isEmpty){
+          return const SizedBox.shrink();
+        }
+        var packages = logic.exercisesListAll.firstWhere((element) {
+          return element.id.toString() == id.toString();
+        });
+        return logic.isLoading ? const SizedBox.shrink():FloatingActionButton(
+          backgroundColor: packages.isFavorite! ? AppColor.error : AppColor
+              .primary,
+          onPressed: ()=>_onAddBtnClick(logic),
+          child: Icon(
+            packages.isFavorite! ? Icons.remove : Icons.add,
+            color: AppColor.white,
+          ),
+        );
+      }),
       body: GetBuilder<HomeViewModel>(
           init: HomeViewModel(),
           initState: (state) {
@@ -120,5 +134,9 @@ class CategoriesDetailsView extends StatelessWidget {
     );
   }
 
-  void _onAddBtnClick() {}
+  void _onAddBtnClick(HomeViewModel logic) async{
+    await logic.addToMyWork(id , isFromDetails: true);
+    logic.packagesExercisesDetails(id);
+
+  }
 }

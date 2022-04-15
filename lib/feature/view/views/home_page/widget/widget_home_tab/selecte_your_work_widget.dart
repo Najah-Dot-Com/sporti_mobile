@@ -149,7 +149,7 @@ class SelectYourWorkWidget extends StatelessWidget {
 
   void _onItemClick() {
     Get.to(CategoriesDetailsView(
-      id: package?.parentId.toString(),
+      id: package?.id.toString(),
       title: package?.title.toString(),
       package: package,
     ));

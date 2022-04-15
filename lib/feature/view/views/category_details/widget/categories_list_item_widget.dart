@@ -7,6 +7,7 @@ import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
+import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/constance.dart';
 
 class CategoriesListItemWidget extends StatelessWidget {
@@ -64,7 +65,7 @@ class CategoriesListItemWidget extends StatelessWidget {
                     height: AppSize.s6,
                   ),
                   CustomTextView(
-                    txt: "times 1",
+                    txt:packageDetails!.isRetuen! ? AppStrings.txtReturnIn.tr: packageDetails!.isDone! ?AppStrings.txtDone.tr:AppStrings.txtNotPlayed.tr,
                     maxLine: Constance.maxLineOne,
                     textOverflow: TextOverflow.ellipsis,
                     textStyle: themeData.textTheme.subtitle2

@@ -331,10 +331,20 @@ Future<DateTime?> dateBiker() async {
     lastDate: DateTime(2030),
     locale: myLocale,
   );
-
   return picker;
 }
 
+
+Future<TimeOfDay?> timeBiker() async {
+  var picker = await showTimePicker(
+    context: Get.context!,
+    helpText: AppStrings.txtReturnTime.tr,
+    initialTime: TimeOfDay(
+        hour: DateTime.now().hour,
+        minute: DateTime.now().minute % 30 == 0 ? 0 : 30),
+  );
+  return picker;
+}
 
 String formatStringWithCurrency(var data/*, String currency*/) {
   try {

@@ -76,6 +76,7 @@ class SharedPref {
       var userData = getUserData();
       userData.balance = value.balance.toString();
       userData.finish = value.finish;
+      setUserData(jsonEncode(userData.toJson()));
       await _prefs?.setString(userBalanceKey, jsonEncode(userData.toJson()));
     } catch (e) {
     Logger().e(e);

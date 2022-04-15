@@ -144,7 +144,7 @@ class HomeViewModel extends GetxController with GetSingleTickerProviderStateMixi
 
 
   //this for  add to my work
-  Future<void> addToMyWork(var id)async{
+  Future<void> addToMyWork(var id,{bool isFromDetails = false})async{
     try {
       isLoadingAddMyWork = true;
       update();
@@ -157,7 +157,9 @@ class HomeViewModel extends GetxController with GetSingleTickerProviderStateMixi
           update();
           allPackagesExercises();
           allPackagesTopExercises();
-          Get.back();
+          if(!isFromDetails) {
+            Get.back();
+          }
         } else {
           snackError("", value.message);
           isLoadingAddMyWork = false;

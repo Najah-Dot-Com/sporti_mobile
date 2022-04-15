@@ -33,6 +33,10 @@ class AppStrings {
   static const String txtAccount = "الحساب";
   static const String txtCompleted = "أتممت";
   static const String txtDone = "تمت";
+  static const String txtNotPlayed = "Not Played Yet";
+  static const String txtReturnIn = "Return In";
+  static const String txtReturnDate = "Return Date";
+  static const String txtReturnTime = "Return Time";
   static const String txtNotCompleted = "لم تتم";
   static const String txtInCompleted = "جاري الاتمام";
   static const String txtExercises = "تمارين";
@@ -115,6 +119,8 @@ class AppStrings {
  //todo this for update password
   static const String txtOldPassword = "oldPassword";
   static const String txtNewPassword = "newPassword";
+
+
 
 
 

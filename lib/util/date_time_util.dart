@@ -505,6 +505,16 @@ class DateUtility {
     return DateFormat.yMMMd().format(dateTime);
   }
 
+
+  static String convertDateToYMDDate(DateTime dateTime){
+    return /*DateTime.parse(*/DateFormat("dd/MM/yyyy").format(dateTime)/*)*/;
+  }
+
+  static DateTime convertTimeTo24(TimeOfDay timeOfDay){
+    var format = DateFormat("HH:mm a");
+    var time = format.parse(timeOfDay.format(Get.context!));
+    return time;
+  }
 }
 
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:country_code_picker/country_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,8 +17,20 @@ import 'util/localization/localization_service.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPref.instance.init();
+  portraitOrientation();
+  HttpOverrides.global = MyHttpOverrides();
   DioManagerClass.getInstance.init();
   runApp(MyApp());
+}
+
+// to do this for handShaking Certificate ::
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }
 
 class MyApp extends StatefulWidget {
@@ -39,7 +53,7 @@ class _MyAppState extends State<MyApp> {
           //   Locale("ar"),
           //   Locale("en"),
           // ],
-        localizationsDelegates: [
+        localizationsDelegates: const [
           CountryLocalizations.delegate,
         ],
         enableLog: true,
