@@ -4,6 +4,8 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:sporti/feature/view/appwidget/custom_text_filed.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/search/widget/card_item_widget.dart';
+import 'package:sporti/feature/view/views/search/widget/exercises_list_widget.dart';
+import 'package:sporti/feature/view/views/search/widget/package_lists_widget.dart';
 import 'package:sporti/feature/viewmodel/search_viewmodel.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
@@ -26,8 +28,20 @@ class SearchView extends StatelessWidget {
             Expanded(
               child: CustomTextFormFiled(
                 label: AppStrings.txtSearch.tr,
-                onSubmitted: (v) {},
-                onChange: (v) {},
+                onSubmitted: (v) {
+                  if(v.toString().isNotEmpty){
+                    logic.onSearchExercise(_searchEditingController.text.toString());
+                  }else{
+                    logic.resetLists();
+                  }
+                },
+                onChange: (v) {
+                  if(v.toString().isNotEmpty && v.toString().length >= 3){
+                    logic.onSearchExercise(_searchEditingController.text.toString());
+                  }else if(v.toString().isEmpty){
+                    logic.resetLists();
+                  }
+                },
                 controller: _searchEditingController,
                 isSmallPaddingWidth: true,
               ),
@@ -38,7 +52,7 @@ class SearchView extends StatelessWidget {
             IconButton(
               onPressed: () {
                 _searchEditingController.clear();
-                logic.update();
+                logic.resetLists();
               },
               icon: Icon(
                 Icons.close,
@@ -89,29 +103,11 @@ class SearchView extends StatelessWidget {
           initialIndex: 0,
           child: Scaffold(
             appBar: myAppBar(themeData, logic),
-            body: Column(
+            body:const TabBarView(
+              physics: NeverScrollableScrollPhysics(),
               children: [
-                const SizedBox(
-                  height: AppSize.s12,
-                ),
-                Expanded(
-                  child: GridView.builder(
-                      shrinkWrap: true,
-                      itemCount: 16,
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: AppSize.s12),
-                      keyboardDismissBehavior:
-                          ScrollViewKeyboardDismissBehavior.onDrag,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: AppSize.s18,
-                              mainAxisSpacing: AppSize.s20,
-                              childAspectRatio: (AppSize.s130 / AppSize.s140)),
-                      itemBuilder: (context, index) {
-                        return const CardItemWidget();
-                      }),
-                ),
+                PackageExerciseListWidget(),
+                ExerciseListWidget()
               ],
             ),
           ),

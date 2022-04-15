@@ -2,6 +2,7 @@ import 'package:logger/logger.dart';
 import 'package:sporti/feature/model/balance_data.dart';
 import 'package:sporti/feature/model/exercise_details_data.dart';
 import 'package:sporti/feature/model/exercises_package_data.dart';
+import 'package:sporti/feature/model/search_exercise_data.dart';
 import 'package:sporti/feature/model/user_data.dart';
 import 'package:sporti/network/api/model/app_response.dart';
 import 'package:sporti/network/api/model/auth_usecase.dart';
@@ -130,6 +131,21 @@ class ExercisesFeature {
       // snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return ExerciseDetailsData.fromJson({});
+    }
+  }
+
+  Future<SearchExerciseData?>  searchExercise(String searchWord) async{
+    var appResponse = await ExercisesUseCase.getInstance.searchExercise(
+        url: ConstanceNetwork.searchExercisesApi+searchWord.toString(),
+        header: ConstanceNetwork.header(2)
+    );
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return SearchExerciseData.fromJson(appResponse.result??{});
+    } else {
+      // snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      Logger().d("else ${appResponse.toJson()}");
+      return SearchExerciseData.fromJson({});
     }
   }
 
