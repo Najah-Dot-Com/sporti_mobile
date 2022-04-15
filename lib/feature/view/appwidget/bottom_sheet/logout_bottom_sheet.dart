@@ -13,10 +13,9 @@ import '../primary_button.dart';
 
 class LogoutBottomSheet extends StatelessWidget {
   const LogoutBottomSheet({
-    Key? key,
+    Key? key,  this.isDeleteAccount = false,
   }) : super(key: key);
-
-//language
+  final bool isDeleteAccount;
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
@@ -46,7 +45,7 @@ class LogoutBottomSheet extends StatelessWidget {
             ),
             const SizedBox(height: AppSize.s24),
             CustomTextView(
-              txt: AppStrings.txtLogoutHint.tr,
+              txt:isDeleteAccount ?AppStrings.txtDeleteAccountHint.tr : AppStrings.txtLogoutHint.tr,
               textAlign: TextAlign.center,
               textStyle: themeData.textTheme.headline2,
             ),
@@ -57,7 +56,7 @@ class LogoutBottomSheet extends StatelessWidget {
               isLoading: logic.isLoading,
               colorBtn: AppColor.error,
               colorText: AppColor.white,
-              textButton: AppStrings.txtLogout.tr,
+              textButton:isDeleteAccount? AppStrings.txtDeleteAccount.tr: AppStrings.txtLogout.tr,
               width: double.infinity,
               onClicked:()=> _onOkClick(logic),
             ),
@@ -83,8 +82,13 @@ class LogoutBottomSheet extends StatelessWidget {
   }
 
   _onOkClick(AuthViewModel logic)async {
-    await logic.logoutUser();
-    Get.back();
+    if(isDeleteAccount){
+      await logic.deleteUserAccount();
+      Get.back();
+    }else{
+      await logic.logoutUser();
+      Get.back();
+    }
   }
 
   _onCancelClick() {

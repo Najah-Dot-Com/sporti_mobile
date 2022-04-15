@@ -120,36 +120,39 @@ class ProfileView extends StatelessWidget {
     );
   }
 //this for items in the below to go to another pages
-  Widget _profileDeleteAccount(ThemeData themeData , {required String title,  required String trailingIcon}) {
-    return Container(
-      width: double.infinity,
-      height: AppSize.s50,
-      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
-      margin:const EdgeInsets.only(bottom: AppSize.s12),
-      decoration: BoxDecoration(
-          color: AppColor.white,
-          borderRadius: BorderRadius.circular(AppPadding.p8),
-          boxShadow: [
-            AppShadow.boxShadow()!
-          ]
-      ),
-      child: Row(
-        children: [
+  Widget _profileDeleteAccount(ThemeData themeData , {required Function() onClick,required String title,  required String trailingIcon}) {
+    return InkWell(
+      onTap: onClick,
+      child: Container(
+        width: double.infinity,
+        height: AppSize.s50,
+        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+        margin:const EdgeInsets.only(bottom: AppSize.s12),
+        decoration: BoxDecoration(
+            color: AppColor.white,
+            borderRadius: BorderRadius.circular(AppPadding.p8),
+            boxShadow: [
+              AppShadow.boxShadow()!
+            ]
+        ),
+        child: Row(
+          children: [
 
-          Expanded(
-            child: CustomTextView(
-                txt:title,
-                textStyle: themeData.textTheme.headline2?.copyWith(color: AppColor.error)),
-          ),
-          const SizedBox(
-            width: AppSize.s20,
-          ),
-          if(Get.locale == LocalizationService.localeEn && trailingIcon == AppMedia.arrowIos)...[
-            const Icon(Icons.arrow_forward_ios),
-          ]else...[
-            SvgPicture.asset(trailingIcon)
-          ]
-        ],
+            Expanded(
+              child: CustomTextView(
+                  txt:title,
+                  textStyle: themeData.textTheme.headline2?.copyWith(color: AppColor.error)),
+            ),
+            const SizedBox(
+              width: AppSize.s20,
+            ),
+            if(Get.locale == LocalizationService.localeEn && trailingIcon == AppMedia.arrowIos)...[
+              const Icon(Icons.arrow_forward_ios),
+            ]else...[
+              SvgPicture.asset(trailingIcon)
+            ]
+          ],
+        ),
       ),
     );
   }
@@ -198,7 +201,7 @@ class ProfileView extends StatelessWidget {
               _profileItem(themeData,onClick:_onLogout,leadingIcon:AppMedia.logout ,title:AppStrings.txtLogout.tr ,trailingIcon:AppMedia.arrowIos ),
               _profileItem(themeData,onClick:_onGetMoneyPage,leadingIcon:AppMedia.currency ,title:AppStrings.txtCurrency.tr ,trailingIcon:AppMedia.arrowIos ),
               _profileItem(themeData,onClick:_onUpdatePassword,leadingIcon:AppMedia.resetPassword ,title:AppStrings.resetYourPass.tr ,trailingIcon:AppMedia.arrowIos ),
-              _profileDeleteAccount(themeData ,title: AppStrings.txtDeleteAccount.tr,trailingIcon:  AppMedia.arrowIos),
+              _profileDeleteAccount(themeData ,onClick: _onDeleteAccountClick,title: AppStrings.txtDeleteAccount.tr,trailingIcon:  AppMedia.arrowIos),
               const SizedBox(
                 height: AppSize.s50,
               ),
@@ -213,7 +216,7 @@ class ProfileView extends StatelessWidget {
 
 
  String _completedConcatenations() {
-    return AppStrings.txtCompleted.tr + " ${SharedPref.instance.getUserData().finish} " + AppStrings.txtExercises.tr;
+    return AppStrings.txtCompleted.tr + " ${SharedPref.instance.getUserData().finish} " /*+ AppStrings.txtExercises.tr*/;
  }
 
   String _balanceConcatenations() {
@@ -243,5 +246,9 @@ class ProfileView extends StatelessWidget {
 
   _onUpdatePassword() {
     Get.to(()=> const UpdatePasswordView());
+  }
+
+  _onDeleteAccountClick() {
+    Get.bottomSheet(const LogoutBottomSheet(isDeleteAccount: true,));
   }
 }

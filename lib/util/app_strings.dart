@@ -49,6 +49,7 @@ class AppStrings {
   static const String txtCancel = "cancel";
   static const String txtOk = "ok";
   static const String txtLogoutHint = "LogoutHint";
+  static const String txtDeleteAccountHint = "deleteAccountHint";
 
   //TODO: this for verify account view
    static const String txtEnterYourMobileNumber = "EnterYourMobileNumber";

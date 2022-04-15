@@ -110,7 +110,7 @@ class AuthFeature {
   }
 
   Future<AppResponse> verifyAccount(Map<String, dynamic> body) async {
-    var appResponse = await AuthUseCase.getInstance.virifyAccount(
+    var appResponse = await AuthUseCase.getInstance.verifyAccount(
       url: ConstanceNetwork.verifyAccount,
       header: ConstanceNetwork.header(2),
       body: body,
@@ -125,7 +125,7 @@ class AuthFeature {
     }
   }
   Future<AppResponse> confirmAccount(Map<String, dynamic> body) async {
-    var appResponse = await AuthUseCase.getInstance.confirmUseraccount(
+    var appResponse = await AuthUseCase.getInstance.confirmUserAccount(
       url: ConstanceNetwork.confirmAccount,
       header: ConstanceNetwork.header(2),
       body: body,
@@ -140,4 +140,19 @@ class AuthFeature {
     }
   }
 
+
+  Future<AppResponse> deleteUserAccount() async {
+    var appResponse = await AuthUseCase.getInstance.deleteUserAccount(
+        url: ConstanceNetwork.deleteUserApi,
+        header: ConstanceNetwork.header(5)
+    );
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return appResponse;
+    } else {
+      snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      Logger().d("else ${appResponse.toJson()}");
+      return appResponse;
+    }
+  }
 }

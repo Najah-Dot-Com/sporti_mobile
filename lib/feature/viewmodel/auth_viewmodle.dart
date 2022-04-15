@@ -394,4 +394,43 @@ class AuthViewModel extends GetxController {
       update();
     }
   }
+
+
+  Future<void> deleteUserAccount() async {
+    try {
+      isLoading = true;
+      update();
+      await AuthFeature.getInstance.deleteUserAccount().then((value) async {
+        //handle object from value || [save in sharedPreferences]
+        Logger().d(value.toJson());
+        if (value.status) {
+          //TODO: if verification and success go to home page
+          await SharedPref.instance.setUserLogin(false);
+          Get.offAll(LoginView());
+          isLoading = false;
+          update();
+          await SharedPref.instance.clear();
+          snackSuccess("", value.message);
+        } else {
+          isLoading = false;
+          update();
+          await SharedPref.instance.setUserLogin(false);
+          Get.offAll(LoginView());
+          await SharedPref.instance.clear();
+        }
+      }).catchError((onError) {
+        //handle error from value
+        // snackError("", onError.toString());
+        Logger().d(onError.toString());
+        isLoading = false;
+        update();
+      });
+    } catch (e) {
+      Logger().d(e.toString());
+      isLoading = false;
+      update();
+    }
+  }
+
+
 }

@@ -83,6 +83,7 @@ Map<String, String> arSU = {
   AppStrings.txtFullName: "الاسم بالكامل",
   AppStrings.txtCancel: "الغاء",
   AppStrings.txtLogoutHint: "هل انت متاكد من انك تريد تسجيل الخروج",
+  AppStrings.txtDeleteAccountHint: "هل انت متاكد من انك تريد حذف الحساب",
   AppStrings.txtOldPassword: "كلمة المرور القديمة",
   AppStrings.txtNewPassword: "كلمة المرور الجديدة",
   AppStrings.txtOk: "موافق",
