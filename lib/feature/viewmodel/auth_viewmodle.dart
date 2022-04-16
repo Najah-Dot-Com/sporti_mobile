@@ -227,8 +227,8 @@ class AuthViewModel extends GetxController {
     }
   }
 
-  void verifyEmail(TextEditingController emailController) {
-    var parameters = emailController.text.toString();
+  void verifyEmail(String emailController) {
+    var parameters = emailController;
 
     _verifyEmail(parameters);
   }
@@ -304,7 +304,7 @@ class AuthViewModel extends GetxController {
           await snackSuccess("", value.message);
           //this check for decide which screen to move to.
           if (confirmPass == null) {
-            Get.to(() => ResetPasswordView(
+            Get.offAll(() => ResetPasswordView(
                   pinCodeController: pinCode,
                 ));
           } else {

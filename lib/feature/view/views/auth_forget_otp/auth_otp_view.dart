@@ -183,7 +183,10 @@ class _AuthOTPViewState extends State<AuthOTPView> {
                   const SizedBox(
                     height: AppSize.s28,
                   ),
-                  _resendVerificationsCode(themeData),
+                  GestureDetector(
+                    child: _resendVerificationsCode(themeData),
+                    onTap: () => _onResendCodeClick(logic),
+                  ),
                 ],
               );
             }));
@@ -194,7 +197,13 @@ class _AuthOTPViewState extends State<AuthOTPView> {
     logic.confirmEmail(pinCode: _pinCodeController);
     // Get.to(() => ResetPasswordView(pinCodeController: _pinCodeController,));
   }
-
+ _onResendCodeClick(AuthViewModel logic) {
+    FocusManager.instance.primaryFocus?.unfocus();
+    bool isValidate = _formKey.currentState!.validate();
+    if (isValidate) {
+      logic.verifyEmail(widget.email!);
+    }
+  }
   // this for on complete code
   void _onCodeComplete(String value) {}
 

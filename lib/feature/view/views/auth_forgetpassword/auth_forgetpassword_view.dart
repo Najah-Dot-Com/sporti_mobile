@@ -113,7 +113,7 @@ class ForgetPasswordView extends StatelessWidget {
     FocusManager.instance.primaryFocus?.unfocus();
     bool isValidate = _formKey.currentState!.validate();
     if (isValidate) {
-      logic.verifyEmail(_emailController);
+      logic.verifyEmail(_emailController.text.toString());
     }
   }
 }
