@@ -15,7 +15,7 @@ import 'network/api/dio_manager/dio_manage_class.dart';
 import 'util/app_shaerd_data.dart';
 import 'util/localization/localization_service.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPref.instance.init();
   portraitOrientation();
@@ -50,34 +50,34 @@ class _MyAppState extends State<MyApp> {
     return DismissKeyboard(
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
-          // supportedLocales:const [
-          //   Locale("ar"),
-          //   Locale("en"),
-          // ],
+        // supportedLocales:const [
+        //   Locale("ar"),
+        //   Locale("en"),
+        // ],
         localizationsDelegates: const [
           CountryLocalizations.delegate,
         ],
         enableLog: true,
         defaultTransition: Transition.native,
         title: AppStrings.appTitle.tr,
-        locale:SharedPref.instance.getAppLanguageMain(),
+        locale: SharedPref.instance.getAppLanguageMain(),
         fallbackLocale: LocalizationService.fallbackLocale,
         translations: LocalizationService(),
         builder: (context, widget) => ResponsiveWrapper.builder(
-            BouncingScrollWrapper.builder(context, widget!),
-            maxWidth: 1200,
-            minWidth: 450,
-            defaultScale: true,
-            breakpoints: [
-              const ResponsiveBreakpoint.resize(450, name: MOBILE),
-              const ResponsiveBreakpoint.autoScale(800, name: TABLET),
-              const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
-              const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
-              const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
-            ],
+          BouncingScrollWrapper.builder(context, widget!),
+          maxWidth: 1200,
+          minWidth: 450,
+          defaultScale: true,
+          breakpoints: [
+            const ResponsiveBreakpoint.resize(450, name: MOBILE),
+            const ResponsiveBreakpoint.autoScale(800, name: TABLET),
+            const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
+            const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
+            const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
+          ],
         ),
         theme: AppTheme.getApplicationTheme(),
-        home: const AccountSuccessVerifyView(),//SplashView(),
+        home: const SplashView(),
       ),
     );
   }
