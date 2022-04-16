@@ -40,6 +40,14 @@ class AuthViewModel extends GetxController {
     _signIn(map);
   }
 
+  goToHomePage() async {
+    isLoading = true;
+    update();
+    await Get.offAll(const HomePageView());
+    isLoading = false;
+    update();
+  }
+
   //make signIn methode
   Future<void> _signIn(Map<String, dynamic> map) async {
     try {
@@ -78,11 +86,13 @@ class AuthViewModel extends GetxController {
   }
 
   //click on sign in btn on login page
-  void signUpValid(TextEditingController userNameController,
-      TextEditingController passwordController,
-      TextEditingController passwordConfirmationController,
-      TextEditingController fullNameController,
-      TextEditingController emailController,) {
+  void signUpValid(
+    TextEditingController userNameController,
+    TextEditingController passwordController,
+    TextEditingController passwordConfirmationController,
+    TextEditingController fullNameController,
+    TextEditingController emailController,
+  ) {
     if (passwordController.text != passwordConfirmationController.text) {
       snackError("", AppStrings.errorPasswordMatches.tr);
       return;
@@ -94,8 +104,8 @@ class AuthViewModel extends GetxController {
     Map<String, dynamic> map = {
       ConstanceNetwork.userNameKey: userNameController.text.toString(),
       ConstanceNetwork.passwordKey: passwordController.text.toString(),
-      ConstanceNetwork.passwordConfirmKey: passwordConfirmationController.text
-          .toString(),
+      ConstanceNetwork.passwordConfirmKey:
+          passwordConfirmationController.text.toString(),
       ConstanceNetwork.emailKey: emailController.text.toString(),
       ConstanceNetwork.fullNameKey: fullNameController.text.toString(),
     };
@@ -134,7 +144,6 @@ class AuthViewModel extends GetxController {
     }
   }
 
-
   Future<void> logoutUser() async {
     try {
       isLoading = true;
@@ -171,7 +180,8 @@ class AuthViewModel extends GetxController {
     }
   }
 
-  void resetPassword(TextEditingController oldPassController,
+  void resetPassword(
+      TextEditingController oldPassController,
       TextEditingController newPassController,
       TextEditingController repeatPassController) {
     if (newPassController.text != repeatPassController.text) {
@@ -260,24 +270,28 @@ class AuthViewModel extends GetxController {
   }
 
   //click on confirmEmail in btn on auth OTP page
-  void confirmEmail({
-    TextEditingController? pinCode,
-    TextEditingController? passwordNew,
-    TextEditingController? passwordConfirm}) async {
+  void confirmEmail(
+      {TextEditingController? pinCode,
+      TextEditingController? passwordNew,
+      TextEditingController? passwordConfirm}) async {
     Map<String, dynamic> map = {
       ConstanceNetwork.code: pinCode?.text.toString() ?? '',
       ConstanceNetwork.passwordNewKey: passwordNew?.text.toString() ?? '',
       ConstanceNetwork.passwordConfirmKey:
-      passwordConfirm?.text.toString() ?? '',
+          passwordConfirm?.text.toString() ?? '',
     };
-    await _confirmEmail(map: map,
+    await _confirmEmail(
+        map: map,
         pinCode: pinCode,
         newPAss: passwordNew,
         confirmPass: passwordConfirm);
   }
 
-  Future<void> _confirmEmail({Map<String,
-      dynamic>? map, var pinCode, var newPAss, var confirmPass}) async {
+  Future<void> _confirmEmail(
+      {Map<String, dynamic>? map,
+      var pinCode,
+      var newPAss,
+      var confirmPass}) async {
     try {
       isLoading = true;
       update();
@@ -290,8 +304,7 @@ class AuthViewModel extends GetxController {
           await snackSuccess("", value.message);
           //this check for decide which screen to move to.
           if (confirmPass == null) {
-            Get.to(() =>
-                ResetPasswordView(
+            Get.to(() => ResetPasswordView(
                   pinCodeController: pinCode,
                 ));
           } else {
@@ -395,7 +408,6 @@ class AuthViewModel extends GetxController {
     }
   }
 
-
   Future<void> deleteUserAccount() async {
     try {
       isLoading = true;
@@ -431,6 +443,4 @@ class AuthViewModel extends GetxController {
       update();
     }
   }
-
-
 }

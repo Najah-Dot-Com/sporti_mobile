@@ -137,58 +137,61 @@ class _AuthOTPViewState extends State<AuthOTPView> {
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.white,
-      appBar: myAppbar,
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p40),
-        children: [
-          const SizedBox(
-            height: AppSize.s50,
-          ),
-          CustomTextView(
-            txt: AppStrings.txtVerifyCode.tr,
-            textStyle: themeData.textTheme.headline1
-                ?.copyWith(fontSize: AppFontSize.s28, color: AppColor.primary),
-          ),
-          const SizedBox(
-            height: AppSize.s12,
-          ),
-          CustomTextView(
-            txt: AppStrings.txtVerifyEmailCodeHint.tr,
-            textStyle: themeData.textTheme.subtitle2
-                ?.copyWith(fontSize: AppFontSize.s24, color: AppColor.grey),
-          ),
-          const SizedBox(
-            height: AppSize.s12,
-          ),
-          CustomTextView(
-            txt: widget.email,
-            textStyle: themeData.textTheme.headline2
-                ?.copyWith(fontSize: AppFontSize.s18, color: AppColor.primary),
-          ),
-          const SizedBox(
-            height: AppSize.s100,
-          ),
-          _pinCodeWidget(themeData),
-          const SizedBox(
-            height: AppSize.s60,
-          ),
-          PrimaryButton(
-              textButton: AppStrings.txtVerify.tr,
-              isLoading: false,
-              onClicked: _onVerifyClick),
-          const SizedBox(
-            height: AppSize.s28,
-          ),
-          _resendVerificationsCode(themeData),
-        ],
-      ),
-    );
+        backgroundColor: AppColor.white,
+        appBar: myAppbar,
+        body: GetBuilder<AuthViewModel>(
+            init: AuthViewModel(),
+            builder: (logic) {
+              return ListView(
+                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p40),
+                children: [
+                  const SizedBox(
+                    height: AppSize.s50,
+                  ),
+                  CustomTextView(
+                    txt: AppStrings.txtVerifyCode.tr,
+                    textStyle: themeData.textTheme.headline1?.copyWith(
+                        fontSize: AppFontSize.s28, color: AppColor.primary),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s12,
+                  ),
+                  CustomTextView(
+                    txt: AppStrings.txtVerifyEmailCodeHint.tr,
+                    textStyle: themeData.textTheme.subtitle2?.copyWith(
+                        fontSize: AppFontSize.s24, color: AppColor.grey),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s12,
+                  ),
+                  CustomTextView(
+                    txt: widget.email,
+                    textStyle: themeData.textTheme.headline2?.copyWith(
+                        fontSize: AppFontSize.s18, color: AppColor.primary),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s100,
+                  ),
+                  _pinCodeWidget(themeData),
+                  const SizedBox(
+                    height: AppSize.s60,
+                  ),
+                  PrimaryButton(
+                      textButton: AppStrings.txtVerify.tr,
+                      isLoading: logic.isLoading,
+                      onClicked: () => _onVerifyClick(logic)),
+                  const SizedBox(
+                    height: AppSize.s28,
+                  ),
+                  _resendVerificationsCode(themeData),
+                ],
+              );
+            }));
   }
 
-  void _onVerifyClick() {
+  void _onVerifyClick(AuthViewModel logic) {
     FocusManager.instance.primaryFocus?.unfocus();
-    AuthViewModel().confirmEmail(pinCode: _pinCodeController);
+    logic.confirmEmail(pinCode: _pinCodeController);
     // Get.to(() => ResetPasswordView(pinCodeController: _pinCodeController,));
   }
 
@@ -205,6 +208,5 @@ class _AuthOTPViewState extends State<AuthOTPView> {
     return true;
   }
 
-  void _onCodeSubmit(String value) {
-  }
+  void _onCodeSubmit(String value) {}
 }

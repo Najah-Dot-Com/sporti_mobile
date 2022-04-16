@@ -52,9 +52,9 @@ class AccountVerifyView extends StatelessWidget {
             // optional. Shows only country name and flag when popup is closed.
             showOnlyCountryWhenClosed: false,
             // optional. aligns the flag and the Text left
-            padding: const EdgeInsets.only(top: AppPadding.p12,left: AppPadding.p18),
+            padding: const EdgeInsets.only(
+                top: AppPadding.p12, left: AppPadding.p18),
             alignLeft: false,
-
           ),
           // const SizedBox(
           //   width: AppSize.s12,
@@ -81,41 +81,44 @@ class AccountVerifyView extends StatelessWidget {
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.white,
-      appBar: myAppbar,
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p40),
-        children: [
-          const SizedBox(
-            height: AppSize.s50,
-          ),
-          CustomTextView(
-            txt: AppStrings.txtVerifyAccount.tr,
-            textStyle: themeData.textTheme.headline1
-                ?.copyWith(fontSize: AppFontSize.s28, color: AppColor.primary),
-          ),
-          const SizedBox(
-            height: AppSize.s12,
-          ),
-          CustomTextView(
-            txt: AppStrings.txtEnterYourMobileNumber.tr,
-            textStyle: themeData.textTheme.headline2
-                ?.copyWith(fontSize: AppFontSize.s24, color: AppColor.grey),
-          ),
-          const SizedBox(
-            height: AppSize.s100,
-          ),
-          _phoneNumberWidget(themeData),
-          const SizedBox(
-            height: AppSize.s60,
-          ),
-          PrimaryButton(
-              textButton: AppStrings.txtSend.tr,
-              isLoading: false,
-              onClicked: _onSendClick),
-        ],
-      ),
-    );
+        backgroundColor: AppColor.white,
+        appBar: myAppbar,
+        body: GetBuilder<AuthViewModel>(
+            init: AuthViewModel(),
+            builder: (logic) {
+              return ListView(
+                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p40),
+                children: [
+                  const SizedBox(
+                    height: AppSize.s50,
+                  ),
+                  CustomTextView(
+                    txt: AppStrings.txtVerifyAccount.tr,
+                    textStyle: themeData.textTheme.headline1?.copyWith(
+                        fontSize: AppFontSize.s28, color: AppColor.primary),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s12,
+                  ),
+                  CustomTextView(
+                    txt: AppStrings.txtEnterYourMobileNumber.tr,
+                    textStyle: themeData.textTheme.headline2?.copyWith(
+                        fontSize: AppFontSize.s24, color: AppColor.grey),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s100,
+                  ),
+                  _phoneNumberWidget(themeData),
+                  const SizedBox(
+                    height: AppSize.s60,
+                  ),
+                  PrimaryButton(
+                      textButton: AppStrings.txtSend.tr,
+                      isLoading: logic.isLoading,
+                      onClicked: () => _onSendClick(logic)),
+                ],
+              );
+            }));
   }
 
   void _onChangeCountryCode(CountryCode value) {
@@ -124,10 +127,11 @@ class AccountVerifyView extends StatelessWidget {
     Logger().i("counteryCode " '$value');
   }
 
-  void _onSendClick() {
+  void _onSendClick(AuthViewModel logic) {
     _formKey.currentState!.validate();
-    String userPhoneNumAndCode = '$counteryCode${_phoneNumberController.text.toString()}';
+    String userPhoneNumAndCode =
+        '$counteryCode${_phoneNumberController.text.toString()}';
     Logger().i('userPhoneNumAndCode : $userPhoneNumAndCode');
-    AuthViewModel().verifyAccount(userPhoneNumber: userPhoneNumAndCode);
+    logic.verifyAccount(userPhoneNumber: userPhoneNumAndCode);
   }
 }

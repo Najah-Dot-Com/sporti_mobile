@@ -12,6 +12,8 @@ import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_strings.dart';
 
+import '../../../../util/app_shaerd_data.dart';
+
 class AccountOtpView extends StatefulWidget {
   String? userPhoneNumer = '00000';
   AccountOtpView({Key? key, @required this.userPhoneNumer}) : super(key: key);
@@ -33,10 +35,10 @@ class _AccountOtpViewState extends State<AccountOtpView> {
     super.initState();
   }
 
-  void dispose() {
-    _errorController?.close();
-    super.dispose();
-  }
+  // void dispose() {
+    // _errorController?.close();
+    // super.dispose();
+  // }
 
   PreferredSizeWidget get myAppbar => AppBar(
         backgroundColor: AppColor.white,
@@ -136,60 +138,62 @@ class _AccountOtpViewState extends State<AccountOtpView> {
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return Scaffold(
-      backgroundColor: AppColor.white,
-      appBar: myAppbar,
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p40),
-        children: [
-          const SizedBox(
-            height: AppSize.s50,
-          ),
-          CustomTextView(
-            txt: AppStrings.txtVerifyCode.tr,
-            textStyle: themeData.textTheme.headline1
-                ?.copyWith(fontSize: AppFontSize.s28, color: AppColor.primary),
-          ),
-          const SizedBox(
-            height: AppSize.s12,
-          ),
-          CustomTextView(
-            txt: AppStrings.txtVerifyPhoneCodeHint.tr,
-            textStyle: themeData.textTheme.headline2
-                ?.copyWith(fontSize: AppFontSize.s24, color: AppColor.grey),
-          ),
-          const SizedBox(
-            height: AppSize.s12,
-          ),
-          //htis text show user Phone Number
-          CustomTextView(
-            txt: widget.userPhoneNumer,
-            textStyle: themeData.textTheme.headline2
-                ?.copyWith(fontSize: AppFontSize.s18, color: AppColor.primary),
-          ),
-          const SizedBox(
-            height: AppSize.s100,
-          ),
-          _pinCodeWidget(themeData),
-          const SizedBox(
-            height: AppSize.s60,
-          ),
-          PrimaryButton(
-              textButton: AppStrings.txtVerify.tr,
-              isLoading: false,
-              onClicked: _onVerifyClick),
-          const SizedBox(
-            height: AppSize.s28,
-          ),
-          _resendVerificationsCode(themeData),
-        ],
-      ),
-    );
+        backgroundColor: AppColor.white,
+        appBar: myAppbar,
+        body: GetBuilder<AuthViewModel>(
+            init: AuthViewModel(),
+            builder: (logic) {
+              return ListView(
+                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p40),
+                children: [
+                  const SizedBox(
+                    height: AppSize.s50,
+                  ),
+                  CustomTextView(
+                    txt: AppStrings.txtVerifyCode.tr,
+                    textStyle: themeData.textTheme.headline1?.copyWith(
+                        fontSize: AppFontSize.s28, color: AppColor.primary),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s12,
+                  ),
+                  CustomTextView(
+                    txt: AppStrings.txtVerifyPhoneCodeHint.tr,
+                    textStyle: themeData.textTheme.headline2?.copyWith(
+                        fontSize: AppFontSize.s24, color: AppColor.grey),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s12,
+                  ),
+                  //htis text show user Phone Number
+                  CustomTextView(
+                    txt: widget.userPhoneNumer,
+                    textStyle: themeData.textTheme.headline2?.copyWith(
+                        fontSize: AppFontSize.s18, color: AppColor.primary),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s100,
+                  ),
+                  _pinCodeWidget(themeData),
+                  const SizedBox(
+                    height: AppSize.s60,
+                  ),
+                  PrimaryButton(
+                      textButton: AppStrings.txtVerify.tr,
+                      isLoading: logic.isLoading,
+                      onClicked: ()=> _onVerifyClick(logic)),
+                  const SizedBox(
+                    height: AppSize.s28,
+                  ),
+                  _resendVerificationsCode(themeData),
+                ],
+              );
+            }));
   }
 
-  void _onVerifyClick() {
+  void _onVerifyClick(AuthViewModel logic) {
     FocusManager.instance.primaryFocus?.unfocus();
-    AuthViewModel().confirmAccount(pinCode: _pinCodeController);
-    //Get.to(() => const AccountSuccessVerifyView());
+    logic.confirmAccount(pinCode: _pinCodeController);
   }
 
   // this for on complete code
@@ -205,5 +209,9 @@ class _AccountOtpViewState extends State<AccountOtpView> {
     return true;
   }
 
-  void _onCodeSubmit(String value) {}
+  void _onCodeSubmit(String value) {
+    if (value.isNotEmpty) {
+      hideFocus;
+    }
+  }
 }
