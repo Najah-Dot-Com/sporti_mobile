@@ -42,6 +42,7 @@ class AppStrings {
   static const String txtExercises = "تمارين";
   static const String txtBalance = "Balance : ";
   static const String txtVerifyAccount = "تفعيل الحساب";
+  static const String txtUpdateProfile = "تعديل الملف الشخصي"; //Edit profile
   static const String txtTermsAndConditions = "الشروط والاحكام";
   static const String txtPrivacyPolicies = "Privacy Policies";
   static const String txtLogout = "Logout";

@@ -10,7 +10,8 @@ import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/app_theme.dart';
 import 'package:sporti/util/sh_util.dart';
-import 'feature/view/views/account_success_virefy/account_success_virefy_view.dart';
+import 'feature/view/views/profile/profile_view.dart';
+import 'feature/view/views/profile/update_profile_view.dart';
 import 'network/api/dio_manager/dio_manage_class.dart';
 import 'util/app_shaerd_data.dart';
 import 'util/localization/localization_service.dart';
@@ -77,7 +78,7 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
         theme: AppTheme.getApplicationTheme(),
-        home: const SplashView(),
+        home:   UpdateProfileView(),//const SplashView(),
       ),
     );
   }

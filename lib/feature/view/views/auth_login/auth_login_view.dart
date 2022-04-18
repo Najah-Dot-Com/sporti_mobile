@@ -132,15 +132,9 @@ class LoginView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        //this for username TextFiled
-                        // SportiTextField(
-                        //   hint: AppStrings.username.tr,
-                        //   isforPass: false,
-                        //   // controller: , TODO:
-                        // ),
                         CustomTextFormFiled(
                           label: AppStrings.username.tr,
-                          keyboardType: TextInputType.emailAddress,
+                          keyboardType: TextInputType.name,
                           // customValid: emailValid,
                           textInputAction: TextInputAction.next,
                           isSmallPaddingWidth: true,
@@ -155,16 +149,10 @@ class LoginView extends StatelessWidget {
                           },
                         ),
                         const SizedBox(height: AppSize.s40),
-                        //this for password TextFiled
-                        // SportiTextField(
-                        //   hint: AppStrings.password.tr,
-                        //   isforPass: true,
-                        //   // controller: , TODO:
-                        // ),
                         CustomTextFormFiled(
                           label: AppStrings.password.tr,
                           isBorder: true,
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.visiblePassword,
                           customValid: passwordValid,
                           textInputAction: TextInputAction.next,
                           isSmallPaddingWidth: true,
@@ -194,17 +182,6 @@ class LoginView extends StatelessWidget {
                         const SizedBox(
                           height: AppSize.s40,
                         ),
-                        //this btn for signin
-                        // CustomButton(
-                        //   height: AppSize.s60,
-                        //   label: AppStrings.signin.tr,
-                        //   width: AppSize.s350,
-                        //   primaryColor: AppColor.primary,
-                        //   labelcolor: AppColor.white,
-                        //   borderColor: AppColor.primary,
-                        //   isRoundedBorder: true,
-                        //   onTap: _onSignInClick,
-                        // ),
                         PrimaryButton(
                             textButton: AppStrings.signin.tr,
                             colorBtn: AppColor.primary,

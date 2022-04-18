@@ -15,6 +15,7 @@ class AppMedia {
   static const String doneVerify = "$IMAGE_PATH/done_verify.svg";
   static const String transparentImage = "$IMAGE_PATH/trasnparnt_image.svg";
   static const String iconsAdd = "$IMAGE_PATH/icons_add.svg";
+  static const String personIcon = "$IMAGE_PATH/person.svg";
 
   static const String notComplete = "$IMAGE_PATH/not_complete.svg";
   static const String complete = "$IMAGE_PATH/compleate.svg";
