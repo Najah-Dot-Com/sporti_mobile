@@ -1,4 +1,4 @@
-class UserData{
+class UserData {
   UserData(
       {this.fullname,
       this.token,
@@ -6,6 +6,7 @@ class UserData{
       this.isVerify = false,
       this.finish,
       this.balance,
+      this.picture,
       this.username});
 
   String? fullname;
@@ -15,6 +16,7 @@ class UserData{
   String? username;
   int? finish;
   String? balance;
+  String? picture;
 
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
         fullname: json["fullname"] == null ? null : json["fullname"],
@@ -23,7 +25,10 @@ class UserData{
         username: json["username"] == null ? null : json["username"],
         finish: json["finish"] == null ? null : json["finish"],
         balance: json["balance"] == null ? null : json["balance"],
-        expiresIn: json["expires_in"] == null ? null : DateTime.parse(json["expires_in"]),
+        picture: json["picture"] == null ? null : json["picture"],
+        expiresIn: json["expires_in"] == null
+            ? null
+            : DateTime.parse(json["expires_in"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -33,6 +38,7 @@ class UserData{
         "username": username == null ? null : username,
         "finish": finish == null ? null : finish,
         "balance": balance == null ? null : balance,
+        "picture": picture == null ? null : picture,
         "expires_in": expiresIn == null ? null : expiresIn?.toIso8601String(),
       };
 }

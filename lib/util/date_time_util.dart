@@ -444,6 +444,17 @@ class DateUtility {
     }
   }
 
+  static convertDateTimeToAmPmTime(DateTime dateTime) {
+    try {
+      initializeDateFormatting(isArabicLang() ? 'ar' : 'en');
+      return DateFormat("hh:mm a", (isArabicLang() ? "ar" : "en"))
+          .format(dateTime);
+    } catch (e) {
+      print(e);
+      return DateTime.now();
+    }
+  }
+
   static dateFormatNamed({String? txtDate, DateTime? date}){
     initializeDateFormatting(isArabicLang() ? 'ar' : 'en');
     if(!GetUtils.isNull(date))
@@ -453,7 +464,6 @@ class DateUtility {
   }
 
 
-  //todo abdallah mansoure
   //TODO add locale
   static String dateToFormattedDate(String date, bool showYear) {
     DateTime dateTime = DateTime.parse(date);

@@ -8,6 +8,8 @@ class ExercisesData {
     this.updatedAt,
     this.id,
     this.parentId,
+    this.returnDate,
+    this.returnTime,
     this.isDone= false,
     this.isRetuen= false,
     this.countFinish = 0
@@ -22,6 +24,8 @@ class ExercisesData {
   String? description;
   int? time;
   bool? isFavorite;
+  DateTime? returnDate;
+  String? returnTime;
   dynamic image;
   dynamic updatedAt;
 
@@ -35,6 +39,8 @@ class ExercisesData {
     time: json["time"] == null ? null:json["time"],
     isFavorite: json["isFavorite"] == null ? false:json["isFavorite"],
     image: json["image"] == null ? null:json["image"],
+    returnDate: json["return_date"] == null ? null : DateTime.parse(json["return_date"]),
+    returnTime: json["return_time"] == null ? null : json["return_time"],
     updatedAt: json["updated_at"] == null ? null:json["updated_at"],
     countFinish: json["countFinish"] == null ? 0:json["countFinish"],
   );
@@ -49,6 +55,8 @@ class ExercisesData {
     "isFavorite": isFavorite == null ? null: isFavorite,
     "image": image == null ? null: image,
     "updated_at": updatedAt == null ? null: updatedAt,
+    "return_date": returnDate == null ? null : "${returnDate?.year.toString().padLeft(4, '0')}-${returnDate?.month.toString().padLeft(2, '0')}-${returnDate?.day.toString().padLeft(2, '0')}",
+    "return_time": returnTime == null ? null : returnTime,
     "isDone": isDone == null ? null : isDone,
     "isRetuen": isRetuen == null ? null : isRetuen,
   };
