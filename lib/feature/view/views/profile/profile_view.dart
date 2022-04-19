@@ -80,47 +80,6 @@ class ProfileView extends StatelessWidget {
       ],
     );
   }
-
-  // //this for items in the below to go to another pages
-  // Widget _profileItem(ThemeData themeData , {required Function() onClick,required String title, required String leadingIcon , required String trailingIcon}) {
-  //   return InkWell(
-  //     onTap: onClick,
-  //     child: Container(
-  //       width: double.infinity,
-  //       height: AppSize.s50,
-  //       padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
-  //       margin:const EdgeInsets.only(bottom: AppSize.s12),
-  //       decoration: BoxDecoration(
-  //           color: AppColor.white,
-  //           borderRadius: BorderRadius.circular(AppPadding.p8),
-  //           boxShadow: [
-  //             AppShadow.boxShadow()!
-  //           ]
-  //       ),
-  //       child: Row(
-  //         children: [
-  //           SvgPicture.asset(leadingIcon),
-  //           const SizedBox(
-  //             width: AppSize.s20,
-  //           ),
-  //           Expanded(
-  //             child: CustomTextView(
-  //                 txt:title,
-  //                 textStyle: themeData.textTheme.headline2),
-  //           ),
-  //           const SizedBox(
-  //             width: AppSize.s20,
-  //           ),
-  //           if(Get.locale == LocalizationService.localeEn && trailingIcon == AppMedia.arrowIos)...[
-  //             const Icon(Icons.arrow_forward_ios),
-  //           ]else...[
-  //             SvgPicture.asset(trailingIcon)
-  //           ]
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 //this for items in the below to go to another pages
   Widget _profileDeleteAccount(ThemeData themeData , {required Function() onClick,required String title,  required String trailingIcon}) {
     return InkWell(
@@ -158,7 +117,6 @@ class ProfileView extends StatelessWidget {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);

@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
 import 'package:sporti/feature/view/views/auth_resetpassword/auth_resetpassword_view.dart';
 import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
+import 'package:sporti/feature/view/views/profile/profile_view.dart';
 import 'package:sporti/network/api/feature/auth_feature.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
@@ -433,6 +436,51 @@ class AuthViewModel extends GetxController {
       }).catchError((onError) {
         //handle error from value
         // snackError("", onError.toString());
+        Logger().d(onError.toString());
+        isLoading = false;
+        update();
+      });
+    } catch (e) {
+      Logger().d(e.toString());
+      isLoading = false;
+      update();
+    }
+  }
+  //click on updateProfile btn on login page
+  void updateProfile(
+    TextEditingController fullNameController,
+    TextEditingController emailController,
+    File image,
+  ){
+    Map<String, dynamic> map = {
+      ConstanceNetwork.fullNameKey: fullNameController.text.toString(),
+      ConstanceNetwork.emailKey: emailController.text.toString(),
+      ConstanceNetwork.picture: image,
+
+    };
+    _updateProfile(map);
+  }
+
+  //make updateProfile methode
+  Future<void> _updateProfile(Map<String, dynamic> map) async {
+    try {
+      isLoading = true;
+      update();
+      await AuthFeature.getInstance.updateProfile(map).then((value) async {
+        //handle object from value || [save in sharedPreferences]
+        Logger().d(value.toJson());
+        if (value.status == 200) {
+          //if success go to ProfileView page
+          Get.offAll(const ProfileView());
+          isLoading = false;
+          update();
+        } else {
+          isLoading = false;
+          update();
+        }
+      }).catchError((onError) {
+        //handle error from value
+        snackError("", onError.toString());
         Logger().d(onError.toString());
         isLoading = false;
         update();

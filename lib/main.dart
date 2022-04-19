@@ -78,7 +78,7 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
         theme: AppTheme.getApplicationTheme(),
-        home:   UpdateProfileView(),//const SplashView(),
+        home: const SplashView() // UpdateProfileView(),//const SplashView(),
       ),
     );
   }

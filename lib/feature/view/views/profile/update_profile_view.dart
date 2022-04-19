@@ -1,3 +1,7 @@
+// ignore_for_file: unrelated_type_equality_checks
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,17 +16,18 @@ import '../../../../util/app_dimen.dart';
 import '../../../../util/app_font.dart';
 import '../../../../util/app_media.dart';
 import '../../../../util/app_shaerd_data.dart';
+import '../../../viewmodel/auth_viewmodle.dart';
 import '../auth_updatepassword/auth_updatepassword_view.dart';
 
 class UpdateProfileView extends StatelessWidget {
   UpdateProfileView({Key? key}) : super(key: key);
-  TextEditingController? _userNameController = TextEditingController();
+  TextEditingController? _fullNameController = TextEditingController();
   TextEditingController? _emailController = TextEditingController();
   static final FocusNode _userNameFocusNode = FocusNode();
   static final FocusNode _emailFocusNode = FocusNode();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ImagePicker _picker = ImagePicker();
-  XFile? _image;
+  File? _image;
   var imagePath;
   static var img =
       "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80";
@@ -30,15 +35,21 @@ class UpdateProfileView extends StatelessWidget {
     return AppBar(
       title: Text(
         AppStrings.txtUpdateProfile.tr,
-        style: AppTextStyle.getBoldStyle(color: AppColor.primary,fontSize: AppFontSize.s18),
+        style: AppTextStyle.getBoldStyle(
+            color: AppColor.primary, fontSize: AppFontSize.s18),
       ),
       leading: IconButton(
           onPressed: () {
             Get.back();
           },
-          icon:Icon(Icons.arrow_back_ios,color: AppColor.black,size: AppSize.s24,)),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: AppColor.black,
+            size: AppSize.s24,
+          )),
     );
   }
+
   Widget _userCardData(ThemeData themeData, BuildContext context) {
     return Container(
       width: AppSize.s150,
@@ -80,76 +91,90 @@ class UpdateProfileView extends StatelessWidget {
     return Scaffold(
       appBar: appBar(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: AppPadding.p100,horizontal: AppPadding.p20),
+        padding: const EdgeInsets.symmetric(
+            vertical: AppPadding.p100, horizontal: AppPadding.p20),
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _userCardData(themeData,context),
-              const SizedBox(
-                height: AppSize.s20,
-              ),
-              CustomTextFormFiled(
-                label: AppStrings.username.tr,
-                keyboardType: TextInputType.name,
-                textInputAction: TextInputAction.next,
-                isSmallPaddingWidth: true,
-                isBorder: true,
-                focusNode: _userNameFocusNode,
-                nexFocusNode: _emailFocusNode,
-                controller: _userNameController,
-                onSubmitted: (v) {
-                  if (v.isNotEmpty) {
-                    _emailFocusNode.requestFocus();
-                  }
-                },
-              ),
-              const SizedBox(height: AppSize.s40),
-              CustomTextFormFiled(
-                label: AppStrings.txtEmail.tr,
-                isBorder: true,
-                keyboardType: TextInputType.visiblePassword,
-                customValid: passwordValid,
-                textInputAction: TextInputAction.next,
-                isSmallPaddingWidth: true,
-                obscureText: true,
-                controller: _emailController,
-                focusNode: _emailFocusNode,
-                onSubmitted: (v) {
-                  if (v.isNotEmpty) {
-                    hideFocus(context);
-                  }
-                },
-              ),
-              const SizedBox(height: AppSize.s60),
-              profileItem(themeData,color: AppColor.lightBlue,withBoxShadow:false,
-                  onClick: _onUpdatePassword,
-                  leadingIcon: AppMedia.resetPassword,
-                  title: AppStrings.resetYourPass.tr,
-                  trailingIcon: AppMedia.arrowIos),
-               const SizedBox(height: AppSize.s60),
-               PrimaryButton(
-                            textButton: AppStrings.update.tr,
-                            colorBtn: AppColor.primary,
-                            colorText: AppColor.white,
-                            isLoading: false,//logic.isLoading,
-                            onClicked: ()=>_onUpdateClick()),
-
-            ],
-          ),
+          child: GetBuilder<AuthViewModel>(
+              init: AuthViewModel(),
+              builder: (logic) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _userCardData(themeData, context),
+                    const SizedBox(
+                      height: AppSize.s20,
+                    ),
+                    CustomTextFormFiled(
+                      label: AppStrings.username.tr,
+                      keyboardType: TextInputType.name,
+                      textInputAction: TextInputAction.next,
+                      isSmallPaddingWidth: true,
+                      isBorder: true,
+                      focusNode: _userNameFocusNode,
+                      nexFocusNode: _emailFocusNode,
+                      controller: _fullNameController,
+                      onSubmitted: (v) {
+                        if (v.isNotEmpty) {
+                          _emailFocusNode.requestFocus();
+                        }
+                      },
+                    ),
+                    const SizedBox(height: AppSize.s40),
+                    CustomTextFormFiled(
+                      label: AppStrings.txtEmail.tr,
+                      isBorder: true,
+                      keyboardType: TextInputType.emailAddress,
+                      customValid: emailValid,
+                      textInputAction: TextInputAction.next,
+                      isSmallPaddingWidth: true,
+                      controller: _emailController,
+                      focusNode: _emailFocusNode,
+                      onSubmitted: (v) {
+                        if (v.isNotEmpty) {
+                          hideFocus(context);
+                        }
+                      },
+                    ),
+                    const SizedBox(height: AppSize.s60),
+                    profileItem(themeData,
+                        color: AppColor.lightBlue,
+                        withBoxShadow: false,
+                        onClick: _onUpdatePassword,
+                        leadingIcon: AppMedia.resetPassword,
+                        title: AppStrings.resetYourPass.tr,
+                        trailingIcon: AppMedia.arrowIos),
+                    const SizedBox(height: AppSize.s60),
+                    PrimaryButton(
+                        textButton: AppStrings.update.tr,
+                        colorBtn: AppColor.primary,
+                        colorText: AppColor.white,
+                        isLoading: logic.isLoading, //logic.isLoading,
+                        onClicked: () => _onUpdateProfileClick(logic,
+                            _fullNameController!, _emailController!, _image!)),
+                  ],
+                );
+              }),
         ),
       ),
     );
   }
-    _onUpdateClick(){
-        //TODO:
+
+  _onUpdateProfileClick(AuthViewModel logic, TextEditingController _fullNameController,
+      TextEditingController _emailController, File image) {
+    //TODO:
+    if (_fullNameController != null &&
+        _emailController != null &&
+        image != null) {
+      logic.updateProfile(_emailController, _fullNameController, image);
     }
+  }
+
   _imgFromCamera() async {
     XFile? image =
         await _picker.pickImage(source: ImageSource.camera, imageQuality: 40);
     if (image!.length() != 0) {
       // EasyLoading.show(status: '... جاري التحميل'); // show loding indicator
-
+      _image = image as File;
       // EasyLoading.dismiss(); // stop loging indicator
     }
   }
@@ -158,11 +183,8 @@ class UpdateProfileView extends StatelessWidget {
     XFile? image =
         await _picker.pickImage(source: ImageSource.gallery, imageQuality: 40);
     if (image!.length() != 0) {
-      // setState(() {
-      //   _image = image;
+       _image = image as File;
       //   imagePath = File(image.path);
-      // });
-
     }
   }
 
@@ -177,8 +199,8 @@ class UpdateProfileView extends StatelessWidget {
                 children: <Widget>[
                   ListTile(
                     leading: const Icon(Icons.photo_library),
-                    title: const Text(
-                      'معرض الصور',
+                    title: Text(
+                      AppStrings.txtGallery.tr,
                       textAlign: TextAlign.right,
                     ),
                     onTap: () async {
@@ -188,7 +210,7 @@ class UpdateProfileView extends StatelessWidget {
                   ),
                   ListTile(
                     leading: const Icon(Icons.photo_camera),
-                    title: const Text('الكاميرا', textAlign: TextAlign.right),
+                    title: Text(AppStrings.txtCamera.tr, textAlign: TextAlign.right),
                     onTap: () {
                       _imgFromCamera();
                       Navigator.of(context).pop();
@@ -200,6 +222,7 @@ class UpdateProfileView extends StatelessWidget {
           );
         });
   }
+
 
   _onUpdatePassword() {
     Get.to(() => const UpdatePasswordView());
