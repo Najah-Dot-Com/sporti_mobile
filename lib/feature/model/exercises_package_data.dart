@@ -3,6 +3,7 @@ class ExercisesData {
     this.title,
     this.description,
     this.time,
+    this.countExercises,
     this.isFavorite = false,
     this.image,
     this.updatedAt,
@@ -23,6 +24,7 @@ class ExercisesData {
   String? title;
   String? description;
   int? time;
+  int? countExercises;
   bool? isFavorite;
   DateTime? returnDate;
   String? returnTime;
@@ -37,6 +39,7 @@ class ExercisesData {
     title: json["title"] == null ? null:json["title"],
     description: json["description"] == null ? null:json["description"],
     time: json["time"] == null ? null:json["time"],
+    countExercises: json["countExercises"] == null ? null:json["countExercises"],
     isFavorite: json["isFavorite"] == null ? false:json["isFavorite"],
     image: json["image"] == null ? null:json["image"],
     returnDate: json["return_date"] == null ? null : DateTime.parse(json["return_date"]),
@@ -52,6 +55,7 @@ class ExercisesData {
     "title": title == null ? null: title,
     "description": description == null ? null: description,
     "time": time == null ? null: time,
+    "countExercises": countExercises == null ? null: countExercises,
     "isFavorite": isFavorite == null ? null: isFavorite,
     "image": image == null ? null: image,
     "updated_at": updatedAt == null ? null: updatedAt,

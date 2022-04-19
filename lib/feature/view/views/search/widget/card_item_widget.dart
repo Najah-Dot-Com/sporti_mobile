@@ -54,7 +54,7 @@ class CardItemWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 4.0),
                   Text(
-                    "6 ${AppStrings.txtExercises}",
+                    "${data.countExercises} ${AppStrings.txtExercises}",
                     style: theme.textTheme.subtitle2,
                   ),
                 ],
