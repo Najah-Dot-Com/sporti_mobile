@@ -1,7 +1,8 @@
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
 import 'package:sporti/feature/view/views/auth_resetpassword/auth_resetpassword_view.dart';
@@ -19,8 +20,9 @@ import '../view/views/auth_forget_otp/auth_otp_view.dart';
 
 class AuthViewModel extends GetxController {
   bool isLoading = false;
-
   var acceptPolicy = false;
+  final ImagePicker _picker = ImagePicker();
+  var filePath;
 
   @override
   void onInit() {
@@ -446,18 +448,73 @@ class AuthViewModel extends GetxController {
       update();
     }
   }
+  imgFromCamera() async {
+    XFile? image =
+        await _picker.pickImage(source: ImageSource.camera, imageQuality: 40);
+    if (image != null) {
+      // EasyLoading.show(status: '... جاري التحميل'); // show loding indicator
+      filePath = File(image.path);
+      // EasyLoading.dismiss(); // stop loging indicator
+    } else {
+      return;
+    }
+  }
+
+   imgFromGallery() async {
+    XFile? image =
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 40);
+    if (image != null) {
+      filePath = File(image.path);
+    } else {
+      return;
+    }
+  }
+  void showPicker(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+            // ignore: avoid_unnecessary_containers
+            child: Container(
+              child: Wrap(
+                children: <Widget>[
+                  ListTile(
+                    leading: const Icon(Icons.photo_library),
+                    title: Text(
+                      AppStrings.txtGallery.tr,
+                      textAlign: TextAlign.right,
+                    ),
+                    onTap: ()  {
+                      imgFromGallery();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.photo_camera),
+                    title: Text(AppStrings.txtCamera.tr,
+                        textAlign: TextAlign.right),
+                    onTap: () {
+                      imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
   //click on updateProfile btn on login page
   void updateProfile(
     TextEditingController fullNameController,
     TextEditingController emailController,
-    File image,
-  ){
+  ) {
     Map<String, dynamic> map = {
       ConstanceNetwork.fullNameKey: fullNameController.text.toString(),
       ConstanceNetwork.emailKey: emailController.text.toString(),
-      ConstanceNetwork.picture: image,
-
+      ConstanceNetwork.picture: http.MultipartFile.fromPath('file', filePath),
     };
+    Logger().i('filePath : $filePath');
     _updateProfile(map);
   }
 
@@ -491,4 +548,12 @@ class AuthViewModel extends GetxController {
       update();
     }
   }
+
+  // void getImage(ImageSource imageSource) async {
+  //   final ImagePicker _picker = ImagePicker();
+  //   PickedFile imageFile = await _picker.getImage(source: imageSource);
+  //   if (imageFile == null) return;
+  //   File tmpFile = File(imageFile.path);
+  //   tmpFile = await tmpFile.copy(tmpFile.path);
+  // }
 }

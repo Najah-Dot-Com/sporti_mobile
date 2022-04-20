@@ -3,11 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sporti/feature/view/appwidget/bottom_sheet/logout_bottom_sheet.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/account_verfiy/account_verfiy_view.dart';
-import 'package:sporti/feature/view/views/auth_updatepassword/auth_updatepassword_view.dart';
 import 'package:sporti/feature/view/views/money_collect/money_collect_view.dart';
 import 'package:sporti/feature/view/views/privacy_policy/privacy_policy_view.dart';
-import 'package:sporti/feature/view/views/profile/update_profile_view.dart';
-import 'package:sporti/feature/view/views/profile/widget/profileItem.dart';
+import 'package:sporti/feature/view/views/update_profile/update_profile_view.dart';
 import 'package:sporti/feature/view/views/terms_conditions/terms_conditions_view.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
@@ -19,8 +17,6 @@ import 'package:get/get.dart';
 import 'package:sporti/util/app_style.dart';
 import 'package:sporti/util/constance.dart';
 import 'package:sporti/util/localization/localization_service.dart';
-import 'dart:math' as math;
-
 import 'package:sporti/util/sh_util.dart';
 
 class ProfileView extends StatelessWidget {
