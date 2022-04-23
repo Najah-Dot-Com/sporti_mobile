@@ -1,5 +1,6 @@
 // ignore_for_file: unrelated_type_equality_checks
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -46,8 +47,8 @@ class UpdateProfileView extends StatelessWidget {
     );
   }
 
-  Widget _userCardData(
-      ThemeData themeData, BuildContext context, AuthViewModel logic) {
+  Widget _userCardData(ThemeData themeData, BuildContext context,
+      AuthViewModel logic, UserData userData) {
     return Container(
       width: AppSize.s160,
       height: AppSize.s160,
@@ -64,11 +65,19 @@ class UpdateProfileView extends StatelessWidget {
                       width: AppSize.s150,
                       height: AppSize.s150,
                       fit: BoxFit.cover)
-                  : imageNetwork(
-                      // url: img,
-                      width: AppSize.s150,
-                      height: AppSize.s150,
-                      fit: BoxFit.cover)),
+                  : (userData.picture != null &&
+                          userData.picture!.isNotEmpty &&
+                          !userData.picture!.contains("http"))
+                      ? Image.memory(base64Decode(userData.picture.toString()),
+                          width: AppSize.s150,
+                          height: AppSize.s150,
+                          fit: BoxFit.cover)
+                      : imageNetwork(
+                           url:(userData.picture != null &&
+                               userData.picture!.isNotEmpty) ?userData.picture:null,
+                          width: AppSize.s150,
+                          height: AppSize.s150,
+                          fit: BoxFit.cover)),
           PositionedDirectional(
             end: 0,
             bottom: 0,
@@ -109,6 +118,7 @@ class UpdateProfileView extends StatelessWidget {
                 _fullNameController?.text = userData.fullname.toString();
               },
               builder: (logic) {
+                UserData? userData = SharedPref.instance.getUserData();
                 return Form(
                   key: _formKey,
                   child: Column(
@@ -117,7 +127,7 @@ class UpdateProfileView extends StatelessWidget {
                       const SizedBox(
                         height: AppSize.s40,
                       ),
-                      _userCardData(themeData, context, logic),
+                      _userCardData(themeData, context, logic, userData),
                       const SizedBox(
                         height: AppSize.s20,
                       ),
@@ -130,7 +140,7 @@ class UpdateProfileView extends StatelessWidget {
                         focusNode: _userNameFocusNode,
                         nexFocusNode: _emailFocusNode,
                         controller: _fullNameController,
-                        onChange: (v){
+                        onChange: (v) {
                           logic.update();
                         },
                         onSubmitted: (v) {
@@ -149,7 +159,7 @@ class UpdateProfileView extends StatelessWidget {
                         isSmallPaddingWidth: true,
                         controller: _emailController,
                         focusNode: _emailFocusNode,
-                        onChange: (v){
+                        onChange: (v) {
                           logic.update();
                         },
                         onSubmitted: (v) {
@@ -177,9 +187,10 @@ class UpdateProfileView extends StatelessWidget {
                           isLoading: logic.isLoading,
                           //logic.isLoading,
                           onClicked: !logic.isUpdateBtnEnable(
-                              _fullNameController!, _emailController!)
-                              ? (){}: () => _onUpdateProfileClick(
-                              logic, _fullNameController!, _emailController!)),
+                                  _fullNameController!, _emailController!)
+                              ? () {}
+                              : () => _onUpdateProfileClick(logic,
+                                  _fullNameController!, _emailController!)),
                     ],
                   ),
                 );

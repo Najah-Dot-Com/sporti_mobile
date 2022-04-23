@@ -555,10 +555,11 @@ class AuthViewModel extends GetxController {
       await AuthFeature.getInstance.updateProfile(map).then((value) async {
         //handle object from value || [save in sharedPreferences]
         Logger().d(value.toJson());
-        if (value.status == 200) {
+        if (value.status) {
           //if success go to ProfileView page
-          Get.offAll(const ProfileView());
+          SharedPref.instance.setUserDataUpdated(value.toJson()[ConstanceNetwork.resultKey]);
           isLoading = false;
+          snackSuccess("", value.message);
           update();
         } else {
           isLoading = false;
