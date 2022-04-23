@@ -23,6 +23,7 @@ abstract class ConstanceNetwork {
   static String userPhoneNumer = 'phone';
   //this for updateProfile keys
   static String picture = 'picture';
+  static String imageKey = "image";
 
   //this for home page
   static String parentIdKey = "parent_id";
@@ -58,6 +59,8 @@ abstract class ConstanceNetwork {
   static String confirmAccount = "confirm_verifi_code";
   //profile end point
   static String updateProfile = "update_profile";
+
+
 
 
 

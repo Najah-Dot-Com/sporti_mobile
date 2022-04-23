@@ -171,10 +171,10 @@ class AuthFeature {
       Logger().d("if ${appResponse.toJson()}");
       return appResponse;
     } else {
-      snackError(
-          "",
-          appResponse.message ??
-              "" /*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      // snackError(
+      //     "",
+      //     appResponse.message ??
+      //         "" /*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return appResponse;
     }
