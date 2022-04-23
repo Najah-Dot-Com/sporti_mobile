@@ -206,8 +206,8 @@ class UpdateProfileView extends StatelessWidget {
     TextEditingController _emailController,
   ) {
     if (_formKey.currentState!.validate() &&
-        _fullNameController != null &&
-        _emailController != null) {
+        _fullNameController.text.isNotEmpty &&
+        _emailController.text.isNotEmpty) {
       logic.updateProfile(_fullNameController, _emailController);
     }
   }
