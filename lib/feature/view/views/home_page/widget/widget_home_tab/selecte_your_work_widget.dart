@@ -6,6 +6,7 @@ import 'package:sporti/feature/view/appwidget/bottom_sheet/gloable_bottom_sheet.
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/category_details/categories_details_view.dart';
 import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
+import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
@@ -60,7 +61,8 @@ class SelectYourWorkWidget extends StatelessWidget {
                             width: AppSize.s150,
                             height: AppSize.s120,
                             fit: BoxFit.cover,
-                            url: fakeImage),
+                            url:
+                                "${ConstanceNetwork.baseImageExercises}${package?.image?[0] ?? fakeImage}"),
                       ],
                     ),
                   ),
@@ -74,7 +76,8 @@ class SelectYourWorkWidget extends StatelessWidget {
                             ? AppMedia.remove
                             : AppMedia.iconsAdd,
                         width: package!.isFavorite! ? AppSize.s28 : AppSize.s35,
-                        height: package!.isFavorite! ? AppSize.s28 : AppSize.s35,
+                        height:
+                            package!.isFavorite! ? AppSize.s28 : AppSize.s35,
                       ),
                     ),
                   ),
@@ -130,21 +133,25 @@ class SelectYourWorkWidget extends StatelessWidget {
     );
   }
 
-  void _onAddToMyWork() {
-    Get.bottomSheet(
-        GetBuilder<HomeViewModel>(
-            init: HomeViewModel(),
-            builder: (logic) {
-              return GlobalBottomSheet(
-                title: AppStrings.txtAddToMyWork.tr,
-                isLoading: logic.isLoadingAddMyWork,
-                onOkBtnClick: () {
-                  logic.addToMyWork(package?.id.toString());
-                },
-                onCancelBtnClick: () => Get.back(),
-              );
-            }),
-        isScrollControlled: true);
+  void _onAddToMyWork() async {
+    await showIsVerifyDialog().then((value) {
+      if (value) {
+        Get.bottomSheet(
+            GetBuilder<HomeViewModel>(
+                init: HomeViewModel(),
+                builder: (logic) {
+                  return GlobalBottomSheet(
+                    title: AppStrings.txtAddToMyWork.tr,
+                    isLoading: logic.isLoadingAddMyWork,
+                    onOkBtnClick: () {
+                      logic.addToMyWork(package?.id.toString());
+                    },
+                    onCancelBtnClick: () => Get.back(),
+                  );
+                }),
+            isScrollControlled: true);
+      }
+    });
   }
 
   void _onItemClick() {

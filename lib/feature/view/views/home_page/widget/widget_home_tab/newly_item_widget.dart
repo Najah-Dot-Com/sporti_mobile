@@ -5,6 +5,7 @@ import 'package:sporti/feature/view/appwidget/bottom_sheet/gloable_bottom_sheet.
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/category_details/categories_details_view.dart';
 import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
+import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_media.dart';
@@ -41,7 +42,7 @@ class NewlyItemWidget extends StatelessWidget {
                     width: AppSize.s150,
                     height: AppSize.s120,
                     fit: BoxFit.cover,
-                    url: fakeImage),
+                    url: "${ConstanceNetwork.baseImageExercises}${packages?.image?[0] ?? fakeImage}"),
                 SvgPicture.asset(AppMedia.transparentImage),
                 Positioned.fill(
                   child: Align(
@@ -70,19 +71,24 @@ class NewlyItemWidget extends StatelessWidget {
     );
   }
 
-  void _onAddToMyWork() {
-    Get.bottomSheet(GetBuilder<HomeViewModel>(
-        init: HomeViewModel(),
-        builder: (logic) {
-      return GlobalBottomSheet(
-        title:AppStrings.txtAddToMyWork.tr,
-        isLoading: logic.isLoadingAddMyWork,
-        onOkBtnClick: () {
-          logic.addToMyWork(packages?.id.toString());
-        },
-        onCancelBtnClick: () => Get.back(),
-      );
-    }), isScrollControlled: true);
+  void _onAddToMyWork() async{
+   await showIsVerifyDialog().then((value) {
+      if(value){
+        Get.bottomSheet(GetBuilder<HomeViewModel>(
+            init: HomeViewModel(),
+            builder: (logic) {
+              return GlobalBottomSheet(
+                title:AppStrings.txtAddToMyWork.tr,
+                isLoading: logic.isLoadingAddMyWork,
+                onOkBtnClick: () {
+                  logic.addToMyWork(packages?.id.toString());
+                },
+                onCancelBtnClick: () => Get.back(),
+              );
+            }), isScrollControlled: true);
+      }
+    });
+
   }
 
   void _onItemClick() {

@@ -12,6 +12,9 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:sporti/feature/model/user_data.dart';
+import 'package:sporti/feature/view/appwidget/dialog/gloable_dialog_widget.dart';
+import 'package:sporti/feature/view/views/account_verfiy/account_verfiy_view.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_strings.dart';
@@ -21,9 +24,6 @@ import '../feature/view/appwidget/custome_text_view.dart';
 import 'app_dimen.dart';
 import 'app_style.dart';
 import 'localization/localization_service.dart';
-
-
-
 
 String? urlPlacholder =
     "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png";
@@ -92,7 +92,6 @@ phoneVaild(String value) {
   return null;
 }
 
-
 emailValid(String val) {
   if (!GetUtils.isEmail(val)) {
     return AppStrings.messageMatcherEmail.tr;
@@ -121,9 +120,6 @@ String getDeviceLang() {
   return languageCode;
 }
 
-
-
-
 // snackSuccess(String title, String body) {
 //   Future.delayed(Duration(seconds: 0)).then((value) {
 //     Get.snackbar("$title", "$body",
@@ -145,15 +141,21 @@ String getDeviceLang() {
 // }
 
 snackSuccess(String? title, String? body) {
-  mainSnack(body: body ?? "", backgroundColor:const Color(0xFF10C995).withAlpha(150));
+  mainSnack(
+      body: body ?? "",
+      backgroundColor: const Color(0xFF10C995).withAlpha(150));
 }
 
 snackError(String? title, String? body) {
-  mainSnack(body: body ?? "", backgroundColor:const Color(0xFFF2AE56).withAlpha(150));
+  mainSnack(
+      body: body ?? "",
+      backgroundColor: const Color(0xFFF2AE56).withAlpha(150));
 }
 
 snackConnection() {
-  mainSnack(body: AppStrings.txtConnectionNote.tr, backgroundColor:const Color(0xFF000000).withAlpha(150));
+  mainSnack(
+      body: AppStrings.txtConnectionNote.tr,
+      backgroundColor: const Color(0xFF000000).withAlpha(150));
 }
 
 mainSnack({String? title, required String body, Color? backgroundColor}) {
@@ -170,18 +172,16 @@ mainSnack({String? title, required String body, Color? backgroundColor}) {
   });
 }
 
-
-
 showAnimatedDialog(dialog) {
   showGeneralDialog(
     barrierDismissible: false,
     barrierLabel: '',
     barrierColor: Colors.black.withOpacity(0.5),
-    transitionDuration:const Duration(milliseconds: 700),
+    transitionDuration: const Duration(milliseconds: 700),
     context: Get.context!,
     pageBuilder: (context, anim1, anim2) {
       return WillPopScope(
-        onWillPop: (){
+        onWillPop: () {
           return Future.value(false);
         },
         child: Align(
@@ -192,7 +192,8 @@ showAnimatedDialog(dialog) {
     },
     transitionBuilder: (context, anim1, anim2, child) {
       return SlideTransition(
-        position: Tween(begin:const Offset(0, 1), end:const Offset(0, 0)).animate(anim1),
+        position: Tween(begin: const Offset(0, 1), end: const Offset(0, 0))
+            .animate(anim1),
         child: child,
       );
     },
@@ -201,6 +202,7 @@ showAnimatedDialog(dialog) {
 
 var urlProduct =
     "https://images.unsplash.com/photo-1613177794106-be20802b11d3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xvY2slMjBoYW5kc3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80";
+
 Widget imageNetwork({double? width, double? height, String? url, BoxFit? fit}) {
   return CachedNetworkImage(
     imageBuilder: (context, imageProvider) {
@@ -224,10 +226,10 @@ Widget imageNetwork({double? width, double? height, String? url, BoxFit? fit}) {
     fit: BoxFit.cover,
     placeholder: (context, String? url) {
       return Container(
-        decoration:const BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(
-               AppMedia.loadingShimmer) /* CachedNetworkImageProvider(url ?? urlUserPlacholder!)*/,
+            image: AssetImage(AppMedia
+                .loadingShimmer) /* CachedNetworkImageProvider(url ?? urlUserPlacholder!)*/,
             fit: BoxFit.cover,
           ),
         ),
@@ -244,10 +246,6 @@ Widget imageNetwork({double? width, double? height, String? url, BoxFit? fit}) {
   );
 }
 
-
-
-
-
 hideFocus(context) {
   FocusScopeNode currentFocus = FocusScope.of(context ?? Get.context!);
   if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
@@ -255,8 +253,6 @@ hideFocus(context) {
     FocusManager.instance.primaryFocus!.unfocus();
   }
 }
-
-
 
 DateTime convertStringToDate(DateTime? date) {
   Logger().d("date befor ${date.toString()}");
@@ -276,11 +272,9 @@ double convertStringToDouble(String value) {
   return double.tryParse(value)!.toDouble();
 }
 
-
 updateLanguage(Locale locale) {
   Get.updateLocale(locale);
 }
-
 
 class CustomMaterialPageRoute extends MaterialPageRoute {
   @protected
@@ -304,7 +298,7 @@ class CustomMaterialPageRoute extends MaterialPageRoute {
 class DismissKeyboard extends StatelessWidget {
   final Widget? child;
 
-   DismissKeyboard({this.child});
+  DismissKeyboard({this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -322,9 +316,11 @@ class DismissKeyboard extends StatelessWidget {
   }
 }
 
-
 bool isArabicLang() {
-  return (SharedPref.instance.getAppLanguageMain() == LocalizationService.localeAr ? true : false);
+  return (SharedPref.instance.getAppLanguageMain() ==
+          LocalizationService.localeAr
+      ? true
+      : false);
   // return isRTL;
 }
 
@@ -340,7 +336,6 @@ Future<DateTime?> dateBiker() async {
   return picker;
 }
 
-
 Future<TimeOfDay?> timeBiker() async {
   var picker = await showTimePicker(
     context: Get.context!,
@@ -352,11 +347,11 @@ Future<TimeOfDay?> timeBiker() async {
   return picker;
 }
 
-String formatStringWithCurrency(var data/*, String currency*/) {
+String formatStringWithCurrency(var data /*, String currency*/) {
   try {
     var number = data.toString().replaceAll("\$", "").replaceAll(",", "");
     number =
-    "\$ ${NumberFormat("#0.00", "en_US").format(double.parse(number))}";
+        "\$ ${NumberFormat("#0.00", "en_US").format(double.parse(number))}";
     //var numbers = "${currency}${double.parse(number).toStringAsFixed(2)}";
     return number.toString();
   } catch (e) {
@@ -364,81 +359,105 @@ String formatStringWithCurrency(var data/*, String currency*/) {
     return "0.00";
   }
 }
-Widget profileItem(ThemeData themeData , {bool? withBoxShadow=true,Color? color,required Function() onClick,required String title, required String leadingIcon , required String trailingIcon}) {
-    return InkWell(
+
+Widget profileItem(ThemeData themeData,
+    {bool? withBoxShadow = true,
+    Color? color,
+    required Function() onClick,
+    required String title,
+    required String leadingIcon,
+    required String trailingIcon}) {
+  return InkWell(
       onTap: onClick,
-      child:
-      withBoxShadow ==true?
-      Container(
-        width: double.infinity,
-        height: AppSize.s50,
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
-        margin:const EdgeInsets.only(bottom: AppSize.s12),
-        decoration: BoxDecoration(
-            color: color??AppColor.white,
-            borderRadius: BorderRadius.circular(AppPadding.p8),
-            boxShadow: [
-              AppShadow.boxShadow()!
-            ]
-        ),
-        child: Row(
-          children: [
-            SvgPicture.asset(leadingIcon),
-            const SizedBox(
-              width: AppSize.s20,
-            ),
-            Expanded(
-              child: CustomTextView(
-                  txt:title,
-                  textStyle: themeData.textTheme.headline2),
-            ),
-            const SizedBox(
-              width: AppSize.s20,
-            ),
-            if(Get.locale == LocalizationService.localeEn && trailingIcon == AppMedia.arrowIos)...[
-              const Icon(Icons.arrow_forward_ios),
-            ]else...[
-              SvgPicture.asset(trailingIcon)
-            ]
-          ],
-        ),
-      ):Container(
-        width: double.infinity,
-        height: AppSize.s50,
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
-        margin:const EdgeInsets.only(bottom: AppSize.s12),
-        decoration: BoxDecoration(
-            color: color??AppColor.white,
-            //borderRadius: BorderRadius.circular(AppPadding.p8),
-            border: Border(
-              bottom: BorderSide(
-                color: AppColor.black,
-                width: 0.5,
+      child: withBoxShadow == true
+          ? Container(
+              width: double.infinity,
+              height: AppSize.s50,
+              padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+              margin: const EdgeInsets.only(bottom: AppSize.s12),
+              decoration: BoxDecoration(
+                  color: color ?? AppColor.white,
+                  borderRadius: BorderRadius.circular(AppPadding.p8),
+                  boxShadow: [AppShadow.boxShadow()!]),
+              child: Row(
+                children: [
+                  SvgPicture.asset(leadingIcon),
+                  const SizedBox(
+                    width: AppSize.s20,
+                  ),
+                  Expanded(
+                    child: CustomTextView(
+                        txt: title, textStyle: themeData.textTheme.headline2),
+                  ),
+                  const SizedBox(
+                    width: AppSize.s20,
+                  ),
+                  if (Get.locale == LocalizationService.localeEn &&
+                      trailingIcon == AppMedia.arrowIos) ...[
+                    const Icon(Icons.arrow_forward_ios),
+                  ] else ...[
+                    SvgPicture.asset(trailingIcon)
+                  ]
+                ],
               ),
-            ),
-        ),
-        child: Row(
-          children: [
-            SvgPicture.asset(leadingIcon),
-            const SizedBox(
-              width: AppSize.s20,
-            ),
-            Expanded(
-              child: CustomTextView(
-                  txt:title,
-                  textStyle: themeData.textTheme.headline2),
-            ),
-            const SizedBox(
-              width: AppSize.s20,
-            ),
-            if(Get.locale == LocalizationService.localeEn && trailingIcon == AppMedia.arrowIos)...[
-              const Icon(Icons.arrow_forward_ios),
-            ]else...[
-              SvgPicture.asset(trailingIcon)
-            ]
-          ],
-        ),
-      )
-    );
+            )
+          : Container(
+              width: double.infinity,
+              height: AppSize.s50,
+              padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+              margin: const EdgeInsets.only(bottom: AppSize.s12),
+              decoration: BoxDecoration(
+                color: color ?? AppColor.white,
+                //borderRadius: BorderRadius.circular(AppPadding.p8),
+                border: Border(
+                  bottom: BorderSide(
+                    color: AppColor.black,
+                    width: 0.5,
+                  ),
+                ),
+              ),
+              child: Row(
+                children: [
+                  SvgPicture.asset(leadingIcon),
+                  const SizedBox(
+                    width: AppSize.s20,
+                  ),
+                  Expanded(
+                    child: CustomTextView(
+                        txt: title, textStyle: themeData.textTheme.headline2),
+                  ),
+                  const SizedBox(
+                    width: AppSize.s20,
+                  ),
+                  if (Get.locale == LocalizationService.localeEn &&
+                      trailingIcon == AppMedia.arrowIos) ...[
+                    const Icon(Icons.arrow_forward_ios),
+                  ] else ...[
+                    SvgPicture.asset(trailingIcon)
+                  ]
+                ],
+              ),
+            ));
+}
+
+Future<bool> showIsVerifyDialog() async {
+  UserData? userData = SharedPref.instance.getUserData();
+  if (!userData.isVerify!) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      showAnimatedDialog(GlobalDialogWidget(
+        title: AppStrings.txtAttentions.tr,
+        subTitle: AppStrings.verifyHint.tr,
+        isLoading: false,
+        isTwoBtn: true,
+        onCancelBtnClick: () => Get.back(),
+        onOkBtnClick: () {
+          Get.off(() => AccountVerifyView());
+        },
+      ));
+    });
+    return false;
   }
-  
+  else{
+    return true;
+  }
+}

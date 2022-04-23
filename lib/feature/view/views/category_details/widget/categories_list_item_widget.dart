@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/categoriy_exercise_details/categoriy_exercise_details_view.dart';
+import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
@@ -51,7 +52,7 @@ class CategoriesListItemWidget extends StatelessWidget {
                   width: AppSize.s150,
                   height: AppSize.s120,
                   fit: BoxFit.cover,
-                  url: packageDetails?.image ?? fakeImage),
+                  url:"${ConstanceNetwork.baseImageExercises}${packageDetails?.imageSingleSlide??fakeImage}" ),
             ),
             const SizedBox(
               width: AppSize.s20,

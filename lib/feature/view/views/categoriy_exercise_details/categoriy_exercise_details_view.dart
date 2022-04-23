@@ -6,6 +6,7 @@ import 'package:sporti/feature/view/views/categoriy_exercise/categoriy_exercise_
 import 'package:sporti/feature/view/views/categoriy_exercise_details/widget/page_shimmer_widget.dart';
 import 'package:sporti/feature/viewmodel/details_exercise_view_model.dart';
 import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
+import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_media.dart';
@@ -99,9 +100,9 @@ class CategoriyExerciseDetailsView extends StatelessWidget {
                 const SizedBox(height: AppSize.s28,),
                 ClipRRect(borderRadius: BorderRadius.circular(AppSize.s12),
                     child: imageNetwork(width: double.infinity,
-                        height: AppSize.s200,
+                        height: AppSize.s400,
                         fit: BoxFit.cover,
-                        url: logic.exerciseDetailsData?.image ?? fakeImage)),
+                        url: "${ConstanceNetwork.baseImageExercises}${logic.exerciseDetailsData?.image ?? fakeImage}")),
                 const SizedBox(height: AppSize.s28,),
                 CustomTextView(
                   txt: logic.exerciseDetailsData?.title,
@@ -135,7 +136,11 @@ class CategoriyExerciseDetailsView extends StatelessWidget {
   }
 
 
-  void _onStartBtnClick(DetailsExerciseViewModel logic) {
-    Get.to(CategoryExerciseView(exerciseDetailsData:logic.exerciseDetailsData));
+  void _onStartBtnClick(DetailsExerciseViewModel logic) async{
+    await showIsVerifyDialog().then((value) async{
+      if(value){
+        Get.to(CategoryExerciseView(exerciseDetailsData:logic.exerciseDetailsData));
+      }
+    });
   }
 }
