@@ -1,4 +1,4 @@
-class UserData {
+class UserData{
   UserData(
       {this.fullname,
       this.token,
@@ -6,6 +6,7 @@ class UserData {
       this.isVerify = false,
       this.finish,
       this.balance,
+      this.email,
       this.picture,
       this.username});
 
@@ -14,15 +15,17 @@ class UserData {
   DateTime? expiresIn;
   bool? isVerify;
   String? username;
+  String? email;
+  String? picture;
   int? finish;
   String? balance;
-  String? picture;
 
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
         fullname: json["fullname"] == null ? null : json["fullname"],
         token: json["token"] == null ? null : json["token"],
         isVerify: json["isVerify"] == null ? false : json["isVerify"],
         username: json["username"] == null ? null : json["username"],
+        email: json["email"] == null ? null : json["email"],
         finish: json["finish"] == null ? null : json["finish"],
         balance: json["balance"] == null ? null : json["balance"],
         picture: json["picture"] == null ? null : json["picture"],
@@ -36,6 +39,7 @@ class UserData {
         "token": token == null ? null : token,
         "isVerify": isVerify == null ? false : isVerify,
         "username": username == null ? null : username,
+        "email": email == null ? null : email,
         "finish": finish == null ? null : finish,
         "balance": balance == null ? null : balance,
         "picture": picture == null ? null : picture,

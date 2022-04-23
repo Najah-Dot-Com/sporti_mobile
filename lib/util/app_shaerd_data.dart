@@ -1,11 +1,14 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -14,6 +17,9 @@ import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
 
+import '../feature/view/appwidget/custome_text_view.dart';
+import 'app_dimen.dart';
+import 'app_style.dart';
 import 'localization/localization_service.dart';
 
 
@@ -358,4 +364,81 @@ String formatStringWithCurrency(var data/*, String currency*/) {
     return "0.00";
   }
 }
-
+Widget profileItem(ThemeData themeData , {bool? withBoxShadow=true,Color? color,required Function() onClick,required String title, required String leadingIcon , required String trailingIcon}) {
+    return InkWell(
+      onTap: onClick,
+      child:
+      withBoxShadow ==true?
+      Container(
+        width: double.infinity,
+        height: AppSize.s50,
+        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+        margin:const EdgeInsets.only(bottom: AppSize.s12),
+        decoration: BoxDecoration(
+            color: color??AppColor.white,
+            borderRadius: BorderRadius.circular(AppPadding.p8),
+            boxShadow: [
+              AppShadow.boxShadow()!
+            ]
+        ),
+        child: Row(
+          children: [
+            SvgPicture.asset(leadingIcon),
+            const SizedBox(
+              width: AppSize.s20,
+            ),
+            Expanded(
+              child: CustomTextView(
+                  txt:title,
+                  textStyle: themeData.textTheme.headline2),
+            ),
+            const SizedBox(
+              width: AppSize.s20,
+            ),
+            if(Get.locale == LocalizationService.localeEn && trailingIcon == AppMedia.arrowIos)...[
+              const Icon(Icons.arrow_forward_ios),
+            ]else...[
+              SvgPicture.asset(trailingIcon)
+            ]
+          ],
+        ),
+      ):Container(
+        width: double.infinity,
+        height: AppSize.s50,
+        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+        margin:const EdgeInsets.only(bottom: AppSize.s12),
+        decoration: BoxDecoration(
+            color: color??AppColor.white,
+            //borderRadius: BorderRadius.circular(AppPadding.p8),
+            border: Border(
+              bottom: BorderSide(
+                color: AppColor.black,
+                width: 0.5,
+              ),
+            ),
+        ),
+        child: Row(
+          children: [
+            SvgPicture.asset(leadingIcon),
+            const SizedBox(
+              width: AppSize.s20,
+            ),
+            Expanded(
+              child: CustomTextView(
+                  txt:title,
+                  textStyle: themeData.textTheme.headline2),
+            ),
+            const SizedBox(
+              width: AppSize.s20,
+            ),
+            if(Get.locale == LocalizationService.localeEn && trailingIcon == AppMedia.arrowIos)...[
+              const Icon(Icons.arrow_forward_ios),
+            ]else...[
+              SvgPicture.asset(trailingIcon)
+            ]
+          ],
+        ),
+      )
+    );
+  }
+  

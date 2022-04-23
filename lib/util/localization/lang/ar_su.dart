@@ -38,7 +38,8 @@ Map<String, String> arSU = {
   AppStrings.txtMobileNumber: "رقم الهاتف",
   AppStrings.txtVerifyCode: "كود التفعيل",
   AppStrings.txtVerifyPhoneCodeHint: "لقد ارسلنا لك كود التفعيل على رقم هاتفك",
-  AppStrings.txtVerifyEmailCodeHint: "لقد ارسلنا لك كود التفعيل \n على بريدك الالكتروني",
+  AppStrings.txtVerifyEmailCodeHint:
+      "لقد ارسلنا لك كود التفعيل \n على بريدك الالكتروني",
   AppStrings.txtVerify: "تفعيل",
   AppStrings.txtResend: "اعد ارسال",
   AppStrings.txtVerifyAccountDone: "تم تفعيل الحساب بنجاح",
@@ -97,6 +98,11 @@ Map<String, String> arSU = {
   AppStrings.txtReturnDate: "تاريخ الاعادة",
   AppStrings.txtReturnTime: "وقت الاعادة",
   AppStrings.txtAttentions: "انتباه",
-  AppStrings.txtAttentionsHint: "انت لم تكمل التمرين بعد في حال اردت تجاهل التغيرات يمكنك الضغط على موافق والخروج من التمرين",
-  AppStrings.txtAttentionsHintNotComplete: "انت لم تكمل التمرين بعد لم تتمكن من اتمامه حاليا يرجى انتظار التمرين حتى يكتمل",
+  AppStrings.txtAttentionsHint:
+      "انت لم تكمل التمرين بعد في حال اردت تجاهل التغيرات يمكنك الضغط على موافق والخروج من التمرين",
+  AppStrings.txtAttentionsHintNotComplete:
+      "انت لم تكمل التمرين بعد لم تتمكن من اتمامه حاليا يرجى انتظار التمرين حتى يكتمل",
+  AppStrings.txtUpdateProfile: "تعديل الملف الشخصي",
+  AppStrings.txtGallery: "معرض الصور",
+  AppStrings.txtCamera: "الكاميرا",
 };

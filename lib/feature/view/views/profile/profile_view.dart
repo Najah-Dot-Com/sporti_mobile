@@ -3,9 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sporti/feature/view/appwidget/bottom_sheet/logout_bottom_sheet.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/account_verfiy/account_verfiy_view.dart';
-import 'package:sporti/feature/view/views/auth_updatepassword/auth_updatepassword_view.dart';
 import 'package:sporti/feature/view/views/money_collect/money_collect_view.dart';
 import 'package:sporti/feature/view/views/privacy_policy/privacy_policy_view.dart';
+import 'package:sporti/feature/view/views/update_profile/update_profile_view.dart';
 import 'package:sporti/feature/view/views/terms_conditions/terms_conditions_view.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
@@ -17,8 +17,6 @@ import 'package:get/get.dart';
 import 'package:sporti/util/app_style.dart';
 import 'package:sporti/util/constance.dart';
 import 'package:sporti/util/localization/localization_service.dart';
-import 'dart:math' as math;
-
 import 'package:sporti/util/sh_util.dart';
 
 class ProfileView extends StatelessWidget {
@@ -78,47 +76,6 @@ class ProfileView extends StatelessWidget {
       ],
     );
   }
-
-  //this for items in the below to go to another pages
-  Widget _profileItem(ThemeData themeData , {required Function() onClick,required String title, required String leadingIcon , required String trailingIcon}) {
-    return InkWell(
-      onTap: onClick,
-      child: Container(
-        width: double.infinity,
-        height: AppSize.s50,
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
-        margin:const EdgeInsets.only(bottom: AppSize.s12),
-        decoration: BoxDecoration(
-            color: AppColor.white,
-            borderRadius: BorderRadius.circular(AppPadding.p8),
-            boxShadow: [
-              AppShadow.boxShadow()!
-            ]
-        ),
-        child: Row(
-          children: [
-            SvgPicture.asset(leadingIcon),
-            const SizedBox(
-              width: AppSize.s20,
-            ),
-            Expanded(
-              child: CustomTextView(
-                  txt:title,
-                  textStyle: themeData.textTheme.headline2),
-            ),
-            const SizedBox(
-              width: AppSize.s20,
-            ),
-            if(Get.locale == LocalizationService.localeEn && trailingIcon == AppMedia.arrowIos)...[
-              const Icon(Icons.arrow_forward_ios),
-            ]else...[
-              SvgPicture.asset(trailingIcon)
-            ]
-          ],
-        ),
-      ),
-    );
-  }
 //this for items in the below to go to another pages
   Widget _profileDeleteAccount(ThemeData themeData , {required Function() onClick,required String title,  required String trailingIcon}) {
     return InkWell(
@@ -156,7 +113,6 @@ class ProfileView extends StatelessWidget {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
@@ -195,12 +151,13 @@ class ProfileView extends StatelessWidget {
               const SizedBox(
                 height: AppSize.s65,
               ),
-              _profileItem(themeData,onClick:_verifyAccount,leadingIcon:AppMedia.verify ,title:AppStrings.txtVerifyAccount.tr ,trailingIcon:AppMedia.done ),
-              _profileItem(themeData,onClick: _termsAndCondition,leadingIcon:AppMedia.termsAndConditions ,title:AppStrings.txtTermsAndConditions.tr ,trailingIcon:AppMedia.arrowIos ),
-              _profileItem(themeData,onClick:_onPrivacyPolicy,leadingIcon:AppMedia.privacyPolicies ,title:AppStrings.txtPrivacyPolicies.tr ,trailingIcon:AppMedia.arrowIos ),
-              _profileItem(themeData,onClick:_onLogout,leadingIcon:AppMedia.logout ,title:AppStrings.txtLogout.tr ,trailingIcon:AppMedia.arrowIos ),
-              _profileItem(themeData,onClick:_onGetMoneyPage,leadingIcon:AppMedia.currency ,title:AppStrings.txtCurrency.tr ,trailingIcon:AppMedia.arrowIos ),
-              _profileItem(themeData,onClick:_onUpdatePassword,leadingIcon:AppMedia.resetPassword ,title:AppStrings.resetYourPass.tr ,trailingIcon:AppMedia.arrowIos ),
+              profileItem(themeData,onClick:_UpdateProfile,leadingIcon:AppMedia.personIcon,title:AppStrings.txtUpdateProfile.tr ,trailingIcon:AppMedia.arrowIos),
+              profileItem(themeData,onClick:_verifyAccount,leadingIcon:AppMedia.verify ,title:AppStrings.txtVerifyAccount.tr ,trailingIcon:AppMedia.done),
+              profileItem(themeData,onClick: _termsAndCondition,leadingIcon:AppMedia.termsAndConditions ,title:AppStrings.txtTermsAndConditions.tr ,trailingIcon:AppMedia.arrowIos),
+              profileItem(themeData,onClick:_onPrivacyPolicy,leadingIcon:AppMedia.privacyPolicies ,title:AppStrings.txtPrivacyPolicies.tr ,trailingIcon:AppMedia.arrowIos ),
+              profileItem(themeData,onClick:_onLogout,leadingIcon:AppMedia.logout ,title:AppStrings.txtLogout.tr ,trailingIcon:AppMedia.arrowIos),
+              profileItem(themeData,onClick:_onGetMoneyPage,leadingIcon:AppMedia.currency ,title:AppStrings.txtCurrency.tr ,trailingIcon:AppMedia.arrowIos),
+              //_profileItem(themeData,onClick:_onUpdatePassword,leadingIcon:AppMedia.resetPassword ,title:AppStrings.resetYourPass.tr ,trailingIcon:AppMedia.arrowIos),
               _profileDeleteAccount(themeData ,onClick: _onDeleteAccountClick,title: AppStrings.txtDeleteAccount.tr,trailingIcon:  AppMedia.arrowIos),
               const SizedBox(
                 height: AppSize.s50,
@@ -223,6 +180,9 @@ class ProfileView extends StatelessWidget {
     return AppStrings.txtBalance.tr + " ${formatStringWithCurrency( SharedPref.instance.getUserData().balance.toString())} " /*+ AppStrings.txtCurrency.tr*/;
   }
 
+  void _UpdateProfile() {
+      Get.to(()=> UpdateProfileView());
+  }
   void _verifyAccount() {
       Get.to(()=> AccountVerifyView());
   }
@@ -244,9 +204,9 @@ class ProfileView extends StatelessWidget {
     Get.to(()=> const MoneyCollectView());
   }
 
-  _onUpdatePassword() {
-    Get.to(()=> const UpdatePasswordView());
-  }
+  // _onUpdatePassword() {
+  //   Get.to(()=> const UpdatePasswordView());
+  // }
 
   _onDeleteAccountClick() {
     Get.bottomSheet(const LogoutBottomSheet(isDeleteAccount: true,));

@@ -1,11 +1,18 @@
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
+import 'package:sporti/feature/model/user_data.dart';
 import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
 import 'package:sporti/feature/view/views/auth_resetpassword/auth_resetpassword_view.dart';
 import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
+import 'package:sporti/feature/view/views/profile/profile_view.dart';
 import 'package:sporti/network/api/feature/auth_feature.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
+import 'package:sporti/util/app_color.dart';
+import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
@@ -13,11 +20,13 @@ import 'package:sporti/util/sh_util.dart';
 import '../view/views/account_otp/account_otp_view.dart';
 import '../view/views/account_success_virefy/account_success_virefy_view.dart';
 import '../view/views/auth_forget_otp/auth_otp_view.dart';
+import 'package:dio/dio.dart' as multiPart;
 
 class AuthViewModel extends GetxController {
   bool isLoading = false;
-
   var acceptPolicy = false;
+  final ImagePicker _picker = ImagePicker();
+  File? filePath;
 
   @override
   void onInit() {
@@ -441,6 +450,153 @@ class AuthViewModel extends GetxController {
       Logger().d(e.toString());
       isLoading = false;
       update();
+    }
+  }
+
+  imgFromCamera() async {
+    XFile? image =
+        await _picker.pickImage(source: ImageSource.camera, imageQuality: 40);
+    if (image != null) {
+      filePath = File(image.path);
+      update();
+    } else {
+      return;
+    }
+  }
+
+  imgFromGallery() async {
+    XFile? image =
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 40);
+    if (image != null) {
+      filePath = File(image.path);
+      update();
+    } else {
+      return;
+    }
+  }
+
+  void showPicker(BuildContext context) {
+    showModalBottomSheet(
+        backgroundColor: AppColor.transparent,
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+            // ignore: avoid_unnecessary_containers
+            child: Container(
+              padding: const EdgeInsets.all(AppSize.s28),
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                  color: AppColor.white,
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(AppSize.s28),
+                      topRight: Radius.circular(AppSize.s28))),
+              child: Wrap(
+                children: <Widget>[
+                  const SizedBox(height: AppSize.s28),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      height: AppSize.s4,
+                      width: AppSize.s50,
+                      decoration: BoxDecoration(
+                          color: AppColor.grey,
+                          borderRadius: BorderRadius.circular(AppSize.s4)),
+                    ),
+                  ),
+                  const SizedBox(height: AppSize.s28),
+                  ListTile(
+                    leading: const Icon(Icons.photo_library),
+                    title: Text(
+                      AppStrings.txtGallery.tr,
+                      textAlign: TextAlign.right,
+                    ),
+                    onTap: () {
+                      imgFromGallery();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.photo_camera),
+                    title: Text(AppStrings.txtCamera.tr,
+                        textAlign: TextAlign.right),
+                    onTap: () {
+                      imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  //click on updateProfile btn on login page
+  void updateProfile(
+    TextEditingController fullNameController,
+    TextEditingController emailController,
+  ) {
+
+    Map<String, dynamic> map = {
+      ConstanceNetwork.fullNameKey: fullNameController.text.toString(),
+      ConstanceNetwork.emailKey: emailController.text.toString(),
+      ConstanceNetwork.imageKey: filePath != null
+          ? multiPart.MultipartFile.fromFileSync(filePath!.path)
+          : "",
+    };
+    _updateProfile(map);
+  }
+
+  //make updateProfile methode
+  Future<void> _updateProfile(Map<String, dynamic> map) async {
+    try {
+      isLoading = true;
+      update();
+      await AuthFeature.getInstance.updateProfile(map).then((value) async {
+        //handle object from value || [save in sharedPreferences]
+        Logger().d(value.toJson());
+        if (value.status == 200) {
+          //if success go to ProfileView page
+          Get.offAll(const ProfileView());
+          isLoading = false;
+          update();
+        } else {
+          isLoading = false;
+          update();
+        }
+      }).catchError((onError) {
+        //handle error from value
+        snackError("", onError.toString());
+        Logger().d(onError.toString());
+        isLoading = false;
+        update();
+      });
+    } catch (e) {
+      Logger().d(e.toString());
+      isLoading = false;
+      update();
+    }
+  }
+
+  bool isUpdateBtnEnable(TextEditingController userName ,TextEditingController email ) {
+    UserData? userData = SharedPref.instance.getUserData();
+    if(filePath != null) {
+      return true;
+    }
+    else if ( email .text.isNotEmpty && userData.email != email.text){
+      return true;
+    }
+    else if (userData.fullname != userName.text ){
+      return true;
+    }
+    else if(filePath != null && userData.fullname != userName.text){
+      return true;
+    }
+    else if((filePath != null && userData.fullname != userName.text && userData.email != email.text)) {
+      return true;
+    }
+    else{
+      return false;
     }
   }
 }
