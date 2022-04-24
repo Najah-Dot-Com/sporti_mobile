@@ -31,6 +31,8 @@ class UpdateProfileView extends StatelessWidget {
   File? _image;
   static var img =
       "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80";
+  // static var image =
+      // "https://www.google.com/url?sa=i&url=https%3A%2F%2Fm.facebook.com%2FTogetherSupportGaza%2Fphotos%2Fa.666687263409744%2F1899627393449052%2F&psig=AOvVaw3xzEG1gSguKH370R5wFNy3&ust=1650577847682000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCPCD5OTPo_cCFQAAAAAdAAAAABAD";
   AppBar appBar() {
     return AppBar(
       title: Text(

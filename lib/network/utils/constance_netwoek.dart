@@ -22,7 +22,7 @@ abstract class ConstanceNetwork {
   //this for account verify keys
   static String userPhoneNumer = 'phone';
   //this for updateProfile keys
-  static String picture = 'picture';
+  static String image = 'image';
 
   //this for home page
   static String parentIdKey = "parent_id";

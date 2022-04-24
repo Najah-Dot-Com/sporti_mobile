@@ -14,6 +14,7 @@ import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
 
+import '../../network/api/dio_manager/dio_manage_class.dart';
 import '../view/views/account_otp/account_otp_view.dart';
 import '../view/views/account_success_virefy/account_success_virefy_view.dart';
 import '../view/views/auth_forget_otp/auth_otp_view.dart';
@@ -22,6 +23,9 @@ class AuthViewModel extends GetxController {
   bool isLoading = false;
   var acceptPolicy = false;
   final ImagePicker _picker = ImagePicker();
+  static var qudsImage =
+      "https://www.google.com/url?sa=i&url=https%3A%2F%2Fm.facebook.com%2FTogetherSupportGaza%2Fphotos%2Fa.666687263409744%2F1899627393449052%2F&psig=AOvVaw3xzEG1gSguKH370R5wFNy3&ust=1650577847682000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCPCD5OTPo_cCFQAAAAAdAAAAABAD";
+  
   var filePath;
 
   @override
@@ -448,27 +452,31 @@ class AuthViewModel extends GetxController {
       update();
     }
   }
+
   imgFromCamera() async {
     XFile? image =
         await _picker.pickImage(source: ImageSource.camera, imageQuality: 40);
     if (image != null) {
       // EasyLoading.show(status: '... جاري التحميل'); // show loding indicator
       filePath = File(image.path);
+      update();
       // EasyLoading.dismiss(); // stop loging indicator
     } else {
       return;
     }
   }
 
-   imgFromGallery() async {
+  imgFromGallery() async {
     XFile? image =
         await _picker.pickImage(source: ImageSource.gallery, imageQuality: 40);
     if (image != null) {
       filePath = File(image.path);
+      update();
     } else {
       return;
     }
   }
+
   void showPicker(BuildContext context) {
     showModalBottomSheet(
         context: context,
@@ -484,8 +492,8 @@ class AuthViewModel extends GetxController {
                       AppStrings.txtGallery.tr,
                       textAlign: TextAlign.right,
                     ),
-                    onTap: ()  {
-                      imgFromGallery();
+                    onTap: () async {
+                      await imgFromGallery();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -493,8 +501,8 @@ class AuthViewModel extends GetxController {
                     leading: const Icon(Icons.photo_camera),
                     title: Text(AppStrings.txtCamera.tr,
                         textAlign: TextAlign.right),
-                    onTap: () {
-                      imgFromCamera();
+                    onTap: () async {
+                      await imgFromCamera();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -504,6 +512,7 @@ class AuthViewModel extends GetxController {
           );
         });
   }
+
   //click on updateProfile btn on login page
   void updateProfile(
     TextEditingController fullNameController,
@@ -512,7 +521,7 @@ class AuthViewModel extends GetxController {
     Map<String, dynamic> map = {
       ConstanceNetwork.fullNameKey: fullNameController.text.toString(),
       ConstanceNetwork.emailKey: emailController.text.toString(),
-      ConstanceNetwork.picture: http.MultipartFile.fromPath('file', filePath),
+      ConstanceNetwork.image: DioManagerClass.getInstance.uploadImage(file: filePath),
     };
     Logger().i('filePath : $filePath');
     _updateProfile(map);
