@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:sporti/feature/model/exercise_details_data.dart';
+import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/dialog/gloable_dialog_widget.dart';
 import 'package:sporti/feature/view/appwidget/primary_button.dart';
 import 'package:sporti/feature/view/appwidget/viedo_player.dart';
 import 'package:sporti/feature/viewmodel/details_exercise_view_model.dart';
+import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
@@ -21,11 +23,11 @@ import '../../../../util/app_strings.dart';
 class CategoryExerciseView extends StatefulWidget {
   const CategoryExerciseView({
     Key? key,
-    required this.exerciseDetailsData,
+    required this.exerciseDetailsData,required this.packageDetails,
   }) : super(key: key);
 
   final ExerciseDetailsData? exerciseDetailsData;
-
+  final ExercisesData? packageDetails;
   @override
   State<CategoryExerciseView> createState() => _CategoryExerciseViewState();
 }
@@ -33,6 +35,8 @@ class CategoryExerciseView extends StatefulWidget {
 class _CategoryExerciseViewState extends State<CategoryExerciseView> {
   final DetailsExerciseViewModel _detailsExerciseViewModel =
       Get.put(DetailsExerciseViewModel());
+
+  HomeViewModel get homeViewModel => Get.put(HomeViewModel());
 
   @override
   initState() {
@@ -237,7 +241,7 @@ class _CategoryExerciseViewState extends State<CategoryExerciseView> {
       logic.isDoneChange();
       if (logic.isExerciseDone!) {
         logic.addEventExercises(
-            widget.exerciseDetailsData?.id, ConstanceNetwork.typeDoneKey);
+            widget.exerciseDetailsData?.id, ConstanceNetwork.typeDoneKey , homeViewModel ,widget.packageDetails);
       }
     } else {
       showCustomDialogNotComplete();
@@ -261,7 +265,7 @@ class _CategoryExerciseViewState extends State<CategoryExerciseView> {
   }
 
   _onReturnBtnClick(DetailsExerciseViewModel logic) {
-    logic.returnExercise(widget.exerciseDetailsData!);
+    logic.returnExercise(widget.exerciseDetailsData! , homeViewModel,widget.packageDetails);
   }
 
   _onDatePickerClick(DetailsExerciseViewModel logic) {

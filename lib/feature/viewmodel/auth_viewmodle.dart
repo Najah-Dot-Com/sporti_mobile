@@ -52,6 +52,7 @@ class AuthViewModel extends GetxController {
   goToHomePage() async {
     isLoading = true;
     update();
+    await SharedPref.instance.setUserDataVerify();
     await Get.offAll(const HomePageView());
     isLoading = false;
     update();

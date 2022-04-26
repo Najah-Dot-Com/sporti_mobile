@@ -122,6 +122,8 @@ class _AccountOtpViewState extends State<AccountOtpView> {
   Widget _resendVerificationsCode(ThemeData themeData) {
     return RichText(
       text: TextSpan(
+        onEnter: (enter){
+        },
           text: "${AppStrings.txtResend.tr} ",
           children: [
             TextSpan(

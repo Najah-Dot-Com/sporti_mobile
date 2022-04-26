@@ -139,4 +139,14 @@ class SharedPref {
       Logger().e(e);
     }
   }
+
+  setUserDataVerify() {
+    try {
+      var userData = getUserData();
+      userData.isVerify =true;
+      setUserData(jsonEncode(userData.toJson()));
+    } catch (e) {
+      Logger().e(e);
+    }
+  }
 }

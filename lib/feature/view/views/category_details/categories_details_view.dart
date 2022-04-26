@@ -64,7 +64,7 @@ class CategoriesDetailsView extends StatelessWidget {
         itemCount: logic.packageDetailsExercisesList.length,
         itemBuilder: (context, index) {
           return CategoriesListItemWidget(
-              packageDetails: logic.packageDetailsExercisesList[index]);
+              packageDetails: logic.packageDetailsExercisesList[index] , viewModel:logic);
         });
   }
 

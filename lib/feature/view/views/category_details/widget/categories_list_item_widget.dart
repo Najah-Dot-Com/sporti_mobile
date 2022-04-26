@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/categoriy_exercise_details/categoriy_exercise_details_view.dart';
+import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
@@ -16,9 +17,10 @@ import 'package:sporti/util/date_time_util.dart';
 class CategoriesListItemWidget extends StatelessWidget {
   const CategoriesListItemWidget({
     Key? key,
-    this.packageDetails,
+    required this.packageDetails,required this.viewModel,
   }) : super(key: key);
   final ExercisesData? packageDetails;
+  final  HomeViewModel? viewModel;
   final String fakeImage =
       "https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/07/1377301-1183869-The-8-Best-Weight-Benches-of-2021-1296x728-Header-c0dcdf.jpg?w=1575";
 
@@ -99,8 +101,11 @@ class CategoriesListItemWidget extends StatelessWidget {
     );
   }
 
-  void _onExerciseClick() {
-    Get.to(CategoriyExerciseDetailsView(packageDetails: packageDetails));
+  void _onExerciseClick() async{
+   var result =  await Get.to(CategoriyExerciseDetailsView(packageDetails: packageDetails));
+   if(result){
+      viewModel?.packagesExercisesDetails(packageDetails?.parentId);
+   }
   }
 
   String _returnInData() {

@@ -10,6 +10,7 @@ import 'package:sporti/feature/view/views/money_collect/money_collect_view.dart'
 import 'package:sporti/feature/view/views/privacy_policy/privacy_policy_view.dart';
 import 'package:sporti/feature/view/views/update_profile/update_profile_view.dart';
 import 'package:sporti/feature/view/views/terms_conditions/terms_conditions_view.dart';
+import 'package:sporti/feature/viewmodel/auth_viewmodle.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
@@ -29,76 +30,83 @@ class ProfileView extends StatelessWidget {
 
   Widget _userCardData(ThemeData themeData) {
     UserData? userData = SharedPref.instance.getUserData();
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        ClipRRect(
-            borderRadius: BorderRadius.circular(AppPadding.p18),
-            child: (userData.picture != null &&
-                    userData.picture!.isNotEmpty &&
-                    !userData.picture!.contains("http"))
-                ? Image.memory(base64Decode(userData.picture.toString()),
-                    width: AppSize.s120,
-                    height: AppSize.s120,
-                    fit: BoxFit.cover)
-                : imageNetwork(
-                    url: (userData.picture != null && userData.picture!.isNotEmpty)
-                        ? userData.picture
-                        : null,
-                    width: AppSize.s120,
-                    height: AppSize.s120,
-                    fit: BoxFit.cover)
-            ),
-        const SizedBox(
-          width: AppSize.s20,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CustomTextView(
-              txt: SharedPref.instance.getUserData().fullname,
-              maxLine: Constance.maxLineOne,
-              textAlign: TextAlign.start,
-              textOverflow: TextOverflow.ellipsis,
-              textStyle: themeData.textTheme.headline2
-                  ?.copyWith(fontSize: AppFontSize.s18),
-            ),
-            const SizedBox(
-              height: AppSize.s20,
-            ),
-            CustomTextView(
-              txt: _completedConcatenations(),
-              maxLine: Constance.maxLineOne,
-              textAlign: TextAlign.start,
-              textOverflow: TextOverflow.ellipsis,
-              textStyle: themeData.textTheme.headline2
-                  ?.copyWith(fontSize: AppFontSize.s18),
-            ),
-            const SizedBox(
-              height: AppSize.s20,
-            ),
-            CustomTextView(
-              txt: _balanceConcatenations(),
-              maxLine: Constance.maxLineOne,
-              textAlign: TextAlign.start,
-              textOverflow: TextOverflow.ellipsis,
-              textStyle: themeData.textTheme.headline2
-                  ?.copyWith(fontSize: AppFontSize.s18),
-            ),
-          ],
-        ),
-      ],
-    );
+    return GetBuilder<AuthViewModel>(
+        init: AuthViewModel(),
+        builder: (logic) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ClipRRect(
+              borderRadius: BorderRadius.circular(AppPadding.p18),
+              child: (userData.picture != null &&
+                  userData.picture!.isNotEmpty &&
+                  !userData.picture!.contains("http"))
+                  ? Image.memory(base64Decode(userData.picture.toString()),
+                  width: AppSize.s120,
+                  height: AppSize.s120,
+                  fit: BoxFit.cover)
+                  : imageNetwork(
+                  url: (userData.picture != null &&
+                      userData.picture!.isNotEmpty)
+                      ? userData.picture
+                      : null,
+                  width: AppSize.s120,
+                  height: AppSize.s120,
+                  fit: BoxFit.cover)
+          ),
+          const SizedBox(
+            width: AppSize.s20,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CustomTextView(
+                txt: SharedPref.instance
+                    .getUserData()
+                    .fullname,
+                maxLine: Constance.maxLineOne,
+                textAlign: TextAlign.start,
+                textOverflow: TextOverflow.ellipsis,
+                textStyle: themeData.textTheme.headline2
+                    ?.copyWith(fontSize: AppFontSize.s18),
+              ),
+              const SizedBox(
+                height: AppSize.s20,
+              ),
+              CustomTextView(
+                txt: _completedConcatenations(),
+                maxLine: Constance.maxLineOne,
+                textAlign: TextAlign.start,
+                textOverflow: TextOverflow.ellipsis,
+                textStyle: themeData.textTheme.headline2
+                    ?.copyWith(fontSize: AppFontSize.s18),
+              ),
+              const SizedBox(
+                height: AppSize.s20,
+              ),
+              CustomTextView(
+                txt: _balanceConcatenations(),
+                maxLine: Constance.maxLineOne,
+                textAlign: TextAlign.start,
+                textOverflow: TextOverflow.ellipsis,
+                textStyle: themeData.textTheme.headline2
+                    ?.copyWith(fontSize: AppFontSize.s18),
+              ),
+            ],
+          ),
+        ],
+      );
+    });
   }
 
 //this for items in the below to go to another pages
   Widget _profileDeleteAccount(ThemeData themeData,
       {required Function() onClick,
-      required String title,
-      required String trailingIcon}) {
+        required String title,
+        required String trailingIcon}) {
     return InkWell(
       onTap: onClick,
       child: Container(
@@ -124,9 +132,10 @@ class ProfileView extends StatelessWidget {
             if (Get.locale == LocalizationService.localeEn &&
                 trailingIcon == AppMedia.arrowIos) ...[
               const Icon(Icons.arrow_forward_ios),
-            ] else ...[
-              SvgPicture.asset(trailingIcon)
-            ]
+            ] else
+              ...[
+                SvgPicture.asset(trailingIcon)
+              ]
           ],
         ),
       ),
@@ -141,7 +150,7 @@ class ProfileView extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         padding:
-            const EdgeInsets.only(left: AppPadding.p16, right: AppPadding.p16),
+        const EdgeInsets.only(left: AppPadding.p16, right: AppPadding.p16),
         decoration: BoxDecoration(color: themeData.scaffoldBackgroundColor),
         child: SafeArea(
           child: ListView(
@@ -218,12 +227,17 @@ class ProfileView extends StatelessWidget {
 
   String _completedConcatenations() {
     return AppStrings.txtCompleted.tr +
-        " ${SharedPref.instance.getUserData().finish} " /*+ AppStrings.txtExercises.tr*/;
+        " ${SharedPref.instance
+            .getUserData()
+            .finish} " /*+ AppStrings.txtExercises.tr*/;
   }
 
   String _balanceConcatenations() {
     return AppStrings.txtBalance.tr +
-        " ${formatStringWithCurrency(SharedPref.instance.getUserData().balance.toString())} " /*+ AppStrings.txtCurrency.tr*/;
+        " ${formatStringWithCurrency(SharedPref.instance
+            .getUserData()
+            .balance
+            .toString())} " /*+ AppStrings.txtCurrency.tr*/;
   }
 
   void _updateProfile() async {
