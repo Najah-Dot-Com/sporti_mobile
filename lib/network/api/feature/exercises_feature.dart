@@ -97,7 +97,7 @@ class ExercisesFeature {
       List<ExercisesData> data = result.map((e) => ExercisesData.fromJson(e)).toList();
       return data;
     } else {
-      snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      // snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return [];
     }

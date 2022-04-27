@@ -33,80 +33,77 @@ class ProfileView extends StatelessWidget {
     return GetBuilder<AuthViewModel>(
         init: AuthViewModel(),
         builder: (logic) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          ClipRRect(
-              borderRadius: BorderRadius.circular(AppPadding.p18),
-              child: (userData.picture != null &&
-                  userData.picture!.isNotEmpty &&
-                  !userData.picture!.contains("http"))
-                  ? Image.memory(base64Decode(userData.picture.toString()),
-                  width: AppSize.s120,
-                  height: AppSize.s120,
-                  fit: BoxFit.cover)
-                  : imageNetwork(
-                  url: (userData.picture != null &&
-                      userData.picture!.isNotEmpty)
-                      ? userData.picture
-                      : null,
-                  width: AppSize.s120,
-                  height: AppSize.s120,
-                  fit: BoxFit.cover)
-          ),
-          const SizedBox(
-            width: AppSize.s20,
-          ),
-          Column(
+          return Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CustomTextView(
-                txt: SharedPref.instance
-                    .getUserData()
-                    .fullname,
-                maxLine: Constance.maxLineOne,
-                textAlign: TextAlign.start,
-                textOverflow: TextOverflow.ellipsis,
-                textStyle: themeData.textTheme.headline2
-                    ?.copyWith(fontSize: AppFontSize.s18),
-              ),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(AppPadding.p18),
+                  child: (userData.picture != null &&
+                          userData.picture!.isNotEmpty &&
+                          !userData.picture!.contains("http"))
+                      ? Image.memory(base64Decode(userData.picture.toString()),
+                          width: AppSize.s120,
+                          height: AppSize.s120,
+                          fit: BoxFit.cover)
+                      : imageNetwork(
+                          url: (userData.picture != null &&
+                                  userData.picture!.isNotEmpty)
+                              ? userData.picture
+                              : null,
+                          width: AppSize.s120,
+                          height: AppSize.s120,
+                          fit: BoxFit.cover)),
               const SizedBox(
-                height: AppSize.s20,
+                width: AppSize.s20,
               ),
-              CustomTextView(
-                txt: _completedConcatenations(),
-                maxLine: Constance.maxLineOne,
-                textAlign: TextAlign.start,
-                textOverflow: TextOverflow.ellipsis,
-                textStyle: themeData.textTheme.headline2
-                    ?.copyWith(fontSize: AppFontSize.s18),
-              ),
-              const SizedBox(
-                height: AppSize.s20,
-              ),
-              CustomTextView(
-                txt: _balanceConcatenations(),
-                maxLine: Constance.maxLineOne,
-                textAlign: TextAlign.start,
-                textOverflow: TextOverflow.ellipsis,
-                textStyle: themeData.textTheme.headline2
-                    ?.copyWith(fontSize: AppFontSize.s18),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CustomTextView(
+                    txt: SharedPref.instance.getUserData().fullname,
+                    maxLine: Constance.maxLineOne,
+                    textAlign: TextAlign.start,
+                    textOverflow: TextOverflow.ellipsis,
+                    textStyle: themeData.textTheme.headline2
+                        ?.copyWith(fontSize: AppFontSize.s18),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s20,
+                  ),
+                  CustomTextView(
+                    txt: _completedConcatenations(),
+                    maxLine: Constance.maxLineOne,
+                    textAlign: TextAlign.start,
+                    textOverflow: TextOverflow.ellipsis,
+                    textStyle: themeData.textTheme.headline2
+                        ?.copyWith(fontSize: AppFontSize.s18),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s20,
+                  ),
+                  CustomTextView(
+                    txt: _balanceConcatenations(),
+                    maxLine: Constance.maxLineOne,
+                    textAlign: TextAlign.start,
+                    textOverflow: TextOverflow.ellipsis,
+                    textStyle: themeData.textTheme.headline2
+                        ?.copyWith(fontSize: AppFontSize.s18),
+                  ),
+                ],
               ),
             ],
-          ),
-        ],
-      );
-    });
+          );
+        });
   }
 
 //this for items in the below to go to another pages
   Widget _profileDeleteAccount(ThemeData themeData,
       {required Function() onClick,
-        required String title,
-        required String trailingIcon}) {
+      required String title,
+      required String trailingIcon}) {
     return InkWell(
       onTap: onClick,
       child: Container(
@@ -132,10 +129,62 @@ class ProfileView extends StatelessWidget {
             if (Get.locale == LocalizationService.localeEn &&
                 trailingIcon == AppMedia.arrowIos) ...[
               const Icon(Icons.arrow_forward_ios),
-            ] else
-              ...[
-                SvgPicture.asset(trailingIcon)
-              ]
+            ] else ...[
+              SvgPicture.asset(trailingIcon)
+            ]
+          ],
+        ),
+      ),
+    );
+  }
+
+  //this for items in the below to go to another pages
+  Widget _profileLanguage(
+    ThemeData themeData, {
+    required Function() onClick,
+    required String title,
+  }) {
+    return InkWell(
+      onTap: onClick,
+      child: Container(
+        width: double.infinity,
+        height: AppSize.s50,
+        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+        margin: const EdgeInsets.only(bottom: AppSize.s12),
+        decoration: BoxDecoration(
+            color: AppColor.white,
+            borderRadius: BorderRadius.circular(AppPadding.p8),
+            boxShadow: [AppShadow.boxShadow()!]),
+        child: Row(
+          children: [
+            Expanded(
+              child: CustomTextView(
+                  txt: title,
+                  textStyle: themeData.textTheme.headline2
+                      ?.copyWith(color: AppColor.black)),
+            ),
+            const SizedBox(
+              width: AppSize.s20,
+            ),
+            if (Get.locale == LocalizationService.localeEn) ...[
+               Padding(
+                 padding: const EdgeInsets.symmetric(horizontal: AppSize.s8),
+                 child: CustomTextView(
+                  txt: "عربي",
+                  textStyle: themeData.textTheme.headline2
+                      ?.copyWith(color: AppColor.black),
+              ),
+               ),
+            ]else ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSize.s8),
+                child: CustomTextView(
+                  txt: "English",
+                  textStyle: themeData.textTheme.headline2
+                      ?.copyWith(color: AppColor.black),
+                ),
+              ),
+            ]
           ],
         ),
       ),
@@ -150,7 +199,7 @@ class ProfileView extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         padding:
-        const EdgeInsets.only(left: AppPadding.p16, right: AppPadding.p16),
+            const EdgeInsets.only(left: AppPadding.p16, right: AppPadding.p16),
         decoration: BoxDecoration(color: themeData.scaffoldBackgroundColor),
         child: SafeArea(
           child: ListView(
@@ -185,11 +234,12 @@ class ProfileView extends StatelessWidget {
                   leadingIcon: AppMedia.personIcon,
                   title: AppStrings.txtUpdateProfile.tr,
                   trailingIcon: AppMedia.arrowIos),
-              profileItem(themeData,
-                  onClick: _verifyAccount,
-                  leadingIcon: AppMedia.verify,
-                  title: AppStrings.txtVerifyAccount.tr,
-                  trailingIcon: AppMedia.done),
+              if (!SharedPref.instance.getUserData().isVerify!)
+                profileItem(themeData,
+                    onClick: _verifyAccount,
+                    leadingIcon: AppMedia.verify,
+                    title: AppStrings.txtVerifyAccount.tr,
+                    trailingIcon: AppMedia.done),
               profileItem(themeData,
                   onClick: _termsAndCondition,
                   leadingIcon: AppMedia.termsAndConditions,
@@ -211,6 +261,10 @@ class ProfileView extends StatelessWidget {
                   title: AppStrings.txtCurrency.tr,
                   trailingIcon: AppMedia.arrowIos),
               //_profileItem(themeData,onClick:_onUpdatePassword,leadingIcon:AppMedia.resetPassword ,title:AppStrings.resetYourPass.tr ,trailingIcon:AppMedia.arrowIos),
+              _profileLanguage(themeData,
+                  onClick: _onChangeLang,
+                  title: AppStrings.chooseLanguage.tr,
+                  ),
               _profileDeleteAccount(themeData,
                   onClick: _onDeleteAccountClick,
                   title: AppStrings.txtDeleteAccount.tr,
@@ -227,17 +281,12 @@ class ProfileView extends StatelessWidget {
 
   String _completedConcatenations() {
     return AppStrings.txtCompleted.tr +
-        " ${SharedPref.instance
-            .getUserData()
-            .finish} " /*+ AppStrings.txtExercises.tr*/;
+        " ${SharedPref.instance.getUserData().finish} " /*+ AppStrings.txtExercises.tr*/;
   }
 
   String _balanceConcatenations() {
     return AppStrings.txtBalance.tr +
-        " ${formatStringWithCurrency(SharedPref.instance
-            .getUserData()
-            .balance
-            .toString())} " /*+ AppStrings.txtCurrency.tr*/;
+        " ${formatStringWithCurrency(SharedPref.instance.getUserData().balance.toString())} " /*+ AppStrings.txtCurrency.tr*/;
   }
 
   void _updateProfile() async {
@@ -281,4 +330,13 @@ class ProfileView extends StatelessWidget {
       isDeleteAccount: true,
     ));
   }
+
+  _onChangeLang() {
+    if (Get.locale == LocalizationService.localeEn){
+      SharedPref.instance.setAppLang(LocalizationService.langs[LocalizationService.arIndex]);
+    }else{
+      SharedPref.instance.setAppLang(LocalizationService.langs[LocalizationService.enIndex]);
+    }
+  }
+
 }
