@@ -184,8 +184,8 @@ class _AuthOTPViewState extends State<AuthOTPView> {
                     height: AppSize.s28,
                   ),
                   GestureDetector(
-                    child: _resendVerificationsCode(themeData),
-                    onTap: () => _onResendCodeClick(logic),
+                    child: _resendVerificationsCode(themeData),//new push
+                    onTap: () => _onResendCodeClick(logic), //new push for osama
                   ),
                 ],
               );
@@ -197,7 +197,7 @@ class _AuthOTPViewState extends State<AuthOTPView> {
     logic.confirmEmail(pinCode: _pinCodeController);
     // Get.to(() => ResetPasswordView(pinCodeController: _pinCodeController,));
   }
- _onResendCodeClick(AuthViewModel logic) {
+ _onResendCodeClick(AuthViewModel logic) {//new push for osama
     FocusManager.instance.primaryFocus?.unfocus();
     bool isValidate = _formKey.currentState!.validate();
     if (isValidate) {
