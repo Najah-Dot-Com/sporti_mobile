@@ -13,6 +13,7 @@ import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_strings.dart';
 
 import '../../../../util/app_shaerd_data.dart';
+import '../../appwidget/three_size_dot.dart';
 
 class AccountOtpView extends StatefulWidget {
   String? userPhoneNumer = '00000';
@@ -24,8 +25,8 @@ class AccountOtpView extends StatefulWidget {
 
 class _AccountOtpViewState extends State<AccountOtpView> {
   bool hasError = false;
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  static final TextEditingController _pinCodeController =
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController _pinCodeController =
       TextEditingController();
   static StreamController<ErrorAnimationType>? _errorController;
 
@@ -36,8 +37,8 @@ class _AccountOtpViewState extends State<AccountOtpView> {
   }
 
   // void dispose() {
-    // _errorController?.close();
-    // super.dispose();
+  // _errorController?.close();
+  // super.dispose();
   // }
 
   PreferredSizeWidget get myAppbar => AppBar(
@@ -119,18 +120,32 @@ class _AccountOtpViewState extends State<AccountOtpView> {
   }
 
   //this for verifications code
-  Widget _resendVerificationsCode(ThemeData themeData) {
-    return RichText(
-      text: TextSpan(
-          text: "${AppStrings.txtResend.tr} ",
-          children: [
-            TextSpan(
-                text: AppStrings.txtVerifyCode.tr,
-                style: themeData.textTheme.headline2
-                    ?.copyWith(color: AppColor.primary)),
-          ],
-          style: themeData.textTheme.headline2),
-      textAlign: TextAlign.center,
+  Widget _resendVerificationsCode(ThemeData themeData, AuthViewModel logic) {
+    return GestureDetector(
+      onTap: () async {
+        logic.isLoading = true;
+        logic.update();
+        await _onResendCodeClick(logic);
+        // logic.isLoading = false;
+      },
+      child: logic.isLoading
+          ? ThreeSizeDot(
+              color_1: AppColor.primary,
+              color_2: AppColor.primary,
+              color_3: AppColor.primary,
+            )
+          : RichText(
+              text: TextSpan(
+                  text: "${AppStrings.txtResend.tr} ",
+                  children: [
+                    TextSpan(
+                        text: AppStrings.txtVerifyCode.tr,
+                        style: themeData.textTheme.headline2
+                            ?.copyWith(color: AppColor.primary)),
+                  ],
+                  style: themeData.textTheme.headline2),
+              textAlign: TextAlign.center,
+            ),
     );
   }
 
@@ -181,11 +196,11 @@ class _AccountOtpViewState extends State<AccountOtpView> {
                   PrimaryButton(
                       textButton: AppStrings.txtVerify.tr,
                       isLoading: logic.isLoading,
-                      onClicked: ()=> _onVerifyClick(logic)),
+                      onClicked: () => _onVerifyClick(logic)),
                   const SizedBox(
                     height: AppSize.s28,
                   ),
-                  _resendVerificationsCode(themeData),
+                  _resendVerificationsCode(themeData, logic),
                 ],
               );
             }));
@@ -194,6 +209,18 @@ class _AccountOtpViewState extends State<AccountOtpView> {
   void _onVerifyClick(AuthViewModel logic) {
     FocusManager.instance.primaryFocus?.unfocus();
     logic.confirmAccount(pinCode: _pinCodeController);
+  }
+
+  _onResendCodeClick(AuthViewModel logic) {
+    //new push for osama
+    // logic.isLoading = true;
+    FocusManager.instance.primaryFocus?.unfocus();
+    bool isValidate = _formKey.currentState!.validate();
+    if (isValidate) {
+      logic.verifyAccount(userPhoneNumber: widget.userPhoneNumer!);
+      // logic.isLoading = false;
+    }
+    // logic.isLoading = false;
   }
 
   // this for on complete code

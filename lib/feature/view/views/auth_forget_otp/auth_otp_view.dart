@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/primary_button.dart';
+import 'package:sporti/feature/view/appwidget/three_size_dot.dart';
 import 'package:sporti/feature/view/views/account_success_virefy/account_success_virefy_view.dart';
 import 'package:sporti/feature/viewmodel/auth_viewmodle.dart';
 import 'package:sporti/util/app_color.dart';
@@ -23,8 +24,8 @@ class AuthOTPView extends StatefulWidget {
 
 class _AuthOTPViewState extends State<AuthOTPView> {
   bool hasError = false;
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  static final TextEditingController _pinCodeController =
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController _pinCodeController =
       TextEditingController();
   static StreamController<ErrorAnimationType>? _errorController;
 
@@ -118,18 +119,32 @@ class _AuthOTPViewState extends State<AuthOTPView> {
   }
 
   //this for verifications code
-  Widget _resendVerificationsCode(ThemeData themeData) {
-    return RichText(
-      text: TextSpan(
-          text: "${AppStrings.txtResend.tr} ",
-          children: [
-            TextSpan(
-                text: AppStrings.txtVerifyCode.tr,
-                style: themeData.textTheme.headline2
-                    ?.copyWith(color: AppColor.primary)),
-          ],
-          style: themeData.textTheme.headline2),
-      textAlign: TextAlign.center,
+  Widget _resendVerificationsCode(ThemeData themeData, AuthViewModel logic) {
+    return GestureDetector(
+      onTap: () async {
+        logic.isLoading = true;
+        logic.update();
+        await _onResendCodeClick(logic);
+        // logic.isLoading = false;
+      },
+      child: logic.isLoading
+          ? ThreeSizeDot(
+              color_1: AppColor.primary,
+              color_2: AppColor.primary,
+              color_3: AppColor.primary,
+            )
+          : RichText(
+              text: TextSpan(
+                  text: "${AppStrings.txtResend.tr} ",
+                  children: [
+                    TextSpan(
+                        text: AppStrings.txtVerifyCode.tr,
+                        style: themeData.textTheme.headline2
+                            ?.copyWith(color: AppColor.primary)),
+                  ],
+                  style: themeData.textTheme.headline2),
+              textAlign: TextAlign.center,
+            ),
     );
   }
 
@@ -183,10 +198,7 @@ class _AuthOTPViewState extends State<AuthOTPView> {
                   const SizedBox(
                     height: AppSize.s28,
                   ),
-                  GestureDetector(
-                    child: _resendVerificationsCode(themeData),//new push
-                    onTap: () => _onResendCodeClick(logic), //new push for osama
-                  ),
+                  _resendVerificationsCode(themeData,logic),
                 ],
               );
             }));
@@ -197,13 +209,19 @@ class _AuthOTPViewState extends State<AuthOTPView> {
     logic.confirmEmail(pinCode: _pinCodeController);
     // Get.to(() => ResetPasswordView(pinCodeController: _pinCodeController,));
   }
- _onResendCodeClick(AuthViewModel logic) {//new push for osama
+
+  _onResendCodeClick(AuthViewModel logic) {
+    //new push for osama
+    // logic.isLoading = true;
     FocusManager.instance.primaryFocus?.unfocus();
     bool isValidate = _formKey.currentState!.validate();
     if (isValidate) {
       logic.verifyEmail(widget.email!);
+      // logic.isLoading = false;
     }
+    // logic.isLoading = false;
   }
+
   // this for on complete code
   void _onCodeComplete(String value) {}
 
