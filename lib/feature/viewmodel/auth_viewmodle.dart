@@ -21,11 +21,12 @@ import '../view/views/auth_forget_otp/auth_otp_view.dart';
 
 class AuthViewModel extends GetxController {
   bool isLoading = false;
+  bool resendCodeLoding = false;
   var acceptPolicy = false;
   final ImagePicker _picker = ImagePicker();
   static var qudsImage =
       "https://www.google.com/url?sa=i&url=https%3A%2F%2Fm.facebook.com%2FTogetherSupportGaza%2Fphotos%2Fa.666687263409744%2F1899627393449052%2F&psig=AOvVaw3xzEG1gSguKH370R5wFNy3&ust=1650577847682000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCPCD5OTPo_cCFQAAAAAdAAAAABAD";
-  
+
   var filePath;
 
   @override
@@ -245,7 +246,7 @@ class AuthViewModel extends GetxController {
 // mam.farra2030@gmail.com
   Future<void> _verifyEmail(var parameters) async {
     try {
-      isLoading = true;
+      resendCodeLoding = true;
       update();
       await AuthFeature.getInstance
           .verifyUserEmail(parameters)
@@ -254,26 +255,26 @@ class AuthViewModel extends GetxController {
         Logger().d(value.toJson());
         if (value.status) {
           //TODO: if verification and success go to ForgetOtpView page
-          isLoading = false;
+          resendCodeLoding = false;
           update();
           await snackSuccess("", value.message);
           await Get.to(AuthOTPView(
             email: parameters,
           ));
         } else {
-          isLoading = false;
+          resendCodeLoding = false;
           update();
         }
       }).catchError((onError) {
         //handle error from value
         snackError("", onError.toString());
         Logger().d(onError.toString());
-        isLoading = false;
+        resendCodeLoding = false;
         update();
       });
     } catch (e) {
       Logger().d(e.toString());
-      isLoading = false;
+      resendCodeLoding = false;
       update();
     }
   }
@@ -349,13 +350,13 @@ class AuthViewModel extends GetxController {
   Future<void> _verifyAccount(Map<String, dynamic> map, var phoneNumber) async {
     Logger().d(phoneNumber);
     try {
-      isLoading = true;
+      resendCodeLoding = true;
       update();
       await AuthFeature.getInstance.verifyAccount(map).then((value) async {
         if (value.status) {
           // if success go to AccountOtpView page
           Logger().d(value.toJson());
-          isLoading = false;
+          resendCodeLoding = false;
           await snackSuccess("", value.message ?? "");
           update();
           // Get.to(page)
@@ -366,12 +367,12 @@ class AuthViewModel extends GetxController {
         //handle error from value
         snackError("", onError.toString());
         Logger().d(onError.toString());
-        isLoading = false;
+        resendCodeLoding = false;
         update();
       });
     } catch (e) {
       Logger().d(e.toString());
-      isLoading = false;
+      resendCodeLoding = false;
       update();
     }
   }
@@ -521,7 +522,8 @@ class AuthViewModel extends GetxController {
     Map<String, dynamic> map = {
       ConstanceNetwork.fullNameKey: fullNameController.text.toString(),
       ConstanceNetwork.emailKey: emailController.text.toString(),
-      ConstanceNetwork.image: DioManagerClass.getInstance.uploadImage(file: filePath),
+      ConstanceNetwork.image:
+          DioManagerClass.getInstance.uploadImage(file: filePath),
     };
     Logger().i('filePath : $filePath');
     _updateProfile(map);

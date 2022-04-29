@@ -122,12 +122,12 @@ class _AuthOTPViewState extends State<AuthOTPView> {
   Widget _resendVerificationsCode(ThemeData themeData, AuthViewModel logic) {
     return GestureDetector(
       onTap: () async {
-        logic.isLoading = true;
+        logic.resendCodeLoding = true;
         logic.update();
         await _onResendCodeClick(logic);
         // logic.isLoading = false;
       },
-      child: logic.isLoading
+      child: logic.resendCodeLoding
           ? ThreeSizeDot(
               color_1: AppColor.primary,
               color_2: AppColor.primary,

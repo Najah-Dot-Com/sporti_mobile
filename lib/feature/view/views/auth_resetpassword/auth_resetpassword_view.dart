@@ -126,7 +126,7 @@ class ResetPasswordView extends StatelessWidget {
                             height: AppSize.s100,
                           ),
                           PrimaryButton(
-                              textButton: AppStrings.signin.tr,
+                              textButton: AppStrings.txtVerify.tr,
                               colorBtn: AppColor.primary,
                               colorText: AppColor.white,
                               isLoading: logic.isLoading,

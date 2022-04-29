@@ -26,8 +26,7 @@ class AccountOtpView extends StatefulWidget {
 class _AccountOtpViewState extends State<AccountOtpView> {
   bool hasError = false;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _pinCodeController =
-      TextEditingController();
+  TextEditingController _pinCodeController = TextEditingController();
   static StreamController<ErrorAnimationType>? _errorController;
 
   @override
@@ -123,12 +122,13 @@ class _AccountOtpViewState extends State<AccountOtpView> {
   Widget _resendVerificationsCode(ThemeData themeData, AuthViewModel logic) {
     return GestureDetector(
       onTap: () async {
-        logic.isLoading = true;
+        logic.isLoading = false;
+        logic.resendCodeLoding = true;
         logic.update();
         await _onResendCodeClick(logic);
-        // logic.isLoading = false;
+        // logic.resendCodeLoding = false;
       },
-      child: logic.isLoading
+      child: logic.resendCodeLoding
           ? ThreeSizeDot(
               color_1: AppColor.primary,
               color_2: AppColor.primary,
