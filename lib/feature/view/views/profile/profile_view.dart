@@ -39,7 +39,11 @@ class ProfileView extends StatelessWidget {
             children: [
               ClipRRect(
                   borderRadius: BorderRadius.circular(AppPadding.p18),
-                  child: (userData.picture != null &&
+                  child: (logic.isDoneUploadImage && logic.filePath != null) ?
+                      Image.file(logic.filePath! ,width: AppSize.s120,
+                          height: AppSize.s120,
+                          fit: BoxFit.cover)
+                      :(userData.picture != null &&
                           userData.picture!.isNotEmpty &&
                           !userData.picture!.contains("http"))
                       ? Image.memory(base64Decode(userData.picture.toString()),

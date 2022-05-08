@@ -77,7 +77,11 @@ class HomePageTab extends StatelessWidget {
           physics: AppStyleScroll.customScrollViewIOS(),
           itemBuilder: (context, index) {
             try {
-              return  NewlyItemWidget(packages: logic.exercisesListRecentlyAll[index]);
+              if(logic.exercisesListRecentlyAll[index].countExercises != 0) {
+                return  NewlyItemWidget(packages: logic.exercisesListRecentlyAll[index]);
+              }else{
+                return const SizedBox.shrink();
+              }
             } catch (e) {
               print(e);
               return const SizedBox.shrink();
@@ -107,7 +111,11 @@ class HomePageTab extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             try {
-              return  SelectYourWorkWidget(package:logic.exercisesListAll[index]);
+              if(logic.exercisesListAll[index].countExercises != 0) {
+                return  SelectYourWorkWidget(package:logic.exercisesListAll[index]);
+              }else{
+                return const SizedBox.shrink();
+              }
             } catch (e) {
               print(e);
               return const SizedBox.shrink();

@@ -25,6 +25,7 @@ import 'package:dio/dio.dart' as multiPart;
 
 class AuthViewModel extends GetxController {
   bool isLoading = false;
+  bool isDoneUploadImage = false;
   bool resendCodeLoding = false;
   var acceptPolicy = false;
   final ImagePicker _picker = ImagePicker();
@@ -458,7 +459,7 @@ class AuthViewModel extends GetxController {
 
   imgFromCamera() async {
     XFile? image =
-        await _picker.pickImage(source: ImageSource.camera, imageQuality: 40);
+        await _picker.pickImage(source: ImageSource.camera, imageQuality: 25 , maxWidth: AppSize.s120 , maxHeight: AppSize.s120);
     if (image != null) {
       filePath = File(image.path);
       update();
@@ -469,7 +470,7 @@ class AuthViewModel extends GetxController {
 
   imgFromGallery() async {
     XFile? image =
-        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 40);
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 25 , maxWidth: AppSize.s120 , maxHeight: AppSize.s120);
     if (image != null) {
       filePath = File(image.path);
       update();
@@ -514,7 +515,7 @@ class AuthViewModel extends GetxController {
                       textAlign: TextAlign.right,
                     ),
                     onTap: () async {
-                      await imgFromGallery();
+                       imgFromGallery();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -523,7 +524,7 @@ class AuthViewModel extends GetxController {
                     title: Text(AppStrings.txtCamera.tr,
                         textAlign: TextAlign.right),
                     onTap: () async {
-                      await imgFromCamera();
+                       imgFromCamera();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -554,6 +555,7 @@ class AuthViewModel extends GetxController {
   Future<void> _updateProfile(Map<String, dynamic> map) async {
     try {
       isLoading = true;
+      isDoneUploadImage = false;
       update();
       await AuthFeature.getInstance.updateProfile(map).then((value) async {
         //handle object from value || [save in sharedPreferences]
@@ -562,10 +564,12 @@ class AuthViewModel extends GetxController {
           //if success go to ProfileView page
           SharedPref.instance.setUserDataUpdated(value.toJson()[ConstanceNetwork.resultKey]);
           isLoading = false;
+          isDoneUploadImage = true;
           snackSuccess("", value.message);
           update();
         } else {
           isLoading = false;
+          isDoneUploadImage = false;
           update();
         }
       }).catchError((onError) {
@@ -573,11 +577,13 @@ class AuthViewModel extends GetxController {
         snackError("", onError.toString());
         Logger().d(onError.toString());
         isLoading = false;
+        isDoneUploadImage = false;
         update();
       });
     } catch (e) {
       Logger().d(e.toString());
       isLoading = false;
+      isDoneUploadImage = false;
       update();
     }
   }
