@@ -61,8 +61,7 @@ class SelectYourWorkWidget extends StatelessWidget {
                             width: AppSize.s150,
                             height: AppSize.s120,
                             fit: BoxFit.cover,
-                            url:
-                                "${ConstanceNetwork.baseImageExercises}${package?.image?[0] ?? fakeImage}"),
+                            url: "${ConstanceNetwork.baseImageExercises}${package?.image?[0] ?? fakeImage}"),
                       ],
                     ),
                   ),
