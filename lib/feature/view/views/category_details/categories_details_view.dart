@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:sporti/feature/model/exercises_package_data.dart';
@@ -5,6 +6,7 @@ import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/category_details/widget/categories_list_item_widget.dart';
 import 'package:sporti/feature/view/views/category_details/widget/shimmer_categories_list_item_widget.dart';
 import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
+import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
@@ -62,7 +64,7 @@ class CategoriesDetailsView extends StatelessWidget {
         itemCount: logic.packageDetailsExercisesList.length,
         itemBuilder: (context, index) {
           return CategoriesListItemWidget(
-              packageDetails: logic.packageDetailsExercisesList[index]);
+              packageDetails: logic.packageDetailsExercisesList[index] , viewModel:logic);
         });
   }
 
@@ -109,11 +111,31 @@ class CategoriesDetailsView extends StatelessWidget {
                     const SizedBox(
                       height: AppSize.s28,
                     ),
-                    imageNetwork(
-                        width: double.infinity,
-                        height: AppSize.s200,
-                        fit: BoxFit.cover,
-                        url: fakeImage),
+                    CarouselSlider.builder(
+                      itemCount: package?.image?.length,
+                        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex){
+                        return  imageNetwork(
+                            width: double.infinity,
+                            height: AppSize.s200,
+                            fit: BoxFit.cover,
+                            url: "${ConstanceNetwork.baseImageExercises}${package?.image?[itemIndex]??fakeImage}");
+                        },
+                        options: CarouselOptions(
+                          height: AppSize.s400,
+                          aspectRatio: AppSize.s16/AppSize.s9,
+                          viewportFraction:AppSize.s0_8,
+                          initialPage: 0,
+                          enableInfiniteScroll: true,
+                          reverse: false,
+                          autoPlay: true,
+                          autoPlayInterval: const Duration(seconds: 3),
+                          autoPlayAnimationDuration: const Duration(milliseconds: DurationConstant.d800),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enlargeCenterPage: true,
+                          onPageChanged: (index , corsule){},
+                          scrollDirection: Axis.horizontal,
+                        ),
+                    ),
                     const SizedBox(
                       height: AppSize.s28,
                     ),
@@ -135,8 +157,12 @@ class CategoriesDetailsView extends StatelessWidget {
   }
 
   void _onAddBtnClick(HomeViewModel logic) async{
-    await logic.addToMyWork(id , isFromDetails: true);
-    logic.packagesExercisesDetails(id);
+    await showIsVerifyDialog().then((value) async{
+      if(value){
+        await logic.addToMyWork(id , isFromDetails: true);
+        logic.packagesExercisesDetails(id);
+      }
+    });
 
   }
 }

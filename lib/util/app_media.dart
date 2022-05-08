@@ -30,4 +30,5 @@ class AppMedia {
   static const String remove = "$IMAGE_PATH/remove.svg";
 
   static const String resetPassword = "$IMAGE_PATH/reset_password.svg";
+
 }

@@ -6,6 +6,7 @@ import 'package:sporti/feature/view/views/categoriy_exercise/categoriy_exercise_
 import 'package:sporti/feature/view/views/categoriy_exercise_details/widget/page_shimmer_widget.dart';
 import 'package:sporti/feature/viewmodel/details_exercise_view_model.dart';
 import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
+import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_media.dart';
@@ -34,7 +35,7 @@ class CategoriyExerciseDetailsView extends StatelessWidget {
               color: AppColor.black),
         ),
         leading: IconButton(
-          onPressed: () => Get.back(),
+          onPressed: () => Get.back(result: true),
           icon: Icon(
             Icons.arrow_back_ios,
             color: AppColor.black,
@@ -73,69 +74,79 @@ class CategoriyExerciseDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
-    return Scaffold(
-      appBar: myAppBar(themeData),
-      floatingActionButton: GetBuilder<DetailsExerciseViewModel>(builder: (logic) {
-        return  logic.isLoading ? const SizedBox.shrink():  myStartBtn(themeData , logic);
-      }),
-      backgroundColor: AppColor.white,
-      body: GetBuilder<DetailsExerciseViewModel>(
-        init: DetailsExerciseViewModel(),
-        initState: (state) {
-          WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-            state.controller?.getExerciseDetails(packageDetails?.id);
-          });
-        },
-        builder: (logic) {
-          if (logic.isLoading) {
-            return const PageShimmerWidget();
-          }
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSize.s28),
-            child: ListView(
-              // mainAxisAlignment: MainAxisAlignment.start,
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: AppSize.s28,),
-                ClipRRect(borderRadius: BorderRadius.circular(AppSize.s12),
-                    child: imageNetwork(width: double.infinity,
-                        height: AppSize.s200,
-                        fit: BoxFit.cover,
-                        url: logic.exerciseDetailsData?.image ?? fakeImage)),
-                const SizedBox(height: AppSize.s28,),
-                CustomTextView(
-                  txt: logic.exerciseDetailsData?.title,
-                  textStyle: themeData.textTheme.headline2?.copyWith(
-                      color: AppColor.black),
-                ),
-                const SizedBox(height: AppSize.s12,),
-                CustomTextView(
-                  txt: logic.exerciseDetailsData?.description,
-                  textStyle: themeData.textTheme.subtitle2?.copyWith(
-                      color: AppColor.darkGrey, height: AppSize.s1_5),
-                ),
-                const SizedBox(height: AppSize.s28,),
-                CustomTextView(
-                  txt: AppStrings.txtTargetMuscle.tr,
-                  textStyle: themeData.textTheme.headline2?.copyWith(
-                      color: AppColor.black),
-                ),
-                const SizedBox(height: AppSize.s12,),
-                CustomTextView(
-                  txt: AppStrings.txtDetailsNote.tr,
-                  textStyle: themeData.textTheme.subtitle2?.copyWith(
-                      color: AppColor.darkGrey, height: AppSize.s1_5),
-                ),
-              ],
-            ),
-          );
-        },
+    return WillPopScope(
+      onWillPop: (){
+        Get.back(result: true);
+        return Future.value(true);
+      },
+      child: Scaffold(
+        appBar: myAppBar(themeData),
+        floatingActionButton: GetBuilder<DetailsExerciseViewModel>(builder: (logic) {
+          return  logic.isLoading ? const SizedBox.shrink():  myStartBtn(themeData , logic);
+        }),
+        backgroundColor: AppColor.white,
+        body: GetBuilder<DetailsExerciseViewModel>(
+          init: DetailsExerciseViewModel(),
+          initState: (state) {
+            WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+              state.controller?.getExerciseDetails(packageDetails?.id);
+            });
+          },
+          builder: (logic) {
+            if (logic.isLoading) {
+              return const PageShimmerWidget();
+            }
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSize.s28),
+              child: ListView(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: AppSize.s28,),
+                  ClipRRect(borderRadius: BorderRadius.circular(AppSize.s12),
+                      child: imageNetwork(width: double.infinity,
+                          height: AppSize.s400,
+                          fit: BoxFit.cover,
+                          url: "${ConstanceNetwork.baseImageExercises}${logic.exerciseDetailsData?.image ?? fakeImage}")),
+                  const SizedBox(height: AppSize.s28,),
+                  CustomTextView(
+                    txt: logic.exerciseDetailsData?.title,
+                    textStyle: themeData.textTheme.headline2?.copyWith(
+                        color: AppColor.black),
+                  ),
+                  const SizedBox(height: AppSize.s12,),
+                  CustomTextView(
+                    txt: logic.exerciseDetailsData?.description,
+                    textStyle: themeData.textTheme.subtitle2?.copyWith(
+                        color: AppColor.darkGrey, height: AppSize.s1_5),
+                  ),
+                  const SizedBox(height: AppSize.s28,),
+                  CustomTextView(
+                    txt: AppStrings.txtTargetMuscle.tr,
+                    textStyle: themeData.textTheme.headline2?.copyWith(
+                        color: AppColor.black),
+                  ),
+                  const SizedBox(height: AppSize.s12,),
+                  CustomTextView(
+                    txt: AppStrings.txtDetailsNote.tr,
+                    textStyle: themeData.textTheme.subtitle2?.copyWith(
+                        color: AppColor.darkGrey, height: AppSize.s1_5),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
 
 
-  void _onStartBtnClick(DetailsExerciseViewModel logic) {
-    Get.to(CategoryExerciseView(exerciseDetailsData:logic.exerciseDetailsData));
+  void _onStartBtnClick(DetailsExerciseViewModel logic) async{
+    await showIsVerifyDialog().then((value) async{
+      if(value){
+        Get.to(CategoryExerciseView(exerciseDetailsData:logic.exerciseDetailsData,packageDetails:packageDetails));
+      }
+    });
   }
 }

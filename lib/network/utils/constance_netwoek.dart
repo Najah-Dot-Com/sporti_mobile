@@ -6,6 +6,7 @@ import 'package:sporti/util/sh_util.dart';
 abstract class ConstanceNetwork {
   ///todo here insert base_url
   static String baseUrl = "https://sportiapp.com/api/v1/";
+  static String baseImageExercises = "https://sportiapp.com/public/images/exercises/";
 
   ///todo here insert key Of Request
   static String  resultKey = "Result";
@@ -22,7 +23,8 @@ abstract class ConstanceNetwork {
   //this for account verify keys
   static String userPhoneNumer = 'phone';
   //this for updateProfile keys
-  static String image = 'image';
+  static String picture = 'picture';
+  static String imageKey = "image";
 
   //this for home page
   static String parentIdKey = "parent_id";
@@ -58,6 +60,8 @@ abstract class ConstanceNetwork {
   static String confirmAccount = "confirm_verifi_code";
   //profile end point
   static String updateProfile = "update_profile";
+
+
 
 
 

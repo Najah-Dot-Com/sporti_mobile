@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
+import 'package:sporti/feature/model/user_data.dart';
 import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
 import 'package:sporti/feature/view/views/auth_resetpassword/auth_resetpassword_view.dart';
 import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
 import 'package:sporti/feature/view/views/profile/profile_view.dart';
 import 'package:sporti/network/api/feature/auth_feature.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
+import 'package:sporti/util/app_color.dart';
+import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
@@ -18,16 +21,14 @@ import '../../network/api/dio_manager/dio_manage_class.dart';
 import '../view/views/account_otp/account_otp_view.dart';
 import '../view/views/account_success_virefy/account_success_virefy_view.dart';
 import '../view/views/auth_forget_otp/auth_otp_view.dart';
+import 'package:dio/dio.dart' as multiPart;
 
 class AuthViewModel extends GetxController {
   bool isLoading = false;
   bool resendCodeLoding = false;
   var acceptPolicy = false;
   final ImagePicker _picker = ImagePicker();
-  static var qudsImage =
-      "https://www.google.com/url?sa=i&url=https%3A%2F%2Fm.facebook.com%2FTogetherSupportGaza%2Fphotos%2Fa.666687263409744%2F1899627393449052%2F&psig=AOvVaw3xzEG1gSguKH370R5wFNy3&ust=1650577847682000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCPCD5OTPo_cCFQAAAAAdAAAAABAD";
-
-  var filePath;
+  File? filePath;
 
   @override
   void onInit() {
@@ -53,6 +54,7 @@ class AuthViewModel extends GetxController {
   goToHomePage() async {
     isLoading = true;
     update();
+    await SharedPref.instance.setUserDataVerify();
     await Get.offAll(const HomePageView());
     isLoading = false;
     update();
@@ -458,10 +460,8 @@ class AuthViewModel extends GetxController {
     XFile? image =
         await _picker.pickImage(source: ImageSource.camera, imageQuality: 40);
     if (image != null) {
-      // EasyLoading.show(status: '... جاري التحميل'); // show loding indicator
       filePath = File(image.path);
       update();
-      // EasyLoading.dismiss(); // stop loging indicator
     } else {
       return;
     }
@@ -480,13 +480,33 @@ class AuthViewModel extends GetxController {
 
   void showPicker(BuildContext context) {
     showModalBottomSheet(
+        backgroundColor: AppColor.transparent,
         context: context,
         builder: (BuildContext context) {
           return SafeArea(
             // ignore: avoid_unnecessary_containers
             child: Container(
+              padding: const EdgeInsets.all(AppSize.s28),
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                  color: AppColor.white,
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(AppSize.s28),
+                      topRight: Radius.circular(AppSize.s28))),
               child: Wrap(
                 children: <Widget>[
+                  const SizedBox(height: AppSize.s28),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      height: AppSize.s4,
+                      width: AppSize.s50,
+                      decoration: BoxDecoration(
+                          color: AppColor.grey,
+                          borderRadius: BorderRadius.circular(AppSize.s4)),
+                    ),
+                  ),
+                  const SizedBox(height: AppSize.s28),
                   ListTile(
                     leading: const Icon(Icons.photo_library),
                     title: Text(
@@ -519,13 +539,14 @@ class AuthViewModel extends GetxController {
     TextEditingController fullNameController,
     TextEditingController emailController,
   ) {
+
     Map<String, dynamic> map = {
       ConstanceNetwork.fullNameKey: fullNameController.text.toString(),
       ConstanceNetwork.emailKey: emailController.text.toString(),
-      ConstanceNetwork.image:
-          DioManagerClass.getInstance.uploadImage(file: filePath),
+      ConstanceNetwork.imageKey: filePath != null
+          ? multiPart.MultipartFile.fromFileSync(filePath!.path)
+          : "",
     };
-    Logger().i('filePath : $filePath');
     _updateProfile(map);
   }
 
@@ -537,10 +558,11 @@ class AuthViewModel extends GetxController {
       await AuthFeature.getInstance.updateProfile(map).then((value) async {
         //handle object from value || [save in sharedPreferences]
         Logger().d(value.toJson());
-        if (value.status == 200) {
+        if (value.status) {
           //if success go to ProfileView page
-          Get.offAll(const ProfileView());
+          SharedPref.instance.setUserDataUpdated(value.toJson()[ConstanceNetwork.resultKey]);
           isLoading = false;
+          snackSuccess("", value.message);
           update();
         } else {
           isLoading = false;
@@ -560,11 +582,25 @@ class AuthViewModel extends GetxController {
     }
   }
 
-  // void getImage(ImageSource imageSource) async {
-  //   final ImagePicker _picker = ImagePicker();
-  //   PickedFile imageFile = await _picker.getImage(source: imageSource);
-  //   if (imageFile == null) return;
-  //   File tmpFile = File(imageFile.path);
-  //   tmpFile = await tmpFile.copy(tmpFile.path);
-  // }
+  bool isUpdateBtnEnable(TextEditingController userName ,TextEditingController email ) {
+    UserData? userData = SharedPref.instance.getUserData();
+    if(filePath != null) {
+      return true;
+    }
+    else if ( email .text.isNotEmpty && userData.email != email.text){
+      return true;
+    }
+    else if (userData.fullname != userName.text ){
+      return true;
+    }
+    else if(filePath != null && userData.fullname != userName.text){
+      return true;
+    }
+    else if((filePath != null && userData.fullname != userName.text && userData.email != email.text)) {
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 }

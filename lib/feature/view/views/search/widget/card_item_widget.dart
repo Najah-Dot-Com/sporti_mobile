@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/feature/view/views/categoriy_exercise_details/categoriy_exercise_details_view.dart';
 import 'package:sporti/feature/view/views/category_details/categories_details_view.dart';
+import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
@@ -17,7 +18,7 @@ class CardItemWidget extends StatelessWidget {
   final String fakeImage = "https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/07/1377301-1183869-The-8-Best-Weight-Benches-of-2021-1296x728-Header-c0dcdf.jpg?w=1575";
 
   Widget get imageWidget => imageNetwork(
-      url: data.image ??fakeImage,
+      url: "${ConstanceNetwork.baseImageExercises}${data.image?[0]??fakeImage}",
       width: double.infinity,
       height: AppSize.s140,
       fit: BoxFit.cover);
@@ -54,7 +55,7 @@ class CardItemWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 4.0),
                   Text(
-                    "6 ${AppStrings.txtExercises}",
+                    "${data.countExercises} ${AppStrings.txtExercises}",
                     style: theme.textTheme.subtitle2,
                   ),
                 ],

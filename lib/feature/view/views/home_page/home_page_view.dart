@@ -9,6 +9,7 @@ import 'package:sporti/feature/view/views/search/search_view.dart';
 import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
+import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:get/get.dart';
 
@@ -50,6 +51,7 @@ class _HomePageViewState extends State<HomePageView>
     });
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {

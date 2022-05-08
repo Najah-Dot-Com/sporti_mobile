@@ -6,6 +6,8 @@ class UserData{
       this.isVerify = false,
       this.finish,
       this.balance,
+      this.email,
+      this.picture,
       this.username});
 
   String? fullname;
@@ -13,6 +15,8 @@ class UserData{
   DateTime? expiresIn;
   bool? isVerify;
   String? username;
+  String? email;
+  String? picture;
   int? finish;
   String? balance;
 
@@ -21,9 +25,13 @@ class UserData{
         token: json["token"] == null ? null : json["token"],
         isVerify: json["isVerify"] == null ? false : json["isVerify"],
         username: json["username"] == null ? null : json["username"],
+        email: json["email"] == null ? null : json["email"],
         finish: json["finish"] == null ? null : json["finish"],
         balance: json["balance"] == null ? null : json["balance"],
-        expiresIn: json["expires_in"] == null ? null : DateTime.parse(json["expires_in"]),
+        picture: json["picture"] == null ? null : json["picture"],
+        expiresIn: json["expires_in"] == null
+            ? null
+            : DateTime.parse(json["expires_in"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -31,8 +39,10 @@ class UserData{
         "token": token == null ? null : token,
         "isVerify": isVerify == null ? false : isVerify,
         "username": username == null ? null : username,
+        "email": email == null ? null : email,
         "finish": finish == null ? null : finish,
         "balance": balance == null ? null : balance,
+        "picture": picture == null ? null : picture,
         "expires_in": expiresIn == null ? null : expiresIn?.toIso8601String(),
       };
 }

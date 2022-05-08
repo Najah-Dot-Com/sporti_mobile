@@ -10,11 +10,12 @@ import 'package:sporti/feature/model/user_data.dart';
 
 import 'localization/localization_service.dart';
 
-
 class SharedPref {
   static SharedPref instance = SharedPref._();
+
   SharedPref._();
-  factory SharedPref()=> instance;
+
+  factory SharedPref() => instance;
 
   final String fcmKey = "fcm";
   final String langKey = "langKey";
@@ -24,9 +25,6 @@ class SharedPref {
 
   static SharedPreferences? _prefs;
 
-
-
-
   init() async {
     _prefs = await SharedPreferences?.getInstance();
   }
@@ -35,7 +33,7 @@ class SharedPref {
     try {
       _prefs?.setString(fcmKey, fcmToken);
     } catch (e) {
-      printError(info:e.toString());
+      printError(info: e.toString());
     }
   }
 
@@ -43,35 +41,36 @@ class SharedPref {
     return _prefs!.getString(fcmKey) ?? "";
   }
 
-
-  Future<void> setAppLang(String lang)async{
+  Future<void> setAppLang(String lang) async {
     try {
       if (!GetUtils.isNull(lang)) {
         await _prefs?.setString(langKey, lang);
         LocalizationService().changeLocale(lang);
       }
     } catch (e) {
-      printError(info:e.toString());
+      printError(info: e.toString());
     }
   }
-  Locale? getAppLanguageMain() {
 
+  Locale? getAppLanguageMain() {
     try {
-       var string = _prefs?.getString(langKey);
-       if(string != null && string == LocalizationService.langs[LocalizationService.arIndex]){
-         return LocalizationService.localeAr;
-       }else if(string != null && string == LocalizationService.langs[LocalizationService.enIndex]){
-         return LocalizationService.localeEn;
-       }else{
-         return LocalizationService.localeAr;
-       }
+      var string = _prefs?.getString(langKey);
+      if (string != null &&
+          string == LocalizationService.langs[LocalizationService.arIndex]) {
+        return LocalizationService.localeAr;
+      } else if (string != null &&
+          string == LocalizationService.langs[LocalizationService.enIndex]) {
+        return LocalizationService.localeEn;
+      } else {
+        return LocalizationService.localeAr;
+      }
     } catch (e) {
-      printError(info:e.toString());
+      printError(info: e.toString());
       return LocalizationService.localeAr;
     }
   }
 
-   setUserBalance(BalanceData value) async{
+  setUserBalance(BalanceData value) async {
     try {
       var userData = getUserData();
       userData.balance = value.balance.toString();
@@ -79,8 +78,8 @@ class SharedPref {
       setUserData(jsonEncode(userData.toJson()));
       await _prefs?.setString(userBalanceKey, jsonEncode(userData.toJson()));
     } catch (e) {
-    Logger().e(e);
-    return "$e";
+      Logger().e(e);
+      return "$e";
     }
   }
 
@@ -124,11 +123,30 @@ class SharedPref {
   }
 
   //clear
-  clear() async{
+  clear() async {
     _prefs?.remove(userDataKey);
     _prefs?.remove(fcmKey);
   }
 
+  void setUserDataUpdated(json) {
+    try {
+      var userData = getUserData();
+      userData.email = json["email"].toString();
+      userData.fullname = json["fullname"].toString();
+      userData.picture = json["picture"].toString();
+      setUserData(jsonEncode(userData.toJson()));
+    } catch (e) {
+      Logger().e(e);
+    }
+  }
 
-
+  setUserDataVerify() {
+    try {
+      var userData = getUserData();
+      userData.isVerify =true;
+      setUserData(jsonEncode(userData.toJson()));
+    } catch (e) {
+      Logger().e(e);
+    }
+  }
 }

@@ -76,6 +76,7 @@ Map<String, String> arSU = {
       "أدخل عنوان البريد الإلكتروني المرتبط بحسابك لإعادة تعيين كلمة المرور الخاصة بك. ",
   AppStrings.update: "تحديث",
   AppStrings.verify: "تحقق",
+  AppStrings.verifyHint: "للوصل الى هذه الميزة يرجى تفعيل الحساب الخاص بك من خلال الذهاب الى شاشة البروفايل > تفعيل الحساب",
   AppStrings.email: "البريد الالكتروني",
   AppStrings.rememberMeToRepeatExcercise: "ذكرني لاعادة التمرين",
   AppStrings.iFinishedExcercise: "أتمت التمرين",

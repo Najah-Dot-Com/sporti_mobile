@@ -80,6 +80,7 @@ Map<String, String> enUS = {
       "Enter the email address associated with your account to reset your password. ",
   AppStrings.update: "Update",
   AppStrings.verify: "Verify",
+  AppStrings.verifyHint: "To access this feature, please activate your account by going to the Profile screen > Activate account",
   AppStrings.email: "Email",
   AppStrings.rememberMeToRepeatExcercise: "Remind me to re-train",
   AppStrings.iFinishedExcercise: "Done the exercise",

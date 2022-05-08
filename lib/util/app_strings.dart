@@ -110,6 +110,7 @@ class AppStrings {
       "Enter the email address associated with your account to reset your password. ";
   static const String update = "UPDATE";
   static const String verify = "VERIFY";
+  static const String verifyHint = "VERIFYHint";
   static const String email = "Email"; // "Email" "الايميل"
 
   //CategoryExerciseView
@@ -119,8 +120,7 @@ class AppStrings {
   static const String minute = "دقيقة";
   static const String txtAttentions = "Attentions";
   static const String txtAttentionsHint = "AttentionsHint";
-  static const String txtAttentionsHintNotComplete =
-      "AttentionsHintNotComplete";
+  static const String txtAttentionsHintNotComplete = "AttentionsHintNotComplete";
 
   //todo this for update password
   static const String txtOldPassword = "oldPassword";

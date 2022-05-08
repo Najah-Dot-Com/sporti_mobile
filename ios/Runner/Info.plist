@@ -43,5 +43,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+    <string>This app requires to access your Camera to show image on profile.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app requires to access your photo library to show image on profile</string>
 </dict>
 </plist>

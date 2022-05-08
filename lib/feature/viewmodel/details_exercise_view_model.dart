@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:sporti/feature/model/exercise_details_data.dart';
+import 'package:sporti/feature/model/exercises_package_data.dart';
+import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
 import 'package:sporti/network/api/feature/exercises_feature.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
@@ -106,17 +108,17 @@ class DetailsExerciseViewModel extends GetxController {
     update();
   }
 
-  addEventExercises(var id ,var type){
+  addEventExercises(var id ,var type, HomeViewModel homeViewModel,ExercisesData? packageDetails){
     Map<String , dynamic> map = {
       ConstanceNetwork.exerciseIdKey : id,
       ConstanceNetwork.typeKey:type //typeDoneKey || typeReturnKey
     };
-    _addEventExercises(map);
+    _addEventExercises(map,homeViewModel,packageDetails);
   }
 
 
 
-  Future<void> _addEventExercises(Map<String, dynamic> map)async{
+  Future<void> _addEventExercises(Map<String, dynamic> map, HomeViewModel homeViewModel, ExercisesData? packageDetails)async{
     try {
 
       isLoading = true;
@@ -133,6 +135,8 @@ class DetailsExerciseViewModel extends GetxController {
           remindMeToRepeatExercise = false;
           update();
           Get.back();
+          // homeViewModel.packagesExercisesDetails(packageDetails?.parentId);
+          homeViewModel.getBalanceUser();
         } else {
           snackError("", value.message);
           isLoading = false;
@@ -182,7 +186,7 @@ class DetailsExerciseViewModel extends GetxController {
     update();
   }
 
-  Future<void> returnExercise(ExerciseDetailsData exerciseDetailsData) async{
+  Future<void> returnExercise(ExerciseDetailsData exerciseDetailsData, HomeViewModel homeViewModel, ExercisesData? packageDetails) async{
 
     Map<String , dynamic> map = {
       ConstanceNetwork.exerciseIdKey : exerciseDetailsData.id,
@@ -192,7 +196,7 @@ class DetailsExerciseViewModel extends GetxController {
     };
 
     if(currentSelectedDate.isNotEmpty && currentSelectedTime.isNotEmpty) {
-      _addEventExercises(map);
+      _addEventExercises(map,homeViewModel,packageDetails);
     }
   }
 
