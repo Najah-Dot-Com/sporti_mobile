@@ -50,6 +50,9 @@ dependencies:
   video_player: ^2.3.0
   image_picker: ^0.8.5
   carousel_slider: ^4.1.1
+  firebase_core: ^1.16.0
+  firebase_messaging: ^11.3.0
+  flutter_local_notifications: ^9.5.2
   
 dev_dependencies:
   flutter_test:
