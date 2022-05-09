@@ -18,7 +18,7 @@ class CardItemWidget extends StatelessWidget {
   final String fakeImage = "https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/07/1377301-1183869-The-8-Best-Weight-Benches-of-2021-1296x728-Header-c0dcdf.jpg?w=1575";
 
   Widget get imageWidget => imageNetwork(
-      url: "${ConstanceNetwork.baseImageExercises}${data.image?[0]??fakeImage}",
+      url: data.image != null ?"${ConstanceNetwork.baseImageExercises}${data.image?[0]??fakeImage}" :fakeImage,
       width: double.infinity,
       height: AppSize.s140,
       fit: BoxFit.cover);
@@ -54,6 +54,7 @@ class CardItemWidget extends StatelessWidget {
                     maxLines: Constance.maxLineOne,
                   ),
                   const SizedBox(height: 4.0),
+                  if(data.countExercises != null)
                   Text(
                     "${data.countExercises} ${AppStrings.txtExercises}",
                     style: theme.textTheme.subtitle2,

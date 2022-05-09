@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "722010426083",
+    "project_id": "sporti-db69e",
+    "storage_bucket": "sporti-db69e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722010426083:android:af5f3ddcb2729cf14ad3d6",
+        "android_client_info": {
+          "package_name": "com.naja7.sporti"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "722010426083-cv961vh7p0tr3honui064rbhere07763.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.naja7.sporti",
+            "certificate_hash": "a79cc014ec889fc1c7d62e37d90274f4dc9b1aaa"
+          }
+        },
+        {
+          "client_id": "722010426083-nl1krg8ujpmco92h9djh1fccf83499g2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbN_beZhQqGngMv_Gtnr_OqBl2Y3WU39A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "722010426083-nl1krg8ujpmco92h9djh1fccf83499g2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,8 +7,10 @@ import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_media.dart';
 import '../../../../util/app_color.dart';
+import '../../../../util/app_shaerd_data.dart';
 import '../../../../util/app_strings.dart';
 import '../../../viewmodel/auth_viewmodle.dart';
+import '../../appwidget/custom_text_filed.dart';
 import '../../appwidget/primary_button.dart';
 import '../account_success_virefy/account_success_virefy_view.dart';
 
@@ -16,9 +18,11 @@ class ResetPasswordView extends StatelessWidget {
   TextEditingController? pinCodeController = TextEditingController();
   ResetPasswordView({Key? key, @required this.pinCodeController})
       : super(key: key);
-  TextEditingController _newPassController = TextEditingController();
-  TextEditingController _repeatPassController = TextEditingController();
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController newPassController = TextEditingController();
+  TextEditingController repeatPassController = TextEditingController();
+  FocusNode newPassFocusNode = FocusNode();
+  FocusNode repeatPassFocusNode = FocusNode();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
@@ -42,7 +46,7 @@ class ResetPasswordView extends StatelessWidget {
             builder: (logic) {
               return Padding(
                 padding: const EdgeInsets.symmetric(
-                    vertical: AppPadding.p60, horizontal: AppPadding.p50),
+                    vertical: AppPadding.p50, horizontal: AppPadding.p50),
                 child: Center(
                   child: Form(
                     key: _formKey,
@@ -71,26 +75,58 @@ class ResetPasswordView extends StatelessWidget {
                           const SizedBox(
                             height: AppSize.s50,
                           ),
-                          SportiTextField(
-                            hint: AppStrings.password.tr,
-                            isforPass: true,
-                            controller: _newPassController,
-                            textInputType: TextInputType.visiblePassword,
+                          CustomTextFormFiled(
+                            label: AppStrings.password.tr,
+                            isBorder: true,
+                            keyboardType: TextInputType.visiblePassword,
+                            customValid: passwordValid,
+                            textInputAction: TextInputAction.next,
+                            isSmallPaddingWidth: true,
+                            obscureText: true,
+                            controller: newPassController,
+                            focusNode: newPassFocusNode,
+                            nexFocusNode: repeatPassFocusNode,
+                            isSuffixIcon: true,
+                            suffixIcon: Icons.visibility_off,
+                            onSubmitted: (v) {
+                              if (v.isNotEmpty) {
+                                hideFocus(context);
+                              }
+                            },
                           ),
                           const SizedBox(
                             height: AppSize.s20,
                           ),
-                          SportiTextField(
-                            hint: AppStrings.repassword.tr,
-                            isforPass: true,
-                            controller: _repeatPassController,
-                            textInputType: TextInputType.visiblePassword,
+                          CustomTextFormFiled(
+                            label: AppStrings.repassword.tr,
+                            isBorder: true,
+                            keyboardType: TextInputType.visiblePassword,
+                            customValid: passwordValid,
+                            textInputAction: TextInputAction.next,
+                            isSmallPaddingWidth: true,
+                            obscureText: true,
+                            controller: repeatPassController,
+                            focusNode:  repeatPassFocusNode,
+                            nexFocusNode: newPassFocusNode,
+                            isSuffixIcon: true,
+                            suffixIcon: Icons.visibility_off,
+                            onSubmitted: (v) {
+                              if (v.isNotEmpty) {
+                                hideFocus(context);
+                              }
+                            },
                           ),
+                          // SportiTextField(
+                          //   hint: AppStrings.repassword.tr,
+                          //   isforPass: true,
+                          //   controller: repeatPassController,
+                          //   textInputType: TextInputType.visiblePassword,
+                          // ),
                           const SizedBox(
                             height: AppSize.s100,
                           ),
                           PrimaryButton(
-                              textButton: AppStrings.signin.tr,
+                              textButton: AppStrings.txtVerify.tr,
                               colorBtn: AppColor.primary,
                               colorText: AppColor.white,
                               isLoading: logic.isLoading,
@@ -117,8 +153,8 @@ class ResetPasswordView extends StatelessWidget {
     FocusManager.instance.primaryFocus?.unfocus();
     logic.confirmEmail(
         pinCode: pinCodeController,
-        passwordNew: _newPassController,
-        passwordConfirm: _repeatPassController);
+        passwordNew: newPassController,
+        passwordConfirm: repeatPassController);
     // Get.offAll(() => const  LoginView());
   }
 }

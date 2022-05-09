@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
 import 'dart:async';
@@ -12,7 +14,7 @@ import 'package:sporti/util/sh_util.dart';
 class DioManagerClass {
   DioManagerClass._();
   static final DioManagerClass getInstance = DioManagerClass._();
-  factory DioManagerClass()=> getInstance;
+  factory DioManagerClass() => getInstance;
   Dio? _dio;
   Dio init() {
     _dio = Dio(
@@ -33,14 +35,15 @@ class DioManagerClass {
     print("msg_request_url : $url");
     print("msg_request_header : $header");
     return await _dio!.get(url,
-        options: Options(headers: header), queryParameters: queryParameters??{});
+        options: Options(headers: header),
+        queryParameters: queryParameters ?? {});
   }
 
   Future<Response> dioPostMethod(
       {var url,
       Map<String, dynamic>? header,
       Map<String, dynamic>? body}) async {
-           print("msg_request_url : $url");
+    print("msg_request_url : $url");
     print("msg_request_header : $header");
     print("msg_request_body : $body");
     return await _dio!.post(
@@ -66,7 +69,7 @@ class DioManagerClass {
       {var url,
       Map<String, dynamic>? header,
       Map<String, dynamic>? body}) async {
-           print("msg_request_url : $url");
+    print("msg_request_url : $url");
     print("msg_request_header : $header");
     print("msg_request_body : $body");
     return await _dio!.put(url, options: Options(headers: header), data: body);
@@ -81,6 +84,15 @@ class DioManagerClass {
     print("msg_request_body : $body");
     return await _dio!
         .delete(url, options: Options(headers: header), data: body);
+  }
+
+  Future<String> uploadImage({File? file}) async {
+    String fileName = file!.path.split('/').last;
+    FormData formData = FormData.fromMap({
+      "file": await MultipartFile.fromFile(file.path, filename: fileName),
+    });
+    dynamic response = await _dio?.post("/info", data: formData);
+    return response.data['id'];
   }
 }
 
@@ -102,9 +114,9 @@ class ApiInterceptors extends Interceptor {
   void onError(DioError err, ErrorInterceptorHandler handler) {
     super.onError(err, handler);
     Logger().d("onError : ${err.message}");
-    if(err.message.contains("401")){
+    if (err.message.contains("401")) {
       SharedPref.instance.setUserLogin(false);
-      getx.Get.offAll( LoginView());
+      getx.Get.offAll(LoginView());
     }
   }
 }

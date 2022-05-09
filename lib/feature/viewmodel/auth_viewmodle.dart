@@ -17,6 +17,7 @@ import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
 
+import '../../network/api/dio_manager/dio_manage_class.dart';
 import '../view/views/account_otp/account_otp_view.dart';
 import '../view/views/account_success_virefy/account_success_virefy_view.dart';
 import '../view/views/auth_forget_otp/auth_otp_view.dart';
@@ -24,6 +25,8 @@ import 'package:dio/dio.dart' as multiPart;
 
 class AuthViewModel extends GetxController {
   bool isLoading = false;
+  bool isDoneUploadImage = false;
+  bool resendCodeLoding = false;
   var acceptPolicy = false;
   final ImagePicker _picker = ImagePicker();
   File? filePath;
@@ -246,7 +249,7 @@ class AuthViewModel extends GetxController {
 // mam.farra2030@gmail.com
   Future<void> _verifyEmail(var parameters) async {
     try {
-      isLoading = true;
+      resendCodeLoding = true;
       update();
       await AuthFeature.getInstance
           .verifyUserEmail(parameters)
@@ -255,26 +258,26 @@ class AuthViewModel extends GetxController {
         Logger().d(value.toJson());
         if (value.status) {
           //TODO: if verification and success go to ForgetOtpView page
-          isLoading = false;
+          resendCodeLoding = false;
           update();
           await snackSuccess("", value.message);
           await Get.to(AuthOTPView(
             email: parameters,
           ));
         } else {
-          isLoading = false;
+          resendCodeLoding = false;
           update();
         }
       }).catchError((onError) {
         //handle error from value
         snackError("", onError.toString());
         Logger().d(onError.toString());
-        isLoading = false;
+        resendCodeLoding = false;
         update();
       });
     } catch (e) {
       Logger().d(e.toString());
-      isLoading = false;
+      resendCodeLoding = false;
       update();
     }
   }
@@ -350,13 +353,13 @@ class AuthViewModel extends GetxController {
   Future<void> _verifyAccount(Map<String, dynamic> map, var phoneNumber) async {
     Logger().d(phoneNumber);
     try {
-      isLoading = true;
+      resendCodeLoding = true;
       update();
       await AuthFeature.getInstance.verifyAccount(map).then((value) async {
         if (value.status) {
           // if success go to AccountOtpView page
           Logger().d(value.toJson());
-          isLoading = false;
+          resendCodeLoding = false;
           await snackSuccess("", value.message ?? "");
           update();
           // Get.to(page)
@@ -367,12 +370,12 @@ class AuthViewModel extends GetxController {
         //handle error from value
         snackError("", onError.toString());
         Logger().d(onError.toString());
-        isLoading = false;
+        resendCodeLoding = false;
         update();
       });
     } catch (e) {
       Logger().d(e.toString());
-      isLoading = false;
+      resendCodeLoding = false;
       update();
     }
   }
@@ -456,7 +459,7 @@ class AuthViewModel extends GetxController {
 
   imgFromCamera() async {
     XFile? image =
-        await _picker.pickImage(source: ImageSource.camera, imageQuality: 40);
+        await _picker.pickImage(source: ImageSource.camera, imageQuality: 25 , maxWidth: AppSize.s120 , maxHeight: AppSize.s120);
     if (image != null) {
       filePath = File(image.path);
       update();
@@ -467,7 +470,7 @@ class AuthViewModel extends GetxController {
 
   imgFromGallery() async {
     XFile? image =
-        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 40);
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 25 , maxWidth: AppSize.s120 , maxHeight: AppSize.s120);
     if (image != null) {
       filePath = File(image.path);
       update();
@@ -511,8 +514,8 @@ class AuthViewModel extends GetxController {
                       AppStrings.txtGallery.tr,
                       textAlign: TextAlign.right,
                     ),
-                    onTap: () {
-                      imgFromGallery();
+                    onTap: () async {
+                       imgFromGallery();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -520,8 +523,8 @@ class AuthViewModel extends GetxController {
                     leading: const Icon(Icons.photo_camera),
                     title: Text(AppStrings.txtCamera.tr,
                         textAlign: TextAlign.right),
-                    onTap: () {
-                      imgFromCamera();
+                    onTap: () async {
+                       imgFromCamera();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -552,6 +555,7 @@ class AuthViewModel extends GetxController {
   Future<void> _updateProfile(Map<String, dynamic> map) async {
     try {
       isLoading = true;
+      isDoneUploadImage = false;
       update();
       await AuthFeature.getInstance.updateProfile(map).then((value) async {
         //handle object from value || [save in sharedPreferences]
@@ -560,10 +564,12 @@ class AuthViewModel extends GetxController {
           //if success go to ProfileView page
           SharedPref.instance.setUserDataUpdated(value.toJson()[ConstanceNetwork.resultKey]);
           isLoading = false;
+          isDoneUploadImage = true;
           snackSuccess("", value.message);
           update();
         } else {
           isLoading = false;
+          isDoneUploadImage = false;
           update();
         }
       }).catchError((onError) {
@@ -571,11 +577,13 @@ class AuthViewModel extends GetxController {
         snackError("", onError.toString());
         Logger().d(onError.toString());
         isLoading = false;
+        isDoneUploadImage = false;
         update();
       });
     } catch (e) {
       Logger().d(e.toString());
       isLoading = false;
+      isDoneUploadImage = false;
       update();
     }
   }
