@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sporti/fcm/app_fcm.dart';
 import 'package:sporti/feature/view/appwidget/appLogo.dart';
 import 'package:sporti/feature/view/appwidget/customButton.dart';
 import 'package:sporti/feature/view/appwidget/custom_text_filed.dart';
@@ -104,6 +105,11 @@ class LoginView extends StatelessWidget {
       appBar: myAppbar(themeData),
       body: GetBuilder<AuthViewModel>(
           init: AuthViewModel(),
+          initState: (state){
+            WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+              AppFcm.fcmInstance.getTokenFCM();
+            });
+          },
           builder: (logic) {
         return Column(
           children: [

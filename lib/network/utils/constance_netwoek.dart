@@ -18,6 +18,8 @@ abstract class ConstanceNetwork {
   static String emailKey = "email";
   static String passwordConfirmKey = "password_confirm";
   static String passwordNewKey = "password_new";
+  static String fcmToken = "fcm_token";
+
   //this for auth keys
   static String code = 'code';
   //this for account verify keys
@@ -60,6 +62,8 @@ abstract class ConstanceNetwork {
   static String confirmAccount = "confirm_verifi_code";
   //profile end point
   static String updateProfile = "update_profile";
+
+
 
 
 

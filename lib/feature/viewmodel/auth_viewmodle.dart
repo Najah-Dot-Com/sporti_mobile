@@ -47,7 +47,8 @@ class AuthViewModel extends GetxController {
       TextEditingController passwordController) {
     Map<String, dynamic> map = {
       ConstanceNetwork.userNameKey: userNameController.text.toString(),
-      ConstanceNetwork.passwordKey: passwordController.text.toString()
+      ConstanceNetwork.passwordKey: passwordController.text.toString(),
+      ConstanceNetwork.fcmToken: SharedPref.instance.getFCMToken().toString(),
     };
     _signIn(map);
   }

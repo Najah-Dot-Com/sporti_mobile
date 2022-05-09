@@ -19,10 +19,6 @@ class AuthFeature {
       Logger().d("if ${appResponse.toJson()}");
       return UserData.fromJson(appResponse.result ?? {});
     } else {
-      snackError(
-          "",
-          appResponse.message ??
-              "" /*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return UserData.fromJson(appResponse.result ?? {});
     }
@@ -37,10 +33,6 @@ class AuthFeature {
       Logger().d("if ${appResponse.toJson()}");
       return UserData.fromJson(appResponse.result ?? {});
     } else {
-      snackError(
-          "",
-          appResponse.message ??
-              "" /*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return UserData.fromJson(appResponse.result ?? {});
     }
@@ -53,10 +45,6 @@ class AuthFeature {
       Logger().d("if ${appResponse.toJson()}");
       return appResponse;
     } else {
-      snackError(
-          "",
-          appResponse.message ??
-              "" /*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return appResponse;
     }
@@ -71,11 +59,6 @@ class AuthFeature {
       Logger().d("if ${appResponse.toJson()}");
       return appResponse;
     } else {
-      snackError(
-          "",
-          appResponse.message ??
-              "" /*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
-      snackError("", appResponse.message ?? appResponse.message ?? "");
       Logger().d("else ${appResponse.toJson()}");
       return appResponse;
     }
@@ -91,7 +74,6 @@ class AuthFeature {
       Logger().d("if ${appResponse.toJson()}");
       return appResponse;
     } else {
-      snackError("", appResponse.message ?? appResponse.message ?? "");
       Logger().d("else ${appResponse.toJson()}");
       return appResponse;
     }
@@ -107,7 +89,6 @@ class AuthFeature {
       Logger().d("if ${appResponse.toJson()}");
       return appResponse;
     } else {
-      snackError("", appResponse.message ?? "");
       Logger().d("else ${appResponse.toJson()}");
       return appResponse;
     }
@@ -123,7 +104,6 @@ class AuthFeature {
       Logger().d("if ${appResponse.toJson()}");
       return appResponse;
     } else {
-      snackError("", appResponse.message ?? appResponse.message ?? "");
       Logger().d("else ${appResponse.toJson()}");
       return appResponse;
     }
@@ -139,7 +119,6 @@ class AuthFeature {
       Logger().d("if ${appResponse.toJson()}");
       return appResponse;
     } else {
-      snackError("", appResponse.message ?? "");
       Logger().d("else ${appResponse.toJson()}");
       return appResponse;
     }
@@ -153,10 +132,6 @@ class AuthFeature {
       Logger().d("if ${appResponse.toJson()}");
       return appResponse;
     } else {
-      snackError(
-          "",
-          appResponse.message ??
-              "" /*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return appResponse;
     }
@@ -171,10 +146,6 @@ class AuthFeature {
       Logger().d("if ${appResponse.toJson()}");
       return appResponse;
     } else {
-      // snackError(
-      //     "",
-      //     appResponse.message ??
-      //         "" /*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return appResponse;
     }

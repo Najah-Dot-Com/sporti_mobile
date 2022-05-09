@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:country_code_picker/country_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
+import 'package:sporti/fcm/app_fcm.dart';
 import 'package:sporti/feature/view/views/auth_splash/auth_splash_view.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
@@ -20,6 +22,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPref.instance.init();
   portraitOrientation();
+  await Firebase.initializeApp();
+  await AppFcm.fcmInstance.init();
+  await AppFcm.fcmInstance.getTokenFCM();
   HttpOverrides.global = MyHttpOverrides();
   DioManagerClass.getInstance.init();
   runApp(MyApp());
