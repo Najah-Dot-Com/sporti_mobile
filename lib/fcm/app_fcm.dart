@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:logger/logger.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
+//class of app notifications
 class AppFcm {
   AppFcm._();
   static final AppFcm fcmInstance = AppFcm._();
