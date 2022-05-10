@@ -19,6 +19,7 @@ abstract class ConstanceNetwork {
   static String passwordConfirmKey = "password_confirm";
   static String passwordNewKey = "password_new";
   static String fcmToken = "fcm_token";
+  static String notifyType = "notifiy_type";
 
   //this for auth keys
   static String code = 'code';

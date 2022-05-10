@@ -2,13 +2,19 @@
 
 import 'dart:io';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 
 import 'package:logger/logger.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:sporti/feature/model/exercises_package_data.dart';
+import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
+import 'package:sporti/feature/view/views/home_page/widget/home_page_tab.dart';
+import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
+import 'package:sporti/network/utils/constance_netwoek.dart';
+import 'package:sporti/util/constance.dart';
 import 'package:sporti/util/sh_util.dart';
 
 class AppFcm {
@@ -20,19 +26,18 @@ class AppFcm {
     configuration();
     registerNotification();
     getTokenFCM();
-
   }
 
   ValueNotifier<int> notificationCounterValueNotifer = ValueNotifier(0);
   ValueNotifier<bool> isChatPageOpen = ValueNotifier(false);
   ValueNotifier<String> userChatId = ValueNotifier("");
   MethodChannel platform =
-  const MethodChannel('dexterx.dev/flutter_local_notifications_example');
+      const MethodChannel('dexterx.dev/flutter_local_notifications_example');
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   RemoteMessage messages = RemoteMessage();
 
@@ -55,32 +60,32 @@ class AppFcm {
 
   configuration() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('drawable/icons_app');
+        AndroidInitializationSettings('drawable/icons_app');
 
     final IOSInitializationSettings initializationSettingsIOS =
-    IOSInitializationSettings(
+        IOSInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
     );
 
     final MacOSInitializationSettings initializationSettingsMacOS =
-    MacOSInitializationSettings(
+        MacOSInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
     );
 
     final InitializationSettings initializationSettings =
-    InitializationSettings(
-        android: initializationSettingsAndroid,
-        iOS: initializationSettingsIOS,
-        macOS: initializationSettingsMacOS);
+        InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsIOS,
+            macOS: initializationSettingsMacOS);
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: selectNotification);
     final notificationAppLaunchDetails =
-    await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+        await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
     if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
       await selectNotification(notificationAppLaunchDetails?.payload);
     }
@@ -90,8 +95,6 @@ class AppFcm {
     try {
       // RemoteMessage message = messages;
       goToOrderPage(messages.data);
-
-
     } catch (e) {
       print(e);
       Logger().d(e);
@@ -111,7 +114,7 @@ class AppFcm {
 
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
     /// Update the iOS foreground notification presentation options to allow
@@ -130,55 +133,60 @@ class AppFcm {
           "android_ ${message.data}  ${message.notification?.android.toString().toString()}");
       var android = message.data;
 
-        messages = message;
-        Logger().e("android $android  \n ios ${notification.title}");
-        //todo this for update ui when recive message
-        updatePages(message);
-        flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              iOS: IOSNotificationDetails(
-                presentAlert: true,
-                presentBadge: true,
-                presentSound: true,
-                /* subtitle: message.notification.body,*/
-              ),
-              android: AndroidNotificationDetails(
-                  channel.id, channel.name, //channel.description,
-                  enableLights: true,
-                  enableVibration: true,
-                  fullScreenIntent: true,
-                  autoCancel: true,
-                  importance: Importance.max,
-                  priority: Priority.high,
-                  // TODO add a proper drawable resource to android, for now using
-                  //      one that already exists in example app.
-                  color: const Color(0xFF26C3AE)),
+      messages = message;
+      Logger().e("android $android  \n ios ${notification.title}");
+      //todo this for update ui when recive message
+      updatePages(message);
+      flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            iOS: IOSNotificationDetails(
+              presentAlert: true,
+              presentBadge: true,
+              presentSound: true,
+              /* subtitle: message.notification.body,*/
             ),
-            payload: "${message.data}");
+            android: AndroidNotificationDetails(
+                channel.id, channel.name, //channel.description,
+                enableLights: true,
+                enableVibration: true,
+                fullScreenIntent: true,
+                autoCancel: true,
+                importance: Importance.max,
+                priority: Priority.high,
+                // TODO add a proper drawable resource to android, for now using
+                //      one that already exists in example app.
+                color: const Color(0xFF26C3AE)),
+          ),
+          payload: "${message.data}");
     });
   }
 
   getTokenFCM() async {
     await _firebaseMessaging.getToken().then((token) {
       Logger().i("fcmToken:$token");
-       SharedPref.instance.setFCMToken(token.toString());
+      SharedPref.instance.setFCMToken(token.toString());
     }).catchError((err) {
       Logger().d(err);
     });
   }
-
-
+  static final HomeViewModel _homeViewModel = Get.put<HomeViewModel>(
+      HomeViewModel());
   static void goToOrderPage(Map<String, dynamic> map) {
-
+    //check type of notify
+    if (map[ConstanceNetwork.notifyType] == Constance.newExersiceType) {
+      //call data befor go to page
+      _homeViewModel.allPackagesExercises();
+      _homeViewModel.allPackagesTopExercises();
+      //go to HomePage
+      _homeViewModel.onTabChange(0);
+    }
   }
 
-
-
   //subscribe
-  fcmSubscribe()async{
+  fcmSubscribe() async {
     // if(FirebaseAuth.instance.currentUser != null && FirebaseAuth.instance.currentUser?.uid != null){
     //   final UserController _userController = Get.put(UserController());
     //   if(_userController.myUser.value.gendervalue == "رجل") {
