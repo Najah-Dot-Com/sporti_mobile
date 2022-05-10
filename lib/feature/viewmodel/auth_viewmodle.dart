@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +7,6 @@ import 'package:sporti/feature/model/user_data.dart';
 import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
 import 'package:sporti/feature/view/views/auth_resetpassword/auth_resetpassword_view.dart';
 import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
-import 'package:sporti/feature/view/views/profile/profile_view.dart';
 import 'package:sporti/network/api/feature/auth_feature.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_color.dart';
@@ -16,8 +14,6 @@ import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
-
-import '../../network/api/dio_manager/dio_manage_class.dart';
 import '../view/views/account_otp/account_otp_view.dart';
 import '../view/views/account_success_virefy/account_success_virefy_view.dart';
 import '../view/views/auth_forget_otp/auth_otp_view.dart';
@@ -79,15 +75,18 @@ class AuthViewModel extends GetxController {
         } else {
           isLoading = false;
           update();
+          // snackError("", AppStrings.txtBadLogin.tr);
         }
       }).catchError((onError) {
         //handle error from value
+        isLoading = false;
         snackError("", onError.toString());
         Logger().d(onError.toString());
-        isLoading = false;
+        // isLoading = false;
         update();
       });
     } catch (e) {
+      snackError("", e.toString());
       Logger().d(e.toString());
       isLoading = false;
       update();
@@ -135,7 +134,7 @@ class AuthViewModel extends GetxController {
         //handle object from value || [save in sharedPreferences]
         Logger().d(value.toJson());
         if (value.token != null) {
-          //TODO: if verification and success go to home page
+          //if verification and success go to home page
           await SharedPref.instance.setUserLogin(true);
           Get.offAll(const HomePageView());
           isLoading = false;
@@ -146,7 +145,7 @@ class AuthViewModel extends GetxController {
         }
       }).catchError((onError) {
         //handle error from value
-        snackError("", onError.toString());
+        snackError("Error", onError.toString());
         Logger().d(onError.toString());
         isLoading = false;
         update();
