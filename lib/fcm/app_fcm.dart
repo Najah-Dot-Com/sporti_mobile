@@ -9,13 +9,17 @@ import 'package:get/get.dart';
 
 import 'package:logger/logger.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:sporti/feature/model/exercise_details_data.dart';
 import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
 import 'package:sporti/feature/view/views/home_page/widget/home_page_tab.dart';
+import 'package:sporti/feature/viewmodel/details_exercise_view_model.dart';
 import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/constance.dart';
 import 'package:sporti/util/sh_util.dart';
+
+import '../feature/view/views/categoriy_exercise_details/categoriy_exercise_details_view.dart';
 
 class AppFcm {
   AppFcm._();
@@ -172,15 +176,44 @@ class AppFcm {
       Logger().d(err);
     });
   }
-  static final HomeViewModel _homeViewModel = Get.put<HomeViewModel>(
-      HomeViewModel());
-  static void goToOrderPage(Map<String, dynamic> map) {
+
+  static final DetailsExerciseViewModel _detailsExerciseViewModel =
+      Get.put<DetailsExerciseViewModel>(DetailsExerciseViewModel());
+  static final HomeViewModel _homeViewModel =
+      Get.put<HomeViewModel>(HomeViewModel());
+  static void goToOrderPage(Map<String, dynamic> map) async{
+    // ExerciseDetailsData? exerciseDetailsData = ExerciseDetailsData(
+    //   description: map['description']
+    // ); exerciseDetailsData
+    // var data = _detailsExerciseViewModel.exerciseDetailsData;
     //check type of notify
-    if (map[ConstanceNetwork.notifyType] == Constance.newExersiceType) {
+     var exdata = ExercisesData(
+        id: map["id"],
+        parentId: map["parent_id"],
+        isDone: map["isDone"],
+        isRetuen: map["isRetuen"],
+        title: map["title"],
+        description: map["description"],
+        time: map["time"],
+        countExercises:
+           map["countExercises"],
+        isFavorite: map["isFavorite"],
+        image: map["image"],
+        imageSingleSlide: null,
+        returnDate: map["return_date"],
+        returnTime: map["return_time"],
+        updatedAt: map["updated_at"],
+        countFinish: map["countFinish"],
+      );
+    if (map[ConstanceNetwork.notifyType] == Constance.newExersiceType)  {
       //call data befor go to page
-      _homeViewModel.allPackagesExercises();
-      _homeViewModel.allPackagesTopExercises();
+      // _homeViewModel.allPackagesExercises();
+      // _homeViewModel.allPackagesTopExercises();
+      await _detailsExerciseViewModel.getExerciseDetails(map['id']);
       //go to HomePage
+      Get.to(() =>CategoriyExerciseDetailsView(packageDetails: exdata));
+      // _homeViewModel.onTabChange(0);
+    }else{
       _homeViewModel.onTabChange(0);
     }
   }
