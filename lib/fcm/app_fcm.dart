@@ -18,7 +18,6 @@ import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/constance.dart';
 import 'package:sporti/util/sh_util.dart';
-
 import '../feature/view/views/categoriy_exercise_details/categoriy_exercise_details_view.dart';
 
 class AppFcm {
@@ -48,7 +47,7 @@ class AppFcm {
       Get.put<DetailsExerciseViewModel>(DetailsExerciseViewModel());
   static final HomeViewModel _homeViewModel =
       Get.put<HomeViewModel>(HomeViewModel());
-      
+
   AndroidNotificationChannel channel = const AndroidNotificationChannel(
     'com.naja7.sporti', // id
     'com.naja7.sporti', // title
@@ -180,8 +179,8 @@ class AppFcm {
     });
   }
 
-
-  static void goToOrderPage(Map<String, dynamic> map) async {
+  static void goToOrderPage(Map<String, dynamic> map,
+      {bool? isFromTerminate}) async {
     var packageDetails = ExercisesData(
       id: map["id"],
     );
@@ -197,15 +196,25 @@ class AppFcm {
     }
   }
 
-  //subscribe
-  fcmSubscribe() async {
-    // if(FirebaseAuth.instance.currentUser != null && FirebaseAuth.instance.currentUser?.uid != null){
-    //   final UserController _userController = Get.put(UserController());
-    //   if(_userController.myUser.value.gendervalue == "رجل") {
-    //     _firebaseMessaging.subscribeToTopic('man');
-    //   }else{
-    //     _firebaseMessaging.subscribeToTopic('woman');
-    //   }
-    // }
+  Future<void> setupInteractedMessage() async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+    // If the message also contains a data property with a "type" of "chat",
+    // navigate to a chat screen
+    if (initialMessage != null) {
+      Logger().d("remote message $initialMessage");
+      _handleMessage(initialMessage);
+    }
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
+  void _handleMessage(RemoteMessage message) {
+    print("MSG_BUG _handleMessage");
+    AppFcm.goToOrderPage(message.data, isFromTerminate: true);
   }
 }
