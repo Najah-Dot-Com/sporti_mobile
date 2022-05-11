@@ -44,7 +44,11 @@ class AppFcm {
       FlutterLocalNotificationsPlugin();
 
   RemoteMessage messages = RemoteMessage();
-
+  static final DetailsExerciseViewModel _detailsExerciseViewModel =
+      Get.put<DetailsExerciseViewModel>(DetailsExerciseViewModel());
+  static final HomeViewModel _homeViewModel =
+      Get.put<HomeViewModel>(HomeViewModel());
+      
   AndroidNotificationChannel channel = const AndroidNotificationChannel(
     'com.naja7.sporti', // id
     'com.naja7.sporti', // title
@@ -55,7 +59,8 @@ class AppFcm {
 
   void updatePages(RemoteMessage message) async {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      // Get.put(UserController()).getPeopleHeLikeMeNotification();
+      _homeViewModel.exercisesListAll;
+      _homeViewModel.exercisesListRecentlyAll;
     });
     Future.delayed(Duration(seconds: 3)).then((value) {
       //flutterLocalNotificationsPlugin.cancelAll();
@@ -129,14 +134,12 @@ class AppFcm {
       badge: true,
       sound: true,
     );
-
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification notification = message.notification!;
       //todo this for add badge for app
       Logger().e(
           "android_ ${message.data}  ${message.notification?.android.toString().toString()}");
       var android = message.data;
-
       messages = message;
       Logger().e("android $android  \n ios ${notification.title}");
       //todo this for update ui when recive message
@@ -177,44 +180,20 @@ class AppFcm {
     });
   }
 
-  static final DetailsExerciseViewModel _detailsExerciseViewModel =
-      Get.put<DetailsExerciseViewModel>(DetailsExerciseViewModel());
-  static final HomeViewModel _homeViewModel =
-      Get.put<HomeViewModel>(HomeViewModel());
-  static void goToOrderPage(Map<String, dynamic> map) async{
-    // ExerciseDetailsData? exerciseDetailsData = ExerciseDetailsData(
-    //   description: map['description']
-    // ); exerciseDetailsData
-    // var data = _detailsExerciseViewModel.exerciseDetailsData;
-    //check type of notify
-     var exdata = ExercisesData(
-        id: map["id"],
-        parentId: map["parent_id"],
-        isDone: map["isDone"],
-        isRetuen: map["isRetuen"],
-        title: map["title"],
-        description: map["description"],
-        time: map["time"],
-        countExercises:
-           map["countExercises"],
-        isFavorite: map["isFavorite"],
-        image: map["image"],
-        imageSingleSlide: null,
-        returnDate: map["return_date"],
-        returnTime: map["return_time"],
-        updatedAt: map["updated_at"],
-        countFinish: map["countFinish"],
-      );
-    if (map[ConstanceNetwork.notifyType] == Constance.newExersiceType)  {
-      //call data befor go to page
-      // _homeViewModel.allPackagesExercises();
-      // _homeViewModel.allPackagesTopExercises();
-      await _detailsExerciseViewModel.getExerciseDetails(map['id']);
-      //go to HomePage
-      Get.to(() =>CategoriyExerciseDetailsView(packageDetails: exdata));
-      // _homeViewModel.onTabChange(0);
-    }else{
-      _homeViewModel.onTabChange(0);
+
+  static void goToOrderPage(Map<String, dynamic> map) async {
+    var packageDetails = ExercisesData(
+      id: map["id"],
+    );
+    try {
+      if (map[ConstanceNetwork.notifyType] == Constance.newExersiceType) {
+        Get.to(
+            () => CategoriyExerciseDetailsView(packageDetails: packageDetails));
+      } else {
+        _homeViewModel.onTabChange(0);
+      }
+    } on Exception catch (e) {
+      Logger().i('goToOrderPage Error', e.toString());
     }
   }
 

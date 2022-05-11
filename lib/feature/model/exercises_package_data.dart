@@ -18,7 +18,7 @@ class ExercisesData {
       this.isRetuen = false,
       this.countFinish = 0});
 
-  int? id;
+  dynamic id;
   int? parentId;
   int? countFinish;
   bool? isDone;
