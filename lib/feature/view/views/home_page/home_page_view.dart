@@ -33,7 +33,7 @@ class _HomePageViewState extends State<HomePageView>
 
   Widget bottomNavBar(ThemeData themeData) => const BottomNavigationBarWidget();
 
-    static final List<Widget> bottomNavBarList = [
+     final List<Widget> bottomNavBarList = [
     const HomePageTab(), //home page
     const CategoriesMyWorkListView(), //my work
     const NotificationsView(), //notifications
