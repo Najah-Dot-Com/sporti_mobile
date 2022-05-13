@@ -63,6 +63,9 @@ abstract class ConstanceNetwork {
   static String confirmAccount = "confirm_verifi_code";
   //profile end point
   static String updateProfile = "update_profile";
+  
+  //Notifications end point
+  static String allNotificationse = "get_notification";
 
 
 

@@ -7,9 +7,13 @@ import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/app_style.dart';
 
-class NotificationsView extends StatelessWidget {
-  const NotificationsView({Key? key}) : super(key: key);
+import '../../../viewmodel/notification_viewmodel.dart';
+import '../categoriy_exercise_details/widget/page_shimmer_widget.dart';
 
+class NotificationsView extends StatelessWidget {
+  NotificationsView({Key? key}) : super(key: key);
+  // final NotificationViewModel _notificationViewModel =
+  //     Get.put(NotificationViewModel());
   PreferredSizeWidget myAppbar(ThemeData themeData) => AppBar(
         backgroundColor: AppColor.white,
         centerTitle: true,
@@ -32,20 +36,30 @@ class NotificationsView extends StatelessWidget {
     var themeData = Theme.of(context);
     return Scaffold(
       appBar: myAppbar(themeData),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSize.s28),
-        child: ListView(
-          shrinkWrap: true,
-          children: const [
-            SizedBox(height: AppSize.s28,),
-            NotificationItemWidget(),
-            NotificationItemWidget(),
-            NotificationItemWidget(),
-            NotificationItemWidget(),
-            NotificationItemWidget(),
-          ],
-        ),
-      ),
+      body: GetBuilder<NotificationViewModel>(
+          init: NotificationViewModel(),
+          initState: (state) {
+            WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+              state.controller?.allNotifications();
+            });
+          },
+          builder: (logic) {
+            if (logic.isLoading) {
+              return const PageShimmerWidget();
+            }
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: AppPadding.p16,horizontal: AppPadding.p16),
+              child: ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: AppSize.s10,
+                ),
+                itemCount: logic.notificatiosDataList.length,
+                itemBuilder: (context, index) => NotificationItemWidget(
+                    data: logic.notificatiosDataList[index]),
+                shrinkWrap: true,
+              ),
+            );
+          }),
     );
   }
 }

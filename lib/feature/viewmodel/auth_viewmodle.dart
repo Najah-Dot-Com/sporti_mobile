@@ -65,9 +65,10 @@ class AuthViewModel extends GetxController {
       update();
       await AuthFeature.getInstance.loginUser(map).then((value) async {
         //handle object from value || [save in sharedPreferences]
-        Logger().d(value.toJson());
+        // Logger().d(value.toJson());
+        Logger().d("user token", value.token);
         if (value.token != null) {
-          //TODO: if verification and success go to home page
+          //TODO : if verification and success go to home page
           await SharedPref.instance.setUserLogin(true);
           Get.offAll(const HomePageView());
           isLoading = false;
@@ -75,7 +76,6 @@ class AuthViewModel extends GetxController {
         } else {
           isLoading = false;
           update();
-          // snackError("", AppStrings.txtBadLogin.tr);
         }
       }).catchError((onError) {
         //handle error from value
@@ -458,8 +458,11 @@ class AuthViewModel extends GetxController {
   }
 
   imgFromCamera() async {
-    XFile? image =
-        await _picker.pickImage(source: ImageSource.camera, imageQuality: 25 , maxWidth: AppSize.s120 , maxHeight: AppSize.s120);
+    XFile? image = await _picker.pickImage(
+        source: ImageSource.camera,
+        imageQuality: 25,
+        maxWidth: AppSize.s120,
+        maxHeight: AppSize.s120);
     if (image != null) {
       filePath = File(image.path);
       update();
@@ -469,8 +472,11 @@ class AuthViewModel extends GetxController {
   }
 
   imgFromGallery() async {
-    XFile? image =
-        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 25 , maxWidth: AppSize.s120 , maxHeight: AppSize.s120);
+    XFile? image = await _picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 25,
+        maxWidth: AppSize.s120,
+        maxHeight: AppSize.s120);
     if (image != null) {
       filePath = File(image.path);
       update();
@@ -515,7 +521,7 @@ class AuthViewModel extends GetxController {
                       textAlign: TextAlign.right,
                     ),
                     onTap: () async {
-                       imgFromGallery();
+                      imgFromGallery();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -524,7 +530,7 @@ class AuthViewModel extends GetxController {
                     title: Text(AppStrings.txtCamera.tr,
                         textAlign: TextAlign.right),
                     onTap: () async {
-                       imgFromCamera();
+                      imgFromCamera();
                       Navigator.of(context).pop();
                     },
                   ),
@@ -540,7 +546,6 @@ class AuthViewModel extends GetxController {
     TextEditingController fullNameController,
     TextEditingController emailController,
   ) {
-
     Map<String, dynamic> map = {
       ConstanceNetwork.fullNameKey: fullNameController.text.toString(),
       ConstanceNetwork.emailKey: emailController.text.toString(),
@@ -562,7 +567,8 @@ class AuthViewModel extends GetxController {
         Logger().d(value.toJson());
         if (value.status) {
           //if success go to ProfileView page
-          SharedPref.instance.setUserDataUpdated(value.toJson()[ConstanceNetwork.resultKey]);
+          SharedPref.instance
+              .setUserDataUpdated(value.toJson()[ConstanceNetwork.resultKey]);
           isLoading = false;
           isDoneUploadImage = true;
           snackSuccess("", value.message);
@@ -588,24 +594,22 @@ class AuthViewModel extends GetxController {
     }
   }
 
-  bool isUpdateBtnEnable(TextEditingController userName ,TextEditingController email ) {
+  bool isUpdateBtnEnable(
+      TextEditingController userName, TextEditingController email) {
     UserData? userData = SharedPref.instance.getUserData();
-    if(filePath != null) {
+    if (filePath != null) {
       return true;
-    }
-    else if ( email .text.isNotEmpty && userData.email != email.text){
+    } else if (email.text.isNotEmpty && userData.email != email.text) {
       return true;
-    }
-    else if (userData.fullname != userName.text ){
+    } else if (userData.fullname != userName.text) {
       return true;
-    }
-    else if(filePath != null && userData.fullname != userName.text){
+    } else if (filePath != null && userData.fullname != userName.text) {
       return true;
-    }
-    else if((filePath != null && userData.fullname != userName.text && userData.email != email.text)) {
+    } else if ((filePath != null &&
+        userData.fullname != userName.text &&
+        userData.email != email.text)) {
       return true;
-    }
-    else{
+    } else {
       return false;
     }
   }

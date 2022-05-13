@@ -46,10 +46,8 @@ class HomeViewModel extends GetxController with GetSingleTickerProviderStateMixi
     }
   }
 
-
-
   //this for all packages
-  Future<void> allPackagesExercises()async{
+  Future<void> allPackagesExercises() async{
     try {
       isLoading = true;
       update();
