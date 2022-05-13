@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+import 'package:sporti/fcm/app_fcm.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/notifications/widget/notification_item.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_strings.dart';
-import 'package:sporti/util/app_style.dart';
-
 import '../../../viewmodel/notification_viewmodel.dart';
 import '../categoriy_exercise_details/widget/page_shimmer_widget.dart';
 
 class NotificationsView extends StatelessWidget {
   NotificationsView({Key? key}) : super(key: key);
+
   // final NotificationViewModel _notificationViewModel =
   //     Get.put(NotificationViewModel());
+
   PreferredSizeWidget myAppbar(ThemeData themeData) => AppBar(
         backgroundColor: AppColor.white,
         centerTitle: true,
@@ -40,7 +42,7 @@ class NotificationsView extends StatelessWidget {
           init: NotificationViewModel(),
           initState: (state) {
             WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-              state.controller?.allNotifications();
+              state.controller?.getAllNotifications();
             });
           },
           builder: (logic) {
@@ -48,18 +50,34 @@ class NotificationsView extends StatelessWidget {
               return const PageShimmerWidget();
             }
             return Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppPadding.p16,horizontal: AppPadding.p16),
+              padding: const EdgeInsets.symmetric(
+                  vertical: AppPadding.p16, horizontal: AppPadding.p16),
               child: ListView.separated(
                 separatorBuilder: (context, index) => const SizedBox(
                   height: AppSize.s10,
                 ),
                 itemCount: logic.notificatiosDataList.length,
-                itemBuilder: (context, index) => NotificationItemWidget(
-                    data: logic.notificatiosDataList[index]),
+                itemBuilder: (context, index) => GestureDetector(
+                  onTap: () {
+                    onClickNotifyItem(logic: logic, index: index);
+                  },
+                  child: NotificationItemWidget(
+                      data: logic.notificatiosDataList[index]),
+                ),
                 shrinkWrap: true,
               ),
             );
           }),
     );
+  }
+
+  onClickNotifyItem({NotificationViewModel? logic, int? index}) {
+    try {
+      logic!.isLoading = true;
+      AppFcm.goToOrderPage(logic.notificatiosDataList[index!].toJson());
+      logic.isLoading = false;
+    } on Exception catch (e) {
+      Logger().d(" AppFcm.goToOrderPage :", e.toString());
+    }
   }
 }

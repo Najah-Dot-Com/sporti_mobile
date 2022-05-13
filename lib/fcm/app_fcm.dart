@@ -1,24 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-
 import 'package:logger/logger.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:sporti/feature/model/exercise_details_data.dart';
 import 'package:sporti/feature/model/exercises_package_data.dart';
-import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
-import 'package:sporti/feature/view/views/home_page/widget/home_page_tab.dart';
 import 'package:sporti/feature/viewmodel/details_exercise_view_model.dart';
 import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/constance.dart';
 import 'package:sporti/util/sh_util.dart';
 import '../feature/view/views/categoriy_exercise_details/categoriy_exercise_details_view.dart';
+import '../feature/viewmodel/notification_viewmodel.dart';
 
 class AppFcm {
   AppFcm._();
@@ -47,6 +42,8 @@ class AppFcm {
       Get.put<DetailsExerciseViewModel>(DetailsExerciseViewModel());
   static final HomeViewModel _homeViewModel =
       Get.put<HomeViewModel>(HomeViewModel());
+  static final NotificationViewModel _notificationsViewModel =
+      Get.put<NotificationViewModel>(NotificationViewModel());
 
   AndroidNotificationChannel channel = const AndroidNotificationChannel(
     'com.naja7.sporti', // id
@@ -60,6 +57,7 @@ class AppFcm {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       _homeViewModel.allPackagesExercises();
       _homeViewModel.allPackagesTopExercises();
+      _notificationsViewModel.getAllNotifications();
     });
     Future.delayed(Duration(seconds: 3)).then((value) {
       //flutterLocalNotificationsPlugin.cancelAll();

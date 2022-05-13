@@ -13,7 +13,7 @@ class NotificationViewModel extends GetxController {
   @override
   onInit() async {
     super.onInit();
-    allNotifications();
+    getAllNotifications();
   }
 
   @override
@@ -28,7 +28,7 @@ class NotificationViewModel extends GetxController {
     super.onClose();
   }
 
-  Future<void> allNotifications() async {
+  Future<void> getAllNotifications() async {
     try {
       isLoading = true;
       update();
@@ -43,13 +43,13 @@ class NotificationViewModel extends GetxController {
         }
       }).catchError((onError) {
         //handle error from value
-        snackError("allNotifications catchError", onError.toString());
+        snackError("getAllNotifications model catchError", onError.toString());
         Logger().d(onError.toString());
         isLoading = false;
         update();
       });
     } catch (e) {
-      Logger().d("allNotifications  catch", e.toString());
+      Logger().d("getAllNotifications model  catch", e.toString());
       isLoading = false;
       update();
     }
