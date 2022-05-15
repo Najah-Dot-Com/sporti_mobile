@@ -46,6 +46,8 @@ class AuthViewModel extends GetxController {
       ConstanceNetwork.passwordKey: passwordController.text.toString(),
       ConstanceNetwork.fcmToken: SharedPref.instance.getFCMToken().toString(),
     };
+    SharedPref.instance.setUserName(userNameController.text.toString());
+    SharedPref.instance.setPassword(passwordController.text.toString());
     _signIn(map);
   }
 
@@ -122,6 +124,8 @@ class AuthViewModel extends GetxController {
       ConstanceNetwork.emailKey: emailController.text.toString(),
       ConstanceNetwork.fullNameKey: fullNameController.text.toString(),
     };
+    SharedPref.instance.setUserName(userNameController.text.toString());
+    SharedPref.instance.setPassword(passwordController.text.toString());
     _signUp(map);
   }
 
