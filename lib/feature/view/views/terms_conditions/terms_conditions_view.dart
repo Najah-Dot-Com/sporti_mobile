@@ -10,9 +10,9 @@ import '../../../viewmodel/privacyPolicy_viewmodel.dart';
 
 class TermsConditionView extends StatelessWidget {
   TermsConditionView({Key? key}) : super(key: key);
-  final PrivacyPolicyViewModel _privacyAndTerms =
-      Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel(),
-          permanent: true);
+  // final PrivacyPolicyViewModel _privacyAndTerms =
+  //     Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel(),
+  //         permanent: true);
   PreferredSizeWidget myAppbar(ThemeData themeData) => AppBar(
         backgroundColor: AppColor.white,
         centerTitle: true,
@@ -44,19 +44,19 @@ class TermsConditionView extends StatelessWidget {
                   state.controller!.getPrivacyAndTermsPages();
                 });
               },
-              builder: (context) {
+              builder: (logic) {
                 return Column(
                   children: [
                     ListTile(
                       title: HtmlWidget(
-                        "${_privacyAndTerms.termsTitle}",
+                        "${logic.termsTitle}",
                         textStyle: themeData.textTheme.headline1
                             ?.copyWith(color: AppColor.black),
                       ),
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: AppPadding.p14, horizontal: AppPadding.p14),
                       subtitle: HtmlWidget(
-                        "${_privacyAndTerms.termsDetails}",
+                        "${logic.termsDetails}",
                         textStyle: themeData.textTheme.headline2
                             ?.copyWith(color: AppColor.black),
                       ),

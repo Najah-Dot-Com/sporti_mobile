@@ -5,15 +5,16 @@ import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_strings.dart';
+// import 'package:sporti/util/sh_util.dart';
 import '../../../viewmodel/privacyPolicy_viewmodel.dart';
 
 class PrivacyPolicyWidget extends StatelessWidget {
   PrivacyPolicyWidget({Key? key}) : super(key: key);
   // final HomeViewModel _homeViewModel = Get.put<HomeViewModel>(HomeViewModel());
-  final PrivacyPolicyViewModel _privacyAndTerms =
-      Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel(),
-          permanent: true);
-
+  // final PrivacyPolicyViewModel _privacyAndTerms =
+  //     Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel(),
+  //         permanent: true);
+  // final SharedPref _pref = SharedPref();
   PreferredSizeWidget myAppbar(ThemeData themeData) => AppBar(
         backgroundColor: AppColor.white,
         centerTitle: true,
@@ -46,26 +47,30 @@ class PrivacyPolicyWidget extends StatelessWidget {
                   state.controller!.getPrivacyAndTermsPages();
                 });
               },
-              builder: (context) {
-                return Column(
+              builder: (logic) {
+                return 
+            Column(
                   children: [
                     ListTile(
                       title: HtmlWidget(
-                        "${_privacyAndTerms.privacyTitle}",
+                        "${logic.privacyTitle}",
+                        // _pref.getPolicyTitle(),
                         textStyle: themeData.textTheme.headline1
                             ?.copyWith(color: AppColor.black),
                       ),
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: AppPadding.p14, horizontal: AppPadding.p14),
                       subtitle: HtmlWidget(
-                        "${_privacyAndTerms.privacyDetails}",
+                        "${logic.privacyDetails}",
+                      // _pref.getPolicyDetails(),
                         textStyle: themeData.textTheme.headline2
                             ?.copyWith(color: AppColor.black),
                       ),
                     ),
                   ],
                 );
-              }),
+             }
+             ),
         ),
       ),
     );

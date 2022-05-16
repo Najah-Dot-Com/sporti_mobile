@@ -12,6 +12,7 @@ import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/app_theme.dart';
 import 'package:sporti/util/sh_util.dart';
+import 'feature/viewmodel/privacyPolicy_viewmodel.dart';
 import 'network/api/dio_manager/dio_manage_class.dart';
 import 'util/app_shaerd_data.dart';
 import 'util/localization/localization_service.dart';
@@ -25,6 +26,9 @@ void main() async {
   await AppFcm.fcmInstance.getTokenFCM();
   WidgetsBinding.instance?.addPostFrameCallback((timeStamp)async{
       await AppFcm.fcmInstance.setupInteractedMessage();
+      PrivacyPolicyViewModel _privacyAndTerms =
+      Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel());
+      await _privacyAndTerms.getPrivacyAndTermsPages();
     });
   HttpOverrides.global = MyHttpOverrides();
   DioManagerClass.getInstance.init();

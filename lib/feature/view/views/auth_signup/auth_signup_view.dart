@@ -296,14 +296,14 @@ class SignupView extends StatelessWidget {
 
   final PrivacyPolicyViewModel _privacyAndTerms =
       Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel(),);
-  void _onPrivacyClick() {
-    _privacyAndTerms.getPrivacyAndTermsPages();
-    Get.to(PrivacyPolicyWidget());
-  }
 
+  void _onPrivacyClick() {
+    // _privacyAndTerms.getPrivacyAndTermsPages();
+    Get.to(()=>PrivacyPolicyWidget());
+  }
   void _onTermsClick() {
-    _privacyAndTerms.getPrivacyAndTermsPages();
-    Get.to(TermsConditionView());
+    // _privacyAndTerms.getPrivacyAndTermsPages();
+    Get.to(()=>TermsConditionView());
   }
 
 

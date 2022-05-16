@@ -22,13 +22,42 @@ class SharedPref {
   final String userDataKey = "userData";
   final String userBalanceKey = "userBalanceKey";
   final String loginKey = "login";
+  final String termsTitlekey = "login";
+  final String termsDetailskey = "login";
+  final String policyTitlekey = "login";
+  final String policyDetailskey = "login";
+
 
   static SharedPreferences? _prefs;
 
   init() async {
     _prefs = await SharedPreferences?.getInstance();
   }
-
+  setPolicyAndTermsString({String? termsTitle,String? termsDetails,String? policyTitle,String? policyDetails}) async {
+    try {
+      _prefs?.setString(termsTitlekey, termsTitle??"");
+      _prefs?.setString(termsDetailskey, termsDetails??"");
+      _prefs?.setString(policyTitlekey, policyTitle??"");
+      _prefs?.setString(policyDetailskey, policyDetails??"");
+    } catch (e) {
+      printError(info: e.toString());
+    }
+  }
+  String getFCMToken() {
+    return _prefs!.getString(fcmKey) ?? "";
+  }
+  String getPolicyTitle() {
+      return _prefs!.getString(policyTitlekey) ?? "";
+    }
+  String getPolicyDetails() {
+      return _prefs!.getString(policyDetailskey) ?? "";
+    }
+  String getTermsTitle() {
+      return _prefs!.getString(termsTitlekey) ?? "";
+    }
+  String getTermsDetails() {
+      return _prefs!.getString(termsDetailskey) ?? "";
+    }
   setFCMToken(String fcmToken) async {
     try {
       _prefs?.setString(fcmKey, fcmToken);
@@ -36,10 +65,8 @@ class SharedPref {
       printError(info: e.toString());
     }
   }
-
-  String getFCMToken() {
-    return _prefs!.getString(fcmKey) ?? "";
-  }
+   
+ 
 
   Future<void> setAppLang(String lang) async {
     try {

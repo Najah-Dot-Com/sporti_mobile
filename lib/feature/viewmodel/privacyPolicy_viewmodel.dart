@@ -2,6 +2,8 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:logger/logger.dart';
 import 'package:sporti/network/api/feature/privacyPolicy_feature.dart';
 
+import '../../util/sh_util.dart';
+
 class PrivacyPolicyViewModel extends GetxController {
   bool isLoading = false;
   String? privacyDetails = "";
@@ -12,14 +14,14 @@ class PrivacyPolicyViewModel extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getPrivacyAndTermsPages();
+    // getPrivacyAndTermsPages();
   }
 
   Future<void> getPrivacyAndTermsPages() async {
     try {
       isLoading = true;
       update();
-      await PrivacyPolicyFeature.getInstance.getPrivacyPages().then((value) {
+      await PrivacyPolicyFeature.getInstance.getPrivacyPages().then((value) async{
         //check list if not empty do or don't do.
         if (value != null && value.isNotEmpty) {
           //for privacy policy data.
@@ -28,6 +30,7 @@ class PrivacyPolicyViewModel extends GetxController {
           //for conditions and terms data.
           termsDetails = value[1].details;
           termsTitle = value[1].title;
+          await SharedPref.instance.setPolicyAndTermsString(termsTitle:termsTitle, termsDetails:termsDetails, policyTitle:privacyTitle, policyDetails:privacyDetails);
           isLoading = false;
           update();
         }

@@ -240,13 +240,13 @@ class LoginView extends StatelessWidget {
       Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel(),permanent: true);
   
   void _onPrivacyClick() {
-    _privacyAndTerms.getPrivacyAndTermsPages();
+    // _privacyAndTerms.getPrivacyAndTermsPages();
     Get.to( ()  => PrivacyPolicyWidget());
   }
 
   void _onTermsClick() {
-    _privacyAndTerms.getPrivacyAndTermsPages();
-    Get.to(TermsConditionView());
+    // _privacyAndTerms.getPrivacyAndTermsPages();
+    Get.to(()=>TermsConditionView());
   }
 
   _onSignInClick(AuthViewModel logic) {

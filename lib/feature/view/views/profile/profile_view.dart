@@ -309,17 +309,16 @@ class ProfileView extends StatelessWidget {
   void _verifyAccount() {
     Get.to(() => AccountVerifyView());
   }
-
+final PrivacyPolicyViewModel _privacyAndTerms =
+      Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel(),/* permanent: true */);
+  
   void _termsAndCondition() {
-    _privacyAndTerms.getPrivacyAndTermsPages();
+    // _privacyAndTerms.getPrivacyAndTermsPages();
     Get.to(() =>  TermsConditionView());
   }
-
-  final PrivacyPolicyViewModel _privacyAndTerms =
-      Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel(),permanent: true);
   void _onPrivacyPolicy() {
-    _privacyAndTerms.getPrivacyAndTermsPages();
-    Get.to( ()  => PrivacyPolicyWidget(),preventDuplicates: true);
+    // _privacyAndTerms.getPrivacyAndTermsPages();
+    Get.to( ()  => PrivacyPolicyWidget(),);
   }
 
   void _onLogout() {
