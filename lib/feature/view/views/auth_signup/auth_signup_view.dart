@@ -13,6 +13,7 @@ import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
+import '../../../viewmodel/privacyPolicy_viewmodel.dart';
 import '../../appwidget/authwellcomeRow.dart';
 import '../../appwidget/sportiTextField.dart';
 import 'widget/checkBoxOfTerms.dart';
@@ -293,12 +294,16 @@ class SignupView extends StatelessWidget {
     );
   }
 
+  final PrivacyPolicyViewModel _privacyAndTerms =
+      Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel(),);
   void _onPrivacyClick() {
-    Get.to(const PrivacyPolicyWidget());
+    _privacyAndTerms.getPrivacyAndTermsPages();
+    Get.to(PrivacyPolicyWidget());
   }
 
   void _onTermsClick() {
-    Get.to(const TermsConditionView());
+    _privacyAndTerms.getPrivacyAndTermsPages();
+    Get.to(TermsConditionView());
   }
 
 

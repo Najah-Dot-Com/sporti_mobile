@@ -1,11 +1,7 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:sporti/network/api/dio_manager/dio_manage_class.dart';
-import 'package:sporti/network/utils/constance_netwoek.dart';
-import 'package:sporti/util/sh_util.dart';
-
 import 'app_response.dart';
 
 class ExercisesUseCase{
@@ -30,7 +26,7 @@ class ExercisesUseCase{
   }
 
   //todo this is for allTopExercises request
-  Future<AppResponse> allTopExercises({var url, var header, }) async{
+  Future<AppResponse> allTopExercises({var url, var header,}) async{
     try {
       var response = await DioManagerClass.getInstance
           .dioGetMethod(url: url, header: header ,);

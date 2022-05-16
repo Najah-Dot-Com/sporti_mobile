@@ -37,7 +37,7 @@ class _HomePageViewState extends State<HomePageView>
     const HomePageTab(), //home page
     const CategoriesMyWorkListView(), //my work
     NotificationsView(), //notifications
-    const ProfileView(), //profile
+    ProfileView(), //profile
   ];
 
   final HomeViewModel _homeViewModel = Get.put<HomeViewModel>(HomeViewModel());

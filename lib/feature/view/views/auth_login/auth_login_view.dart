@@ -15,6 +15,7 @@ import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
+import '../../../viewmodel/privacyPolicy_viewmodel.dart';
 import '../../appwidget/authwellcomeRow.dart';
 import '../../appwidget/custome_text_view.dart';
 import '../../appwidget/sportiTextField.dart';
@@ -235,12 +236,17 @@ class LoginView extends StatelessWidget {
     Get.to(ForgetPasswordView());
   }
 
+  final PrivacyPolicyViewModel _privacyAndTerms =
+      Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel(),permanent: true);
+  
   void _onPrivacyClick() {
-    Get.to(const PrivacyPolicyWidget());
+    _privacyAndTerms.getPrivacyAndTermsPages();
+    Get.to( ()  => PrivacyPolicyWidget());
   }
 
   void _onTermsClick() {
-    Get.to(const TermsConditionView());
+    _privacyAndTerms.getPrivacyAndTermsPages();
+    Get.to(TermsConditionView());
   }
 
   _onSignInClick(AuthViewModel logic) {

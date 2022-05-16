@@ -23,8 +23,10 @@ import 'package:sporti/util/constance.dart';
 import 'package:sporti/util/localization/localization_service.dart';
 import 'package:sporti/util/sh_util.dart';
 
+import '../../../viewmodel/privacyPolicy_viewmodel.dart';
+
 class ProfileView extends StatelessWidget {
-  const ProfileView({Key? key}) : super(key: key);
+  ProfileView({Key? key}) : super(key: key);
   static var img =
       "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80";
 
@@ -39,25 +41,27 @@ class ProfileView extends StatelessWidget {
             children: [
               ClipRRect(
                   borderRadius: BorderRadius.circular(AppPadding.p18),
-                  child: (logic.isDoneUploadImage && logic.filePath != null) ?
-                      Image.file(logic.filePath! ,width: AppSize.s120,
-                          height: AppSize.s120,
-                          fit: BoxFit.cover)
-                      :(userData.picture != null &&
-                          userData.picture!.isNotEmpty &&
-                          !userData.picture!.contains("http"))
-                      ? Image.memory(base64Decode(userData.picture.toString()),
+                  child: (logic.isDoneUploadImage && logic.filePath != null)
+                      ? Image.file(logic.filePath!,
                           width: AppSize.s120,
                           height: AppSize.s120,
                           fit: BoxFit.cover)
-                      : imageNetwork(
-                          url: (userData.picture != null &&
-                                  userData.picture!.isNotEmpty)
-                              ? userData.picture
-                              : null,
-                          width: AppSize.s120,
-                          height: AppSize.s120,
-                          fit: BoxFit.cover)),
+                      : (userData.picture != null &&
+                              userData.picture!.isNotEmpty &&
+                              !userData.picture!.contains("http"))
+                          ? Image.memory(
+                              base64Decode(userData.picture.toString()),
+                              width: AppSize.s120,
+                              height: AppSize.s120,
+                              fit: BoxFit.cover)
+                          : imageNetwork(
+                              url: (userData.picture != null &&
+                                      userData.picture!.isNotEmpty)
+                                  ? userData.picture
+                                  : null,
+                              width: AppSize.s120,
+                              height: AppSize.s120,
+                              fit: BoxFit.cover)),
               const SizedBox(
                 width: AppSize.s20,
               ),
@@ -171,15 +175,15 @@ class ProfileView extends StatelessWidget {
               width: AppSize.s20,
             ),
             if (Get.locale == LocalizationService.localeEn) ...[
-               Padding(
-                 padding: const EdgeInsets.symmetric(horizontal: AppSize.s8),
-                 child: CustomTextView(
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSize.s8),
+                child: CustomTextView(
                   txt: "عربي",
                   textStyle: themeData.textTheme.headline2
                       ?.copyWith(color: AppColor.black),
+                ),
               ),
-               ),
-            ]else ...[
+            ] else ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSize.s8),
                 child: CustomTextView(
@@ -265,10 +269,11 @@ class ProfileView extends StatelessWidget {
                   title: AppStrings.txtCurrency.tr,
                   trailingIcon: AppMedia.arrowIos),
               //_profileItem(themeData,onClick:_onUpdatePassword,leadingIcon:AppMedia.resetPassword ,title:AppStrings.resetYourPass.tr ,trailingIcon:AppMedia.arrowIos),
-              _profileLanguage(themeData,
-                  onClick: _onChangeLang,
-                  title: AppStrings.chooseLanguage.tr,
-                  ),
+              _profileLanguage(
+                themeData,
+                onClick: _onChangeLang,
+                title: AppStrings.chooseLanguage.tr,
+              ),
               _profileDeleteAccount(themeData,
                   onClick: _onDeleteAccountClick,
                   title: AppStrings.txtDeleteAccount.tr,
@@ -306,11 +311,15 @@ class ProfileView extends StatelessWidget {
   }
 
   void _termsAndCondition() {
-    Get.to(() => const TermsConditionView());
+    _privacyAndTerms.getPrivacyAndTermsPages();
+    Get.to(() =>  TermsConditionView());
   }
 
+  final PrivacyPolicyViewModel _privacyAndTerms =
+      Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel(),permanent: true);
   void _onPrivacyPolicy() {
-    Get.to(() => const PrivacyPolicyWidget());
+    _privacyAndTerms.getPrivacyAndTermsPages();
+    Get.to( ()  => PrivacyPolicyWidget(),preventDuplicates: true);
   }
 
   void _onLogout() {
@@ -336,11 +345,12 @@ class ProfileView extends StatelessWidget {
   }
 
   _onChangeLang() {
-    if (Get.locale == LocalizationService.localeEn){
-      SharedPref.instance.setAppLang(LocalizationService.langs[LocalizationService.arIndex]);
-    }else{
-      SharedPref.instance.setAppLang(LocalizationService.langs[LocalizationService.enIndex]);
+    if (Get.locale == LocalizationService.localeEn) {
+      SharedPref.instance
+          .setAppLang(LocalizationService.langs[LocalizationService.arIndex]);
+    } else {
+      SharedPref.instance
+          .setAppLang(LocalizationService.langs[LocalizationService.enIndex]);
     }
   }
-
 }

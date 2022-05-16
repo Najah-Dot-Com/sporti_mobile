@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get/get.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_strings.dart';
 
-class TermsConditionView extends StatelessWidget {
-  const TermsConditionView({Key? key}) : super(key: key);
+import '../../../viewmodel/privacyPolicy_viewmodel.dart';
 
+class TermsConditionView extends StatelessWidget {
+  TermsConditionView({Key? key}) : super(key: key);
+  final PrivacyPolicyViewModel _privacyAndTerms =
+      Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel(),
+          permanent: true);
   PreferredSizeWidget myAppbar(ThemeData themeData) => AppBar(
         backgroundColor: AppColor.white,
         centerTitle: true,
@@ -29,26 +34,37 @@ class TermsConditionView extends StatelessWidget {
     var themeData = Theme.of(context);
     return Scaffold(
       appBar: myAppbar(themeData),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: AppSize.s28),
-        children: [
-          const SizedBox(
-            height: AppSize.s28,
-          ),
-          CustomTextView(
-            txt: "Placholder",
-            textStyle:
-                themeData.textTheme.headline2?.copyWith(color: AppColor.black),
-          ),
-          const SizedBox(
-            height: AppSize.s12,
-          ),
-          CustomTextView(
-            txt: "Placholder",
-            textStyle:
-                themeData.textTheme.headline3?.copyWith(color: AppColor.black),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(AppPadding.p14),
+          child: GetBuilder<PrivacyPolicyViewModel>(
+              init: PrivacyPolicyViewModel(),
+              initState: (state) {
+                WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+                  state.controller!.getPrivacyAndTermsPages();
+                });
+              },
+              builder: (context) {
+                return Column(
+                  children: [
+                    ListTile(
+                      title: HtmlWidget(
+                        "${_privacyAndTerms.termsTitle}",
+                        textStyle: themeData.textTheme.headline1
+                            ?.copyWith(color: AppColor.black),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: AppPadding.p14, horizontal: AppPadding.p14),
+                      subtitle: HtmlWidget(
+                        "${_privacyAndTerms.termsDetails}",
+                        textStyle: themeData.textTheme.headline2
+                            ?.copyWith(color: AppColor.black),
+                      ),
+                    ),
+                  ],
+                );
+              }),
+        ),
       ),
     );
   }

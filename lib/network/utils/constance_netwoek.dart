@@ -6,10 +6,11 @@ import 'package:sporti/util/sh_util.dart';
 abstract class ConstanceNetwork {
   ///todo here insert base_url
   static String baseUrl = "https://sportiapp.com/api/v1/";
-  static String baseImageExercises = "https://sportiapp.com/public/images/exercises/";
+  static String baseImageExercises =
+      "https://sportiapp.com/public/images/exercises/";
 
   ///todo here insert key Of Request
-  static String  resultKey = "Result";
+  static String resultKey = "Result";
 
   //this for login keys
   static String userNameKey = "username";
@@ -56,23 +57,17 @@ abstract class ConstanceNetwork {
   static String detailsExercisesApi = "details_exercises?seq=";
   static String searchExercisesApi = "search_exercises?q=";
 
-
   static String verifyEmailApi = "verifi_email?email=";
   static String confirmEmailApi = "confirm_verifi_email";
   static String verifyAccount = "verifi_account";
   static String confirmAccount = "confirm_verifi_code";
   //profile end point
   static String updateProfile = "update_profile";
-  
+
   //Notifications end point
   static String allNotificationse = "get_notification";
-
-
-
-
-
-
-
+  //privace and policy  end point
+  static String getPages = "get_page";
 
   static Map<String, String> header(int typeToken) {
     Map<String, String> headers = {};
@@ -109,7 +104,7 @@ abstract class ConstanceNetwork {
         'Language': Get.locale.toString().split("_")[0],
         'Accept': 'application/json',
       };
-    }else if (typeToken == 5) {
+    } else if (typeToken == 5) {
       headers = {
         'Authorization': 'Bearer ${SharedPref.instance.getUserData().token}',
         'Language': Get.locale.toString().split("_")[0],
