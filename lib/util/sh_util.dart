@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporti/feature/model/balance_data.dart';
 import 'package:sporti/feature/model/user_data.dart';
+import 'package:sporti/util/app_shaerd_data.dart';
 
 import 'localization/localization_service.dart';
 
@@ -27,6 +28,8 @@ class SharedPref {
   final String policyTitlekey = "login";
   final String policyDetailskey = "login";
 
+  final String userNameKey = "userName";
+  final String passwordKey = "password";
 
   static SharedPreferences? _prefs;
 
@@ -65,14 +68,17 @@ class SharedPref {
       printError(info: e.toString());
     }
   }
-   
- 
+
+  String getFCMToken() {
+    return _prefs!.getString(fcmKey) ?? "";
+  }
 
   Future<void> setAppLang(String lang) async {
     try {
       if (!GetUtils.isNull(lang)) {
         await _prefs?.setString(langKey, lang);
         LocalizationService().changeLocale(lang);
+        loginAgain();
       }
     } catch (e) {
       printError(info: e.toString());
@@ -146,6 +152,42 @@ class SharedPref {
     } catch (e) {
       Logger().e(e);
       return false;
+    }
+  }
+
+  setUserName(String userName) async {
+    try {
+      await _prefs?.setString(userNameKey, userName);
+    } catch (e) {
+      Logger().e(e);
+      return "$e";
+    }
+  }
+
+  String getUserName() {
+    try {
+      return _prefs?.getString(userNameKey) ?? "";
+    } catch (e) {
+      Logger().e(e);
+      return "";
+    }
+  }
+
+  setPassword(String password) async {
+    try {
+      await _prefs?.setString(passwordKey, password);
+    } catch (e) {
+      Logger().e(e);
+      return "$e";
+    }
+  }
+
+  String getPassword() {
+    try {
+      return _prefs?.getString(passwordKey) ?? "";
+    } catch (e) {
+      Logger().e(e);
+      return "";
     }
   }
 

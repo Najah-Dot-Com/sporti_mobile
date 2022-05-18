@@ -10,17 +10,17 @@ class NotificationData {
   NotificationData({this.id, this.notifyType, this.title, this.body});
   factory NotificationData.fromJson(Map<String, dynamic> json) =>
       NotificationData(
-        id: json['id']??null,
-        notifyType: json["notifiy_type"]??null,
-        title: json['title']??null,
-        body: json['body']??null,
+        id: json['id'] == null ? null:json['id'],
+        notifyType: json[ConstanceNetwork.notifyType] == null ? null:json[ConstanceNetwork.notifyType],
+        title: json['title'] == null ? null:json['title'],
+        body: json['body'] == null ? null:json['body'],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id??null,
-        "notifiy_type": notifyType??null,
-        "title": title??null,
-        "body": body??null,
+        "id": id == null ? null:id,
+        ConstanceNetwork.notifyType: notifyType == null ? null:notifyType,
+        "title": title == null ? null:title,
+        "body": body == null ? null:body
       };
 }
 class Result {

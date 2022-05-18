@@ -24,6 +24,7 @@ void main() async {
   await Firebase.initializeApp();
   await AppFcm.fcmInstance.init();
   await AppFcm.fcmInstance.getTokenFCM();
+  listener();
   WidgetsBinding.instance?.addPostFrameCallback((timeStamp)async{
       await AppFcm.fcmInstance.setupInteractedMessage();
       PrivacyPolicyViewModel _privacyAndTerms =
@@ -33,6 +34,17 @@ void main() async {
   HttpOverrides.global = MyHttpOverrides();
   DioManagerClass.getInstance.init();
   runApp(MyApp());
+}
+
+void listener() {
+  if(SharedPref.instance.getIsUserLogin()){
+    DateTime subtract = SharedPref.instance.getUserData().expiresIn!.subtract(const Duration(days: 1));
+    if(subtract.isAtSameMomentAs(DateTime.now()) ||
+        subtract.isAtSameMomentAs(DateTime.now().subtract(const Duration(days: 1)))){
+      //here we need refresh token by login again
+      loginAgain();
+    }
+  }
 }
 
 // to do this for handShaking Certificate ::

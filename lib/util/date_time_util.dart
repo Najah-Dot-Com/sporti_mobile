@@ -517,7 +517,7 @@ class DateUtility {
 
 
   static String convertDateToYMDDate(DateTime dateTime){
-    return /*DateTime.parse(*/DateFormat("dd/MM/yyyy").format(dateTime)/*)*/;
+    return /*DateTime.parse(*/DateFormat("yyyy/MM/dd").format(dateTime)/*)*/;
   }
 
   static DateTime convertTimeTo24(TimeOfDay timeOfDay){

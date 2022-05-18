@@ -15,12 +15,15 @@ import 'package:logger/logger.dart';
 import 'package:sporti/feature/model/user_data.dart';
 import 'package:sporti/feature/view/appwidget/dialog/gloable_dialog_widget.dart';
 import 'package:sporti/feature/view/views/account_verfiy/account_verfiy_view.dart';
+import 'package:sporti/feature/viewmodel/auth_viewmodle.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
 
 import '../feature/view/appwidget/custome_text_view.dart';
+import '../network/api/feature/auth_feature.dart';
+import '../network/utils/constance_netwoek.dart';
 import 'app_dimen.dart';
 import 'app_style.dart';
 import 'localization/localization_service.dart';
@@ -456,8 +459,23 @@ Future<bool> showIsVerifyDialog() async {
       ));
     });
     return false;
-  }
-  else{
+  } else {
     return true;
   }
+}
+
+loginAgain() {
+
+  var userName = SharedPref.instance.getUserName();
+  var password = SharedPref.instance.getPassword();
+
+  if (userName.toString().isNotEmpty && password.toString().isNotEmpty) {
+    Map<String, dynamic> map = {
+      ConstanceNetwork.userNameKey: userName,
+      ConstanceNetwork.passwordKey: password,
+      ConstanceNetwork.fcmToken: SharedPref.instance.getFCMToken().toString(),
+    };
+     AuthFeature.getInstance.loginUser(map);
+  }
+
 }
