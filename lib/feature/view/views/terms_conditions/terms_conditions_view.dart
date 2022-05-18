@@ -41,18 +41,18 @@ class TermsConditionView extends StatelessWidget {
               init: PrivacyPolicyViewModel(),
               initState: (state) {
                 WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-                  state.controller!.getPrivacyAndTermsPages();
+                  // state.controller!.getPrivacyAndTermsPages();
                 });
               },
               builder: (logic) {
                 return Column(
                   children: [
                     ListTile(
-                      title: HtmlWidget(
-                        "${logic.termsTitle}",
-                        textStyle: themeData.textTheme.headline1
-                            ?.copyWith(color: AppColor.black),
-                      ),
+                      // title: HtmlWidget(
+                      //   "${logic.termsTitle}",
+                      //   textStyle: themeData.textTheme.headline1
+                      //       ?.copyWith(color: AppColor.black),
+                      // ),
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: AppPadding.p14, horizontal: AppPadding.p14),
                       subtitle: HtmlWidget(

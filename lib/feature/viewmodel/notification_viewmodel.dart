@@ -10,8 +10,8 @@ class NotificationViewModel extends GetxController {
   bool isLoading = false;
   bool isLoadingMore = false;
   List<NotificationData> notificatiosDataList = [];
-  int page = 1;
-  int? pagetotal = 2;
+  int? page = 1;
+  int? pageTotal = 0;
 
   @override
   onInit() async {
@@ -41,28 +41,25 @@ class NotificationViewModel extends GetxController {
         isLoadingMore = true;
       }
       update();
-      // if (page == this.page&&page++ < pagetotal) {
-      //   page++;
-      // }
-      // update();
       await NotificationsFeature.getInstance
           .allNotifications(page)
           .then((value) async {
-        if (value.data!.toList().isNotEmpty) {
-          Logger().d("value.data!.toList()", value.data!.toList());
+        if (value.data != null && value.data!.toList().isNotEmpty) {
           // notificatiosDataList = value.data!.toList();
-          notificatiosDataList.addAll(value.data!.toList());
-          pagetotal = value.pageTotle;
-          print("notificatiosDataList pagetotal : " "$pagetotal");
-          print("notificatiosDataList.length");
-          print(notificatiosDataList.length);
+          for(var item in value.data!.toList()){
+            if(!notificatiosDataList.contains(item)){
+              notificatiosDataList.add(item);
+            }
+          }
+          // notificatiosDataList.addAll(value.data!.toList());
+          pageTotal = value.pageTotle;
           isLoading = false;
           isLoadingMore = false;
           update();
         }
       }).catchError((onError) {
         //handle error from value
-        snackError("getAllNotifications model catchError", onError.toString());
+        // snackError("getAllNotifications model catchError", onError.toString());
         Logger().d(onError.toString());
         isLoading = false;
         isLoadingMore = false;
@@ -74,5 +71,22 @@ class NotificationViewModel extends GetxController {
       isLoadingMore = false;
       update();
     }
+  }
+
+
+
+  Future loadMoreNotifications() async {
+    isLoadingMore = true;
+    update();
+    if (page! <= pageTotal!) {
+      page = page! + 1;
+      // await getAllAnnouncement(
+      //     pageIndexAllAnnouncement, pageSizeAllAnnouncement, "",
+      //     isPagination: true);
+      await getAllNotifications(page);
+      await  Future.delayed(const Duration(seconds: 0));
+    }
+    isLoadingMore = false;
+    update();
   }
 }

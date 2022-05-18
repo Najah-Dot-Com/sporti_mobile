@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:sporti/fcm/app_fcm.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
+import 'package:sporti/feature/view/views/home_page/widget/widget_home_tab/shimmer_your_work_widget.dart';
 import 'package:sporti/feature/view/views/notifications/widget/notification_item.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
@@ -54,12 +55,12 @@ class NotificationsView extends StatelessWidget {
           init: NotificationViewModel(),
           initState: (state) {
             WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-              scrollController.addListener(scrollUp);
+              scrollController.addListener(state.controller!.loadMoreNotifications);
             });
           },
           builder: (logic) {
             if (logic.isLoading) {
-              return const PageShimmerWidget();
+              return const ShimmerSelectYourWorkWidget();
             }
             return Padding(
               padding: const EdgeInsets.symmetric(
@@ -69,12 +70,7 @@ class NotificationsView extends StatelessWidget {
                 height: height,
                 child: Column(
                   children: [
-                    (logic.isLoadingMore)
-                        ? SizedBox(
-                            width: width,
-                            height: 120,
-                            child: const PageShimmerWidget())
-                        : const SizedBox(),
+
                     Expanded(
                       child: ListView.separated(
                         controller: scrollController,
@@ -92,6 +88,12 @@ class NotificationsView extends StatelessWidget {
                         ),
                       ),
                     ),
+                    (logic.isLoadingMore)
+                        ? SizedBox(
+                        width: width,
+                        height: 120,
+                        child: const PageShimmerWidget())
+                        : const SizedBox(),
                   ],
                 ),
               ),
@@ -100,25 +102,23 @@ class NotificationsView extends StatelessWidget {
     );
   }
 
-  void scrollUp() async {
-    try {
-      if (scrollController.offset <=
-              scrollController.position.minScrollExtent &&
-          !scrollController.position.outOfRange) {
-        if (_notificationViewModel.page != _notificationViewModel.pagetotal &&
-            _notificationViewModel.page++ <=
-                _notificationViewModel.pagetotal!) {
-          _notificationViewModel.page = _notificationViewModel.page++;
-          _notificationViewModel.update();
-          await _notificationViewModel
-              .getAllNotifications(_notificationViewModel.page);
-        }
-        print("reach the top");
-      }
-    } on Exception catch (e) {
-      Logger().d("getAllNotifications(page)", e);
-    }
-  }
+  // void scrollUp() async {
+  //   try {
+  //     if (scrollController.offset <= scrollController.position.minScrollExtent && !scrollController.position.outOfRange) {
+  //       if (_notificationViewModel.page != _notificationViewModel.pageTotal &&
+  //           _notificationViewModel.page++ <=
+  //               _notificationViewModel.pageTotal!) {
+  //         _notificationViewModel.page = _notificationViewModel.page++;
+  //         _notificationViewModel.update();
+  //         await _notificationViewModel
+  //             .getAllNotifications(_notificationViewModel.page);
+  //       }
+  //
+  //     }
+  //   } on Exception catch (e) {
+  //     Logger().d("getAllNotifications(page)", e);
+  //   }
+  // }
 
   onClickNotifyItem({NotificationViewModel? logic, int? index}) {
     try {

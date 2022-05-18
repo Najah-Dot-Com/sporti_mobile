@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:get/utils.dart';
 
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporti/feature/model/balance_data.dart';
 import 'package:sporti/feature/model/user_data.dart';
+import 'package:sporti/feature/viewmodel/privacyPolicy_viewmodel.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
 
 import 'localization/localization_service.dart';
@@ -23,10 +25,10 @@ class SharedPref {
   final String userDataKey = "userData";
   final String userBalanceKey = "userBalanceKey";
   final String loginKey = "login";
-  final String termsTitlekey = "login";
-  final String termsDetailskey = "login";
-  final String policyTitlekey = "login";
-  final String policyDetailskey = "login";
+  final String termsTitlekey = "termsTitlekey";
+  final String termsDetailskey = "termsDetailskey";
+  final String policyTitlekey = "policyTitlekey";
+  final String policyDetailskey = "policyDetailskey";
 
   final String userNameKey = "userName";
   final String passwordKey = "password";
@@ -36,31 +38,42 @@ class SharedPref {
   init() async {
     _prefs = await SharedPreferences?.getInstance();
   }
-  setPolicyAndTermsString({String? termsTitle,String? termsDetails,String? policyTitle,String? policyDetails}) async {
+
+  setPolicyAndTermsString(
+      {String? termsTitle,
+      String? termsDetails,
+      String? policyTitle,
+      String? policyDetails}) async {
     try {
-      _prefs?.setString(termsTitlekey, termsTitle??"");
-      _prefs?.setString(termsDetailskey, termsDetails??"");
-      _prefs?.setString(policyTitlekey, policyTitle??"");
-      _prefs?.setString(policyDetailskey, policyDetails??"");
+      _prefs?.setString(termsTitlekey, termsTitle ?? "");
+      _prefs?.setString(termsDetailskey, termsDetails ?? "");
+      _prefs?.setString(policyTitlekey, policyTitle ?? "");
+      _prefs?.setString(policyDetailskey, policyDetails ?? "");
     } catch (e) {
       printError(info: e.toString());
     }
   }
+
   String getFCMToken() {
     return _prefs!.getString(fcmKey) ?? "";
   }
+
   String getPolicyTitle() {
-      return _prefs!.getString(policyTitlekey) ?? "";
-    }
+    return _prefs!.getString(policyTitlekey) ?? "";
+  }
+
   String getPolicyDetails() {
-      return _prefs!.getString(policyDetailskey) ?? "";
-    }
+    return _prefs!.getString(policyDetailskey) ?? "";
+  }
+
   String getTermsTitle() {
-      return _prefs!.getString(termsTitlekey) ?? "";
-    }
+    return _prefs!.getString(termsTitlekey) ?? "";
+  }
+
   String getTermsDetails() {
-      return _prefs!.getString(termsDetailskey) ?? "";
-    }
+    return _prefs!.getString(termsDetailskey) ?? "";
+  }
+
   setFCMToken(String fcmToken) async {
     try {
       _prefs?.setString(fcmKey, fcmToken);
@@ -69,16 +82,13 @@ class SharedPref {
     }
   }
 
-  String getFCMToken() {
-    return _prefs!.getString(fcmKey) ?? "";
-  }
-
   Future<void> setAppLang(String lang) async {
     try {
       if (!GetUtils.isNull(lang)) {
         await _prefs?.setString(langKey, lang);
         LocalizationService().changeLocale(lang);
         loginAgain();
+        Get.put(PrivacyPolicyViewModel()).getPrivacyAndTermsPages();
       }
     } catch (e) {
       printError(info: e.toString());
@@ -212,7 +222,7 @@ class SharedPref {
   setUserDataVerify() {
     try {
       var userData = getUserData();
-      userData.isVerify =true;
+      userData.isVerify = true;
       setUserData(jsonEncode(userData.toJson()));
     } catch (e) {
       Logger().e(e);

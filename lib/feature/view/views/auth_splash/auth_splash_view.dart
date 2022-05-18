@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
 import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
 import 'package:sporti/util/app_dimen.dart';
@@ -28,6 +29,7 @@ class _SplashViewState extends State<SplashView>
   void initState() {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
        Timer(const Duration(seconds: 3), () {
+         Logger().i("${SharedPref.instance.getIsUserLogin()},${SharedPref.instance.getIsUserLogin() is String}");
          if(SharedPref.instance.getIsUserLogin()){
            Get.offAll(const HomePageView());
          }else {

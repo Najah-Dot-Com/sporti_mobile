@@ -33,12 +33,12 @@ class Result {
     List<NotificationData>? data;
 
     factory Result.fromJson(Map<String, dynamic> json) => Result(
-        pageTotle: json["pageTotle"],
-        data: List<NotificationData>.from(json["data"].map((x) => NotificationData.fromJson(x))),
+        pageTotle:json["pageTotle"] == null ? null: json["pageTotle"],
+        data:json["data"] == null ? null: List<NotificationData>.from(json["data"].map((x) => NotificationData.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
-        "pageTotle": pageTotle,
-        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+        "pageTotle": pageTotle == null ? null:pageTotle,
+        "data":data == null ? null: List<dynamic>.from(data!.map((x) => x.toJson())),
     };
 }
