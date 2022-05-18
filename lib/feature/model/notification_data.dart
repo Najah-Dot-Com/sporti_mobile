@@ -23,3 +23,22 @@ class NotificationData {
         "body": body??null,
       };
 }
+class Result {
+    Result({
+        this.pageTotle,
+        this.data,
+    });
+
+    int? pageTotle;
+    List<NotificationData>? data;
+
+    factory Result.fromJson(Map<String, dynamic> json) => Result(
+        pageTotle: json["pageTotle"],
+        data: List<NotificationData>.from(json["data"].map((x) => NotificationData.fromJson(x))),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "pageTotle": pageTotle,
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+    };
+}

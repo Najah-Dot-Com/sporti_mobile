@@ -8,12 +8,17 @@ import '../../util/app_shaerd_data.dart';
 
 class NotificationViewModel extends GetxController {
   bool isLoading = false;
+  bool isLoadingMore = false;
   List<NotificationData> notificatiosDataList = [];
+  int page = 1;
+  int? pagetotal = 2;
 
   @override
   onInit() async {
     super.onInit();
-    getAllNotifications();
+    page = 1;
+    notificatiosDataList = [];
+    await getAllNotifications(page);
   }
 
   @override
@@ -28,17 +33,31 @@ class NotificationViewModel extends GetxController {
     super.onClose();
   }
 
-  Future<void> getAllNotifications() async {
+  Future<void> getAllNotifications(var page) async {
     try {
-      isLoading = true;
+      if (notificatiosDataList.isEmpty) {
+        isLoading = true;
+      } else {
+        isLoadingMore = true;
+      }
       update();
+      // if (page == this.page&&page++ < pagetotal) {
+      //   page++;
+      // }
+      // update();
       await NotificationsFeature.getInstance
-          .allNotifications()
+          .allNotifications(page)
           .then((value) async {
-        if (value != null && value.isNotEmpty) {
-          notificatiosDataList.clear();
-          notificatiosDataList = value;
+        if (value.data!.toList().isNotEmpty) {
+          Logger().d("value.data!.toList()", value.data!.toList());
+          // notificatiosDataList = value.data!.toList();
+          notificatiosDataList.addAll(value.data!.toList());
+          pagetotal = value.pageTotle;
+          print("notificatiosDataList pagetotal : " "$pagetotal");
+          print("notificatiosDataList.length");
+          print(notificatiosDataList.length);
           isLoading = false;
+          isLoadingMore = false;
           update();
         }
       }).catchError((onError) {
@@ -46,11 +65,13 @@ class NotificationViewModel extends GetxController {
         snackError("getAllNotifications model catchError", onError.toString());
         Logger().d(onError.toString());
         isLoading = false;
+        isLoadingMore = false;
         update();
       });
     } catch (e) {
       Logger().d("getAllNotifications model  catch", e.toString());
       isLoading = false;
+      isLoadingMore = false;
       update();
     }
   }

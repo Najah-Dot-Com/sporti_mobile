@@ -57,7 +57,7 @@ class AppFcm {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       _homeViewModel.allPackagesExercises();
       _homeViewModel.allPackagesTopExercises();
-      _notificationsViewModel.getAllNotifications();
+      _notificationsViewModel.getAllNotifications(_notificationsViewModel.page);
     });
     Future.delayed(Duration(seconds: 3)).then((value) {
       //flutterLocalNotificationsPlugin.cancelAll();

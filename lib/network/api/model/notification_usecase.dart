@@ -10,10 +10,11 @@ class NotificationUseCase {
   static final NotificationUseCase getInstance = NotificationUseCase._();
   factory NotificationUseCase() => getInstance;
 
-  Future<AppResponse> allNotifications({var url, var header}) async {
+  Future<AppResponse> allNotifications({var url, var header, var page}) async {
     try {
-      var response = await DioManagerClass.getInstance
-          .dioGetMethod(header: header, url: url);
+      var response = await DioManagerClass.getInstance.dioGetMethod(
+          header: header, url: url, queryParameters: {"?page=": page});
+      print("notifcation page number  $page");
       return AppResponse.fromJson(json.decode(response.toString()));
     } on DioError catch (e) {
       var msg = json.decode(e.response.toString());

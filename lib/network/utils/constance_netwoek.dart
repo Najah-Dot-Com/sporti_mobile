@@ -65,7 +65,7 @@ abstract class ConstanceNetwork {
   static String updateProfile = "update_profile";
 
   //Notifications end point
-  static String allNotificationse = "get_notification";
+  static String allNotificationse = "get_notification"; //?page=
   //privace and policy  end point
   static String getPages = "get_page";
 

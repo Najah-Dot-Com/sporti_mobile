@@ -8,20 +8,20 @@ class NotificationsFeature {
   static final NotificationsFeature getInstance = NotificationsFeature._();
   factory NotificationsFeature() => getInstance;
 
-  Future<List<NotificationData>?> allNotifications() async {
+  Future<Result> allNotifications(var page) async {
     var appResponse = await NotificationUseCase.getInstance.allNotifications(
-      url: ConstanceNetwork.allNotificationse,
-      header: ConstanceNetwork.header(2),
-    );
+        url: ConstanceNetwork.allNotificationse+"?page=$page",
+        header: ConstanceNetwork.header(2),
+        page: page);
     if (appResponse.status == true) {
       Logger().d("if ", appResponse.toJson());
-      List result = appResponse.result;
-      List<NotificationData> data =
-          result.map((e) => NotificationData.fromJson(e)).toList();
+      var result = appResponse.result;
+      Result data = Result.fromJson(result);
+      // result.map((e) => NotificationData.fromJson(e)).toList();
       return data;
     } else {
       Logger().d("else notifications", appResponse.toJson());
-      return [];
+      return Result.fromJson(appResponse.toJson());
     }
   }
 }
