@@ -161,4 +161,19 @@ class AuthFeature {
       return appResponse;
     }
   }
+
+  Future<AppResponse> requestUserBalance(Map<String, dynamic> map) async{
+    var appResponse = await AuthUseCase.getInstance.requestUserBalance(
+        body: map,
+        url: ConstanceNetwork.balanceRequestApi,
+        header: ConstanceNetwork.header(2));
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return appResponse;
+    } else {
+      snackError("",appResponse.message);
+      Logger().d("else ${appResponse.toJson()}");
+      return appResponse;
+    }
+  }
 }

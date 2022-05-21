@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:sporti/feature/view/appwidget/custom_text_filed.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/primary_button.dart';
+import 'package:sporti/feature/view/views/money_collect/money_collect_view.dart';
+import 'package:sporti/feature/viewmodel/auth_viewmodle.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:get/get.dart';
 import 'package:sporti/util/constance.dart';
+import 'package:sporti/util/sh_util.dart';
 
 class MoneyGiftView extends StatelessWidget {
   const MoneyGiftView({Key? key}) : super(key: key);
@@ -20,14 +23,18 @@ class MoneyGiftView extends StatelessWidget {
 
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  PreferredSizeWidget myAppbar(ThemeData themeData) => AppBar(
+
+  PreferredSizeWidget myAppbar(ThemeData themeData) =>
+      AppBar(
         centerTitle: true,
         backgroundColor: AppColor.white,
-        leading: InkWell(onTap: ()=> Get.back(),child: Icon(Icons.arrow_back_ios ,color: AppColor.black,)),
+        leading: InkWell(onTap: () => Get.back(),
+            child: Icon(Icons.arrow_back_ios, color: AppColor.black,)),
         title: CustomTextView(
           textAlign: TextAlign.center,
           txt: AppStrings.txtCongratulations.tr,
-          textStyle: themeData.textTheme.headline1?.copyWith(color: AppColor.primary),
+          textStyle: themeData.textTheme.headline1?.copyWith(
+              color: AppColor.primary),
         ),
       );
 
@@ -51,7 +58,9 @@ class MoneyGiftView extends StatelessWidget {
           ),
           child: CustomTextView(
             textAlign: TextAlign.center,
-            txt: "               ",
+            txt: " ${formatStringWithCurrency(SharedPref.instance
+                .getUserData()
+                .balance ?? 0)} ",
             textStyle: themeData.textTheme.subtitle2,
           ),
         ),
@@ -143,11 +152,20 @@ class MoneyGiftView extends StatelessWidget {
                       children: [
                         SizedBox(
                           width: AppSize.s120,
-                          child: PrimaryButton(
-                              textButton: AppStrings.txtSend.tr,
-                              isLoading: false,
-                              width: AppSize.s120,
-                              onClicked: _onSendClicked),
+                          child: GetBuilder<AuthViewModel>(
+                              init: AuthViewModel(),
+                              initState: (state){
+                                WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+                                  _emailController.text = SharedPref.instance.getUserData().email.toString();
+                                });
+                              },
+                              builder: (logic) {
+                            return PrimaryButton(
+                                textButton: AppStrings.txtSend.tr,
+                                isLoading: logic.isLoading,
+                                width: AppSize.s120,
+                                onClicked: ()=> _onSendClicked(logic));
+                          }),
                         ),
                       ],
                     )
@@ -161,7 +179,10 @@ class MoneyGiftView extends StatelessWidget {
     );
   }
 
-  _onSendClicked() {
-    _formKey.currentState!.validate();
+  _onSendClicked(AuthViewModel logic) {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      logic.requestUserBalance(_emailController, _noteController);
+    }
   }
 }

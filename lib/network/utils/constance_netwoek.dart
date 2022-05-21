@@ -6,8 +6,8 @@ import 'package:sporti/util/sh_util.dart';
 abstract class ConstanceNetwork {
   ///todo here insert base_url
   static String baseUrl = "https://sportiapp.com/api/v1/";
-  static String baseImageExercises =
-      "https://sportiapp.com/public/images/exercises/";
+  static String baseImageExercises = "https://sportiapp.com/public/images/exercises/";
+  static String baseVideoExercises = "https://sportiapp.com/public/video/exercises/";
 
   ///todo here insert key Of Request
   static String resultKey = "Result";
@@ -21,6 +21,7 @@ abstract class ConstanceNetwork {
   static String passwordNewKey = "password_new";
   static String fcmToken = "fcm_token";
   static String notifyType = "notifiy_type";
+  static String noteKey = "note";
 
   //this for auth keys
   static String code = 'code';
@@ -63,11 +64,14 @@ abstract class ConstanceNetwork {
   static String confirmAccount = "confirm_verifi_code";
   //profile end point
   static String updateProfile = "update_profile";
+  static String balanceRequestApi = "balance_request";
 
   //Notifications end point
   static String allNotificationse = "get_notification"; //?page=
   //privace and policy  end point
   static String getPages = "get_page";
+
+
 
   static Map<String, String> header(int typeToken) {
     Map<String, String> headers = {};

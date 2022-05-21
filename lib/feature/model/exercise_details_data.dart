@@ -5,6 +5,7 @@ class ExerciseDetailsData {
     this.description,
     this.time,
     this.image,
+    this.video,
     this.updatedAt,
   });
 
@@ -13,6 +14,7 @@ class ExerciseDetailsData {
   String? description;
   dynamic time;
   String? image;
+  String? video;
   DateTime? updatedAt;
 
   factory ExerciseDetailsData.fromJson(Map<String, dynamic> json) => ExerciseDetailsData(
@@ -21,6 +23,7 @@ class ExerciseDetailsData {
     description: json["description"] == null ? null : json["description"],
     time: json["time"] == null ? null : json["time"],
     image: json["image"] == null ? null:json["image"],
+    video: json["video"] == null ? null:json["video"],
     updatedAt: json["updated_at"] == null ? null:DateTime.parse(json["updated_at"]),
   );
 
@@ -30,6 +33,7 @@ class ExerciseDetailsData {
     "description": description == null ? null : description,
     "time": time == null ? null : time,
     "image": image == null ? null:image,
+    "video": video == null ? null:video,
     "updated_at": updatedAt == null ? null:updatedAt?.toIso8601String(),
   };
 }

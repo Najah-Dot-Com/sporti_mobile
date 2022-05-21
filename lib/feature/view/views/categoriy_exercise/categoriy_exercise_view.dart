@@ -95,8 +95,7 @@ class _CategoryExerciseViewState extends State<CategoryExerciseView> {
               //     width: double.infinity,
               //     child: Image(image: AssetImage(AppMedia.exircise_one))),
               VideoPlayer(
-                videoUrl:
-                    "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
+                videoUrl:_videoUrlHandler(),
                 onVideoChangeCallback: (controller) {
                   controller.addListener(() => checkVideo(controller));
                 },
@@ -275,4 +274,12 @@ class _CategoryExerciseViewState extends State<CategoryExerciseView> {
   _onTimePickerClick(DetailsExerciseViewModel logic) {
     logic.showPickerTime();
   }
+
+  String _videoUrlHandler(){
+    if(widget.exerciseDetailsData?.video != null && widget.exerciseDetailsData!.video.toString().isNotEmpty){
+      return  ConstanceNetwork.baseVideoExercises+widget.exerciseDetailsData!.video.toString();
+    }
+    return "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4";
+  }
+
 }

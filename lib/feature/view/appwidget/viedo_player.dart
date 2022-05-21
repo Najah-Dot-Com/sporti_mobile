@@ -41,7 +41,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
         looping: false,
         zoomAndPan: true,
         deviceOrientationsAfterFullScreen: [DeviceOrientation.portraitDown,DeviceOrientation.portraitUp,],
-        deviceOrientationsOnEnterFullScreen: [DeviceOrientation.portraitDown,DeviceOrientation.portraitUp,],
+        deviceOrientationsOnEnterFullScreen: [DeviceOrientation.landscapeLeft,DeviceOrientation.landscapeRight,],
         showOptions: true,
         showControls: true,
         showControlsOnInitialize: true,
