@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sporti/feature/view/views/search/widget/shimmer_search_widget.dart';
 import 'package:sporti/feature/viewmodel/search_viewmodel.dart';
 import 'package:sporti/util/app_dimen.dart';
+import 'package:sporti/util/app_media.dart';
 
 import 'card_item_widget.dart';
 
@@ -22,8 +23,16 @@ class ExerciseListWidget extends StatelessWidget {
               if (logic.isLoading) ...[
                 const Expanded(child:  ShimmerSearchWidget()),
               ] else if (!logic.isLoading && logic.exerciseList.isEmpty) ...[
-                const SizedBox.shrink()
-              ] else ...[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Image.asset(AppMedia.emptySearch,
+                        fit: BoxFit.cover,),
+                    ),
+                  ),
+                )
+              ]else ...[
                 Expanded(
                   child: GridView.builder(
                       shrinkWrap: true,

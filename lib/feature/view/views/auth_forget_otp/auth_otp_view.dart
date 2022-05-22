@@ -56,7 +56,7 @@ class _AuthOTPViewState extends State<AuthOTPView> {
     return Form(
       key: _formKey,
       child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15),
           child: PinCodeTextField(
             autoFocus: true,
             autoDismissKeyboard: true,

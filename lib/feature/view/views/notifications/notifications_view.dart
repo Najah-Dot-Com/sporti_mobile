@@ -7,6 +7,7 @@ import 'package:sporti/feature/view/views/home_page/widget/widget_home_tab/shimm
 import 'package:sporti/feature/view/views/notifications/widget/notification_item.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
+import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_strings.dart';
 import '../../../viewmodel/notification_viewmodel.dart';
 import '../categoriy_exercise_details/widget/page_shimmer_widget.dart';
@@ -60,7 +61,30 @@ class NotificationsView extends StatelessWidget {
           },
           builder: (logic) {
             if (logic.isLoading) {
-              return const ShimmerSelectYourWorkWidget();
+              return Column(
+                children:const [
+                   ShimmerSelectYourWorkWidget(),
+                   ShimmerSelectYourWorkWidget(),
+                   ShimmerSelectYourWorkWidget(),
+                   ShimmerSelectYourWorkWidget(),
+                   ShimmerSelectYourWorkWidget(),
+                   ShimmerSelectYourWorkWidget(),
+                ],
+              );
+            }else if(!logic.isLoading && logic.notificatiosDataList.isEmpty){
+              return Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Image.asset(AppMedia.emptyState,
+                          fit: BoxFit.cover,),
+                      ),
+                    ),
+                  ),
+                ],
+              );
             }
             return Padding(
               padding: const EdgeInsets.symmetric(

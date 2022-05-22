@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
 import 'dart:async';
@@ -9,13 +10,18 @@ import 'dart:async';
 import 'package:logger/logger.dart';
 import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
+import 'package:sporti/util/app_shaerd_data.dart';
+import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
 
 class DioManagerClass {
   DioManagerClass._();
+
   static final DioManagerClass getInstance = DioManagerClass._();
+
   factory DioManagerClass() => getInstance;
   Dio? _dio;
+
   Dio init() {
     _dio = Dio(
       BaseOptions(
@@ -34,9 +40,13 @@ class DioManagerClass {
       {var url, Map<String, dynamic>? header, var queryParameters}) async {
     print("msg_request_url : $url");
     print("msg_request_header : $header");
-    return await _dio!.get(url,
-        options: Options(headers: header),
-        queryParameters: queryParameters ?? {});
+    if (await checkInternetConnectivity()) {
+      return await _dio!.get(url,
+          options: Options(headers: header),
+          queryParameters: queryParameters ?? {});
+    } else {
+      throw SocketException(AppStrings.txtConnection.tr.toString());
+    }
   }
 
   Future<Response> dioPostMethod(
@@ -46,11 +56,15 @@ class DioManagerClass {
     print("msg_request_url : $url");
     print("msg_request_header : $header");
     print("msg_request_body : $body");
-    return await _dio!.post(
-      url,
-      options: Options(headers: header),
-      data: body,
-    );
+    if (await checkInternetConnectivity()) {
+      return await _dio!.post(
+        url,
+        options: Options(headers: header),
+        data: body,
+      );
+    } else {
+      throw SocketException(AppStrings.txtConnection.tr.toString());
+    }
   }
 
   Future<Response> dioPostFormMethod(
@@ -58,11 +72,15 @@ class DioManagerClass {
     print("msg_request_url : $url");
     print("msg_request_header : $header");
     print("msg_request_body : $body");
-    return await _dio!.post(
-      url,
-      options: Options(headers: header),
-      data: FormData.fromMap(body),
-    );
+    if (await checkInternetConnectivity()) {
+      return await _dio!.post(
+        url,
+        options: Options(headers: header),
+        data: FormData.fromMap(body),
+      );
+    } else {
+      throw SocketException(AppStrings.txtConnection.tr.toString());
+    }
   }
 
   Future<Response> dioUpdateMethod(
@@ -72,7 +90,12 @@ class DioManagerClass {
     print("msg_request_url : $url");
     print("msg_request_header : $header");
     print("msg_request_body : $body");
-    return await _dio!.put(url, options: Options(headers: header), data: body);
+    if (await checkInternetConnectivity()) {
+      return await _dio!
+          .put(url, options: Options(headers: header), data: body);
+    } else {
+      throw SocketException(AppStrings.txtConnection.tr.toString());
+    }
   }
 
   Future<Response> dioDeleteMethod(
@@ -82,17 +105,18 @@ class DioManagerClass {
     print("msg_request_url : $url");
     print("msg_request_header : $header");
     print("msg_request_body : $body");
-    return await _dio!
-        .delete(url, options: Options(headers: header), data: body);
+    if (await checkInternetConnectivity()) {
+      return await _dio!
+          .delete(url, options: Options(headers: header), data: body);
+    } else {
+      throw SocketException(AppStrings.txtConnection.tr.toString());
+    }
   }
 
-  Future<String> uploadImage({File? file}) async {
-    String fileName = file!.path.split('/').last;
-    FormData formData = FormData.fromMap({
-      "file": await MultipartFile.fromFile(file.path, filename: fileName),
-    });
-    dynamic response = await _dio?.post("/info", data: formData);
-    return response.data['id'];
+  Future<bool> checkInternetConnectivity() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    return connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi;
   }
 }
 
@@ -117,6 +141,11 @@ class ApiInterceptors extends Interceptor {
     if (err.message.contains("401")) {
       SharedPref.instance.setUserLogin(false);
       getx.Get.offAll(LoginView());
+      return;
+    }
+    if(err.message.contains("SocketException")){
+      // getx.Get.offAll(LoginView());
+      snackError("",AppStrings.txtConnection.tr.toString().replaceAll("SocketException", ""));
     }
   }
 }

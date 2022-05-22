@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:sporti/feature/view/appwidget/custom_text_filed.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/primary_button.dart';
@@ -164,7 +165,7 @@ class MoneyGiftView extends StatelessWidget {
                                 textButton: AppStrings.txtSend.tr,
                                 isLoading: logic.isLoading,
                                 width: AppSize.s120,
-                                onClicked: ()=> _onSendClicked(logic));
+                                onClicked: !handleNullPrice() ? (){}:()=> _onSendClicked(logic));
                           }),
                         ),
                       ],
@@ -183,6 +184,17 @@ class MoneyGiftView extends StatelessWidget {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       logic.requestUserBalance(_emailController, _noteController);
+    }
+  }
+
+  bool handleNullPrice() {
+    Logger().d(SharedPref.instance.getUserData().balance);
+    if(SharedPref.instance.getUserData().balance  == null ){
+      return false;
+    }else if(SharedPref.instance.getUserData().balance != null && int.tryParse(SharedPref.instance.getUserData().balance.toString().replaceAll("\$", ""))!.toInt() < 1){
+      return false;
+    }else{
+      return true;
     }
   }
 }

@@ -86,9 +86,21 @@ class CategoriesMyWorkListView extends StatelessWidget {
                     return const ShimmerSelectYourWorkWidget();
                   });
 
-            }else if(!logic.isLoading && logic.exercisesListAll.isEmpty){
+            }else if(!logic.isLoading && logic.exercisesListFavorite.isEmpty){
               //todo:// here we will add empty state widget
-              return const SizedBox.shrink();
+              return  Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Image.asset(AppMedia.emptyState,
+                          fit: BoxFit.cover,),
+                      ),
+                    ),
+                  ),
+                ],
+              );
             }else {
               return ListView.builder(
               physics: AppStyleScroll.customScrollViewIOS(),

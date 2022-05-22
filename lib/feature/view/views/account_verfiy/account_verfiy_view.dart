@@ -132,6 +132,6 @@ class AccountVerifyView extends StatelessWidget {
     String userPhoneNumAndCode =
         '$counteryCode${_phoneNumberController.text.toString()}';
     Logger().i('userPhoneNumAndCode : $userPhoneNumAndCode');
-    logic.verifyAccount(userPhoneNumber: userPhoneNumAndCode);
+    logic.verifyAccount(userPhoneNumber: userPhoneNumAndCode , onResendCodeClick: false);
   }
 }

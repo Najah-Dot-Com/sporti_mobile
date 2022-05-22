@@ -7,6 +7,9 @@ class AppStrings {
   static const String messageMatcherEmail = "messageMatcherEmail";
   static const String txtConnectionNote = "txtConnectionNote";
   static const String txtFiledRequired = "txtFiledRequired";
+  static const String txtConnection = "txtConnection";
+  static const String txtSkip = "Skip";
+  static const String txtNext = "Next";
 
   //TODO:this for  [money fail page]
   static const String txtMoneyEnough = "ليس لديك عملات كافية";
@@ -125,4 +128,6 @@ class AppStrings {
   //todo this for update password
   static const String txtOldPassword = "oldPassword";
   static const String txtNewPassword = "newPassword";
+
+
 }

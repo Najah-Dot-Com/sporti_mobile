@@ -29,6 +29,7 @@ class SharedPref {
   final String termsDetailskey = "termsDetailskey";
   final String policyTitlekey = "policyTitlekey";
   final String policyDetailskey = "policyDetailskey";
+  final String isBoardingViewKey = "isBoardingView";
 
   final String userNameKey = "userName";
   final String passwordKey = "password";
@@ -226,6 +227,23 @@ class SharedPref {
       setUserData(jsonEncode(userData.toJson()));
     } catch (e) {
       Logger().e(e);
+    }
+  }
+
+  void setOnBoardingView(bool isView) {
+    try {
+       _prefs?.setBool(isBoardingViewKey , isView) ;
+    } catch (e) {
+      Logger().e(e);
+    }
+  }
+
+  bool getOnBoardingView() {
+    try {
+    return  _prefs?.getBool(isBoardingViewKey) ?? false ;
+    } catch (e) {
+      Logger().e(e);
+      return false;
     }
   }
 }

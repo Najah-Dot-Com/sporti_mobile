@@ -57,7 +57,7 @@ class _AccountOtpViewState extends State<AccountOtpView> {
     return Form(
       key: _formKey,
       child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15),
           child: PinCodeTextField(
             autoFocus: true,
             autoDismissKeyboard: true,
@@ -218,7 +218,7 @@ class _AccountOtpViewState extends State<AccountOtpView> {
     FocusManager.instance.primaryFocus?.unfocus();
     bool isValidate = _formKey.currentState!.validate();
     if (isValidate) {
-      logic.verifyAccount(userPhoneNumber: widget.userPhoneNumer!);
+      logic.verifyAccount(userPhoneNumber: widget.userPhoneNumer! , onResendCodeClick:true);
       // logic.isLoading = false;
     }
     // logic.isLoading = false;

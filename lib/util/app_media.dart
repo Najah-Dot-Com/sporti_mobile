@@ -2,6 +2,8 @@ const String IMAGE_PATH = "assets/images";
 
 class AppMedia {
   static const String loadingShimmer = "$IMAGE_PATH/loading_shimmer.gif";
+  static const String emptyState = "$IMAGE_PATH/empty_state.gif";
+  static const String emptySearch = "$IMAGE_PATH/empty_search.gif";
   static const String errorMoney = "$IMAGE_PATH/error_money.svg";
   static const String collectMoney = "$IMAGE_PATH/collectMoney.svg";
   static const String verify = "$IMAGE_PATH/verify.svg";

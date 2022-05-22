@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
+import 'package:sporti/feature/view/views/auth_on_bording/on_bording_view.dart';
 import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_media.dart';
@@ -33,7 +34,11 @@ class _SplashViewState extends State<SplashView>
          if(SharedPref.instance.getIsUserLogin()){
            Get.offAll(const HomePageView());
          }else {
-           Get.offAll( LoginView());
+           if(!SharedPref.instance.getOnBoardingView()) {
+             Get.offAll(LoginView());
+           }else {
+             Get.offAll(const OnBoardingView());
+           }
          }
        });
     });

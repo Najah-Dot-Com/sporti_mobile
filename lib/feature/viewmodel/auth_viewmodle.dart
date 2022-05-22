@@ -145,6 +145,7 @@ class AuthViewModel extends GetxController {
           isLoading = false;
           update();
         } else {
+          snackError("Error", AppStrings.txtConnection.tr);
           isLoading = false;
           update();
         }
@@ -228,6 +229,7 @@ class AuthViewModel extends GetxController {
           update();
           snackSuccess("", value.message);
         } else {
+          snackError("", value.message);
           isLoading = false;
           update();
         }
@@ -255,6 +257,7 @@ class AuthViewModel extends GetxController {
   Future<void> _verifyEmail(var parameters) async {
     try {
       resendCodeLoding = true;
+      isLoading = true;
       update();
       await AuthFeature.getInstance
           .verifyUserEmail(parameters)
@@ -264,13 +267,16 @@ class AuthViewModel extends GetxController {
         if (value.status) {
           //TODO: if verification and success go to ForgetOtpView page
           resendCodeLoding = false;
+          isLoading = false;
           update();
           await snackSuccess("", value.message);
           await Get.to(AuthOTPView(
             email: parameters,
           ));
         } else {
+          await snackError("", value.message);
           resendCodeLoding = false;
+          isLoading = false;
           update();
         }
       }).catchError((onError) {
@@ -278,11 +284,13 @@ class AuthViewModel extends GetxController {
         snackError("", onError.toString());
         Logger().d(onError.toString());
         resendCodeLoding = false;
+        isLoading = false;
         update();
       });
     } catch (e) {
       Logger().d(e.toString());
       resendCodeLoding = false;
+      isLoading = false;
       update();
     }
   }
@@ -329,6 +337,7 @@ class AuthViewModel extends GetxController {
             Get.offAll(() => LoginView());
           }
         } else {
+          await snackError("", value.message);
           isLoading = false;
           update();
         }
@@ -347,40 +356,52 @@ class AuthViewModel extends GetxController {
   }
 
   //click on verifyAccount in btn on login page
-  void verifyAccount({@required var userPhoneNumber}) {
+  void verifyAccount({required var userPhoneNumber,required bool onResendCodeClick}) {
     Map<String, dynamic> map = {
       ConstanceNetwork.userPhoneNumer: userPhoneNumber,
     };
     Logger().d(map);
-    _verifyAccount(map, userPhoneNumber);
+    _verifyAccount(map, userPhoneNumber , onResendCodeClick);
   }
 
-  Future<void> _verifyAccount(Map<String, dynamic> map, var phoneNumber) async {
+  Future<void> _verifyAccount(Map<String, dynamic> map, var phoneNumber, bool onResendCodeClick) async {
     Logger().d(phoneNumber);
     try {
+
       resendCodeLoding = true;
+      if(!onResendCodeClick) {
+        isLoading = true;
+      }
       update();
       await AuthFeature.getInstance.verifyAccount(map).then((value) async {
         if (value.status) {
           // if success go to AccountOtpView page
           Logger().d(value.toJson());
           resendCodeLoding = false;
+          isLoading = false;
           await snackSuccess("", value.message ?? "");
           update();
           // Get.to(page)
           Logger().d(phoneNumber);
           Get.to(() => AccountOtpView(userPhoneNumer: phoneNumber));
+        }else{
+          resendCodeLoding = false;
+          isLoading = false;
+          await snackError("", value.message ?? "");
+          update();
         }
       }).catchError((onError) {
         //handle error from value
         snackError("", onError.toString());
         Logger().d(onError.toString());
         resendCodeLoding = false;
+        isLoading = false;
         update();
       });
     } catch (e) {
       Logger().d(e.toString());
       resendCodeLoding = false;
+      isLoading = false;
       update();
     }
   }
@@ -409,6 +430,7 @@ class AuthViewModel extends GetxController {
           await snackSuccess("", value.message);
           Get.to(const AccountSuccessVerifyView());
         } else {
+          await snackError("", value.message);
           isLoading = false;
           update();
         }
@@ -446,6 +468,7 @@ class AuthViewModel extends GetxController {
           update();
           await SharedPref.instance.setUserLogin(false);
           Get.offAll(LoginView());
+          snackError("", value.message);
           await SharedPref.instance.clear();
         }
       }).catchError((onError) {
@@ -581,6 +604,7 @@ class AuthViewModel extends GetxController {
         } else {
           isLoading = false;
           isDoneUploadImage = false;
+          snackError("", value.message);
           update();
         }
       }).catchError((onError) {
@@ -638,6 +662,7 @@ class AuthViewModel extends GetxController {
         snackSuccess("", value.message);
         update();
       } else {
+        snackError("", value.message);
         isLoading = false;
         update();
       }
