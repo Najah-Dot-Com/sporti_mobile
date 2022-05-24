@@ -2,7 +2,6 @@ abstract class Constance {
   static const Font_regular = "regular";
   static const Font_simiaBold = "semi_bold";
   static const Font_bold = "bold";
-  
 
   static const DateFormatSlash = "yyyy-MM-dd";
   static const TimeFormat24 = "HH:mm";
@@ -14,7 +13,6 @@ abstract class Constance {
   static const int maxLineSaven = 7;
 
 // notifications
-static const newExersiceType = "new_exersice";
-
-
+  static const newExersiceType = "new_exersice";
+  static const returnExersiceType = "return_exersice";
 }

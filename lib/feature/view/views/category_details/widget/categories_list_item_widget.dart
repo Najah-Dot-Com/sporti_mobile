@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
@@ -17,10 +19,11 @@ import 'package:sporti/util/date_time_util.dart';
 class CategoriesListItemWidget extends StatelessWidget {
   const CategoriesListItemWidget({
     Key? key,
-    required this.packageDetails,required this.viewModel,
+    required this.packageDetails,
+    required this.viewModel,
   }) : super(key: key);
   final ExercisesData? packageDetails;
-  final  HomeViewModel? viewModel;
+  final HomeViewModel? viewModel;
   final String fakeImage =
       "https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/07/1377301-1183869-The-8-Best-Weight-Benches-of-2021-1296x728-Header-c0dcdf.jpg?w=1575";
 
@@ -54,7 +57,8 @@ class CategoriesListItemWidget extends StatelessWidget {
                   width: AppSize.s150,
                   height: AppSize.s120,
                   fit: BoxFit.cover,
-                  url:"${ConstanceNetwork.baseImageExercises}${packageDetails?.imageSingleSlide??fakeImage}" ),
+                  url:
+                      "${ConstanceNetwork.baseImageExercises}${packageDetails?.imageSingleSlide ?? fakeImage}"),
             ),
             const SizedBox(
               width: AppSize.s20,
@@ -101,18 +105,33 @@ class CategoriesListItemWidget extends StatelessWidget {
     );
   }
 
-  void _onExerciseClick() async{
-   var result =  await Get.to(CategoriyExerciseDetailsView(packageDetails: packageDetails));
-   if(result){
+  void _onExerciseClick() async {
+    var result = await Get.to(
+        CategoriyExerciseDetailsView(packageDetails: packageDetails));
+    if (result) {
       viewModel?.packagesExercisesDetails(packageDetails?.parentId);
-   }
+    }
   }
 
   String _returnInData() {
-    return AppStrings.txtReturnIn.tr +
-        " " +
-        DateUtility.convertDateTimeToAmPmTime(DateUtility.convertTimeTo24(
-                    DateUtility.stringToTimeOfDay(
-                        packageDetails!.returnTime.toString()))).toString();
+    var stringToTimeOfDay =
+        DateUtility.stringToTimeOfDay(packageDetails!.returnTime.toString());
+    if (packageDetails!.returnDate!.isAtSameMomentAs(
+        DateFormat("yyyy-MM-dd").parse(DateTime.now().toString()))) {
+      return AppStrings.txtReturnIn.tr +
+          " " +
+          DateUtility.convertDateTimeToAmPmTime(
+              DateUtility.convertTimeTo24(stringToTimeOfDay)
+                  .add(const Duration(hours: 3)));
+    }else{
+      initializeDateFormatting(isArabicLang() ? 'ar' : 'en');
+      return AppStrings.txtReturnIn.tr +
+          " " +
+          DateFormat('EEEE',isArabicLang() ? "ar" : "en").format(packageDetails!.returnDate!)+
+          " " +
+          DateUtility.convertDateTimeToAmPmTime(
+              DateUtility.convertTimeTo24(stringToTimeOfDay)
+                  .add(const Duration(hours: 3)));
+    }
   }
 }

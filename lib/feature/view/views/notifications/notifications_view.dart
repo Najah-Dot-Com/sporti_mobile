@@ -96,19 +96,22 @@ class NotificationsView extends StatelessWidget {
                   children: [
 
                     Expanded(
-                      child: ListView.separated(
-                        controller: scrollController,
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: AppSize.s10,
-                        ),
-                        itemCount: logic.notificatiosDataList.length,
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            onClickNotifyItem(logic: logic, index: index);
-                          },
-                          child: NotificationItemWidget(
-                              data: logic.notificatiosDataList.reversed
-                                  .toList()[index]),
+                      child: RefreshIndicator(
+                        onRefresh: _onRefresh,
+                        child: ListView.separated(
+                          controller: scrollController,
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: AppSize.s10,
+                          ),
+                          itemCount: logic.notificatiosDataList.toList().length,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              onClickNotifyItem(logic: logic, index: index);
+                            },
+                            child: NotificationItemWidget(
+                                data: logic.notificatiosDataList
+                                    .toList()[index]),
+                          ),
                         ),
                       ),
                     ),
@@ -147,10 +150,17 @@ class NotificationsView extends StatelessWidget {
   onClickNotifyItem({NotificationViewModel? logic, int? index}) {
     try {
       logic!.isLoading = true;
-      AppFcm.goToOrderPage(logic.notificatiosDataList[index!].toJson());
+      AppFcm.goToOrderPage(logic.notificatiosDataList.toList()[index!].toJson());
       logic.isLoading = false;
     } on Exception catch (e) {
       Logger().d(" AppFcm.goToOrderPage :", e.toString());
     }
+  }
+
+  Future<void> _onRefresh() async{
+    _notificationViewModel.notificatiosDataList.clear();
+    _notificationViewModel.page = 0;
+    await _notificationViewModel.getAllNotifications(0);
+    await Future.delayed(const Duration(seconds: 1));
   }
 }

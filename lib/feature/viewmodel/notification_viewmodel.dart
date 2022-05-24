@@ -9,7 +9,7 @@ import '../../util/app_shaerd_data.dart';
 class NotificationViewModel extends GetxController {
   bool isLoading = false;
   bool isLoadingMore = false;
-  List<NotificationData> notificatiosDataList = [];
+  Set<NotificationData> notificatiosDataList = <NotificationData>{};
   int? page = 1;
   int? pageTotal = 0;
 
@@ -17,7 +17,7 @@ class NotificationViewModel extends GetxController {
   onInit() async {
     super.onInit();
     page = 1;
-    notificatiosDataList = [];
+    notificatiosDataList = {};
     await getAllNotifications(page);
   }
 
@@ -44,7 +44,8 @@ class NotificationViewModel extends GetxController {
       await NotificationsFeature.getInstance
           .allNotifications(page)
           .then((value) async {
-        if (value.data != null && value.data!.toList().isNotEmpty) {
+        if (value.data != null &&
+            value.data!.toList().isNotEmpty) {
           // notificatiosDataList = value.data!.toList();
           for(var item in value.data!.toList()){
             if(!notificatiosDataList.contains(item)){

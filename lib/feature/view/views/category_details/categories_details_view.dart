@@ -120,7 +120,7 @@ class CategoriesDetailsView extends StatelessWidget {
                             width: double.infinity,
                             height: AppSize.s200,
                             fit: BoxFit.cover,
-                            url: "${ConstanceNetwork.baseImageExercises}${package?.image?[itemIndex]??fakeImage}");
+                            url: package?.image?[itemIndex] == null ? fakeImage:"${ConstanceNetwork.baseImageExercises}${package?.image?[itemIndex]}");
                         },
                         options: CarouselOptions(
                           height: AppSize.s400,

@@ -404,6 +404,8 @@ class DateUtility {
     }
   }
 
+
+
   static compareToTime(TimeOfDay oneVal, TimeOfDay twoVal) {
     try {
       Logger().d("$oneVal  $twoVal");
@@ -524,6 +526,12 @@ class DateUtility {
     var format = DateFormat("HH:mm a");
     var time = format.parse(timeOfDay.format(Get.context!));
     return time;
+  }
+
+  static String convertTimeToAmPm(TimeOfDay timeOfDay){
+    var format = DateFormat("HH:mm a");
+    var time = format.parse(timeOfDay.format(Get.context!));
+    return DateFormat("yyyy-MM-dd hh:mm a").format(time);
   }
 }
 

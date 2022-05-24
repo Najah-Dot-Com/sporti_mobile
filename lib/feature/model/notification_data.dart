@@ -7,20 +7,23 @@ class NotificationData {
   String? notifyType;
   String? title;
   String? body;
-  NotificationData({this.id, this.notifyType, this.title, this.body});
+  DateTime? createdAt;
+  NotificationData({this.createdAt,this.id, this.notifyType, this.title, this.body});
   factory NotificationData.fromJson(Map<String, dynamic> json) =>
       NotificationData(
         id: json['id'] == null ? null:json['id'],
         notifyType: json[ConstanceNetwork.notifyType] == null ? null:json[ConstanceNetwork.notifyType],
         title: json['title'] == null ? null:json['title'],
         body: json['body'] == null ? null:json['body'],
+        createdAt: json['created_at'] == null ? null:DateTime.parse(json['created_at']),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id == null ? null:id,
         ConstanceNetwork.notifyType: notifyType == null ? null:notifyType,
         "title": title == null ? null:title,
-        "body": body == null ? null:body
+        "body": body == null ? null:body,
+        "created_at": createdAt == null ? null:createdAt!.toIso8601String(),
       };
 }
 class Result {

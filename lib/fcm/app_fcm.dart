@@ -17,7 +17,9 @@ import '../feature/viewmodel/notification_viewmodel.dart';
 
 class AppFcm {
   AppFcm._();
+
   static final AppFcm fcmInstance = AppFcm._();
+
   factory AppFcm() => fcmInstance;
 
   init() {
@@ -57,7 +59,7 @@ class AppFcm {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       _homeViewModel.allPackagesExercises();
       _homeViewModel.allPackagesTopExercises();
-      _notificationsViewModel.getAllNotifications(_notificationsViewModel.page);
+      _notificationsViewModel.getAllNotifications(1);
     });
     Future.delayed(Duration(seconds: 3)).then((value) {
       //flutterLocalNotificationsPlugin.cancelAll();
@@ -184,10 +186,12 @@ class AppFcm {
     );
     try {
       if (map[ConstanceNetwork.notifyType] == Constance.newExersiceType) {
-        Get.to(
-            () => CategoriyExerciseDetailsView(packageDetails: packageDetails));
+        Get.to(() => CategoriyExerciseDetailsView(packageDetails: packageDetails));
+      } else if (map[ConstanceNetwork.notifyType] ==
+          Constance.returnExersiceType) {
+        Get.to( () => CategoriyExerciseDetailsView(packageDetails: packageDetails));
       } else {
-        _homeViewModel.onTabChange(0);
+        // _homeViewModel.onTabChange(0);
       }
     } on Exception catch (e) {
       Logger().i('goToOrderPage Error', e.toString());

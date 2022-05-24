@@ -87,126 +87,132 @@ class _CategoryExerciseViewState extends State<CategoryExerciseView> {
             },
           ),
         ),
-        body: GetBuilder<DetailsExerciseViewModel>(builder: (logic) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // const SizedBox(
-              //     width: double.infinity,
-              //     child: Image(image: AssetImage(AppMedia.exircise_one))),
-              VideoPlayer(
-                videoUrl:_videoUrlHandler(),
-                onVideoChangeCallback: (controller) {
-                  controller.addListener(() => checkVideo(controller));
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    right: AppPadding.p20,
-                    left: AppPadding.p20,
-                    top: AppPadding.p60),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () => onDoneClick(logic),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Icon(logic.isExerciseDone!
-                              ? Icons.radio_button_checked
-                              : Icons.radio_button_off),
-                          const SizedBox(
-                            width: AppSize.s12,
-                          ),
-                          CustomTextView(
-                            txt: AppStrings.iFinishedExcercise.tr,
-                            textStyle: themeData.textTheme.headline5,
-                            textAlign: TextAlign.right,
-                          )
-                        ],
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () => onRemindClick(logic),
-                      child: Row(
-                        children: [
-                          Icon(logic.remindMeToRepeatExercise!
-                              ? Icons.radio_button_checked
-                              : Icons.radio_button_off),
-                          const SizedBox(
-                            width: AppSize.s12,
-                          ),
-                          CustomTextView(
-                            txt: AppStrings.rememberMeToRepeatExcercise.tr,
-                            textStyle: themeData.textTheme.headline5,
-                            textAlign: TextAlign.right,
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: AppSize.s14,
-                    ),
-                    if (logic.remindMeToRepeatExercise!) ...[
+        body: GetBuilder<DetailsExerciseViewModel>
+          (builder: (logic) {
+          return SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // const SizedBox(
+                //     width: double.infinity,
+                //     child: Image(image: AssetImage(AppMedia.exircise_one))),
+                VideoPlayer(
+                  videoUrl:_videoUrlHandler(),
+                  onVideoChangeCallback: (controller) {
+                    controller.addListener(() => checkVideo(controller));
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      right: AppPadding.p20,
+                      left: AppPadding.p20,
+                      top: AppPadding.p60),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
                       InkWell(
-                        onTap: () => _onDatePickerClick(logic),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: AppColor.white,
-                              borderRadius: BorderRadius.circular(AppSize.s12),
-                              border: Border.all(
-                                  color: AppColor.lightGrey,
-                                  style: BorderStyle.solid,
-                                  width: 1.0)),
-                          width: double.infinity,
-                          height: AppSize.s50,
-                          child: Center(
-                              child: CustomTextView(
-                            txt: logic.currentSelectedDate.isEmpty
-                                ? AppStrings.txtReturnDate.tr
-                                : logic.currentSelectedDate,
-                            textStyle: themeData.textTheme.headline1,
-                          )),
+                        onTap: () => onDoneClick(logic),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Icon(logic.isExerciseDone!
+                                ? Icons.radio_button_checked
+                                : Icons.radio_button_off),
+                            const SizedBox(
+                              width: AppSize.s12,
+                            ),
+                            CustomTextView(
+                              txt: AppStrings.iFinishedExcercise.tr,
+                              textStyle: themeData.textTheme.headline5,
+                              textAlign: TextAlign.right,
+                            )
+                          ],
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () => onRemindClick(logic),
+                        child: Row(
+                          children: [
+                            Icon(logic.remindMeToRepeatExercise!
+                                ? Icons.radio_button_checked
+                                : Icons.radio_button_off),
+                            const SizedBox(
+                              width: AppSize.s12,
+                            ),
+                            CustomTextView(
+                              txt: AppStrings.rememberMeToRepeatExcercise.tr,
+                              textStyle: themeData.textTheme.headline5,
+                              textAlign: TextAlign.right,
+                            )
+                          ],
                         ),
                       ),
                       const SizedBox(
                         height: AppSize.s14,
                       ),
-                      InkWell(
-                        onTap: () => _onTimePickerClick(logic),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: AppColor.white,
-                              borderRadius: BorderRadius.circular(AppSize.s12),
-                              border: Border.all(
-                                  color: AppColor.lightGrey,
-                                  style: BorderStyle.solid,
-                                  width: 1.0)),
-                          width: double.infinity,
-                          height: AppSize.s50,
-                          child: Center(
-                              child: CustomTextView(
-                            txt: logic.currentSelectedTime.isEmpty
-                                ? AppStrings.txtReturnTime.tr
-                                : logic.currentSelectedTime,
-                            textStyle: themeData.textTheme.headline1,
-                          )),
+                      if (logic.remindMeToRepeatExercise!) ...[
+                        InkWell(
+                          onTap: () => _onDatePickerClick(logic),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: AppColor.white,
+                                borderRadius: BorderRadius.circular(AppSize.s12),
+                                border: Border.all(
+                                    color: AppColor.lightGrey,
+                                    style: BorderStyle.solid,
+                                    width: 1.0)),
+                            width: double.infinity,
+                            height: AppSize.s50,
+                            child: Center(
+                                child: CustomTextView(
+                              txt: logic.currentSelectedDate.isEmpty
+                                  ? AppStrings.txtReturnDate.tr
+                                  : logic.currentSelectedDate,
+                              textStyle: themeData.textTheme.headline1,
+                            )),
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: AppSize.s28,
-                      ),
-                      PrimaryButton(
-                          textButton: AppStrings.txtSend.tr,
-                          isLoading: logic.isLoading,
-                          onClicked: () => _onReturnBtnClick(logic))
-                    ]
-                  ],
+                        const SizedBox(
+                          height: AppSize.s14,
+                        ),
+                        InkWell(
+                          onTap: () => _onTimePickerClick(logic),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: AppColor.white,
+                                borderRadius: BorderRadius.circular(AppSize.s12),
+                                border: Border.all(
+                                    color: AppColor.lightGrey,
+                                    style: BorderStyle.solid,
+                                    width: 1.0)),
+                            width: double.infinity,
+                            height: AppSize.s50,
+                            child: Center(
+                                child: CustomTextView(
+                              txt: logic.currentSelectedTime.isEmpty
+                                  ? AppStrings.txtReturnTime.tr
+                                  : logic.currentSelectedTimeView,
+                              textStyle: themeData.textTheme.headline1,
+                            )),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: AppSize.s28,
+                        ),
+                        PrimaryButton(
+                            textButton: AppStrings.txtSend.tr,
+                            isLoading: logic.isLoading,
+                            onClicked: () => _onReturnBtnClick(logic),),
+                        const SizedBox(
+                          height: AppSize.s28,
+                        ),
+                      ]
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         }),
       ),

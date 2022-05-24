@@ -107,7 +107,7 @@ class CategoriyExerciseDetailsView extends StatelessWidget {
                       child: imageNetwork(width: double.infinity,
                           height: AppSize.s400,
                           fit: BoxFit.cover,
-                          url: "${ConstanceNetwork.baseImageExercises}${logic.exerciseDetailsData?.image ?? fakeImage}")),
+                          url:logic.exerciseDetailsData?.image == null ? fakeImage: "${ConstanceNetwork.baseImageExercises}${logic.exerciseDetailsData?.image}")),
                   const SizedBox(height: AppSize.s28,),
                   CustomTextView(
                     txt: logic.exerciseDetailsData?.title,
@@ -121,17 +121,19 @@ class CategoriyExerciseDetailsView extends StatelessWidget {
                         color: AppColor.darkGrey, height: AppSize.s1_5),
                   ),
                   const SizedBox(height: AppSize.s28,),
-                  CustomTextView(
-                    txt: AppStrings.txtTargetMuscle.tr,
-                    textStyle: themeData.textTheme.headline2?.copyWith(
-                        color: AppColor.black),
-                  ),
-                  const SizedBox(height: AppSize.s12,),
-                  CustomTextView(
-                    txt: AppStrings.txtDetailsNote.tr,
-                    textStyle: themeData.textTheme.subtitle2?.copyWith(
-                        color: AppColor.darkGrey, height: AppSize.s1_5),
-                  ),
+                  if(logic.exerciseDetailsData?.targetMusales != null)...[
+                    CustomTextView(
+                      txt: AppStrings.txtTargetMuscle.tr,
+                      textStyle: themeData.textTheme.headline2?.copyWith(
+                          color: AppColor.black),
+                    ),
+                    const SizedBox(height: AppSize.s12,),
+                    CustomTextView(
+                      txt: logic.exerciseDetailsData?.targetMusales ,
+                      textStyle: themeData.textTheme.subtitle2?.copyWith(
+                          color: AppColor.darkGrey, height: AppSize.s1_5),
+                    ),
+                  ]
                 ],
               ),
             );

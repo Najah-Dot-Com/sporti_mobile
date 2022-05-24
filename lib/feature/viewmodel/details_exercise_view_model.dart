@@ -23,6 +23,7 @@ class DetailsExerciseViewModel extends GetxController {
 
   String currentSelectedDate = "";
   String currentSelectedTime = "";
+  String currentSelectedTimeView = "";
 
 
   @override
@@ -132,6 +133,7 @@ class DetailsExerciseViewModel extends GetxController {
           isExerciseDone = false;
           currentSelectedDate = "";
           currentSelectedTime = "";
+          currentSelectedTimeView = "";
           remindMeToRepeatExercise = false;
           update();
           Get.back();
@@ -143,6 +145,7 @@ class DetailsExerciseViewModel extends GetxController {
           isExerciseDone = false;
           currentSelectedDate = "";
           currentSelectedTime = "";
+          currentSelectedTimeView = "";
           remindMeToRepeatExercise = false;
           update();
         }
@@ -154,6 +157,7 @@ class DetailsExerciseViewModel extends GetxController {
         isExerciseDone = false;
         currentSelectedDate = "";
         currentSelectedTime = "";
+        currentSelectedTimeView = "";
         remindMeToRepeatExercise = false;
         update();
       });
@@ -163,6 +167,7 @@ class DetailsExerciseViewModel extends GetxController {
       isExerciseDone = false;
       currentSelectedDate = "";
       currentSelectedTime = "";
+      currentSelectedTimeView = "";
       remindMeToRepeatExercise = false;
       update();
     }
@@ -181,7 +186,9 @@ class DetailsExerciseViewModel extends GetxController {
     var timePicker = await timeBiker();
     if (!GetUtils.isNull(timePicker)) {
       Logger().d(DateUtility.convertTimeTo24(timePicker!));
-      currentSelectedTime = "${DateUtility.convertTimeTo24(timePicker).hour}:${DateUtility.convertTimeTo24(timePicker).minute}";
+      var split = DateUtility.convertTimeToAmPm(timePicker).toString().split(" ");
+      currentSelectedTimeView = split[1] + " " + split[2]  ;
+      currentSelectedTime = "${DateUtility.convertTimeTo24(timePicker).toUtc().subtract(const Duration(hours: 1)).hour}:${DateUtility.convertTimeTo24(timePicker).toUtc().minute}";
     }
     update();
   }
