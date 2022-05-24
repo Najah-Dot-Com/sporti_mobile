@@ -9,6 +9,7 @@ import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 import 'package:sporti/fcm/app_fcm.dart';
 import 'package:sporti/feature/view/views/auth_splash/auth_splash_view.dart';
+import 'package:sporti/network/api/feature/auth_feature.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/app_theme.dart';
@@ -37,7 +38,8 @@ void main() async {
   runApp(MyApp());
 }
 
-void listener() {
+void listener() async{
+  await AuthFeature.getInstance.getAppSettings();
   if(SharedPref.instance.getIsUserLogin()){
     DateTime subtract = SharedPref.instance.getUserData().expiresIn!.subtract(const Duration(days: 1));
     if(subtract.isAtSameMomentAs(DateTime.now()) ||

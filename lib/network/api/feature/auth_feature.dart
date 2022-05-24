@@ -175,4 +175,18 @@ class AuthFeature {
       return appResponse;
     }
   }
+
+  Future<AppResponse> getAppSettings() async{
+    var appResponse = await AuthUseCase.getInstance.getAppSettings(
+        url: ConstanceNetwork.settingApi,
+        header: ConstanceNetwork.header(0));
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return appResponse;
+    } else {
+      snackError("",appResponse.message);
+      Logger().d("else ${appResponse.toJson()}");
+      return appResponse;
+    }
+  }
 }

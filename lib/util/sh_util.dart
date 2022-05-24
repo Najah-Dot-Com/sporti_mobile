@@ -7,6 +7,7 @@ import 'package:get/utils.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporti/feature/model/balance_data.dart';
+import 'package:sporti/feature/model/settings_data.dart';
 import 'package:sporti/feature/model/user_data.dart';
 import 'package:sporti/feature/viewmodel/privacyPolicy_viewmodel.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
@@ -30,6 +31,7 @@ class SharedPref {
   final String policyTitlekey = "policyTitlekey";
   final String policyDetailskey = "policyDetailskey";
   final String isBoardingViewKey = "isBoardingView";
+  final String appSettingsKey = "appSettings";
 
   final String userNameKey = "userName";
   final String passwordKey = "password";
@@ -244,6 +246,26 @@ class SharedPref {
     } catch (e) {
       Logger().e(e);
       return false;
+    }
+  }
+
+  setAppSettings(String encode) {
+    try {
+      _prefs?.setString(appSettingsKey , encode) ;
+    } catch (e) {
+      Logger().e(e);
+    }
+  }
+
+  SettingData getAppSettings() {
+    try {
+      var string = _prefs?.getString(appSettingsKey) ?? "";
+      var decode = json.decode(string);
+      SettingData profileData = SettingData.fromJson(decode);
+      return profileData;
+    } catch (e) {
+      Logger().e(e);
+      return SettingData();
     }
   }
 }

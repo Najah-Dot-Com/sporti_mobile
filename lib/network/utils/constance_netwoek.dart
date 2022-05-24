@@ -70,6 +70,7 @@ abstract class ConstanceNetwork {
   static String allNotificationse = "get_notification"; //?page=
   //privace and policy  end point
   static String getPages = "get_page";
+  static String settingApi = "setting";
 
 
 

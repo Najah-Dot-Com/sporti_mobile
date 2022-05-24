@@ -15,6 +15,7 @@ import 'package:sporti/util/app_strings.dart';
 import 'package:get/get.dart';
 import 'package:sporti/util/app_style.dart';
 import 'package:sporti/util/constance.dart';
+import 'package:sporti/util/sh_util.dart';
 
 class CategoriesDetailsView extends StatelessWidget {
   const CategoriesDetailsView(
@@ -111,6 +112,7 @@ class CategoriesDetailsView extends StatelessWidget {
                     const SizedBox(
                       height: AppSize.s28,
                     ),
+                    if(!logic.isLoading)...[
                     CarouselSlider.builder(
                       itemCount: package?.image?.length,
                         itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex){
@@ -140,10 +142,11 @@ class CategoriesDetailsView extends StatelessWidget {
                       height: AppSize.s28,
                     ),
                     CustomTextView(
-                      txt: AppStrings.txtDetailsNote.tr,
+                      txt: SharedPref.instance.getAppSettings().systemMessage?? AppStrings.txtDetailsNote.tr,
                       textStyle: themeData.textTheme.subtitle2
                           ?.copyWith(color: AppColor.grey),
                     ),
+                    ],
                     const SizedBox(
                       height: AppSize.s20,
                     ),
