@@ -25,6 +25,16 @@ class NotificationData {
         "body": body == null ? null:body,
         "created_at": createdAt == null ? null:createdAt!.toIso8601String(),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is NotificationData &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }
 class Result {
     Result({

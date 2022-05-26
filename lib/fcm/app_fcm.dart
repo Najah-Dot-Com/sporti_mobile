@@ -57,9 +57,10 @@ class AppFcm {
 
   void updatePages(RemoteMessage message) async {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      _homeViewModel.allPackagesExercises();
-      _homeViewModel.allPackagesTopExercises();
-      _notificationsViewModel.getAllNotifications(1);
+      Get.put<HomeViewModel>(HomeViewModel()).allPackagesExercises();
+      Get.put<HomeViewModel>(HomeViewModel()).allPackagesTopExercises();
+      Get.put<NotificationViewModel>(NotificationViewModel()).notificatiosDataList.clear();
+      Get.put<NotificationViewModel>(NotificationViewModel()).getAllNotifications(1);
     });
     Future.delayed(Duration(seconds: 3)).then((value) {
       //flutterLocalNotificationsPlugin.cancelAll();

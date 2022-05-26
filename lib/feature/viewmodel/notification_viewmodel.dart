@@ -81,9 +81,6 @@ class NotificationViewModel extends GetxController {
     update();
     if (page! <= pageTotal!) {
       page = page! + 1;
-      // await getAllAnnouncement(
-      //     pageIndexAllAnnouncement, pageSizeAllAnnouncement, "",
-      //     isPagination: true);
       await getAllNotifications(page);
       await  Future.delayed(const Duration(seconds: 0));
     }

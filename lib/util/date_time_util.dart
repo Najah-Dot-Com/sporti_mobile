@@ -180,7 +180,6 @@ class DateUtility {
       print('utc convert : $createdDate');
       var createdDate1 = (DateTime.parse(createdDate));
       print('utc convert2 : $createdDate1');
-
       return createdDate1;
     } catch (e) {
       print(e);

@@ -10,6 +10,7 @@ import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:get/get.dart';
+import 'package:sporti/util/sh_util.dart';
 
 class MoneyCollectView extends StatelessWidget {
   const MoneyCollectView({Key? key}) : super(key: key);
@@ -85,7 +86,7 @@ class MoneyCollectView extends StatelessWidget {
 
   String _balanceAccount() {
     return AppStrings.txtAccountBalance.tr +
-        " 200 " +
+        " ${SharedPref.instance.getUserData().balance} " +
         AppStrings.txtCurrency.tr;
   }
 
