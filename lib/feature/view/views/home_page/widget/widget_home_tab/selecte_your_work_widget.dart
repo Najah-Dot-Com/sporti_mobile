@@ -115,7 +115,7 @@ class SelectYourWorkWidget extends StatelessWidget {
               width: AppSize.s20,
             ),
             CustomTextView(
-              txt: "${package?.time.toString()} min",
+              txt: _handleTimePackage(),
               textStyle: themeData.textTheme.subtitle2
                   ?.copyWith(color: AppColor.grey, fontSize: AppFontSize.s16),
             ),
@@ -160,4 +160,14 @@ class SelectYourWorkWidget extends StatelessWidget {
       package: package,
     ));
   }
+
+  String _handleTimePackage() {
+    if(package?.time != null && package!.time! < 60) {
+      return "${package?.time.toString()}"+ " " + AppStrings.seconds.tr;
+    }else if(package?.time != null && package!.time! >= 60) {
+      return "${(package!.time! / 60).round()}"+ " " + AppStrings.minute.tr.substring(0,3);
+    }
+    return  "${package?.time.toString()}"+ " " + AppStrings.seconds.tr;
+  }
+
 }

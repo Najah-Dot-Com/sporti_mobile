@@ -84,6 +84,7 @@ Map<String, String> arSU = {
   AppStrings.iFinishedExcercise: "أتمت التمرين",
   AppStrings.hour: "ساعة",
   AppStrings.minute: "دقيقة",
+  AppStrings.seconds: "ثواني",
   AppStrings.txtFullName: "الاسم بالكامل",
   AppStrings.txtCancel: "الغاء",
   AppStrings.txtLogoutHint: "هل انت متاكد من انك تريد تسجيل الخروج",

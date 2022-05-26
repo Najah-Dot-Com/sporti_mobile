@@ -121,6 +121,7 @@ class AppStrings {
   static const String iFinishedExcercise = "أتمت التمرين";
   static const String hour = "ساعة";
   static const String minute = "دقيقة";
+  static const String seconds = "ثواني";//seconds
   static const String txtAttentions = "Attentions";
   static const String txtAttentionsHint = "AttentionsHint";
   static const String txtAttentionsHintNotComplete = "AttentionsHintNotComplete";

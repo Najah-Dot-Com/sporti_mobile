@@ -88,6 +88,7 @@ Map<String, String> enUS = {
   AppStrings.iFinishedExcercise: "Done the exercise",
   AppStrings.hour: "hour",
   AppStrings.minute: "minute",
+  AppStrings.seconds: "sec",
   AppStrings.txtFullName: "Full Name",
   AppStrings.txtCancel: "Cancel",
   AppStrings.txtLogoutHint: "Are you sure you want to logout",
