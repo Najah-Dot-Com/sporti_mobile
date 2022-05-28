@@ -21,8 +21,8 @@ Map<String, String> enUS = {
   AppStrings.txtCurrency: "Currency",
   AppStrings.txtCallRequest: "Please send a request to be contacted",
   AppStrings.txtCommunication: "Communication ",
-  AppStrings.txtCheckRevenue:
-      "Please make sure you get a total of \$20 or more",
+  AppStrings.txtCheckRevenue: "Please make sure you get a total of",
+  AppStrings.txtOrMore: "or more",
   AppStrings.txtCongratulations: "Congratulations on the achievement",
   AppStrings.txtYouDeserve: "you deserve",
   AppStrings.txtEmail: "Enter your email address",

@@ -36,6 +36,7 @@ class SignupView extends StatelessWidget {
   static final FocusNode _conPassFocusNode = FocusNode();
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final ScrollController _scrollController = ScrollController();
   Widget bottomSheetWidget(ThemeData themeData) {
     return Container(
       color: AppColor.white,
@@ -123,6 +124,7 @@ class SignupView extends StatelessWidget {
                       topRight: Radius.circular(50)),
                 ),
                 child: ListView(
+                  controller: _scrollController,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(
@@ -178,6 +180,7 @@ class SignupView extends StatelessWidget {
                               nexFocusNode: _passFocusNode,
                               controller: _emailController,
                               onSubmitted: (v) {
+                                _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
                                 if (v.isNotEmpty) {
                                   _passFocusNode.requestFocus();
                                 }
@@ -277,7 +280,7 @@ class SignupView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: AppSize.s60),
+                                 const SizedBox(height: AppSize.s100),
                               ],
                             ),
                           ],
@@ -287,7 +290,10 @@ class SignupView extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
+            const SizedBox(
+              height: AppSize.s50,
+            ),
           ],
         );
       }),

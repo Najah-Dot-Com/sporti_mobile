@@ -69,7 +69,7 @@ class MoneyCollectView extends StatelessWidget {
             ),
             CustomTextView(
               textAlign: TextAlign.center,
-              txt: AppStrings.txtCheckRevenue.tr,
+              txt: /*AppStrings.txtCheckRevenue.tr*/_getMaxBalanceAccount(),
               textStyle: themeData.textTheme.headline1
                   ?.copyWith(color: AppColor.black , fontSize: AppFontSize.s14),
             ),
@@ -88,6 +88,11 @@ class MoneyCollectView extends StatelessWidget {
     return AppStrings.txtAccountBalance.tr +
         " ${SharedPref.instance.getUserData().balance} " +
         AppStrings.txtCurrency.tr;
+  }
+  String _getMaxBalanceAccount() {
+    return AppStrings.txtCheckRevenue.tr +
+        " ${SharedPref.instance.getAppSettings().maxGift} " +
+        AppStrings.txtOrMore.tr;
   }
 
   void _onGoCommunicationClicked() {

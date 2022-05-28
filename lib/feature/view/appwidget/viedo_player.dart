@@ -50,8 +50,8 @@ class _VideoPlayerState extends State<VideoPlayer> {
         allowMuting: true,
         autoInitialize: true,
         // placeholder: ShimmerLoadingAnnouncement(),
-        aspectRatio: (MediaQuery.of(context).size.width /
-            MediaQuery.of(context).size.width) /*w,h*/
+        // aspectRatio: (MediaQuery.of(context).size.width /
+        //     MediaQuery.of(context).size.width) /*w,h*/
         );
     videoPlayerController.addListener(() {
       widget.onVideoChangeCallback!(videoPlayerController);

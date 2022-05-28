@@ -8,6 +8,7 @@ import 'package:sporti/feature/view/views/auth_login/auth_login_view.dart';
 import 'package:sporti/feature/view/views/auth_resetpassword/auth_resetpassword_view.dart';
 import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
 import 'package:sporti/feature/view/views/money_collect/money_collect_view.dart';
+import 'package:sporti/feature/viewmodel/firebase_auth_model.dart';
 import 'package:sporti/network/api/feature/auth_feature.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_color.dart';
@@ -356,48 +357,64 @@ class AuthViewModel extends GetxController {
   }
 
   //click on verifyAccount in btn on login page
-  void verifyAccount({required var userPhoneNumber,required bool onResendCodeClick}) {
+  void verifyAccount(
+      {required var userPhoneNumber, required bool onResendCodeClick}) {
     Map<String, dynamic> map = {
       ConstanceNetwork.userPhoneNumer: userPhoneNumber,
     };
     Logger().d(map);
-    _verifyAccount(map, userPhoneNumber , onResendCodeClick);
+    _verifyAccount(map, userPhoneNumber, onResendCodeClick);
   }
 
-  Future<void> _verifyAccount(Map<String, dynamic> map, var phoneNumber, bool onResendCodeClick) async {
+  Future<void> _verifyAccount(
+      Map<String, dynamic> map, var phoneNumber, bool onResendCodeClick) async {
     Logger().d(phoneNumber);
     try {
-
       resendCodeLoding = true;
-      if(!onResendCodeClick) {
+      if (!onResendCodeClick) {
         isLoading = true;
       }
       update();
-      await AuthFeature.getInstance.verifyAccount(map).then((value) async {
-        if (value.status) {
-          // if success go to AccountOtpView page
-          Logger().d(value.toJson());
-          resendCodeLoding = false;
-          isLoading = false;
-          await snackSuccess("", value.message ?? "");
-          update();
-          // Get.to(page)
-          Logger().d(phoneNumber);
-          Get.to(() => AccountOtpView(userPhoneNumer: phoneNumber));
-        }else{
-          resendCodeLoding = false;
-          isLoading = false;
-          await snackError("", value.message ?? "");
-          update();
-        }
-      }).catchError((onError) {
-        //handle error from value
-        snackError("", onError.toString());
-        Logger().d(onError.toString());
+      await FirebaseAuthModel.instance.verifyPhoneNumber(phoneNumber, () async {
+        //todo here we will do success case
+        resendCodeLoding = false;
+        isLoading = false;
+        // await snackSuccess("", value.message ?? "");
+        update();
+        // Get.to(page)
+        Logger().d(phoneNumber);
+        Get.to(() => AccountOtpView(userPhoneNumer: phoneNumber));
+      }, () {
+        //todo here we will do fail case
         resendCodeLoding = false;
         isLoading = false;
         update();
       });
+      // await AuthFeature.getInstance.verifyAccount(map).then((value) async {
+      //   if (value.status) {
+      //     // if success go to AccountOtpView page
+      //     Logger().d(value.toJson());
+      //     resendCodeLoding = false;
+      //     isLoading = false;
+      //     await snackSuccess("", value.message ?? "");
+      //     update();
+      //     // Get.to(page)
+      //     Logger().d(phoneNumber);
+      //     Get.to(() => AccountOtpView(userPhoneNumer: phoneNumber));
+      //   }else{
+      //     resendCodeLoding = false;
+      //     isLoading = false;
+      //     await snackError("", value.message ?? "");
+      //     update();
+      //   }
+      // }).catchError((onError) {
+      //   //handle error from value
+      //   snackError("", onError.toString());
+      //   Logger().d(onError.toString());
+      //   resendCodeLoding = false;
+      //   isLoading = false;
+      //   update();
+      // });
     } catch (e) {
       Logger().d(e.toString());
       resendCodeLoding = false;
@@ -420,27 +437,64 @@ class AuthViewModel extends GetxController {
     try {
       isLoading = true;
       update();
-      await AuthFeature.getInstance.confirmAccount(map).then((value) async {
-        //handle object from value || [save in sharedPreferences]
-        Logger().d(value.toJson());
-        if (value.status) {
-          //TODO: if verification and success go to ForgetOtpView page
-          isLoading = false;
-          update();
-          await snackSuccess("", value.message);
-          Get.to(const AccountSuccessVerifyView());
-        } else {
-          await snackError("", value.message);
-          isLoading = false;
-          update();
-        }
-      }).catchError((onError) {
+      Logger().d(map[ConstanceNetwork.code]);
+      await FirebaseAuthModel.instance
+          .sendCodeToFirebase(
+              code: map[ConstanceNetwork.code].toString(),
+              onSuccess: () async {
+                await AuthFeature.getInstance
+                    .activatedAccountFirebaseApi()
+                    .then((value) async {
+                  if (value.status) {
+                    //TODO: if verification and success go to ForgetOtpView page
+                    isLoading = false;
+                    update();
+                    await snackSuccess("", value.message);
+                    Get.to(const AccountSuccessVerifyView());
+                  } else {
+                    await snackError("", value.message);
+                    isLoading = false;
+                    update();
+                  }
+                }).catchError((onError) {
+                  snackError("", onError.toString());
+                  Logger().d(onError.toString());
+                  isLoading = false;
+                  update();
+                });
+              },
+              onFail: () {
+                isLoading = false;
+                update();
+              })
+          .catchError((onError) {
         //handle error from value
         snackError("", onError.toString());
         Logger().d(onError.toString());
         isLoading = false;
         update();
       });
+      // await AuthFeature.getInstance.confirmAccount(map).then((value) async {
+      //   //handle object from value || [save in sharedPreferences]
+      //   Logger().d(value.toJson());
+      //   if (value.status) {
+      //     //TODO: if verification and success go to ForgetOtpView page
+      //     isLoading = false;
+      //     update();
+      //     await snackSuccess("", value.message);
+      //     Get.to(const AccountSuccessVerifyView());
+      //   } else {
+      //     await snackError("", value.message);
+      //     isLoading = false;
+      //     update();
+      //   }
+      // }).catchError((onError) {
+      //   //handle error from value
+      //   snackError("", onError.toString());
+      //   Logger().d(onError.toString());
+      //   isLoading = false;
+      //   update();
+      // });
     } catch (e) {
       Logger().d(e.toString());
       isLoading = false;
@@ -643,15 +697,16 @@ class AuthViewModel extends GetxController {
     }
   }
 
-  void requestUserBalance(TextEditingController emailController, TextEditingController noteController) async{
-    Map<String,dynamic> map = {
-      ConstanceNetwork.emailKey  : emailController.text.toString(),
-      ConstanceNetwork.noteKey  : noteController.text.toString(),
+  void requestUserBalance(TextEditingController emailController,
+      TextEditingController noteController) async {
+    Map<String, dynamic> map = {
+      ConstanceNetwork.emailKey: emailController.text.toString(),
+      ConstanceNetwork.noteKey: noteController.text.toString(),
     };
     await _requestUserBalance(map);
   }
 
-  Future<void> _requestUserBalance(Map<String, dynamic> map) async{
+  Future<void> _requestUserBalance(Map<String, dynamic> map) async {
     isLoading = true;
     update();
     await AuthFeature.getInstance.requestUserBalance(map).then((value) async {

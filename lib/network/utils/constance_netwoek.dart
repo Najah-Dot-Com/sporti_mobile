@@ -47,6 +47,7 @@ abstract class ConstanceNetwork {
   static String logoutApi = "logout";
   static String deleteUserApi = "delete_account";
   static String changePasswordApi = "change_password";
+  static String activatedAccountFirebaseApi = "activeted_account";
 
   //exercises end point
   static String exercisesApi = "exercises";

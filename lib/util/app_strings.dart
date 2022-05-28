@@ -21,8 +21,8 @@ class AppStrings {
   static const String txtCurrency = "عملة";
   static const String txtCallRequest = "يرجى ارسال الطلب ليتم التواصل معك ";
   static const String txtCommunication = "التواصل ";
-  static const String txtCheckRevenue =
-      "يرجى التأكد من أنك حصلت على اجمالي  \$20 فأكثر";
+  static const String txtCheckRevenue = "يرجى التأكد من أنك حصلت على اجمالي ";
+  static const String txtOrMore = "فأكثر";
 
   //TODO:this for gift page string
   static const String txtCongratulations = "مبروك الإنجاز";

@@ -68,6 +68,21 @@ class AuthFeature {
     }
   }
 
+
+  Future<AppResponse> activatedAccountFirebaseApi() async {
+    var appResponse = await AuthUseCase.getInstance.activatedAccountFirebaseApi(
+        url: ConstanceNetwork.activatedAccountFirebaseApi,
+        header: ConstanceNetwork.header(2));
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return appResponse;
+    } else {
+      // snackError("",appResponse.message);
+      Logger().d("else ${appResponse.toJson()}");
+      return appResponse;
+    }
+  }
+
   Future<AppResponse> verifyUserEmail(var parameters) async {
     var appResponse = await AuthUseCase.getInstance.verifyUserEmail(
       url: ConstanceNetwork.verifyEmailApi + parameters,

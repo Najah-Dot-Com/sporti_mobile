@@ -2,19 +2,23 @@ class SettingData {
   SettingData({
     this.setting,
     this.systemMessage,
+    this.maxGift
   });
 
   List<Setting>? setting;
   String? systemMessage;
+  String? maxGift;
 
   factory SettingData.fromJson(Map<String, dynamic> json) => SettingData(
     setting: json["setting"] == null ? null : List<Setting>.from(json["setting"].map((x) => Setting.fromJson(x))),
     systemMessage: json["system_message"] == null ? null : json["system_message"],
+    maxGift: json["max_gift"] == null ? null : json["max_gift"],
   );
 
   Map<String, dynamic> toJson() => {
     "setting": setting == null ? null : List<dynamic>.from(setting!.map((x) => x.toJson())),
     "system_message": systemMessage == null ? null : systemMessage,
+    "max_gift": maxGift == null ? null : maxGift,
   };
 }
 
