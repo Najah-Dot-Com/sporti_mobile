@@ -15,4 +15,7 @@ abstract class Constance {
 // notifications
   static const newExersiceType = "new_exersice";
   static const returnExersiceType = "return_exersice";
+
+  static String guestUserNameKey = "Guest";
+  static String guestUserPasswordKey = "123456789";
 }

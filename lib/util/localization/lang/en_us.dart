@@ -111,4 +111,5 @@ Map<String, String> enUS = {
   AppStrings.txtUpdateProfile:"Update Profile",
   AppStrings.txtGallery:"Gallery",
   AppStrings.txtCamera:"Camera",
+  AppStrings.loginHint:"Please log in to the application to be able to take advantage of the services and features available",
 };

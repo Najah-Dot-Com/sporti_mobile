@@ -114,6 +114,7 @@ class AppStrings {
   static const String update = "UPDATE";
   static const String verify = "VERIFY";
   static const String verifyHint = "VERIFYHint";
+  static const String loginHint = "loginToActions";
   static const String email = "Email"; // "Email" "الايميل"
 
   //CategoryExerciseView

@@ -229,6 +229,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
   void initListener() {
     var appSettings = SharedPref.instance.getAppSettings();
+    _storeOnboardInfo();
     if (appSettings.setting != null && appSettings.setting!.isNotEmpty) {
       screens.clear();
       setState(() {});

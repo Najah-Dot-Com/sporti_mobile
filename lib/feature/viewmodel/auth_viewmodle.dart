@@ -23,6 +23,7 @@ import 'package:dio/dio.dart' as multiPart;
 
 class AuthViewModel extends GetxController {
   bool isLoading = false;
+  bool isLoadingSkip = false;
   bool isDoneUploadImage = false;
   bool resendCodeLoding = false;
   var acceptPolicy = false;
@@ -53,6 +54,19 @@ class AuthViewModel extends GetxController {
     _signIn(map);
   }
 
+  //click on sign in btn on login page
+  void signInValidSkip(String userNameController,
+      String passwordController) {
+    Map<String, dynamic> map = {
+      ConstanceNetwork.userNameKey: userNameController.toString(),
+      ConstanceNetwork.passwordKey: passwordController.toString(),
+      ConstanceNetwork.fcmToken: SharedPref.instance.getFCMToken().toString(),
+    };
+    SharedPref.instance.setUserName(userNameController.toString());
+    SharedPref.instance.setPassword(passwordController.toString());
+    _signIn(map , isFromSkip:true);
+  }
+
   goToHomePage() async {
     isLoading = true;
     update();
@@ -63,9 +77,13 @@ class AuthViewModel extends GetxController {
   }
 
   //make signIn methode
-  Future<void> _signIn(Map<String, dynamic> map) async {
+  Future<void> _signIn(Map<String, dynamic> map, {bool? isFromSkip = false}) async {
     try {
-      isLoading = true;
+      if(!isFromSkip!) {
+        isLoading = true;
+      }else{
+        isLoadingSkip = true;
+      }
       update();
       await AuthFeature.getInstance.loginUser(map).then((value) async {
         //handle object from value || [save in sharedPreferences]
@@ -76,14 +94,17 @@ class AuthViewModel extends GetxController {
           await SharedPref.instance.setUserLogin(true);
           Get.offAll(const HomePageView());
           isLoading = false;
+          isLoadingSkip = false;
           update();
         } else {
           isLoading = false;
+          isLoadingSkip = false;
           update();
         }
       }).catchError((onError) {
         //handle error from value
         isLoading = false;
+        isLoadingSkip = false;
         snackError("", onError.toString());
         Logger().d(onError.toString());
         // isLoading = false;
@@ -93,6 +114,7 @@ class AuthViewModel extends GetxController {
       snackError("", e.toString());
       Logger().d(e.toString());
       isLoading = false;
+      isLoadingSkip = false;
       update();
     }
   }
@@ -164,7 +186,7 @@ class AuthViewModel extends GetxController {
     }
   }
 
-  Future<void> logoutUser() async {
+  Future<void> logoutUser({bool? isFromGuest = false}) async {
     try {
       isLoading = true;
       update();
@@ -178,7 +200,9 @@ class AuthViewModel extends GetxController {
           isLoading = false;
           update();
           await SharedPref.instance.clear();
-          snackSuccess("", value.message);
+          if(!isFromGuest!) {
+            snackSuccess("", value.message);
+          }
         } else {
           isLoading = false;
           update();

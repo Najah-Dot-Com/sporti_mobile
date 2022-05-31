@@ -5,6 +5,7 @@ import 'package:sporti/feature/view/appwidget/appLogo.dart';
 import 'package:sporti/feature/view/appwidget/customButton.dart';
 import 'package:sporti/feature/view/appwidget/custom_text_filed.dart';
 import 'package:sporti/feature/view/appwidget/primary_button.dart';
+import 'package:sporti/feature/view/appwidget/three_size_dot.dart';
 import 'package:sporti/feature/view/views/auth_forgetpassword/auth_forgetpassword_view.dart';
 import 'package:sporti/feature/view/views/auth_signup/auth_signup_view.dart';
 import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
@@ -15,6 +16,7 @@ import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
+import 'package:sporti/util/constance.dart';
 import '../../../viewmodel/privacyPolicy_viewmodel.dart';
 import '../../appwidget/authwellcomeRow.dart';
 import '../../appwidget/custome_text_view.dart';
@@ -131,13 +133,13 @@ class LoginView extends StatelessWidget {
                   key: _formKey,
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: AppSize.s70,
+                        top: AppSize.s50,
                         left: AppPadding.p50,
                         right: AppPadding.p50,
                         bottom: AppPadding.p20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: ListView(
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomTextFormFiled(
                           label: AppStrings.username.tr,
@@ -195,6 +197,25 @@ class LoginView extends StatelessWidget {
                             colorText: AppColor.white,
                             isLoading: logic.isLoading,
                             onClicked: ()=>_onSignInClick(logic)),
+                        const SizedBox(
+                          height: AppSize.s20,
+                        ),
+                        InkWell(
+                          onTap: ()=>_onSignInClickSkip(logic),
+                          child: Center(
+                            child: logic.isLoadingSkip ? ThreeSizeDot(
+                              color_1: AppColor.black,
+                              color_2: AppColor.black,
+                              color_3: AppColor.black,
+                            ):CustomTextView(
+                              txt: AppStrings.txtSkip.tr,
+                              textAlign: TextAlign.center,
+                              textStyle: themeData.textTheme.subtitle2
+                                  ?.copyWith(color: AppColor.black),
+                            ),
+                          ),
+                        ),
+
                         const SizedBox(
                           height: AppSize.s10,
                         ),
@@ -255,5 +276,8 @@ class LoginView extends StatelessWidget {
       _formKey.currentState!.validate();
       logic.signInValid(_userNameController, _passController);
     }
+  }
+  _onSignInClickSkip(AuthViewModel logic) {
+      logic.signInValidSkip(Constance.guestUserNameKey, Constance.guestUserPasswordKey);
   }
 }

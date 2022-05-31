@@ -306,8 +306,12 @@ class ProfileView extends StatelessWidget {
     });
   }
 
-  void _verifyAccount() {
-    Get.to(() => AccountVerifyView());
+  void _verifyAccount() async{
+    if(SharedPref.instance.getUserData().username == Constance.guestUserNameKey){
+      await showIsVerifyDialog();
+    }else {
+      Get.to(() => AccountVerifyView());
+    }
   }
 final PrivacyPolicyViewModel _privacyAndTerms =
       Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel(),/* permanent: true */);

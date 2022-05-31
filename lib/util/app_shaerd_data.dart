@@ -26,6 +26,7 @@ import '../network/api/feature/auth_feature.dart';
 import '../network/utils/constance_netwoek.dart';
 import 'app_dimen.dart';
 import 'app_style.dart';
+import 'constance.dart';
 import 'localization/localization_service.dart';
 
 String? urlPlacholder =
@@ -44,7 +45,7 @@ String? urlUserPlacholder =
 // }
 
 var safeAreaLight =
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
+SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
   systemNavigationBarColor: AppColor.white,
   statusBarColor: AppColor.white,
   statusBarIconBrightness: Brightness.dark,
@@ -52,7 +53,7 @@ var safeAreaLight =
 ));
 
 var safeAreaDark =
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
   systemNavigationBarColor: AppColor.white,
   statusBarColor: AppColor.transparent,
   statusBarIconBrightness: Brightness.light,
@@ -60,7 +61,7 @@ var safeAreaDark =
 ));
 
 var bottomNavDark =
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
   systemNavigationBarColor: AppColor.primary,
   statusBarColor: AppColor.primary,
   statusBarIconBrightness: Brightness.dark,
@@ -103,9 +104,11 @@ emailValid(String val) {
   }
 }
 
-Widget simplePopup() => PopupMenuButton<int>(
+Widget simplePopup() =>
+    PopupMenuButton<int>(
       initialValue: 1,
-      itemBuilder: (context) => [
+      itemBuilder: (context) =>
+      [
         PopupMenuItem(
           value: 1,
           child: Text("First"),
@@ -291,11 +294,11 @@ class CustomMaterialPageRoute extends MaterialPageRoute {
     bool maintainState = true,
     bool fullscreenDialog = false,
   }) : super(
-          builder: builder!,
-          settings: settings,
-          maintainState: maintainState,
-          fullscreenDialog: fullscreenDialog,
-        );
+    builder: builder!,
+    settings: settings,
+    maintainState: maintainState,
+    fullscreenDialog: fullscreenDialog,
+  );
 }
 
 class DismissKeyboard extends StatelessWidget {
@@ -321,7 +324,7 @@ class DismissKeyboard extends StatelessWidget {
 
 bool isArabicLang() {
   return (SharedPref.instance.getAppLanguageMain() ==
-          LocalizationService.localeAr
+      LocalizationService.localeAr
       ? true
       : false);
   // return isRTL;
@@ -344,8 +347,12 @@ Future<TimeOfDay?> timeBiker() async {
     context: Get.context!,
     helpText: AppStrings.txtReturnTime.tr,
     initialTime: TimeOfDay(
-        hour: DateTime.now().hour,
-        minute: DateTime.now().minute % 30 == 0 ? 0 : 30),
+        hour: DateTime
+            .now()
+            .hour,
+        minute: DateTime
+            .now()
+            .minute % 30 == 0 ? 0 : 30),
   );
   return picker;
 }
@@ -354,7 +361,7 @@ String formatStringWithCurrency(var data /*, String currency*/) {
   try {
     var number = data.toString().replaceAll("\$", "").replaceAll(",", "");
     number =
-        "\$ ${NumberFormat("#0.00", "en_US").format(double.parse(number))}";
+    "\$ ${NumberFormat("#0.00", "en_US").format(double.parse(number))}";
     //var numbers = "${currency}${double.parse(number).toStringAsFixed(2)}";
     return number.toString();
   } catch (e) {
@@ -365,87 +372,89 @@ String formatStringWithCurrency(var data /*, String currency*/) {
 
 Widget profileItem(ThemeData themeData,
     {bool? withBoxShadow = true,
-    Color? color,
-    required Function() onClick,
-    required String title,
-    required String leadingIcon,
-    required String trailingIcon}) {
+      Color? color,
+      required Function() onClick,
+      required String title,
+      required String leadingIcon,
+      required String trailingIcon}) {
   return InkWell(
       onTap: onClick,
       child: withBoxShadow == true
           ? Container(
-              width: double.infinity,
-              height: AppSize.s50,
-              padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
-              margin: const EdgeInsets.only(bottom: AppSize.s12),
-              decoration: BoxDecoration(
-                  color: color ?? AppColor.white,
-                  borderRadius: BorderRadius.circular(AppPadding.p8),
-                  boxShadow: [AppShadow.boxShadow()!]),
-              child: Row(
-                children: [
-                  SvgPicture.asset(leadingIcon),
-                  const SizedBox(
-                    width: AppSize.s20,
-                  ),
-                  Expanded(
-                    child: CustomTextView(
-                        txt: title, textStyle: themeData.textTheme.headline2),
-                  ),
-                  const SizedBox(
-                    width: AppSize.s20,
-                  ),
-                  if (Get.locale == LocalizationService.localeEn &&
-                      trailingIcon == AppMedia.arrowIos) ...[
-                    const Icon(Icons.arrow_forward_ios),
-                  ] else ...[
-                    SvgPicture.asset(trailingIcon)
-                  ]
-                ],
-              ),
-            )
+        width: double.infinity,
+        height: AppSize.s50,
+        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+        margin: const EdgeInsets.only(bottom: AppSize.s12),
+        decoration: BoxDecoration(
+            color: color ?? AppColor.white,
+            borderRadius: BorderRadius.circular(AppPadding.p8),
+            boxShadow: [AppShadow.boxShadow()!]),
+        child: Row(
+          children: [
+            SvgPicture.asset(leadingIcon),
+            const SizedBox(
+              width: AppSize.s20,
+            ),
+            Expanded(
+              child: CustomTextView(
+                  txt: title, textStyle: themeData.textTheme.headline2),
+            ),
+            const SizedBox(
+              width: AppSize.s20,
+            ),
+            if (Get.locale == LocalizationService.localeEn &&
+                trailingIcon == AppMedia.arrowIos) ...[
+              const Icon(Icons.arrow_forward_ios),
+            ] else
+              ...[
+                SvgPicture.asset(trailingIcon)
+              ]
+          ],
+        ),
+      )
           : Container(
-              width: double.infinity,
-              height: AppSize.s50,
-              padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
-              margin: const EdgeInsets.only(bottom: AppSize.s12),
-              decoration: BoxDecoration(
-                color: color ?? AppColor.white,
-                //borderRadius: BorderRadius.circular(AppPadding.p8),
-                border: Border(
-                  bottom: BorderSide(
-                    color: AppColor.black,
-                    width: 0.5,
-                  ),
-                ),
-              ),
-              child: Row(
-                children: [
-                  SvgPicture.asset(leadingIcon),
-                  const SizedBox(
-                    width: AppSize.s20,
-                  ),
-                  Expanded(
-                    child: CustomTextView(
-                        txt: title, textStyle: themeData.textTheme.headline2),
-                  ),
-                  const SizedBox(
-                    width: AppSize.s20,
-                  ),
-                  if (Get.locale == LocalizationService.localeEn &&
-                      trailingIcon == AppMedia.arrowIos) ...[
-                    const Icon(Icons.arrow_forward_ios),
-                  ] else ...[
-                    SvgPicture.asset(trailingIcon)
-                  ]
-                ],
-              ),
-            ));
+        width: double.infinity,
+        height: AppSize.s50,
+        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+        margin: const EdgeInsets.only(bottom: AppSize.s12),
+        decoration: BoxDecoration(
+          color: color ?? AppColor.white,
+          //borderRadius: BorderRadius.circular(AppPadding.p8),
+          border: Border(
+            bottom: BorderSide(
+              color: AppColor.black,
+              width: 0.5,
+            ),
+          ),
+        ),
+        child: Row(
+          children: [
+            SvgPicture.asset(leadingIcon),
+            const SizedBox(
+              width: AppSize.s20,
+            ),
+            Expanded(
+              child: CustomTextView(
+                  txt: title, textStyle: themeData.textTheme.headline2),
+            ),
+            const SizedBox(
+              width: AppSize.s20,
+            ),
+            if (Get.locale == LocalizationService.localeEn &&
+                trailingIcon == AppMedia.arrowIos) ...[
+              const Icon(Icons.arrow_forward_ios),
+            ] else
+              ...[
+                SvgPicture.asset(trailingIcon)
+              ]
+          ],
+        ),
+      ));
 }
 
 Future<bool> showIsVerifyDialog() async {
   UserData? userData = SharedPref.instance.getUserData();
-  if (!userData.isVerify!) {
+  if (!userData.isVerify! && userData.username != Constance.guestUserNameKey) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       showAnimatedDialog(GlobalDialogWidget(
         title: AppStrings.txtAttentions.tr,
@@ -459,23 +468,44 @@ Future<bool> showIsVerifyDialog() async {
       ));
     });
     return false;
+  } else
+  if (!userData.isVerify! && userData.username == Constance.guestUserNameKey) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      showAnimatedDialog(GetBuilder<AuthViewModel>(
+        init: AuthViewModel(),
+          builder: (logic) {
+            return GlobalDialogWidget(
+              title: AppStrings.txtAttentions.tr,
+              subTitle: AppStrings.loginHint.tr,
+              isLoading: logic.isLoading,
+              isTwoBtn: true,
+              onCancelBtnClick: () => Get.back(),
+              onOkBtnClick: () {
+                logic.logoutUser(isFromGuest: true);
+              },
+            );
+          }));
+    });
+    return false;
   } else {
     return true;
   }
 }
 
 loginAgain() {
-
   var userName = SharedPref.instance.getUserName();
   var password = SharedPref.instance.getPassword();
 
-  if (userName.toString().isNotEmpty && password.toString().isNotEmpty) {
+  if (userName
+      .toString()
+      .isNotEmpty && password
+      .toString()
+      .isNotEmpty) {
     Map<String, dynamic> map = {
       ConstanceNetwork.userNameKey: userName,
       ConstanceNetwork.passwordKey: password,
       ConstanceNetwork.fcmToken: SharedPref.instance.getFCMToken().toString(),
     };
-     AuthFeature.getInstance.loginUser(map);
+    AuthFeature.getInstance.loginUser(map);
   }
-
 }

@@ -110,4 +110,5 @@ Map<String, String> arSU = {
   AppStrings.txtUpdateProfile: "تعديل الملف الشخصي",
   AppStrings.txtGallery: "معرض الصور",
   AppStrings.txtCamera: "الكاميرا",
+  AppStrings.loginHint:"من فضلك قم بستجيل الدخول في التطبيق كي تتمكن من الاستفادة من الخدمات والميزات المتوفرة",
 };
