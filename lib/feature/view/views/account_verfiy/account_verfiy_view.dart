@@ -19,7 +19,7 @@ class AccountVerifyView extends StatelessWidget {
 
   static final TextEditingController _phoneNumberController =
       TextEditingController();
-  String counteryCode = "";
+  String counteryCode = "+965";
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   PreferredSizeWidget get myAppbar => AppBar(
