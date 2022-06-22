@@ -6,8 +6,10 @@ import 'package:sporti/util/sh_util.dart';
 abstract class ConstanceNetwork {
   ///todo here insert base_url
   static String baseUrl = "https://sportiapp.com/api/v1/";
-  static String baseImageExercises = "https://sportiapp.com/public/images/exercises/";
-  static String baseVideoExercises = "https://sportiapp.com/public/video/exercises/";
+  static String baseImageExercises =
+      "https://sportiapp.com/public/images/exercises/";
+  static String baseVideoExercises =
+      "https://sportiapp.com/public/video/exercises/";
 
   ///todo here insert key Of Request
   static String resultKey = "Result";
@@ -25,8 +27,10 @@ abstract class ConstanceNetwork {
 
   //this for auth keys
   static String code = 'code';
+
   //this for account verify keys
   static String userPhoneNumer = 'phone';
+
   //this for updateProfile keys
   static String picture = 'picture';
   static String imageKey = "image";
@@ -63,6 +67,7 @@ abstract class ConstanceNetwork {
   static String confirmEmailApi = "confirm_verifi_email";
   static String verifyAccount = "verifi_account";
   static String confirmAccount = "confirm_verifi_code";
+
   //profile end point
   static String updateProfile = "update_profile";
   static String balanceRequestApi = "balance_request";
@@ -73,7 +78,11 @@ abstract class ConstanceNetwork {
   static String getPages = "get_page";
   static String settingApi = "setting";
 
-
+  //subscriptions
+  static String plans = "plans";
+  static String planId = "plan_id";
+  static String subscriptions = "subscrip";
+  static String isSubscrip = "is_subscrip";
 
   static Map<String, String> header(int typeToken) {
     Map<String, String> headers = {};

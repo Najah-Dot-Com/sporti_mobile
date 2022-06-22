@@ -91,7 +91,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.android.support:multidex:1.0.3'
     implementation "androidx.browser:browser:1.2.0"
-
+//    implementation 'com.android.billingclient:billing:4.0.0'//3.0.2//4.0.0
+//    implementation 'com.android.billingclient:billing:3.0.2'//4.0.0
+//   implementation "com.android.billingclient:billing:5.0.0"
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
 }

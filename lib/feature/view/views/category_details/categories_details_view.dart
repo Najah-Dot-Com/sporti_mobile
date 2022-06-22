@@ -14,6 +14,7 @@ import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:get/get.dart';
 import 'package:sporti/util/app_style.dart';
+import 'package:sporti/util/connectivity_widget.dart';
 import 'package:sporti/util/constance.dart';
 import 'package:sporti/util/sh_util.dart';
 
@@ -74,93 +75,95 @@ class CategoriesDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
-    return Scaffold(
-      appBar: myAppbar(themeData),
-      floatingActionButton: GetBuilder<HomeViewModel>(builder: (logic) {
-        if(logic.packageDetailsExercisesList.isEmpty){
-          return const SizedBox.shrink();
-        }
-        var packages = logic.exercisesListAll.firstWhere((element) {
-          return element.id.toString() == id.toString();
-        });
-        return logic.isLoading ? const SizedBox.shrink():FloatingActionButton(
-          backgroundColor: packages.isFavorite! ? AppColor.error : AppColor
-              .primary,
-          onPressed: ()=>_onAddBtnClick(logic),
-          child: Icon(
-            packages.isFavorite! ? Icons.remove : Icons.add,
-            color: AppColor.white,
-          ),
-        );
-      }),
-      body: GetBuilder<HomeViewModel>(
-          init: HomeViewModel(),
-          initState: (state) {
-            WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-              state.controller?.packagesExercisesDetails(id);
-            });
-          },
-          builder: (logic) {
-            return SingleChildScrollView(
-              physics: AppStyleScroll.customScrollViewIOS(),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppSize.s28),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: AppSize.s28,
-                    ),
-                    if(!logic.isLoading)...[
-                    CarouselSlider.builder(
-                      itemCount: package?.image?.length,
-                        itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex){
-                        return  imageNetwork(
-                            width: double.infinity,
-                            height: AppSize.s200,
-                            fit: BoxFit.cover,
-                            url: package?.image?[itemIndex] == null ? fakeImage:"${ConstanceNetwork.baseImageExercises}${package?.image?[itemIndex]}");
-                        },
-                        options: CarouselOptions(
-                          height: AppSize.s400,
-                          aspectRatio: AppSize.s16/AppSize.s9,
-                          viewportFraction:AppSize.s0_8,
-                          initialPage: 0,
-                          enableInfiniteScroll: true,
-                          reverse: false,
-                          autoPlay: true,
-                          autoPlayInterval: const Duration(seconds: 3),
-                          autoPlayAnimationDuration: const Duration(milliseconds: DurationConstant.d800),
-                          autoPlayCurve: Curves.fastOutSlowIn,
-                          enlargeCenterPage: true,
-                          onPageChanged: (index , corsule){},
-                          scrollDirection: Axis.horizontal,
-                        ),
-                    ),
-                    const SizedBox(
-                      height: AppSize.s28,
-                    ),
-                    CustomTextView(
-                      txt: SharedPref.instance.getAppSettings().systemMessage?? AppStrings.txtDetailsNote.tr,
-                      textStyle: themeData.textTheme.subtitle2
-                          ?.copyWith(color: AppColor.grey),
-                    ),
+    return ConnectivityWidget(
+      scaffold: Scaffold(
+        appBar: myAppbar(themeData),
+        floatingActionButton: GetBuilder<HomeViewModel>(builder: (logic) {
+          if(logic.packageDetailsExercisesList.isEmpty){
+            return const SizedBox.shrink();
+          }
+          var packages = logic.exercisesListAll.firstWhere((element) {
+            return element.id.toString() == id.toString();
+          });
+          return logic.isLoading ? const SizedBox.shrink():FloatingActionButton(
+            backgroundColor: packages.isFavorite! ? AppColor.error : AppColor
+                .primary,
+            onPressed: ()=>_onAddBtnClick(logic),
+            child: Icon(
+              packages.isFavorite! ? Icons.remove : Icons.add,
+              color: AppColor.white,
+            ),
+          );
+        }),
+        body: GetBuilder<HomeViewModel>(
+            init: HomeViewModel(),
+            initState: (state) {
+              WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+                state.controller?.packagesExercisesDetails(id);
+              });
+            },
+            builder: (logic) {
+              return SingleChildScrollView(
+                physics: AppStyleScroll.customScrollViewIOS(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AppSize.s28),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: AppSize.s28,
+                      ),
+                      if(!logic.isLoading)...[
+                      CarouselSlider.builder(
+                        itemCount: package?.image?.length,
+                          itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex){
+                          return  imageNetwork(
+                              width: double.infinity,
+                              height: AppSize.s200,
+                              fit: BoxFit.cover,
+                              url: package?.image?[itemIndex] == null ? fakeImage:"${ConstanceNetwork.baseImageExercises}${package?.image?[itemIndex]}");
+                          },
+                          options: CarouselOptions(
+                            height: AppSize.s400,
+                            aspectRatio: AppSize.s16/AppSize.s9,
+                            viewportFraction:AppSize.s0_8,
+                            initialPage: 0,
+                            enableInfiniteScroll: true,
+                            reverse: false,
+                            autoPlay: true,
+                            autoPlayInterval: const Duration(seconds: 3),
+                            autoPlayAnimationDuration: const Duration(milliseconds: DurationConstant.d800),
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enlargeCenterPage: true,
+                            onPageChanged: (index , corsule){},
+                            scrollDirection: Axis.horizontal,
+                          ),
+                      ),
+                      const SizedBox(
+                        height: AppSize.s28,
+                      ),
+                      CustomTextView(
+                        txt: SharedPref.instance.getAppSettings().systemMessage?? AppStrings.txtDetailsNote.tr,
+                        textStyle: themeData.textTheme.subtitle2
+                            ?.copyWith(color: AppColor.grey),
+                      ),
+                      ],
+                      const SizedBox(
+                        height: AppSize.s20,
+                      ),
+                      myPackageList(logic),
                     ],
-                    const SizedBox(
-                      height: AppSize.s20,
-                    ),
-                    myPackageList(logic),
-                  ],
+                  ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+      ),
     );
   }
 
   void _onAddBtnClick(HomeViewModel logic) async{
-    await showIsVerifyDialog().then((value) async{
+    await showIsVerifyDialog(isNeedSubscriptions: true).then((value) async{
       if(value){
         await logic.addToMyWork(id , isFromDetails: true);
         logic.packagesExercisesDetails(id);

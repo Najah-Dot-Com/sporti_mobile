@@ -145,7 +145,7 @@ class CategoriyExerciseDetailsView extends StatelessWidget {
 
 
   void _onStartBtnClick(DetailsExerciseViewModel logic) async{
-    await showIsVerifyDialog().then((value) async{
+    await showIsVerifyDialog(isNeedSubscriptions: true).then((value) async{
       if(value){
         Get.to(CategoryExerciseView(exerciseDetailsData:logic.exerciseDetailsData,packageDetails:packageDetails));
       }

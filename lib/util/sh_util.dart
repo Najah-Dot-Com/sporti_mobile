@@ -7,6 +7,7 @@ import 'package:get/utils.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporti/feature/model/balance_data.dart';
+import 'package:sporti/feature/model/plan_data.dart';
 import 'package:sporti/feature/model/settings_data.dart';
 import 'package:sporti/feature/model/user_data.dart';
 import 'package:sporti/feature/viewmodel/privacyPolicy_viewmodel.dart';
@@ -32,6 +33,7 @@ class SharedPref {
   final String policyDetailskey = "policyDetailskey";
   final String isBoardingViewKey = "isBoardingView";
   final String appSettingsKey = "appSettings";
+  final String appSubscriptionsKey = "appSubscriptions";
 
   final String userNameKey = "userName";
   final String passwordKey = "password";
@@ -266,6 +268,27 @@ class SharedPref {
     } catch (e) {
       Logger().e(e);
       return SettingData();
+    }
+  }
+
+  void setAllSubscriptions(String result) {
+    try {
+      _prefs?.setString(appSubscriptionsKey , result) ;
+    } catch (e) {
+      Logger().e(e);
+    }
+  }
+
+  List<PlanData> getAllSubscriptions() {
+    try {
+      var string = _prefs?.getString(appSubscriptionsKey) ?? "";
+      var decode = json.decode(string);
+      List result = decode;
+      List<PlanData> data = result.map((e) => PlanData.fromJson(e)).toList();
+      return data;
+    } catch (e) {
+      Logger().e(e);
+      return [];
     }
   }
 }

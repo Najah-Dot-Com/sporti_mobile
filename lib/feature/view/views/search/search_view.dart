@@ -84,7 +84,9 @@ class SearchView extends StatelessWidget {
           ],
         ),
         leading: IconButton(
-          onPressed: () => Get.back(),
+          onPressed: () {
+            Get.back();
+          },
           icon: Icon(
             Icons.arrow_back_ios,
             color: AppColor.black,

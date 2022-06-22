@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:country_code_picker/country_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +11,12 @@ import 'package:responsive_framework/utils/scroll_behavior.dart';
 import 'package:sporti/fcm/app_fcm.dart';
 import 'package:sporti/feature/view/views/auth_splash/auth_splash_view.dart';
 import 'package:sporti/network/api/feature/auth_feature.dart';
+import 'package:sporti/network/api/feature/subscriptions_feature.dart';
+import 'package:sporti/network/api/purchases/purchases_api.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/app_theme.dart';
+import 'package:sporti/util/connectivity_widget.dart';
 import 'package:sporti/util/sh_util.dart';
 import 'feature/viewmodel/privacyPolicy_viewmodel.dart';
 import 'network/api/dio_manager/dio_manage_class.dart';
@@ -26,7 +30,12 @@ void main() async {
   await Firebase.initializeApp();
   await AppFcm.fcmInstance.init();
   await AppFcm.fcmInstance.getTokenFCM();
+  await PurchasesApi.instance.init().then((value) async{
+     // await PurchasesApi.instance.getOffering(isAll: true);
+  });
   listener();
+  ConnectionStatusSingleton connectionStatus = ConnectionStatusSingleton.getInstance();
+  connectionStatus.initialize();
   WidgetsBinding.instance?.addPostFrameCallback((timeStamp)async{
       await AppFcm.fcmInstance.setupInteractedMessage();
       PrivacyPolicyViewModel _privacyAndTerms =
@@ -47,6 +56,14 @@ void listener() async{
       //here we need refresh token by login again
       loginAgain();
     }
+    if(SharedPref.instance.getUserData().plan == null ){
+      loginAgain();
+    }
+    if(SharedPref.instance.getUserData().plan != null && SharedPref.instance.getUserData().plan?.type == null){
+      loginAgain();
+    }
+    //todo this for get subscriptions and store in sp
+    SubscriptionsFeature.getInstance.allSubscriptionsPlan();
   }
 }
 
@@ -106,4 +123,6 @@ class _MyAppState extends State<MyApp> {
           ),
     );
   }
+
+
 }

@@ -35,7 +35,6 @@ class ExercisesData {
   dynamic updatedAt;
 
   factory ExercisesData.fromJson(Map<String, dynamic> json) {
-    Logger().i(json);
     if (json["image"] is List) {
       return ExercisesData(
         id: json["id"] == null ? null : json["id"],

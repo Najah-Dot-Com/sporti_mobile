@@ -8,6 +8,7 @@ import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/account_verfiy/account_verfiy_view.dart';
 import 'package:sporti/feature/view/views/money_collect/money_collect_view.dart';
 import 'package:sporti/feature/view/views/privacy_policy/privacy_policy_view.dart';
+import 'package:sporti/feature/view/views/subscriptions/my_current_subscriptions/my_cureent_subscriptions_view.dart';
 import 'package:sporti/feature/view/views/update_profile/update_profile_view.dart';
 import 'package:sporti/feature/view/views/terms_conditions/terms_conditions_view.dart';
 import 'package:sporti/feature/viewmodel/auth_viewmodle.dart';
@@ -249,6 +250,17 @@ class ProfileView extends StatelessWidget {
                     title: AppStrings.txtVerifyAccount.tr,
                     trailingIcon: AppMedia.done),
               profileItem(themeData,
+                  onClick: _onSubscriptionsPage,
+                  leadingIcon: AppMedia.subscriptions,
+                  title: AppStrings.txtSubscriptions.tr,
+                  trailingIcon: AppMedia.arrowIos),
+              profileItem(themeData,
+                  onClick: _onGetMoneyPage,
+                  leadingIcon: AppMedia.currency,
+                  title: AppStrings.txtCurrency.tr,
+                  trailingIcon: AppMedia.arrowIos),
+              //_profileItem(themeData,onClick:_onUpdatePassword,leadingIcon:AppMedia.resetPassword ,title:AppStrings.resetYourPass.tr ,trailingIcon:AppMedia.arrowIos),
+              profileItem(themeData,
                   onClick: _termsAndCondition,
                   leadingIcon: AppMedia.termsAndConditions,
                   title: AppStrings.txtTermsAndConditions.tr,
@@ -258,12 +270,6 @@ class ProfileView extends StatelessWidget {
                   leadingIcon: AppMedia.privacyPolicies,
                   title: AppStrings.txtPrivacyPolicies.tr,
                   trailingIcon: AppMedia.arrowIos),
-              profileItem(themeData,
-                  onClick: _onGetMoneyPage,
-                  leadingIcon: AppMedia.currency,
-                  title: AppStrings.txtCurrency.tr,
-                  trailingIcon: AppMedia.arrowIos),
-              //_profileItem(themeData,onClick:_onUpdatePassword,leadingIcon:AppMedia.resetPassword ,title:AppStrings.resetYourPass.tr ,trailingIcon:AppMedia.arrowIos),
               _profileLanguage(
                 themeData,
                 onClick: _onChangeLang,
@@ -299,30 +305,37 @@ class ProfileView extends StatelessWidget {
   }
 
   void _updateProfile() async {
-    await showIsVerifyDialog().then((value) {
+    await showIsVerifyDialog(isNeedSubscriptions: false).then((value) {
       if (value) {
         Get.to(() => UpdateProfileView());
       }
     });
   }
 
-  void _verifyAccount() async{
-    if(SharedPref.instance.getUserData().username == Constance.guestUserNameKey){
-      await showIsVerifyDialog();
-    }else {
+  void _verifyAccount() async {
+    if (SharedPref.instance.getUserData().username ==
+        Constance.guestUserNameKey) {
+      await showIsVerifyDialog(isNeedSubscriptions: false);
+    } else {
       Get.to(() => AccountVerifyView());
     }
   }
-final PrivacyPolicyViewModel _privacyAndTerms =
-      Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel(),/* permanent: true */);
-  
+
+  final PrivacyPolicyViewModel _privacyAndTerms =
+      Get.put<PrivacyPolicyViewModel>(
+    PrivacyPolicyViewModel(), /* permanent: true */
+  );
+
   void _termsAndCondition() {
     // _privacyAndTerms.getPrivacyAndTermsPages();
-    Get.to(() =>  TermsConditionView());
+    Get.to(() => TermsConditionView());
   }
+
   void _onPrivacyPolicy() {
     // _privacyAndTerms.getPrivacyAndTermsPages();
-    Get.to( ()  => PrivacyPolicyWidget(),);
+    Get.to(
+      () => PrivacyPolicyWidget(),
+    );
   }
 
   void _onLogout() {
@@ -330,7 +343,7 @@ final PrivacyPolicyViewModel _privacyAndTerms =
   }
 
   void _onGetMoneyPage() async {
-    await showIsVerifyDialog().then((value) {
+    await showIsVerifyDialog(isNeedSubscriptions: false).then((value) {
       if (value) {
         Get.to(() => const MoneyCollectView());
       }
@@ -355,5 +368,13 @@ final PrivacyPolicyViewModel _privacyAndTerms =
       SharedPref.instance
           .setAppLang(LocalizationService.langs[LocalizationService.enIndex]);
     }
+  }
+
+  _onSubscriptionsPage() async {
+    await showIsVerifyDialog(isNeedSubscriptions: false).then((value) {
+      if (value) {
+        Get.to(const MyCurrentSubscriptionsView());
+      }
+    });
   }
 }

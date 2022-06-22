@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:logger/logger.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/appwidget/primary_button.dart';
 import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
@@ -8,6 +9,7 @@ import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
 import 'package:sporti/util/app_media.dart';
+import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:get/get.dart';
 import 'package:sporti/util/sh_util.dart';
@@ -22,7 +24,7 @@ class MoneyCollectView extends StatelessWidget {
     var themeData = Theme.of(context);
     return Scaffold(
       backgroundColor: AppColor.white,
-      appBar: AppBar(elevation: 0,leading: InkWell(onTap: (){Get.back();}, child: Icon(Icons.arrow_back_ios , color: AppColor.black,)),),
+      appBar: AppBar(elevation: 0,leading: InkWell(onTap: (){Navigator.pop(Get.context!);}, child: Icon(Icons.arrow_back_ios , color: AppColor.black,)),),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppPadding.p50),
         child: Column(
@@ -96,6 +98,21 @@ class MoneyCollectView extends StatelessWidget {
   }
 
   void _onGoCommunicationClicked() {
-    Get.to(()=> const MoneyGiftView());
+    var currentNum = convertStringToNumber(SharedPref.instance.getUserData().balance?.replaceAll("\$", ""));
+    var maxNum = convertStringToNumber(SharedPref.instance.getAppSettings().maxGift?.replaceAll("\$", ""));
+   Logger().d("$currentNum  $maxNum");
+    if(currentNum >= maxNum) {
+      Get.to(()=> const MoneyGiftView());
+    }else{
+      snackError("", "${_getMaxBalanceAccount()}");
+      Logger().d("$currentNum  $maxNum");
+    }
+  }
+
+  double convertStringToNumber(String? replaceAll) {
+    if(replaceAll == null){
+      return 0.0;
+    }
+    return double.tryParse(replaceAll.toString())!.toDouble();
   }
 }

@@ -17,8 +17,11 @@ class AppStrings {
   static const String txtHome = "الرئيسية";
 
   //TODO:this for [money-collect-page]
-  static const String txtAccountBalance = "رصيد حسابك :";
-  static const String txtCurrency = "عملة";
+  static const String txtAccountBalance = "ارباح حسابك :";
+  static const String txtCurrency = "الربح";
+  static const String txtSubscriptions = "الاشتراكات";
+  static const String txtSubscriptionsExpire = "This subscription will expire at:";
+  static const String txtChange = "Change";
   static const String txtCallRequest = "يرجى ارسال الطلب ليتم التواصل معك ";
   static const String txtCommunication = "التواصل ";
   static const String txtCheckRevenue = "يرجى التأكد من أنك حصلت على اجمالي ";
@@ -42,7 +45,7 @@ class AppStrings {
   static const String txtNotCompleted = "لم تتم";
   static const String txtInCompleted = "جاري الاتمام";
   static const String txtExercises = "تمارين";
-  static const String txtBalance = "Balance : ";
+  static const String txtBalance = "Points : ";
   static const String txtVerifyAccount = "تفعيل الحساب";
   static const String txtUpdateProfile = "تعديل الملف الشخصي"; //Edit profile
   static const String txtTermsAndConditions = "الشروط والاحكام";
@@ -115,6 +118,7 @@ class AppStrings {
   static const String verify = "VERIFY";
   static const String verifyHint = "VERIFYHint";
   static const String loginHint = "loginToActions";
+  static const String subscriptionsHint = "subscriptionsHint";
   static const String email = "Email"; // "Email" "الايميل"
 
   //CategoryExerciseView
@@ -130,6 +134,8 @@ class AppStrings {
   //todo this for update password
   static const String txtOldPassword = "oldPassword";
   static const String txtNewPassword = "newPassword";
+
+  static var txtChoseSubscriptions = "Chose Your Subscriptions";
 
 
 }

@@ -12,6 +12,7 @@ import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:get/get.dart';
+import 'package:sporti/util/connectivity_widget.dart';
 
 class HomePageView extends StatefulWidget {
   const HomePageView({Key? key}) : super(key: key);
@@ -56,17 +57,19 @@ class _HomePageViewState extends State<HomePageView>
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
-    return Scaffold(
-      bottomNavigationBar: bottomNavBar(themeData),
-      floatingActionButton: floatingBtn,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: GetBuilder<HomeViewModel>(builder: (logic) {
-        return TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: logic.tabController,
-          children: bottomNavBarList,
-        );
-      }),
+    return ConnectivityWidget(
+      scaffold: Scaffold(
+        bottomNavigationBar: bottomNavBar(themeData),
+        floatingActionButton: floatingBtn,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        body: GetBuilder<HomeViewModel>(builder: (logic) {
+          return TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: logic.tabController,
+            children: bottomNavBarList,
+          );
+        }),
+      ),
     );
   }
 

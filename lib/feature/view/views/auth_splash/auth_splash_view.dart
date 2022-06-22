@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -8,6 +9,7 @@ import 'package:sporti/feature/view/views/auth_on_bording/on_bording_view.dart';
 import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_media.dart';
+import 'package:sporti/util/connectivity_widget.dart';
 import 'package:sporti/util/sh_util.dart';
 
 class SplashView extends StatefulWidget {
@@ -20,32 +22,36 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView>
     with SingleTickerProviderStateMixin {
   var _visible = true;
-
+  var isOffline = false;
   AnimationController? animationController;
   Animation<double>? animation;
-
-
 
   @override
   void initState() {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-       Timer(const Duration(seconds: 3), () {
-         Logger().i("${SharedPref.instance.getIsUserLogin()},${SharedPref.instance.getIsUserLogin() is String}");
-         if(SharedPref.instance.getIsUserLogin()){
-           Get.offAll(const HomePageView());
-         }else {
-           if(SharedPref.instance.getOnBoardingView()) {
-             Get.offAll(LoginView());
-           }else {
-             Get.offAll(const OnBoardingView());
-           }
-         }
-       });
+      initListener();
+      if (!isOffline) {
+        Timer(const Duration(seconds: 3), () {
+        Logger().i(
+            "${SharedPref.instance.getIsUserLogin()},${SharedPref.instance.getIsUserLogin() is String}");
+        if (SharedPref.instance.getIsUserLogin()) {
+          Get.offAll(const HomePageView());
+        } else {
+          if (SharedPref.instance.getOnBoardingView()) {
+            Get.offAll(LoginView());
+          } else {
+            Get.offAll(const OnBoardingView());
+          }
+        }
+      });
+      }
     });
     super.initState();
 
-    animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
-    animation = CurvedAnimation(parent: animationController!, curve: Curves.easeOut);
+    animationController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    animation =
+        CurvedAnimation(parent: animationController!, curve: Curves.easeOut);
 
     animation?.addListener(() => setState(() {}));
     animationController?.forward();
@@ -53,11 +59,10 @@ class _SplashViewState extends State<SplashView>
     setState(() {
       _visible = !_visible;
     });
-
   }
 
   // app logo widget
-  Widget get splashLogo =>  Center(
+  Widget get splashLogo => Center(
         child: Image(
           image: const AssetImage(AppMedia.sportiGreenLogo),
           width: animation!.value * AppSize.s300,
@@ -65,11 +70,27 @@ class _SplashViewState extends State<SplashView>
         ),
       );
 
+  void initListener() async {
+    var result = await checkInternetConnectivity();
+    if (!result) {
+      isOffline = true;
+      setState(() {});
+    }
+  }
+
+  Future<bool> checkInternetConnectivity() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    return connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: splashLogo,
+    return ConnectivityWidget(
+      scaffold: Scaffold(
+        backgroundColor: Colors.white,
+        body: splashLogo,
+      ),
     );
   }
 }

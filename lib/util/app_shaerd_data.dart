@@ -15,6 +15,8 @@ import 'package:logger/logger.dart';
 import 'package:sporti/feature/model/user_data.dart';
 import 'package:sporti/feature/view/appwidget/dialog/gloable_dialog_widget.dart';
 import 'package:sporti/feature/view/views/account_verfiy/account_verfiy_view.dart';
+import 'package:sporti/feature/view/views/subscriptions/my_current_subscriptions/my_cureent_subscriptions_view.dart';
+import 'package:sporti/feature/view/views/subscriptions/my_current_subscriptions/widget/current_subscribe_widget.dart';
 import 'package:sporti/feature/viewmodel/auth_viewmodle.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_media.dart';
@@ -45,7 +47,7 @@ String? urlUserPlacholder =
 // }
 
 var safeAreaLight =
-SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
   systemNavigationBarColor: AppColor.white,
   statusBarColor: AppColor.white,
   statusBarIconBrightness: Brightness.dark,
@@ -53,7 +55,7 @@ SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
 ));
 
 var safeAreaDark =
-SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
   systemNavigationBarColor: AppColor.white,
   statusBarColor: AppColor.transparent,
   statusBarIconBrightness: Brightness.light,
@@ -61,7 +63,7 @@ SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
 ));
 
 var bottomNavDark =
-SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
   systemNavigationBarColor: AppColor.primary,
   statusBarColor: AppColor.primary,
   statusBarIconBrightness: Brightness.dark,
@@ -104,11 +106,9 @@ emailValid(String val) {
   }
 }
 
-Widget simplePopup() =>
-    PopupMenuButton<int>(
+Widget simplePopup() => PopupMenuButton<int>(
       initialValue: 1,
-      itemBuilder: (context) =>
-      [
+      itemBuilder: (context) => [
         PopupMenuItem(
           value: 1,
           child: Text("First"),
@@ -164,17 +164,29 @@ snackConnection() {
       backgroundColor: const Color(0xFF000000).withAlpha(150));
 }
 
-mainSnack({String? title, required String body, Color? backgroundColor}) {
+mainSnack({String? title,  String? body, Color? backgroundColor}) {
   Future.delayed(const Duration(seconds: 0)).then((value) {
-    Get.showSnackbar(
-      GetSnackBar(
-        backgroundColor: backgroundColor ?? const Color(0xFF303030),
-        message: body,
-        duration: const Duration(seconds: 2),
-        borderRadius: 10,
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      ),
-    );
+    try {
+      Get.showSnackbar(
+            GetSnackBar(
+              backgroundColor: backgroundColor ?? const Color(0xFF303030),
+              message: body != null && body.trim().isNotEmpty ? body:"error occurred",
+              duration: const Duration(seconds: 2),
+              borderRadius: 10,
+              margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            ),
+          );
+    } catch (e) {
+      Get.showSnackbar(
+        GetSnackBar(
+          backgroundColor: backgroundColor ?? const Color(0xFF303030),
+          message: "error occurred",
+          duration: const Duration(seconds: 2),
+          borderRadius: 10,
+          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        ),
+      );
+    }
   });
 }
 
@@ -294,11 +306,11 @@ class CustomMaterialPageRoute extends MaterialPageRoute {
     bool maintainState = true,
     bool fullscreenDialog = false,
   }) : super(
-    builder: builder!,
-    settings: settings,
-    maintainState: maintainState,
-    fullscreenDialog: fullscreenDialog,
-  );
+          builder: builder!,
+          settings: settings,
+          maintainState: maintainState,
+          fullscreenDialog: fullscreenDialog,
+        );
 }
 
 class DismissKeyboard extends StatelessWidget {
@@ -324,7 +336,7 @@ class DismissKeyboard extends StatelessWidget {
 
 bool isArabicLang() {
   return (SharedPref.instance.getAppLanguageMain() ==
-      LocalizationService.localeAr
+          LocalizationService.localeAr
       ? true
       : false);
   // return isRTL;
@@ -347,12 +359,8 @@ Future<TimeOfDay?> timeBiker() async {
     context: Get.context!,
     helpText: AppStrings.txtReturnTime.tr,
     initialTime: TimeOfDay(
-        hour: DateTime
-            .now()
-            .hour,
-        minute: DateTime
-            .now()
-            .minute % 30 == 0 ? 0 : 30),
+        hour: DateTime.now().hour,
+        minute: DateTime.now().minute % 30 == 0 ? 0 : 30),
   );
   return picker;
 }
@@ -361,7 +369,7 @@ String formatStringWithCurrency(var data /*, String currency*/) {
   try {
     var number = data.toString().replaceAll("\$", "").replaceAll(",", "");
     number =
-    "\$ ${NumberFormat("#0.00", "en_US").format(double.parse(number))}";
+        "\$ ${NumberFormat("#0.00", "en_US").format(double.parse(number))}";
     //var numbers = "${currency}${double.parse(number).toStringAsFixed(2)}";
     return number.toString();
   } catch (e) {
@@ -372,88 +380,87 @@ String formatStringWithCurrency(var data /*, String currency*/) {
 
 Widget profileItem(ThemeData themeData,
     {bool? withBoxShadow = true,
-      Color? color,
-      required Function() onClick,
-      required String title,
-      required String leadingIcon,
-      required String trailingIcon}) {
+    Color? color,
+    required Function() onClick,
+    required String title,
+    required String leadingIcon,
+    required String trailingIcon}) {
   return InkWell(
       onTap: onClick,
       child: withBoxShadow == true
           ? Container(
-        width: double.infinity,
-        height: AppSize.s50,
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
-        margin: const EdgeInsets.only(bottom: AppSize.s12),
-        decoration: BoxDecoration(
-            color: color ?? AppColor.white,
-            borderRadius: BorderRadius.circular(AppPadding.p8),
-            boxShadow: [AppShadow.boxShadow()!]),
-        child: Row(
-          children: [
-            SvgPicture.asset(leadingIcon),
-            const SizedBox(
-              width: AppSize.s20,
-            ),
-            Expanded(
-              child: CustomTextView(
-                  txt: title, textStyle: themeData.textTheme.headline2),
-            ),
-            const SizedBox(
-              width: AppSize.s20,
-            ),
-            if (Get.locale == LocalizationService.localeEn &&
-                trailingIcon == AppMedia.arrowIos) ...[
-              const Icon(Icons.arrow_forward_ios),
-            ] else
-              ...[
-                SvgPicture.asset(trailingIcon)
-              ]
-          ],
-        ),
-      )
+              width: double.infinity,
+              height: AppSize.s50,
+              padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+              margin: const EdgeInsets.only(bottom: AppSize.s12),
+              decoration: BoxDecoration(
+                  color: color ?? AppColor.white,
+                  borderRadius: BorderRadius.circular(AppPadding.p8),
+                  boxShadow: [AppShadow.boxShadow()!]),
+              child: Row(
+                children: [
+                  SvgPicture.asset(leadingIcon),
+                  const SizedBox(
+                    width: AppSize.s20,
+                  ),
+                  Expanded(
+                    child: CustomTextView(
+                        txt: title, textStyle: themeData.textTheme.headline2),
+                  ),
+                  const SizedBox(
+                    width: AppSize.s20,
+                  ),
+                  if (Get.locale == LocalizationService.localeEn &&
+                      trailingIcon == AppMedia.arrowIos) ...[
+                    const Icon(Icons.arrow_forward_ios),
+                  ] else ...[
+                    SvgPicture.asset(trailingIcon)
+                  ]
+                ],
+              ),
+            )
           : Container(
-        width: double.infinity,
-        height: AppSize.s50,
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
-        margin: const EdgeInsets.only(bottom: AppSize.s12),
-        decoration: BoxDecoration(
-          color: color ?? AppColor.white,
-          //borderRadius: BorderRadius.circular(AppPadding.p8),
-          border: Border(
-            bottom: BorderSide(
-              color: AppColor.black,
-              width: 0.5,
-            ),
-          ),
-        ),
-        child: Row(
-          children: [
-            SvgPicture.asset(leadingIcon),
-            const SizedBox(
-              width: AppSize.s20,
-            ),
-            Expanded(
-              child: CustomTextView(
-                  txt: title, textStyle: themeData.textTheme.headline2),
-            ),
-            const SizedBox(
-              width: AppSize.s20,
-            ),
-            if (Get.locale == LocalizationService.localeEn &&
-                trailingIcon == AppMedia.arrowIos) ...[
-              const Icon(Icons.arrow_forward_ios),
-            ] else
-              ...[
-                SvgPicture.asset(trailingIcon)
-              ]
-          ],
-        ),
-      ));
+              width: double.infinity,
+              height: AppSize.s50,
+              padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+              margin: const EdgeInsets.only(bottom: AppSize.s12),
+              decoration: BoxDecoration(
+                color: color ?? AppColor.white,
+                //borderRadius: BorderRadius.circular(AppPadding.p8),
+                border: Border(
+                  bottom: BorderSide(
+                    color: AppColor.black,
+                    width: 0.5,
+                  ),
+                ),
+              ),
+              child: Row(
+                children: [
+                  SvgPicture.asset(leadingIcon),
+                  const SizedBox(
+                    width: AppSize.s20,
+                  ),
+                  Expanded(
+                    child: CustomTextView(
+                        txt: title, textStyle: themeData.textTheme.headline2),
+                  ),
+                  const SizedBox(
+                    width: AppSize.s20,
+                  ),
+                  if (Get.locale == LocalizationService.localeEn &&
+                      trailingIcon == AppMedia.arrowIos) ...[
+                    const Icon(Icons.arrow_forward_ios),
+                  ] else ...[
+                    SvgPicture.asset(trailingIcon)
+                  ]
+                ],
+              ),
+            ));
 }
 
-Future<bool> showIsVerifyDialog() async {
+Future<bool> showIsVerifyDialog({required bool isNeedSubscriptions }) async {
   UserData? userData = SharedPref.instance.getUserData();
+  Logger().w(userData.toJson());
   if (!userData.isVerify! && userData.username != Constance.guestUserNameKey) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       showAnimatedDialog(GlobalDialogWidget(
@@ -468,11 +475,11 @@ Future<bool> showIsVerifyDialog() async {
       ));
     });
     return false;
-  } else
-  if (!userData.isVerify! && userData.username == Constance.guestUserNameKey) {
+  } else if (!userData.isVerify! &&
+      userData.username == Constance.guestUserNameKey) {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       showAnimatedDialog(GetBuilder<AuthViewModel>(
-        init: AuthViewModel(),
+          init: AuthViewModel(),
           builder: (logic) {
             return GlobalDialogWidget(
               title: AppStrings.txtAttentions.tr,
@@ -487,8 +494,34 @@ Future<bool> showIsVerifyDialog() async {
           }));
     });
     return false;
+  } else if (isNeedSubscriptions && userData.isVerify! && (getSubscriptionsDate(userData))) {
+    //todo this for end subscriptions
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      showAnimatedDialog(GlobalDialogWidget(
+        title: AppStrings.txtAttentions.tr,
+        subTitle: AppStrings.subscriptionsHint.tr,
+        isLoading: false,
+        isTwoBtn: true,
+        onCancelBtnClick: () => Get.back(),
+        onOkBtnClick: () {
+          Get.off(const MyCurrentSubscriptionsView());
+        },
+      ));
+    });
+    return false;
   } else {
     return true;
+  }
+}
+
+bool getSubscriptionsDate(UserData userData) {
+  Logger().w(userData.toJson());
+  if (userData.planEndDate!.isAfter(DateTime.now())) {
+    return true;
+  } else if (userData.planEndDate!.isAtSameMomentAs(DateTime.now())) {
+    return true;
+  } else {
+    return false;
   }
 }
 
@@ -496,11 +529,7 @@ loginAgain() {
   var userName = SharedPref.instance.getUserName();
   var password = SharedPref.instance.getPassword();
 
-  if (userName
-      .toString()
-      .isNotEmpty && password
-      .toString()
-      .isNotEmpty) {
+  if (userName.toString().isNotEmpty && password.toString().isNotEmpty) {
     Map<String, dynamic> map = {
       ConstanceNetwork.userNameKey: userName,
       ConstanceNetwork.passwordKey: password,

@@ -35,6 +35,7 @@ class AuthFeature {
       Logger().d("if ${appResponse.toJson()}");
       return UserData.fromJson(appResponse.result ?? {});
     } else {
+      snackError("",appResponse.message);
       Logger().d("else ${appResponse.toJson()}");
       return UserData.fromJson(appResponse.result ?? {});
     }

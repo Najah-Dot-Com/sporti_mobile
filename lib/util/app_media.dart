@@ -4,6 +4,7 @@ class AppMedia {
   static const String loadingShimmer = "$IMAGE_PATH/loading_shimmer.gif";
   static const String emptyState = "$IMAGE_PATH/empty_state.gif";
   static const String emptySearch = "$IMAGE_PATH/empty_search.gif";
+  static const String noInternetConnections = "$IMAGE_PATH/no_internet_connection.gif";
   static const String errorMoney = "$IMAGE_PATH/error_money.svg";
   static const String collectMoney = "$IMAGE_PATH/collectMoney.svg";
   static const String verify = "$IMAGE_PATH/verify.svg";
@@ -32,5 +33,8 @@ class AppMedia {
   static const String remove = "$IMAGE_PATH/remove.svg";
 
   static const String resetPassword = "$IMAGE_PATH/reset_password.svg";
+  static const String subscriptions = "$IMAGE_PATH/subscriptions.svg";
+
+  static const String subscriptionsLarge = "$IMAGE_PATH/subscriptions_larg.svg";
 
 }

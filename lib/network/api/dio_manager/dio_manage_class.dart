@@ -36,10 +36,7 @@ class DioManagerClass {
     return _dio!;
   }
 
-  Future<Response> dioGetMethod(
-      {var url, Map<String, dynamic>? header, var queryParameters}) async {
-    print("msg_request_url : $url");
-    print("msg_request_header : $header");
+  Future<Response> dioGetMethod({var url, Map<String, dynamic>? header, var queryParameters}) async {
     if (await checkInternetConnectivity()) {
       return await _dio!.get(url,
           options: Options(headers: header),
@@ -53,9 +50,6 @@ class DioManagerClass {
       {var url,
       Map<String, dynamic>? header,
       Map<String, dynamic>? body}) async {
-    print("msg_request_url : $url");
-    print("msg_request_header : $header");
-    print("msg_request_body : $body");
     if (await checkInternetConnectivity()) {
       return await _dio!.post(
         url,
@@ -69,9 +63,6 @@ class DioManagerClass {
 
   Future<Response> dioPostFormMethod(
       {var url, Map<String, dynamic>? header, var body}) async {
-    print("msg_request_url : $url");
-    print("msg_request_header : $header");
-    print("msg_request_body : $body");
     if (await checkInternetConnectivity()) {
       return await _dio!.post(
         url,

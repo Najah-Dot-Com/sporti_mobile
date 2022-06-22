@@ -72,7 +72,7 @@ class NewlyItemWidget extends StatelessWidget {
   }
 
   void _onAddToMyWork() async{
-   await showIsVerifyDialog().then((value) {
+   await showIsVerifyDialog(isNeedSubscriptions: true).then((value) {
       if(value){
         Get.bottomSheet(GetBuilder<HomeViewModel>(
             init: HomeViewModel(),
