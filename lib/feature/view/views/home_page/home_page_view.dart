@@ -1,3 +1,4 @@
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/categories_mywork_list/categories_mywork_list_view.dart';
@@ -24,9 +25,11 @@ class HomePageView extends StatefulWidget {
 class _HomePageViewState extends State<HomePageView>
     with SingleTickerProviderStateMixin {
   Widget get floatingBtn => FloatingActionButton(
+         elevation: 0,
         child: Icon(
           Icons.search,
           color: AppColor.white,
+          size: AppSize.s40,
         ),
         backgroundColor: AppColor.primary,
         onPressed: _onSearchClick,
@@ -34,7 +37,7 @@ class _HomePageViewState extends State<HomePageView>
 
   Widget bottomNavBar(ThemeData themeData) => const BottomNavigationBarWidget();
 
-    final List<Widget> bottomNavBarList = [
+  final List<Widget> bottomNavBarList = [
     const HomePageTab(), //home page
     const CategoriesMyWorkListView(), //my work
     NotificationsView(), //notifications
@@ -53,22 +56,29 @@ class _HomePageViewState extends State<HomePageView>
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return ConnectivityWidget(
       scaffold: Scaffold(
-        bottomNavigationBar: bottomNavBar(themeData),
-        floatingActionButton: floatingBtn,
+        extendBody: true,
+        bottomNavigationBar:
+            SizedBox(height: AppSize.s90, child: bottomNavBar(themeData)),
+        floatingActionButton: SizedBox(
+            width: AppSize.s85, height: AppSize.s85, child: floatingBtn),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        body: GetBuilder<HomeViewModel>(builder: (logic) {
-          return TabBarView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: logic.tabController,
-            children: bottomNavBarList,
-          );
-        }),
+        body: DoubleBackToCloseApp(
+          snackBar:  SnackBar(
+            content: Text(AppStrings.txtBackToEnd.tr),
+          ),
+          child: GetBuilder<HomeViewModel>(builder: (logic) {
+            return TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: logic.tabController,
+              children: bottomNavBarList,
+            );
+          }),
+        ),
       ),
     );
   }

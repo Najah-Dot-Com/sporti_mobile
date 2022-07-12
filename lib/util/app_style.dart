@@ -94,6 +94,10 @@ class AppBtnStyle {
 class AppStyleScroll{
   static ScrollPhysics? customScrollViewIOS() =>
       const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics());
+
+  static ScrollPhysics? customScrollViewAndroid() =>
+      const ClampingScrollPhysics();
+
 }
 
 class AppShadow{

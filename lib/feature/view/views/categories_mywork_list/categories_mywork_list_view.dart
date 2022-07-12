@@ -50,17 +50,17 @@ class CategoriesMyWorkListView extends StatelessWidget {
           ],
         ),
         toolbarHeight: AppSize.s120,
-        actions: [
-          MaterialButton(
-            onPressed: _onNotificationIconClick,
-            minWidth: AppSize.s48,
-            child: Icon(
-              Icons.notifications_rounded, //feed_outlined
-              size: AppSize.s24,
-              color: AppColor.grey,
-            ),
-          ),
-        ],
+        // actions: [
+        //   MaterialButton(
+        //     onPressed: _onNotificationIconClick,
+        //     minWidth: AppSize.s48,
+        //     child: Icon(
+        //       Icons.notifications_rounded, //feed_outlined
+        //       size: AppSize.s24,
+        //       color: AppColor.grey,
+        //     ),
+        //   ),
+        // ],
       );
 
 

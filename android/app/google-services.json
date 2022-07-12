@@ -14,11 +14,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "722010426083-3of4gkjjvhm1hlioe5dg3sdcmagcg5fk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.naja7.sporti",
+            "certificate_hash": "4cd252bbe8bfaf48ba90c5b7bc083651f9c7ba67"
+          }
+        },
+        {
           "client_id": "722010426083-cv961vh7p0tr3honui064rbhere07763.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.naja7.sporti",
             "certificate_hash": "a79cc014ec889fc1c7d62e37d90274f4dc9b1aaa"
+          }
+        },
+        {
+          "client_id": "722010426083-hn708edrmtvinuilblt2co4tbs46a53r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.naja7.sporti",
+            "certificate_hash": "6d4e80e578f3b8fd7e28e706883f2363a5bcaac5"
           }
         },
         {
@@ -37,6 +53,14 @@
             {
               "client_id": "722010426083-nl1krg8ujpmco92h9djh1fccf83499g2.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "722010426083-ho9f04rcf3iv1s1roqoigjmhuo73j3l8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.naja7.sporti.sporti",
+                "app_store_id": "1620690061"
+              }
             }
           ]
         }

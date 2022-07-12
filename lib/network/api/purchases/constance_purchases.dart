@@ -3,8 +3,8 @@ import 'dart:io';
 class ConstancePurchases {
   static const appIdAndroid = "goog_cbtHNFKuXXzqfUhsIxrSCZJshXi";
   static const appIdIos = "appl_NIkvfTyHPRuiklTGRrduHbpfvPc";
-  static String basicId = (Platform.isIOS ? "sporti111":"sporti11");
-  static const unLimitedId = "sporti22";
+  static String basicId = (Platform.isIOS ? "sporti111":"sporti11_3"/*"sporti11"*/);
+  static String unLimitedId = (Platform.isIOS ? "sporti22":"sporti22_12"/*"sporti22"*/);
   static const freeType = "Free";
   static const basicType = "Basic";
   static const unLimitedType = "UnLimited";

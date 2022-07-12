@@ -21,10 +21,12 @@ class PrimaryButton extends StatelessWidget {
     this.colorText,
     this.width,
     this.height,
+    this.isWithBorderColor = true,
   }) : super(key: key);
   final String textButton;
   final Function onClicked;
   bool isLoading = false;
+  bool isWithBorderColor = true;
   final Color? colorBtn, colorText;
   final double? width, height;
 
@@ -36,7 +38,7 @@ class PrimaryButton extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSize.s40),
-         border: Border.all(color: colorText ?? AppColor.white)
+         border: Border.all(color:!isWithBorderColor ? AppColor.transparent: colorText ?? AppColor.white)
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(AppSize.s40),

@@ -22,31 +22,36 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   List<OnboardModel> screens = <OnboardModel>[
     OnboardModel(
       img: 'https://assets4.lottiefiles.com/packages/lf20_18vkvya1.json',
-      text: "Choose your favorite package of workouts",
-      desc: "Each package contains best exercises for your targeted muscles",
+      text: AppStrings.favoritePackageTxt.tr,
+      desc: AppStrings.favoritePackageHintTxt.tr,
       bg: Colors.white,
       button: AppColor.primary,
     ),
     OnboardModel(
       img: 'https://assets4.lottiefiles.com/packages/lf20_oncjxjbd.json',
-      text: "Sporti can do it for you",
-      desc:
-          "To get the full benefits of workout you have to repeat it regularly Sporti will keep your records to followup",
+      text: AppStrings.sportiDoTxt.tr ,
+      desc: AppStrings.sportiDoHintTxt.tr,
       bg: AppColor.primary,
       button: Colors.white,
     ),
     OnboardModel(
       img: 'https://assets4.lottiefiles.com/packages/lf20_ltuxwdw4.json',
-      text: "Your coach  with you",
-      desc: "Start by finding your favorite exercise any time any where",
+      text: AppStrings.yourCoachTxt.tr,
+      desc: AppStrings.yourCoachHintTxt.tr,
       bg: Colors.white,
       button: AppColor.primary,
     ),
     OnboardModel(
       img: 'https://assets2.lottiefiles.com/packages/lf20_OdVhgq.json',
-      text: "One more thing!",
-      desc:
-          "Sporti rewards with coins that can be transferred to you if you complete your packages",
+      text: AppStrings.oneMoreTxt.tr,
+      desc: AppStrings.oneMoreHintTxt.tr,
+      bg: AppColor.primary,
+      button: Colors.white,
+    ),
+    OnboardModel(
+      img: 'https://assets8.lottiefiles.com/packages/lf20_ctwlrzmf.json',
+      text: AppStrings.subscriptionsTxt.tr,
+      desc: AppStrings.subscriptionsHintTxt.tr,
       bg: AppColor.primary,
       button: Colors.white,
     ),

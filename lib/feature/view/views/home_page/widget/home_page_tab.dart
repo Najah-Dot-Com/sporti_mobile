@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:logger/logger.dart';
+import 'package:sporti/feature/model/user_data.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/home_page/widget/widget_home_tab/newly_item_widget.dart';
 import 'package:sporti/feature/view/views/home_page/widget/widget_home_tab/shimmer_newly_item_widget.dart';
@@ -21,35 +25,33 @@ import 'widget_home_tab/shimmer_your_work_widget.dart';
 class HomePageTab extends StatelessWidget {
   const HomePageTab({Key? key}) : super(key: key);
 
-  static final HomeViewModel _homeViewModel = Get.put<HomeViewModel>(
-      HomeViewModel());
+  static final HomeViewModel _homeViewModel =
+      Get.put<HomeViewModel>(HomeViewModel());
 
-  PreferredSizeWidget myAppBar(ThemeData themeData) =>
-      AppBar(
+  PreferredSizeWidget myAppBar(ThemeData themeData) => AppBar(
         automaticallyImplyLeading: true,
         centerTitle: false,
         title: CustomTextView(
-          txt: AppStrings.txtHello.tr + " ${SharedPref.instance
-              .getUserData()
-              .fullname} ",
-          textStyle: themeData.textTheme.headline2?.copyWith(
-              color: AppColor.black),
+          txt: AppStrings.txtHello.tr +
+              " ${SharedPref.instance.getUserData().fullname} ",
+          textStyle:
+              themeData.textTheme.headline2?.copyWith(color: AppColor.black),
         ),
-        actions: [
-          MaterialButton(
-            onPressed: _onNotificationIconClick,
-            minWidth: AppSize.s48,
-            child: Icon(
-              Icons.notifications_rounded, //feed_outlined
-              size: AppSize.s24,
-              color: AppColor.grey,
-            ),
-          ),
-        ],
+        // actions: [
+        //   MaterialButton(
+        //     onPressed: _onNotificationIconClick,
+        //     minWidth: AppSize.s48,
+        //     child: Icon(
+        //       Icons.notifications_rounded, //feed_outlined
+        //       size: AppSize.s24,
+        //       color: AppColor.grey,
+        //     ),
+        //   ),
+        // ],
       );
 
-  Widget  newlyAdePackage(HomeViewModel logic) {
-    if(logic.isLoading){
+  Widget newlyAdePackage(HomeViewModel logic) {
+    if (logic.isLoading) {
       return SizedBox(
         height: AppSize.s140,
         child: ListView.builder(
@@ -63,36 +65,37 @@ class HomePageTab extends StatelessWidget {
           },
         ),
       );
-    }else if(!logic.isLoading && logic.exercisesListRecentlyAll.isEmpty){
+    } else if (!logic.isLoading && logic.exercisesListRecentlyAll.isEmpty) {
       //todo:// here we will add empty state widget
       return const SizedBox.shrink();
     }
     return SizedBox(
-        height: AppSize.s140,
-        child: ListView.builder(
-          itemCount: logic.exercisesListRecentlyAll.length,
-          shrinkWrap: true,
-          clipBehavior: Clip.hardEdge,
-          scrollDirection: Axis.horizontal,
-          physics: AppStyleScroll.customScrollViewIOS(),
-          itemBuilder: (context, index) {
-            try {
-              if(logic.exercisesListRecentlyAll[index].countExercises != 0) {
-                return  NewlyItemWidget(packages: logic.exercisesListRecentlyAll[index]);
-              }else{
-                return const SizedBox.shrink();
-              }
-            } catch (e) {
-              print(e);
+      height: AppSize.s140,
+      child: ListView.builder(
+        itemCount: logic.exercisesListRecentlyAll.length,
+        shrinkWrap: true,
+        clipBehavior: Clip.hardEdge,
+        scrollDirection: Axis.horizontal,
+        physics: AppStyleScroll.customScrollViewIOS(),
+        itemBuilder: (context, index) {
+          try {
+            if (logic.exercisesListRecentlyAll[index].countExercises != 0) {
+              return NewlyItemWidget(
+                  packages: logic.exercisesListRecentlyAll[index]);
+            } else {
               return const SizedBox.shrink();
             }
-          },
-        ),
-      );
+          } catch (e) {
+            print(e);
+            return const SizedBox.shrink();
+          }
+        },
+      ),
+    );
   }
 
-  Widget  selectMyWorkWidget(HomeViewModel logic) {
-    if(logic.isLoading){
+  Widget selectMyWorkWidget(HomeViewModel logic) {
+    if (logic.isLoading) {
       return ListView.builder(
           itemCount: 7,
           shrinkWrap: true,
@@ -100,37 +103,38 @@ class HomePageTab extends StatelessWidget {
           itemBuilder: (context, index) {
             return const ShimmerSelectYourWorkWidget();
           });
-
-    }else if(!logic.isLoading && logic.exercisesListAll.isEmpty){
+    } else if (!logic.isLoading && logic.exercisesListAll.isEmpty) {
       //todo:// here we will add empty state widget
       return const SizedBox.shrink();
     }
     return ListView.builder(
-          itemCount: logic.exercisesListAll.length,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            try {
-              if(logic.exercisesListAll[index].countExercises != 0) {
-                return  SelectYourWorkWidget(package:logic.exercisesListAll[index]);
-              }else{
-                return const SizedBox.shrink();
-              }
-            } catch (e) {
-              print(e);
+        itemCount: logic.exercisesListAll.length,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          try {
+            if (logic.exercisesListAll[index].countExercises != 0) {
+              return SelectYourWorkWidget(
+                  package: logic.exercisesListAll[index]);
+            } else {
               return const SizedBox.shrink();
             }
-          });
+          } catch (e) {
+            print(e);
+            return const SizedBox.shrink();
+          }
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return Scaffold(
-      appBar: myAppBar(themeData),
+
+      // appBar: myAppBar(themeData),
       body: GetBuilder<HomeViewModel>(
           init: HomeViewModel(),
-          initState: (state){
+          initState: (state) {
             WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
               state.controller?.allPackagesExercises();
               state.controller?.allPackagesTopExercises();
@@ -138,40 +142,169 @@ class HomePageTab extends StatelessWidget {
             });
           },
           builder: (logic) {
-        return SingleChildScrollView(
-          physics: AppStyleScroll.customScrollViewIOS(),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: AppSize.s18),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: AppSize.s28,),
-                CustomTextView(
-                  txt: AppStrings.txtNewlyAddedPackages.tr,
-                  textStyle: themeData.textTheme.headline2?.copyWith(
-                      color: AppColor.black),
-                ),
-                const SizedBox(height: AppSize.s28,),
-                newlyAdePackage(logic),
-                const SizedBox(height: AppSize.s20,),
-                CustomTextView(
-                  txt: AppStrings.txtChooseYourFavoriteExercises.tr,
-                  textStyle: themeData.textTheme.headline2?.copyWith(
-                      color: AppColor.black),
-                ),
-                const SizedBox(height: AppSize.s20,),
-                selectMyWorkWidget(logic),
-
-              ],
-            ),
-          ),
-        );
-      }),
+            UserData? userData = SharedPref.instance.getUserData();
+            Logger().d(userData.picture);
+            return SingleChildScrollView(
+              physics: AppStyleScroll.customScrollViewAndroid(),
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        height: AppSize.s250,
+                        width: double.infinity,
+                        color: AppColor.primary,
+                        child: SvgPicture.asset(
+                          AppMedia.homeGreenBackground,
+                          fit: BoxFit.cover,
+                          height: AppSize.s250,
+                          width: double.infinity,
+                        ),
+                      ),
+                      PositionedDirectional(
+                        top: AppSize.s80,
+                        start: AppSize.s50,
+                        child: InkWell(
+                          onTap: _onProfileIconClick,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ClipOval(
+                                // borderRadius: BorderRadius.circular(AppPadding.p18),
+                                child: (userData.picture != null &&
+                                        userData.picture!.isNotEmpty &&
+                                        !userData.picture!.contains("http"))
+                                    ? Image.memory(
+                                        base64Decode(userData.picture.toString()),
+                                        width: AppSize.s50,
+                                        height: AppSize.s50,
+                                        fit: BoxFit.cover)
+                                    : imageNetwork(
+                                        url: (userData.picture != null &&
+                                                userData.picture!.isNotEmpty)
+                                            ? userData.picture
+                                            : null,
+                                        width: AppSize.s50,
+                                        height: AppSize.s50,
+                                        fit: BoxFit.cover),
+                              ),
+                              const SizedBox(
+                                width: AppSize.s12,
+                              ),
+                              CustomTextView(
+                                txt: AppStrings.txtHello.tr +
+                                    " ${SharedPref.instance.getUserData().fullname} ",
+                                textStyle: themeData.textTheme.headline2
+                                    ?.copyWith(color: AppColor.white),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: AppSize.s200,
+                        width: double.infinity,
+                        margin: const EdgeInsets.only(
+                            top: AppSize.s160,
+                            left: AppSize.s12,
+                            right: AppSize.s12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: AppSize.s40, vertical: AppSize.s30),
+                        decoration: BoxDecoration(
+                            color: AppColor.white,
+                            borderRadius: BorderRadius.circular(AppSize.s12)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomTextView(
+                              txt: AppStrings.txtCoins.tr,
+                              textStyle: themeData.textTheme.headline2
+                                  ?.copyWith(color: AppColor.black),
+                            ),
+                            const SizedBox(
+                              height: AppSize.s30,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  AppMedia.earningIcons,
+                                  width: AppSize.s40,
+                                  height: AppSize.s40,
+                                ),
+                                const SizedBox(width: AppSize.s12,),
+                                CustomTextView(
+                                  txt: /*formatStringWithCurrency(*/SharedPref.instance.getUserData().finish.toString()/*)*/,
+                                  textStyle: themeData.textTheme.headline1
+                                      ?.copyWith(color: AppColor.primary),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: AppSize.s10,
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: CustomTextView(
+                                txt: (AppStrings.txtEqualTo.tr + " " + formatStringWithCurrency(SharedPref.instance.getUserData().balance.toString())),
+                                textStyle: themeData.textTheme.headline3
+                                    ?.copyWith(color: AppColor.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: AppSize.s18),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: AppSize.s28,
+                        ),
+                        CustomTextView(
+                          txt: AppStrings.txtNewlyAddedPackages.tr,
+                          textStyle: themeData.textTheme.headline2
+                              ?.copyWith(color: AppColor.black),
+                        ),
+                        const SizedBox(
+                          height: AppSize.s28,
+                        ),
+                        newlyAdePackage(logic),
+                        const SizedBox(
+                          height: AppSize.s20,
+                        ),
+                        CustomTextView(
+                          txt: AppStrings.txtChooseYourFavoriteExercises.tr,
+                          textStyle: themeData.textTheme.headline2
+                              ?.copyWith(color: AppColor.black),
+                        ),
+                        const SizedBox(
+                          height: AppSize.s20,
+                        ),
+                        selectMyWorkWidget(logic),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
     );
   }
 
   void _onNotificationIconClick() {
     _homeViewModel.onTabChange(_homeViewModel.notificationsIndex);
+  }
+
+  void _onProfileIconClick() {
+    _homeViewModel.onTabChange(_homeViewModel.profileIndex);
   }
 }

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
+import 'package:sporti/util/app_media.dart';
+import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/constance.dart';
 import 'package:sporti/util/localization/localization_service.dart';
@@ -10,8 +12,8 @@ import 'package:sporti/util/sh_util.dart';
 
 import '../primary_button.dart';
 
-class LanguageBottomSheet extends StatelessWidget {
-  const LanguageBottomSheet({
+class SocialBottomSheet extends StatelessWidget {
+  const SocialBottomSheet({
     Key? key,
   }) : super(key: key);
 
@@ -50,35 +52,42 @@ class LanguageBottomSheet extends StatelessWidget {
           // ],
           const SizedBox(height: AppSize.s24),
           CustomTextView(
-            txt:AppStrings.chooseLanguage.tr,
+            txt: AppStrings.socialMedia.tr,
             textAlign: TextAlign.center,
-            textStyle: themeData.textTheme.headline2?.copyWith(color: AppColor.primary),
+            textStyle: themeData.textTheme.headline2
+                ?.copyWith(color: AppColor.primary),
           ),
 
           const SizedBox(
             height: AppSize.s28,
           ),
-          PrimaryButton(
-              isLoading: false,
-              isWithBorderColor: false,
-              colorBtn: AppColor.white,
-              colorText: AppColor.primary,
-              textButton: "العربية",
-              width: double.infinity,
-              onClicked: _onArClick,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: _onInstaClick,
+                child: Image.asset(
+                  AppMedia.instagramIcons,
+                  width: AppSize.s50,
+                  height: AppSize.s50,
+                  fit: BoxFit.cover,
+                ),
               ),
-          const SizedBox(
-            height: AppSize.s10,
+              const SizedBox(
+                width: AppSize.s12,
+              ),
+              InkWell(
+                onTap: _onSnapClick,
+                child: Image.asset(
+                  AppMedia.snapchatIcons,
+                  width: AppSize.s50,
+                  height: AppSize.s50,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ],
           ),
-          PrimaryButton(
-              isLoading: false,
-            isWithBorderColor: false,
-              colorBtn: AppColor.white,
-              colorText: AppColor.black,
-              textButton: "English",
-              width: double.infinity,
-              onClicked: _onEnClick,
-              ),
 
           const SizedBox(
             height: AppSize.s40,
@@ -88,13 +97,13 @@ class LanguageBottomSheet extends StatelessWidget {
     );
   }
 
-  _onArClick() {
-    SharedPref.instance.setAppLang(LocalizationService.langs[LocalizationService.arIndex]);
-    Get.back();
+
+
+  void _onInstaClick() async{
+    await openBrowser("https://instagram.com/hi_conception?igshid=YmMyMTA2M2Y=");
   }
 
-  _onEnClick() {
-    SharedPref.instance.setAppLang(LocalizationService.langs[LocalizationService.enIndex]);
-    Get.back();
+  void _onSnapClick() async{
+    await openBrowser("https://www.snapchat.com/add/najahdot?share_id=CKjFxKSlJMM&locale=en-KW");
   }
 }

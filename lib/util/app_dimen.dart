@@ -27,6 +27,7 @@ class AppPadding {
 }
 
 class AppSize {
+
   static const double s1_5 = 1.5;
   static const double s4 = 4.0;
   static const double s6 = 6.0;
@@ -66,6 +67,10 @@ class AppSize {
   static const double s400 = 400.0;
   static const double s9 = 9.0;
   static const double s0_8 = 0.8;
+  static const double s90 = 90.0;
+  static const double s180 = 180.0;
+  static const double s80 = 80.0;
+
 }
 
 class DurationConstant {

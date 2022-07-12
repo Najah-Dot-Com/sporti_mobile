@@ -122,7 +122,7 @@ class ApiInterceptors extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     super.onResponse(response, handler);
-    Logger().d("onResponse : ${response.statusCode}");
+    Logger().w("onResponse : ${response.statusCode}");
   }
 
   @override

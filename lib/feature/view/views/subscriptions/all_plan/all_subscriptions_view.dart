@@ -75,11 +75,11 @@ class AllSubscriptionsView extends StatelessWidget {
                         child: PrimaryButton(
                             textButton: AppStrings.txtChange.tr,
                             isLoading: logic.isLoading,
-                            colorBtn: logic.isSelectedEqualedCurrent(currentPlan) &&  getSubscriptionsDate(SharedPref.instance.getUserData())
+                            colorBtn: logic.isSelectedEqualedCurrent(currentPlan) && currentPlan.name == logic.subscriptionsList[logic.selectedIndex].name/* getSubscriptionsDate(SharedPref.instance.getUserData())*/
                                 ? AppColor.grey1
                                 : AppColor.primary,
                             onClicked: () =>
-                                logic.isSelectedEqualedCurrent(currentPlan)  &&  getSubscriptionsDate(SharedPref.instance.getUserData())
+                                logic.isSelectedEqualedCurrent(currentPlan)  &&  currentPlan.name == logic.subscriptionsList[logic.selectedIndex].name/*getSubscriptionsDate(SharedPref.instance.getUserData())*/
                                     ? () {}
                                     : _onUpdateClick(logic))),
                   ],
@@ -134,6 +134,9 @@ class AllSubscriptionsView extends StatelessWidget {
                                 isSelectedIndex: logic.isSelectedIndex(index)),
                           );
                         }),
+                  const SizedBox(
+                    height: AppSize.s100,
+                  ),
                 ],
               );
             }),

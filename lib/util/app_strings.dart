@@ -36,6 +36,7 @@ class AppStrings {
 
   //TODO: this for profile page
   static const String txtAccount = "الحساب";
+  static const String txtApp = "App";
   static const String txtCompleted = "أتممت";
   static const String txtDone = "تمت";
   static const String txtNotPlayed = "Not Played Yet";
@@ -98,6 +99,8 @@ class AppStrings {
   static const String hello = "! مرحبا";
   static const String chooseLanguage = "اختر اللغة";
   static const String username = "username"; // "username" اسم المستخدم
+
+  static const String usernameOrEmail = "usernameOrEmail"; // "username" اسم المستخدم
   static const String txtFullName = "fullName"; // "username" اسم المستخدم
   static const String password = "password"; // "password" كلمة المرور
   static const String repassword =
@@ -119,6 +122,8 @@ class AppStrings {
   static const String verifyHint = "VERIFYHint";
   static const String loginHint = "loginToActions";
   static const String subscriptionsHint = "subscriptionsHint";
+  static const String subscriptionsFreeHint = "subscriptionsFreeHint";
+  static const String txtBackToEnd = "Tap back again to leave";
   static const String email = "Email"; // "Email" "الايميل"
 
   //CategoryExerciseView
@@ -137,5 +142,29 @@ class AppStrings {
 
   static var txtChoseSubscriptions = "Chose Your Subscriptions";
 
+  //todo on boarding screen
+
+  static const String favoritePackageTxt="Choose your favorite package of workouts";
+  static const String favoritePackageHintTxt="Each package contains best exercises for your targeted muscles";
+
+  static const String sportiDoTxt="Sporti can do it for you";
+  static const String sportiDoHintTxt="To get the full benefits of workout you have to repeat it regularly Sporti will keep your records to followup";
+
+  static const String yourCoachTxt="Your coach  with you";
+  static const String yourCoachHintTxt="Start by finding your favorite exercise any time any where";
+
+  static const String oneMoreTxt="One more thing!";
+  static const String oneMoreHintTxt="Sporti rewards with coins that can be transferred to you if you complete your packages";
+
+  static const String subscriptionsTxt="Subscriptions";
+  static const String subscriptionsHintTxt="""Free: Use the app for one month only
+               Basic : To get whole benefits of app for 3 months
+               Ultimate : Get it now and enjoy the app for one year
+               From profile you can choose a subscription plan""";
+
+  static const String website = "Website";
+  static const String socialMedia = "Social Media";
+  static const String txtCoins = "You have";
+  static const String txtEqualTo = "Equal";
 
 }

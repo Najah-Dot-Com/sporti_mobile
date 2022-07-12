@@ -13,6 +13,7 @@ import 'package:sporti/feature/view/views/auth_splash/auth_splash_view.dart';
 import 'package:sporti/network/api/feature/auth_feature.dart';
 import 'package:sporti/network/api/feature/subscriptions_feature.dart';
 import 'package:sporti/network/api/purchases/purchases_api.dart';
+import 'package:sporti/network/firebase/firebase_utils.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/app_theme.dart';
@@ -28,11 +29,9 @@ void main() async {
   await SharedPref.instance.init();
   portraitOrientation();
   await Firebase.initializeApp();
+  DioManagerClass.getInstance.init();
   await AppFcm.fcmInstance.init();
   await AppFcm.fcmInstance.getTokenFCM();
-  await PurchasesApi.instance.init().then((value) async{
-     // await PurchasesApi.instance.getOffering(isAll: true);
-  });
   listener();
   ConnectionStatusSingleton connectionStatus = ConnectionStatusSingleton.getInstance();
   connectionStatus.initialize();
@@ -42,8 +41,19 @@ void main() async {
       Get.put<PrivacyPolicyViewModel>(PrivacyPolicyViewModel());
       await _privacyAndTerms.getPrivacyAndTermsPages();
     });
+  if(Platform.isIOS) {
+    var hideSocial = await FirebaseRef.instance.isHideSocial();
+    await SharedPref.instance.storeSocialHandler(hideSocial);
+  }
+  try {
+    await PurchasesApi.instance.init() /*.then((value) async{
+          await PurchasesApi.instance.getOffering(isAll: true);
+      })*/;
+  } catch (e) {
+    Logger().e(e);
+  }
   HttpOverrides.global = MyHttpOverrides();
-  DioManagerClass.getInstance.init();
+
   runApp(MyApp());
 }
 

@@ -27,12 +27,28 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>fb778942219789161</string>
 				<string>com.googleusercontent.apps.722010426083-ho9f04rcf3iv1s1roqoigjmhuo73j3l8</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAppID</key>
+	<string>778942219789161</string>
+	<key>FacebookClientToken</key>
+	<string>b5d483b82f86356b66bf5067b9c0d706</string>
+	<key>FacebookDisplayName</key>
+	<string>Sporti</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+		<string>https</string>
+		<string>http</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>

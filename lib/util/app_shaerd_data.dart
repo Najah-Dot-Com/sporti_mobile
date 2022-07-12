@@ -22,6 +22,7 @@ import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_strings.dart';
 import 'package:sporti/util/sh_util.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../feature/view/appwidget/custome_text_view.dart';
 import '../network/api/feature/auth_feature.dart';
@@ -396,10 +397,10 @@ Widget profileItem(ThemeData themeData,
               decoration: BoxDecoration(
                   color: color ?? AppColor.white,
                   borderRadius: BorderRadius.circular(AppPadding.p8),
-                  boxShadow: [AppShadow.boxShadow()!]),
+                 /* boxShadow: [AppShadow.boxShadow()!]*/),
               child: Row(
                 children: [
-                  SvgPicture.asset(leadingIcon),
+                  SvgPicture.asset(leadingIcon ,color: AppColor.primary,),
                   const SizedBox(
                     width: AppSize.s20,
                   ),
@@ -516,7 +517,11 @@ Future<bool> showIsVerifyDialog({required bool isNeedSubscriptions }) async {
 
 bool getSubscriptionsDate(UserData userData) {
   Logger().w(userData.toJson());
-  if (userData.planEndDate!.isAfter(DateTime.now())) {
+  // Logger().w(userData.planEndDate!.isBefore(DateTime.now()));
+  // Logger().w(userData.planEndDate!.isAtSameMomentAs(DateTime.now()));
+  Logger().w(DateTime.now().isAfter(userData.planEndDate!));
+  Logger().w(userData.planEndDate!.isAtSameMomentAs(DateTime.now()));
+  if (DateTime.now().isAfter(userData.planEndDate!)) {
     return true;
   } else if (userData.planEndDate!.isAtSameMomentAs(DateTime.now())) {
     return true;
@@ -524,7 +529,15 @@ bool getSubscriptionsDate(UserData userData) {
     return false;
   }
 }
-
+Future<void> openBrowser(String url) async {
+  try {
+    if (await canLaunch(url)) {
+      await launch(url);
+    }
+  } catch (e) {
+    Logger().d(e);
+  }
+}
 loginAgain() {
   var userName = SharedPref.instance.getUserName();
   var password = SharedPref.instance.getPassword();
@@ -537,4 +550,25 @@ loginAgain() {
     };
     AuthFeature.getInstance.loginUser(map);
   }
+
+  var userNameSocial = SharedPref.instance.getUserNameSocial();
+  var emailSocial = SharedPref.instance.getEmailSocial();
+  var imageSocial = SharedPref.instance.getImageSocial();
+  var idSocial = SharedPref.instance.getIdSocial();
+  var socialType = SharedPref.instance.getSocialType();
+
+  if (userNameSocial.toString().isNotEmpty && emailSocial.toString().isNotEmpty &&
+      idSocial.toString().isNotEmpty && socialType.toString().isNotEmpty &&
+      imageSocial.toString().isNotEmpty) {
+    Map<String, dynamic> map = {
+      ConstanceNetwork.socialTypeKey: socialType,
+      ConstanceNetwork.socialIdKey: idSocial,
+      ConstanceNetwork.imageKey: imageSocial,
+      ConstanceNetwork.fullNameKey: userNameSocial,
+      ConstanceNetwork.emailKey: emailSocial,
+      ConstanceNetwork.fcmToken: SharedPref.instance.getFCMToken().toString(),
+    };
+    AuthFeature.getInstance.socialLoginUser(map);
+  }
+
 }

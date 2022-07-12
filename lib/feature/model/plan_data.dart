@@ -27,7 +27,7 @@ class PlanData {
   description: json["description"] == null ? null : json["description"],
   period: json["period"] == null ? null : json["period"],
   price: json["price"] == null ? null : json["price"],
-  androidId: json["android_id"] == null ? null : json["android_id"],
+  androidId: json["android_id"] == null ? null : json["android_id"] == "sporti11" ? "sporti11_3":"sporti22_12",
   iosId: json["ios_id"] == null ? null : json["ios_id"],
   type: json["type"] == null ? null : json["type"],
   );

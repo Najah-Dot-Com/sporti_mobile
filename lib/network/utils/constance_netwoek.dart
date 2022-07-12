@@ -16,6 +16,9 @@ abstract class ConstanceNetwork {
 
   //this for login keys
   static String userNameKey = "username";
+  static String socialTypeKey = "social_type";
+  static String socialIdKey = "social_id";
+  // static String imageKey = "image";
   static String passwordKey = "password";
   static String fullNameKey = "fullname";
   static String emailKey = "email";
@@ -47,6 +50,7 @@ abstract class ConstanceNetwork {
   ///todo here insert end Point
   //auth end point
   static String loginApi = "login";
+  static String loginSocialMediaApi = "login_social_media";
   static String signUpApi = "create_account";
   static String logoutApi = "logout";
   static String deleteUserApi = "delete_account";

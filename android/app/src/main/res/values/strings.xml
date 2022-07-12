@@ -2,4 +2,11 @@
 <resources>
     <string name="app_name">Sporti</string>
     <string name="default_notification_channel_id">com.naja7.sporti</string>
+
+    <string name="facebook_app_id">778942219789161</string>
+    <string name="fb_login_protocol_scheme">fb778942219789161</string>
+    <string name="facebook_client_token">b5d483b82f86356b66bf5067b9c0d706</string>
+
+
 </resources>
+

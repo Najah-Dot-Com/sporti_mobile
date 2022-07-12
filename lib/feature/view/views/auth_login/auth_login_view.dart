@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sporti/fcm/app_fcm.dart';
 import 'package:sporti/feature/view/appwidget/appLogo.dart';
@@ -14,9 +15,12 @@ import 'package:sporti/feature/view/views/terms_conditions/terms_conditions_view
 import 'package:sporti/feature/viewmodel/auth_viewmodle.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
+import 'package:sporti/util/app_media.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
 import 'package:sporti/util/app_strings.dart';
+import 'package:sporti/util/app_style.dart';
 import 'package:sporti/util/constance.dart';
+import 'package:sporti/util/sh_util.dart';
 import '../../../viewmodel/privacyPolicy_viewmodel.dart';
 import '../../appwidget/authwellcomeRow.dart';
 import '../../appwidget/custome_text_view.dart';
@@ -142,8 +146,8 @@ class LoginView extends StatelessWidget {
                       // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomTextFormFiled(
-                          label: AppStrings.username.tr,
-                          keyboardType: TextInputType.name,
+                          label: AppStrings.usernameOrEmail.tr,
+                          keyboardType: TextInputType.emailAddress,
                           // customValid: emailValid,
                           textInputAction: TextInputAction.next,
                           isSmallPaddingWidth: true,
@@ -240,7 +244,47 @@ class LoginView extends StatelessWidget {
                           isRoundedBorder: true,
                           onTap: () => Get.offAll(SignupView()),
                         ),
-
+                        if(!SharedPref.instance.getStoreSocialHandler())...[
+                          const SizedBox(height: AppSize.s40,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                onTap: ()=> onGoogleClick(logic),
+                                child: Container(
+                                  width: AppSize.s50,
+                                  height: AppSize.s50,
+                                  alignment: Alignment.center,
+                                  clipBehavior: Clip.hardEdge,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: AppColor.white,
+                                      boxShadow: [AppShadow.boxShadowLight()!]
+                                  ),
+                                  child:  SvgPicture.asset(AppMedia.google),
+                                ),
+                              ),
+                              const SizedBox(width: AppSize.s20,),
+                              InkWell(
+                                onTap: ()=> onFacebookClick(logic),
+                                child: Container(
+                                  width: AppSize.s50,
+                                  height: AppSize.s50,
+                                  clipBehavior: Clip.hardEdge,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: AppColor.white,
+                                      boxShadow: [AppShadow.boxShadowLight()!]
+                                  ),
+                                  child:  SvgPicture.asset(AppMedia.facebook),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: AppSize.s100,),
+                        ]
                       ],
                     ),
                   ),
@@ -279,5 +323,13 @@ class LoginView extends StatelessWidget {
   }
   _onSignInClickSkip(AuthViewModel logic) {
       logic.signInValidSkip(Constance.guestUserNameKey, Constance.guestUserPasswordKey);
+  }
+
+  onGoogleClick(AuthViewModel logic) {
+    logic.googleBtnClick();
+  }
+
+  onFacebookClick(AuthViewModel logic) {
+    logic.facebookBtnClick();
   }
 }

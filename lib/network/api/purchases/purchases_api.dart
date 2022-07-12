@@ -48,7 +48,6 @@ class PurchasesApi {
   Future<List<Offering>> getOffering({bool isAll = false}) async {
     try {
       var offerings = await Purchases.getOfferings();
-
       if (isAll) {
         Logger().w(offerings.all.values.toList());
         return offerings.all.values.toList();
@@ -70,7 +69,8 @@ class PurchasesApi {
         await Purchases.purchasePackage(package);
       return true;
     } catch (e) {
-      snackError("", "$e");
+      // snackError("", "$e");
+      Logger().e(e);
       return false;
     }
   }

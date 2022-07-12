@@ -106,11 +106,15 @@ class _MyCurrentSubscriptionsViewState
   }
 
   String _endAtDate() {
-    if (SharedPref.instance.getUserData().plan?.type ==
-            ConstancePurchases.unLimitedType ||
-        SharedPref.instance.getUserData().plan?.type ==
-            ConstancePurchases.unlimited) {
-      return "";
+    // if (SharedPref.instance.getUserData().plan?.type ==
+    //         ConstancePurchases.unLimitedType ||
+    //     SharedPref.instance.getUserData().plan?.type ==
+    //         ConstancePurchases.unlimited) {
+    //   return "";
+    // }
+    if(SharedPref.instance.getUserData().planEndDate!.difference(DateTime.now()).inDays > 965){
+      return AppStrings.txtSubscriptionsExpire.tr +
+          " ${DateUtility.dateFormatNamed(date: SharedPref.instance.getUserData().planEndDate!.subtract(const Duration(days:((30 * 12) + 5) * 9)))} ";
     }
     return AppStrings.txtSubscriptionsExpire.tr +
         " ${DateUtility.dateFormatNamed(date: SharedPref.instance.getUserData().planEndDate)} ";

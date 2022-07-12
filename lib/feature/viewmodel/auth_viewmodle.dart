@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:sporti/feature/model/user_data.dart';
@@ -10,6 +11,7 @@ import 'package:sporti/feature/view/views/home_page/home_page_view.dart';
 import 'package:sporti/feature/view/views/money_collect/money_collect_view.dart';
 import 'package:sporti/feature/viewmodel/firebase_auth_model.dart';
 import 'package:sporti/network/api/feature/auth_feature.dart';
+import 'package:sporti/network/api/social_media.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
@@ -86,6 +88,69 @@ class AuthViewModel extends GetxController {
       }
       update();
       await AuthFeature.getInstance.loginUser(map).then((value) async {
+        //handle object from value || [save in sharedPreferences]
+        // Logger().d(value.toJson());
+        Logger().d("user token", value.token);
+        if (value.token != null) {
+          //TODO : if verification and success go to home page
+          await SharedPref.instance.setUserLogin(true);
+          Get.offAll(const HomePageView());
+          isLoading = false;
+          isLoadingSkip = false;
+          update();
+        } else {
+          isLoading = false;
+          isLoadingSkip = false;
+          update();
+        }
+      }).catchError((onError) {
+        //handle error from value
+        isLoading = false;
+        isLoadingSkip = false;
+        snackError("", onError.toString());
+        Logger().d(onError.toString());
+        // isLoading = false;
+        update();
+      });
+    } catch (e) {
+      snackError("", e.toString());
+      Logger().d(e.toString());
+      isLoading = false;
+      isLoadingSkip = false;
+      update();
+    }
+  }
+
+
+  //click on sign in btn on login page
+  void signInSocialValid(String fullNameKey,
+      String socialType,String socialId ,
+      String imageKey,String emailKey) {
+    Map<String, dynamic> map = {
+      ConstanceNetwork.socialTypeKey: socialType,
+      ConstanceNetwork.socialIdKey: socialId,
+      ConstanceNetwork.imageKey: imageKey,
+      ConstanceNetwork.fullNameKey: fullNameKey,
+      ConstanceNetwork.emailKey: emailKey,
+      ConstanceNetwork.fcmToken: SharedPref.instance.getFCMToken().toString(),
+    };
+    SharedPref.instance.setUserNameSocial(fullNameKey);
+    SharedPref.instance.setEmailSocial(emailKey);
+    SharedPref.instance.setImageSocial(imageKey);
+    SharedPref.instance.setIdSocial(socialId);
+    SharedPref.instance.setSocialType(socialType);
+
+    _signInSocial(map);
+  }
+  Future<void> _signInSocial(Map<String, dynamic> map, {bool? isFromSkip = false}) async {
+    try {
+      if(!isFromSkip!) {
+        isLoading = false;
+      }else{
+        isLoadingSkip = false;
+      }
+      update();
+      await AuthFeature.getInstance.socialLoginUser(map).then((value) async {
         //handle object from value || [save in sharedPreferences]
         // Logger().d(value.toJson());
         Logger().d("user token", value.token);
@@ -752,5 +817,34 @@ class AuthViewModel extends GetxController {
       isLoading = false;
       update();
     });
+  }
+
+  void googleBtnClick() async{
+    GoogleSignInAccount signInAccount = await SocialMedia.instance.googleSignIn();
+    if(!GetUtils.isNull(signInAccount)){
+      signInSocialValid(signInAccount.displayName.toString(), "google", signInAccount.id, signInAccount.photoUrl.toString(), signInAccount.email.toString());
+    }
+  }
+
+  void facebookBtnClick() async {
+    var facebookLogin = await SocialMedia.instance.facebookLogin();
+    if (facebookLogin.isNotEmpty) {
+      Map<String, dynamic> map = {
+        ConstanceNetwork.socialTypeKey: "facebook",
+        ConstanceNetwork.socialIdKey: facebookLogin["id"].toString(),
+        ConstanceNetwork.imageKey: facebookLogin["picture"]["data"]["url"],
+        ConstanceNetwork.fullNameKey: facebookLogin["name"],
+        ConstanceNetwork.emailKey: facebookLogin["email"],
+        ConstanceNetwork.fcmToken: SharedPref.instance.getFCMToken().toString(),
+      };
+
+      SharedPref.instance.setUserNameSocial(facebookLogin["name"]);
+      SharedPref.instance.setEmailSocial(facebookLogin["email"]);
+      SharedPref.instance.setImageSocial(facebookLogin["picture"]["data"]["url"]);
+      SharedPref.instance.setIdSocial(facebookLogin["id"].toString());
+      SharedPref.instance.setSocialType("facebook");
+
+      _signInSocial(map);
+    }
   }
 }

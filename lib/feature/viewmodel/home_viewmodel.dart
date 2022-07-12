@@ -12,6 +12,7 @@ class HomeViewModel extends GetxController with GetSingleTickerProviderStateMixi
   TabController? tabController;
   int? tabControllerIndex = 0;
   var notificationsIndex = 2;
+  var profileIndex = 3;
 
   bool isLoading = false;
   bool isLoadingAddMyWork = false;

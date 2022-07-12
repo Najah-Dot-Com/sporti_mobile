@@ -18,6 +18,8 @@ import 'localization/localization_service.dart';
 class SharedPref {
   static SharedPref instance = SharedPref._();
 
+
+
   SharedPref._();
 
   factory SharedPref() => instance;
@@ -34,9 +36,15 @@ class SharedPref {
   final String isBoardingViewKey = "isBoardingView";
   final String appSettingsKey = "appSettings";
   final String appSubscriptionsKey = "appSubscriptions";
+  final String userNameSocialKey = "UserNameSocial";
+  final String emailSocialKey = "setEmailSocial";
+  final String imageSocialKey = "setImageSocial";
+  final String idSocialKey = "setIdSocial";
+  final String socialTypeKey = "setSocialType";
 
   final String userNameKey = "userName";
   final String passwordKey = "password";
+  final String socialHandlerKey = "SocialHandler";
 
   static SharedPreferences? _prefs;
 
@@ -210,6 +218,12 @@ class SharedPref {
   clear() async {
     _prefs?.remove(userDataKey);
     _prefs?.remove(fcmKey);
+    _prefs?.remove(userNameSocialKey);
+    _prefs?.remove(emailSocialKey);
+    _prefs?.remove(imageSocialKey);
+    _prefs?.remove(idSocialKey);
+    _prefs?.remove(socialTypeKey);
+    _prefs?.remove(userNameKey);
   }
 
   void setUserDataUpdated(json) {
@@ -291,4 +305,109 @@ class SharedPref {
       return [];
     }
   }
+
+  void setUserNameSocial(String fullNameKey) {
+    try {
+      _prefs?.setString(userNameSocialKey , fullNameKey) ;
+    } catch (e) {
+      Logger().e(e);
+    }
+  }
+
+  void setEmailSocial(String emailKey) {
+
+    try {
+      _prefs?.setString(emailSocialKey , emailKey) ;
+    } catch (e) {
+      Logger().e(e);
+    }
+  }
+
+  void setImageSocial(String imageKey) {
+
+    try {
+      _prefs?.setString(imageSocialKey , imageKey) ;
+    } catch (e) {
+      Logger().e(e);
+    }
+  }
+
+  void setIdSocial(String socialId) {
+
+    try {
+      _prefs?.setString(idSocialKey , socialId) ;
+    } catch (e) {
+      Logger().e(e);
+    }
+  }
+
+  void setSocialType(String socialType) {
+
+    try {
+      _prefs?.setString(socialTypeKey , socialType) ;
+    } catch (e) {
+      Logger().e(e);
+    }
+  }
+
+
+
+
+  String getUserNameSocial() {
+    try {
+      return _prefs?.getString(userNameSocialKey ) ??"" ;
+    } catch (e) {
+      Logger().e(e);
+      return "";
+    }
+  }
+
+  String getEmailSocial() {
+
+    try {
+      return _prefs?.getString(emailSocialKey ) ??"";
+    } catch (e) {
+      Logger().e(e);
+      return "";
+    }
+  }
+
+  String getImageSocial() {
+
+    try {
+      return _prefs?.getString(imageSocialKey ) ??"";
+    } catch (e) {
+      Logger().e(e);
+      return "";
+    }
+  }
+
+  String getIdSocial() {
+
+    try {
+      return _prefs?.getString(idSocialKey) ?? "" ;
+    } catch (e) {
+      Logger().e(e);
+      return "";
+    }
+  }
+
+  String getSocialType() {
+
+    try {
+      return _prefs?.getString(socialTypeKey )??"" ;
+    } catch (e) {
+      Logger().e(e);
+      return "";
+    }
+  }
+
+  storeSocialHandler(bool isHide){
+    _prefs?.setBool(socialHandlerKey, isHide);
+  }
+
+  bool getStoreSocialHandler(){
+    return  _prefs?.getBool(socialHandlerKey )?? false;
+  }
+
 }

@@ -57,7 +57,7 @@ class AppFcm {
 
   void updatePages(RemoteMessage message) async {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      Get.put<HomeViewModel>(HomeViewModel()).allPackagesExercises();
+      Get.put<HomeViewModel>(HomeViewModel()) ;
       Get.put<HomeViewModel>(HomeViewModel()).allPackagesTopExercises();
       Get.put<NotificationViewModel>(NotificationViewModel()).notificatiosDataList.clear();
       Get.put<NotificationViewModel>(NotificationViewModel()).getAllNotifications(1);

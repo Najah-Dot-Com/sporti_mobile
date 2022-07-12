@@ -41,6 +41,22 @@ class AuthFeature {
     }
   }
 
+
+  Future<UserData> socialLoginUser(Map<String, dynamic> body) async {
+    var appResponse = await AuthUseCase.getInstance.socialLoginRequest(
+        body: body,
+        url: ConstanceNetwork.loginSocialMediaApi,
+        header: ConstanceNetwork.header(3));
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      return UserData.fromJson(appResponse.result ?? {});
+    } else {
+      snackError("",appResponse.message);
+      Logger().d("else ${appResponse.toJson()}");
+      return UserData.fromJson(appResponse.result ?? {});
+    }
+  }
+
   Future<AppResponse> logoutUser() async {
     var appResponse = await AuthUseCase.getInstance.logoutRequest(
         url: ConstanceNetwork.logoutApi, header: ConstanceNetwork.header(5));

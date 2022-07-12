@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sporti/feature/model/user_data.dart';
+import 'package:sporti/feature/view/appwidget/bottom_sheet/language_bottom_sheet.dart';
 import 'package:sporti/feature/view/appwidget/bottom_sheet/logout_bottom_sheet.dart';
+import 'package:sporti/feature/view/appwidget/bottom_sheet/social_bottom_sheet.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/account_verfiy/account_verfiy_view.dart';
 import 'package:sporti/feature/view/views/money_collect/money_collect_view.dart';
@@ -40,69 +42,87 @@ class ProfileView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ClipRRect(
-                  borderRadius: BorderRadius.circular(AppPadding.p18),
+              ClipOval(
+                  // borderRadius: BorderRadius.circular(AppPadding.p18),
                   child: (logic.isDoneUploadImage && logic.filePath != null)
                       ? Image.file(logic.filePath!,
-                          width: AppSize.s120,
-                          height: AppSize.s120,
+                          width: AppSize.s90,
+                          height: AppSize.s90,
                           fit: BoxFit.cover)
                       : (userData.picture != null &&
                               userData.picture!.isNotEmpty &&
                               !userData.picture!.contains("http"))
                           ? Image.memory(
                               base64Decode(userData.picture.toString()),
-                              width: AppSize.s120,
-                              height: AppSize.s120,
+                              width: AppSize.s90,
+                              height: AppSize.s90,
                               fit: BoxFit.cover)
                           : imageNetwork(
                               url: (userData.picture != null &&
                                       userData.picture!.isNotEmpty)
                                   ? userData.picture
                                   : null,
-                              width: AppSize.s120,
-                              height: AppSize.s120,
+                              width: AppSize.s90,
+                              height: AppSize.s90,
                               fit: BoxFit.cover)),
               const SizedBox(
                 width: AppSize.s20,
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CustomTextView(
-                    txt: SharedPref.instance.getUserData().fullname,
-                    maxLine: Constance.maxLineOne,
-                    textAlign: TextAlign.start,
-                    textOverflow: TextOverflow.ellipsis,
-                    textStyle: themeData.textTheme.headline2
-                        ?.copyWith(fontSize: AppFontSize.s18),
-                  ),
-                  const SizedBox(
-                    height: AppSize.s20,
-                  ),
-                  CustomTextView(
-                    txt: _completedConcatenations(),
-                    maxLine: Constance.maxLineOne,
-                    textAlign: TextAlign.start,
-                    textOverflow: TextOverflow.ellipsis,
-                    textStyle: themeData.textTheme.headline2
-                        ?.copyWith(fontSize: AppFontSize.s18),
-                  ),
-                  const SizedBox(
-                    height: AppSize.s20,
-                  ),
-                  CustomTextView(
-                    txt: _balanceConcatenations(),
-                    maxLine: Constance.maxLineOne,
-                    textAlign: TextAlign.start,
-                    textOverflow: TextOverflow.ellipsis,
-                    textStyle: themeData.textTheme.headline2
-                        ?.copyWith(fontSize: AppFontSize.s18),
-                  ),
-                ],
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CustomTextView(
+                      txt: SharedPref.instance.getUserData().fullname,
+                      maxLine: Constance.maxLineOne,
+                      textAlign: TextAlign.start,
+                      textOverflow: TextOverflow.ellipsis,
+                      textStyle: themeData.textTheme.headline2
+                          ?.copyWith(fontSize: AppFontSize.s18),
+                    ),
+                    const SizedBox(
+                      height: AppSize.s20,
+                    ),
+                    CustomTextView(
+                      txt: _completedConcatenations(),
+                      maxLine: Constance.maxLineOne,
+                      textAlign: TextAlign.start,
+                      textOverflow: TextOverflow.ellipsis,
+                      textStyle: themeData.textTheme.headline2
+                          ?.copyWith(fontSize: AppFontSize.s18 , color: AppColor.primary),
+                    ),
+                    // const SizedBox(
+                    //   height: AppSize.s20,
+                    // ),
+                    // CustomTextView(
+                    //   txt: _balanceConcatenations(),
+                    //   maxLine: Constance.maxLineOne,
+                    //   textAlign: TextAlign.start,
+                    //   textOverflow: TextOverflow.ellipsis,
+                    //   textStyle: themeData.textTheme.headline2
+                    //       ?.copyWith(fontSize: AppFontSize.s18),
+                    // ),
+                  ],
+                ),
               ),
+              InkWell(
+                onTap: _onDeleteAccountClick,
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [BoxShadow(
+                      color: Colors.grey.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 10,
+                      offset: const Offset(0, 1), // changes position of shadow
+                    ),]
+                  ),
+                  child: SvgPicture.asset(
+                    AppMedia.deleteAccountIcons , fit: BoxFit.cover,),
+                ),
+              ),
+
             ],
           );
         });
@@ -123,24 +143,28 @@ class ProfileView extends StatelessWidget {
         decoration: BoxDecoration(
             color: AppColor.white,
             borderRadius: BorderRadius.circular(AppPadding.p8),
-            boxShadow: [AppShadow.boxShadow()!]),
+            /*boxShadow: [AppShadow.boxShadow()!]*/),
         child: Row(
           children: [
+            SvgPicture.asset(AppMedia.logoutIcons ,/*color: AppColor.primary,*/),
+            const SizedBox(
+              width: AppSize.s20,
+            ),
             Expanded(
               child: CustomTextView(
                   txt: title,
                   textStyle: themeData.textTheme.headline2
-                      ?.copyWith(color: AppColor.error)),
+                      ?.copyWith(color: AppColor.darkYellow)),
             ),
             const SizedBox(
               width: AppSize.s20,
             ),
-            if (Get.locale == LocalizationService.localeEn &&
-                trailingIcon == AppMedia.arrowIos) ...[
-              const Icon(Icons.arrow_forward_ios),
-            ] else ...[
-              SvgPicture.asset(trailingIcon)
-            ]
+            // if (Get.locale == LocalizationService.localeEn &&
+            //     trailingIcon == AppMedia.arrowIos) ...[
+            //   const Icon(Icons.arrow_forward_ios),
+            // ] else ...[
+            //   SvgPicture.asset(trailingIcon)
+            // ]
           ],
         ),
       ),
@@ -163,9 +187,13 @@ class ProfileView extends StatelessWidget {
         decoration: BoxDecoration(
             color: AppColor.white,
             borderRadius: BorderRadius.circular(AppPadding.p8),
-            boxShadow: [AppShadow.boxShadow()!]),
+            /*boxShadow: [AppShadow.boxShadow()!]*/),
         child: Row(
           children: [
+            SvgPicture.asset(AppMedia.langIcons ,color: AppColor.primary,),
+            const SizedBox(
+              width: AppSize.s20,
+            ),
             Expanded(
               child: CustomTextView(
                   txt: title,
@@ -175,25 +203,32 @@ class ProfileView extends StatelessWidget {
             const SizedBox(
               width: AppSize.s20,
             ),
-            if (Get.locale == LocalizationService.localeEn) ...[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppSize.s8),
-                child: CustomTextView(
-                  txt: "عربي",
-                  textStyle: themeData.textTheme.headline2
-                      ?.copyWith(color: AppColor.black),
-                ),
-              ),
+            if (Get.locale == LocalizationService.localeEn /*&&
+                trailingIcon == AppMedia.arrowIos*/) ...[
+              const Icon(Icons.arrow_forward_ios),
             ] else ...[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppSize.s8),
-                child: CustomTextView(
-                  txt: "English",
-                  textStyle: themeData.textTheme.headline2
-                      ?.copyWith(color: AppColor.black),
-                ),
-              ),
+              SvgPicture.asset(AppMedia.arrowIos)
             ]
+            // SvgPicture.asset(AppMedia.arrowIos),
+            // if (Get.locale == LocalizationService.localeEn) ...[
+            //   Padding(
+            //     padding: const EdgeInsets.symmetric(horizontal: AppSize.s8),
+            //     child: CustomTextView(
+            //       txt: "عربي",
+            //       textStyle: themeData.textTheme.headline2
+            //           ?.copyWith(color: AppColor.black),
+            //     ),
+            //   ),
+            // ] else ...[
+            //   Padding(
+            //     padding: const EdgeInsets.symmetric(horizontal: AppSize.s8),
+            //     child: CustomTextView(
+            //       txt: "English",
+            //       textStyle: themeData.textTheme.headline2
+            //           ?.copyWith(color: AppColor.black),
+            //     ),
+            //   ),
+            // ]
           ],
         ),
       ),
@@ -204,12 +239,13 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return Scaffold(
+      backgroundColor: AppColor.white,
       body: Container(
         width: double.infinity,
         height: double.infinity,
         padding:
             const EdgeInsets.only(left: AppPadding.p16, right: AppPadding.p16),
-        decoration: BoxDecoration(color: themeData.scaffoldBackgroundColor),
+        decoration: BoxDecoration(color: AppColor.white/*themeData.scaffoldBackgroundColor*/),
         child: SafeArea(
           child: ListView(
             children: [
@@ -223,13 +259,13 @@ class ProfileView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    CustomTextView(
-                      txt: AppStrings.txtAccount.tr,
-                      textStyle: themeData.textTheme.headline1
-                          ?.copyWith(color: AppColor.primary),
-                    ),
+                    // CustomTextView(
+                    //   txt: AppStrings.txtAccount.tr,
+                    //   textStyle: themeData.textTheme.headline1
+                    //       ?.copyWith(color: AppColor.primary),
+                    // ),
                     const SizedBox(
-                      height: AppSize.s20,
+                      height: AppSize.s10,
                     ),
                     _userCardData(themeData),
                   ],
@@ -238,9 +274,14 @@ class ProfileView extends StatelessWidget {
               const SizedBox(
                 height: AppSize.s65,
               ),
+              CustomTextView(
+                  txt: AppStrings.txtAccount.tr, textStyle: themeData.textTheme.headline2?.copyWith(fontWeight: FontWeight.bold)),
+              const SizedBox(
+                height: AppSize.s12,
+              ),
               profileItem(themeData,
                   onClick: _updateProfile,
-                  leadingIcon: AppMedia.personIcon,
+                  leadingIcon: AppMedia.profileUser/*AppMedia.personIcon*/,
                   title: AppStrings.txtUpdateProfile.tr,
                   trailingIcon: AppMedia.arrowIos),
               if (!SharedPref.instance.getUserData().isVerify!)
@@ -256,10 +297,19 @@ class ProfileView extends StatelessWidget {
                   trailingIcon: AppMedia.arrowIos),
               profileItem(themeData,
                   onClick: _onGetMoneyPage,
-                  leadingIcon: AppMedia.currency,
+                  leadingIcon: AppMedia.earningIcons/*AppMedia.currency*/,
                   title: AppStrings.txtCurrency.tr,
                   trailingIcon: AppMedia.arrowIos),
               //_profileItem(themeData,onClick:_onUpdatePassword,leadingIcon:AppMedia.resetPassword ,title:AppStrings.resetYourPass.tr ,trailingIcon:AppMedia.arrowIos),
+
+              const SizedBox(
+                height: AppSize.s50,
+              ),
+              CustomTextView(
+                  txt: AppStrings.txtApp.tr, textStyle: themeData.textTheme.headline2?.copyWith(fontWeight: FontWeight.bold)),
+              const SizedBox(
+                height: AppSize.s12,
+              ),
               profileItem(themeData,
                   onClick: _termsAndCondition,
                   leadingIcon: AppMedia.termsAndConditions,
@@ -275,15 +325,52 @@ class ProfileView extends StatelessWidget {
                 onClick: _onChangeLang,
                 title: AppStrings.chooseLanguage.tr,
               ),
-              profileItem(themeData,
-                  onClick: _onLogout,
-                  leadingIcon: AppMedia.logout,
-                  title: AppStrings.txtLogout.tr,
-                  trailingIcon: AppMedia.arrowIos),
+              // profileItem(themeData,
+              //     onClick: _onLogout,
+              //     leadingIcon: AppMedia.logout,
+              //     title: AppStrings.txtLogout.tr,
+              //     trailingIcon: AppMedia.arrowIos),
               _profileDeleteAccount(themeData,
-                  onClick: _onDeleteAccountClick,
-                  title: AppStrings.txtDeleteAccount.tr,
+                  onClick:_onLogout /*_onDeleteAccountClick*/,
+                  title: AppStrings.txtLogout.tr/*AppStrings.txtDeleteAccount.tr*/,
                   trailingIcon: AppMedia.arrowIos),
+              const SizedBox(
+                height: AppSize.s30,
+              ),
+              Image.asset(AppMedia.companyLogoNajah , width: AppSize.s70,height: AppSize.s50,),
+              const SizedBox(
+                height: AppSize.s10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: _onWebsiteClick,
+                    child: CustomTextView(
+                        txt: AppStrings.website.tr,
+                        textStyle: themeData.textTheme.headline3
+                            ?.copyWith(color: AppColor.black)),
+                  ),
+                  const SizedBox(
+                    width: AppSize.s10,
+                  ),
+                  CustomTextView(
+                      txt: "|",
+                      textStyle: themeData.textTheme.headline3
+                          ?.copyWith(color: AppColor.black)),
+                  const SizedBox(
+                    width: AppSize.s10,
+                  ),
+                  InkWell(
+                    onTap: _onSocialMediaClick,
+                    child: CustomTextView(
+                        txt: AppStrings.socialMedia.tr,
+                        textStyle: themeData.textTheme.headline3
+                            ?.copyWith(color: AppColor.black)),
+                  )
+                ],
+              ),
               const SizedBox(
                 height: AppSize.s50,
               ),
@@ -361,13 +448,17 @@ class ProfileView extends StatelessWidget {
   }
 
   _onChangeLang() {
-    if (Get.locale == LocalizationService.localeEn) {
-      SharedPref.instance
-          .setAppLang(LocalizationService.langs[LocalizationService.arIndex]);
-    } else {
-      SharedPref.instance
-          .setAppLang(LocalizationService.langs[LocalizationService.enIndex]);
-    }
+    Get.bottomSheet(const LanguageBottomSheet(
+      // isDeleteAccount: true,
+    ));
+    // LogoutBottomSheet
+    // if (Get.locale == LocalizationService.localeEn) {
+    //   SharedPref.instance
+    //       .setAppLang(LocalizationService.langs[LocalizationService.arIndex]);
+    // } else {
+    //   SharedPref.instance
+    //       .setAppLang(LocalizationService.langs[LocalizationService.enIndex]);
+    // }
   }
 
   _onSubscriptionsPage() async {
@@ -376,5 +467,13 @@ class ProfileView extends StatelessWidget {
         Get.to(const MyCurrentSubscriptionsView());
       }
     });
+  }
+
+  void _onWebsiteClick() async{
+    await openBrowser("https://naja7.net/");
+  }
+
+  void _onSocialMediaClick() {
+    Get.bottomSheet(const SocialBottomSheet());
   }
 }
