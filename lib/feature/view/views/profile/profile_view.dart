@@ -372,7 +372,7 @@ class ProfileView extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: AppSize.s50,
+                height: AppSize.s150,
               ),
             ],
           ),

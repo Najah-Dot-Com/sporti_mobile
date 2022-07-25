@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:logger/logger.dart';
@@ -125,6 +126,8 @@ class HomePageTab extends StatelessWidget {
           }
         });
   }
+  final String fakeImage =
+      "https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/07/1377301-1183869-The-8-Best-Weight-Benches-of-2021-1296x728-Header-c0dcdf.jpg?w=1575";
 
   @override
   Widget build(BuildContext context) {
@@ -151,18 +154,18 @@ class HomePageTab extends StatelessWidget {
                   Stack(
                     children: [
                       Container(
-                        height: AppSize.s250,
+                        height: AppSize.s150,
                         width: double.infinity,
                         color: AppColor.primary,
                         child: SvgPicture.asset(
                           AppMedia.homeGreenBackground,
                           fit: BoxFit.cover,
-                          height: AppSize.s250,
+                          height: AppSize.s150,
                           width: double.infinity,
                         ),
                       ),
                       PositionedDirectional(
-                        top: AppSize.s80,
+                        top: AppSize.s60,
                         start: AppSize.s50,
                         child: InkWell(
                           onTap: _onProfileIconClick,
@@ -203,14 +206,14 @@ class HomePageTab extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        height: AppSize.s200,
+                        height: AppSize.s140,
                         width: double.infinity,
                         margin: const EdgeInsets.only(
-                            top: AppSize.s160,
+                            top: AppSize.s120,
                             left: AppSize.s12,
                             right: AppSize.s12),
                         padding: const EdgeInsets.symmetric(
-                            horizontal: AppSize.s40, vertical: AppSize.s30),
+                            horizontal: AppSize.s40, vertical: AppSize.s16),
                         decoration: BoxDecoration(
                             color: AppColor.white,
                             borderRadius: BorderRadius.circular(AppSize.s12)),
@@ -224,7 +227,7 @@ class HomePageTab extends StatelessWidget {
                                   ?.copyWith(color: AppColor.black),
                             ),
                             const SizedBox(
-                              height: AppSize.s30,
+                              height: AppSize.s20,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -258,6 +261,37 @@ class HomePageTab extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: AppSize.s28,
+                  ),
+                  CarouselSlider.builder(
+                    itemCount: 4,
+                    itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex){
+                      return  imageNetwork(
+                          width: double.infinity,
+                          height: AppSize.s200,
+                          fit: BoxFit.cover,
+                          url: fakeImage);
+                    },
+                    options: CarouselOptions(
+                      height: AppSize.s200,
+                      aspectRatio: AppSize.s16/AppSize.s9,
+                      viewportFraction:AppSize.s0_8,
+                      initialPage: 0,
+                      enableInfiniteScroll: true,
+                      reverse: false,
+                      autoPlay: true,
+                      autoPlayInterval: const Duration(seconds: 3),
+                      autoPlayAnimationDuration: const Duration(milliseconds: DurationConstant.d800),
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      enlargeCenterPage: true,
+                      onPageChanged: (index , corsule){},
+                      scrollDirection: Axis.horizontal,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s28,
                   ),
                   Padding(
                     padding:

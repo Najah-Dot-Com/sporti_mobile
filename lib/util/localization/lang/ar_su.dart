@@ -32,7 +32,7 @@ Map<String, String> arSU = {
   AppStrings.txtYorMessage: "رسالتك هنا",
   AppStrings.txtSend: "ارسال",
   AppStrings.txtAccount: "الحساب",
-  AppStrings.txtApp: "الحساب",
+  AppStrings.txtApp: "التطبيق",
   AppStrings.txtCompleted: "أتممت",
   AppStrings.txtExercises: "تمارين",
   AppStrings.txtBalance: "النقاط : ",
