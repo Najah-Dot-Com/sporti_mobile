@@ -24,7 +24,7 @@ import 'widget_home_tab/selecte_your_work_widget.dart';
 import 'widget_home_tab/shimmer_your_work_widget.dart';
 
 class HomePageTab extends StatelessWidget {
-  const HomePageTab({Key? key}) : super(key: key);
+  /*const*/ HomePageTab({Key? key}) : super(key: key);
 
   static final HomeViewModel _homeViewModel =
       Get.put<HomeViewModel>(HomeViewModel());
@@ -128,7 +128,11 @@ class HomePageTab extends StatelessWidget {
   }
   final String fakeImage =
       "https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/07/1377301-1183869-The-8-Best-Weight-Benches-of-2021-1296x728-Header-c0dcdf.jpg?w=1575";
-
+  var image = [
+    "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+    "https://images.unsplash.com/photo-1556817411-31ae72fa3ea0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+    "https://images.unsplash.com/photo-1530549387789-4c1017266635?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
+  ];
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
@@ -265,14 +269,30 @@ class HomePageTab extends StatelessWidget {
                   const SizedBox(
                     height: AppSize.s28,
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: AppSize.s18),
+                    child: Row(
+                      children: [
+                        CustomTextView(
+                          txt: "اعلانات",
+                          textAlign: TextAlign.start,
+                          textStyle: themeData.textTheme.headline2
+                              ?.copyWith(color: AppColor.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: AppSize.s28,
+                  ),
                   CarouselSlider.builder(
-                    itemCount: 4,
+                    itemCount: image.length,
                     itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex){
                       return  imageNetwork(
                           width: double.infinity,
                           height: AppSize.s200,
                           fit: BoxFit.cover,
-                          url: fakeImage);
+                          url: /*fakeImage*/image[itemIndex]);
                     },
                     options: CarouselOptions(
                       height: AppSize.s200,
