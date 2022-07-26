@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="62" height="62" viewBox="0 0 62 62">
+  <defs>
+    <filter id="Frame" x="0" y="0" width="62" height="62" filterUnits="userSpaceOnUse">
+      <feOffset dx="3" dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="delete_account_icon" transform="translate(-293 -78)">
+    <g id="Group_63" data-name="Group 63" transform="translate(0 -6)">
+      <g transform="matrix(1, 0, 0, 1, 293, 84)" filter="url(#Frame)">
+        <rect id="Frame-2" data-name="Frame" width="44" height="44" rx="8" transform="translate(6 6)" fill="#fff" opacity="0.637"/>
+      </g>
+      <g id="Icon_Trash" data-name="Icon Trash" transform="translate(313.017 100.621)">
+        <path id="trash" d="M3.5,20.981A1.744,1.744,0,0,0,5.1,22.759h9.773a1.744,1.744,0,0,0,1.593-1.778l.7-13.395H2.8ZM17.167,3.793H14.773V2.845A2.652,2.652,0,0,0,12.378,0H7.588A2.652,2.652,0,0,0,5.193,2.845v.948H2.8a.883.883,0,0,0-.8.948.883.883,0,0,0,.8.948H17.167a.883.883,0,0,0,.8-.948A.883.883,0,0,0,17.167,3.793Zm-3.991,0H6.79V2.845a.885.885,0,0,1,.8-.948h4.79a.885.885,0,0,1,.8.948Z" transform="translate(-2)" fill="rgba(220,93,19,0.73)"/>
+      </g>
+    </g>
+  </g>
+</svg>
+

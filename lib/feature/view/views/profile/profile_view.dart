@@ -372,7 +372,7 @@ class ProfileView extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: AppSize.s50,
+                height: AppSize.s150,
               ),
             ],
           ),
@@ -470,7 +470,7 @@ class ProfileView extends StatelessWidget {
   }
 
   void _onWebsiteClick() async{
-    await openBrowser("https://naja7.net/");
+    await openBrowser("https://hiconception.com");/*https://naja7.net*/
   }
 
   void _onSocialMediaClick() {
