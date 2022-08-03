@@ -470,7 +470,7 @@ class ProfileView extends StatelessWidget {
   }
 
   void _onWebsiteClick() async{
-    await openBrowser("https://naja7.net/");
+    await openBrowser("https://hiconception.com");/*https://naja7.net*/
   }
 
   void _onSocialMediaClick() {

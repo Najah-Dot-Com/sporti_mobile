@@ -11,6 +11,7 @@ Map<String, String> arSU = {
   AppStrings.messageMatcherEmail: "ادخل ايميل صالح",
   AppStrings.txtConnectionNote: "لا يوجد اتصال انترنت يرجى التاكد من اتصالك بالشبكة",
   AppStrings.txtSkip: "تجاهل",
+  AppStrings.txtForLength: "يجب أن يكون طول نص اسم المُستخدم على الأقل 4 حروف",
   AppStrings.txtConnection: "يرجى تفقد اتصالك بالانترنت",
   AppStrings.fillYourVerificationCode: "يرجى ادخال رمز التحقق",
   AppStrings.txtMoneyEnough: "ليس لديك عملات كافية",

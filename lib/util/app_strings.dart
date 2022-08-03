@@ -10,6 +10,7 @@ class AppStrings {
   static const String txtConnection = "txtConnection";
   static const String txtSkip = "Skip";
   static const String txtNext = "Next";
+  static const String txtForLength = "يجب أن يكون طول نص اسم المُستخدم على الأقل 4 حروف";
 
   //TODO:this for  [money fail page]
   static const String txtMoneyEnough = "ليس لديك عملات كافية";
