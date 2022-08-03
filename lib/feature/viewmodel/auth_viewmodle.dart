@@ -239,7 +239,7 @@ class AuthViewModel extends GetxController {
         }
       }).catchError((onError) {
         //handle error from value
-        snackError("Error", onError.toString());
+        // snackError("Error", onError.toString());
         Logger().d(onError.toString());
         isLoading = false;
         update();

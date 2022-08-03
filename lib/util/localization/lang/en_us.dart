@@ -8,6 +8,7 @@ Map<String, String> enUS = {
   AppStrings.acceptPolicyConditions:
       "You must agree to the Terms and Conditions and Privacy Policies",
   AppStrings.fillYourPhoneNumber: "Fill your phone number ",
+  AppStrings.txtForLength: "Username text must be at least 4 characters long",
   AppStrings.messageMatcherEmail: "Enter valid mail",
   AppStrings.txtConnectionNote: "Connections was interrupt please check your internet connection",
   AppStrings.fillYourVerificationCode: "Please enter the verification code",

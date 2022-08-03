@@ -124,6 +124,7 @@ class SignupView extends StatelessWidget {
                       topRight: Radius.circular(50)),
                 ),
                 child: ListView(
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                   controller: _scrollController,
                   children: [
                     Padding(
@@ -155,7 +156,12 @@ class SignupView extends StatelessWidget {
                             CustomTextFormFiled(
                               label: AppStrings.username.tr,
                               keyboardType: TextInputType.emailAddress,
-                              // customValid: emailValid,
+                               customValid: (v){
+                                if(v.length < 4){
+                                  return AppStrings.txtForLength.tr;
+                                }
+                                return null;
+                               },
                               textInputAction: TextInputAction.next,
                               isSmallPaddingWidth: true,
                               isBorder: true,
