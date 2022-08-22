@@ -47,6 +47,22 @@ class AuthUseCase{
     }
   }
 
+  //todo this is for login request
+  Future<AppResponse> refreshLoginSocialMediaApi({var url, var header, var body}) async{
+    try {
+      var response = await DioManagerClass.getInstance
+          .dioPostMethod(url: url, body: body, header: header);
+      if( json.decode(response.toString())[ConstanceNetwork.resultKey]!= null){
+         await SharedPref.instance.setUserData(json.encode(json.decode(response.toString())[ConstanceNetwork.resultKey]));
+      }
+      return AppResponse.fromJson(json.decode(response.toString()));
+    } on DioError catch (ex) {
+      var message = json.decode(ex.response.toString());
+      Logger().e(message);
+      return AppResponse.fromJson(message??{});
+    }
+  }
+
 
   //todo this is for social login request
   Future<AppResponse> socialLoginRequest({var url, var header, var body}) async{

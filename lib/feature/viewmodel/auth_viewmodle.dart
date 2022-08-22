@@ -803,6 +803,7 @@ class AuthViewModel extends GetxController {
       Logger().d(value.toJson());
       if (value.status) {
         isLoading = false;
+        await loginAgain();
         snackSuccess("", value.message);
         update();
       } else {

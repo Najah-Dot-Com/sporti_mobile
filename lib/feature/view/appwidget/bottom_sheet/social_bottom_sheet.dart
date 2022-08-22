@@ -104,6 +104,6 @@ class SocialBottomSheet extends StatelessWidget {
   }
 
   void _onSnapClick() async{
-    await openBrowser("https://www.snapchat.com/add/najahdot?share_id=CKjFxKSlJMM&locale=en-KW");
+    await openBrowser("https://www.snapchat.com/add/njhkwm?share_id=svgZbMVieyI&locale=en-US"/*https://www.snapchat.com/add/najahdot?share_id=CKjFxKSlJMM&locale=en-KW*/);
   }
 }

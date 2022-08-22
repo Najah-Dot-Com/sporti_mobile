@@ -51,5 +51,6 @@ class AppMedia {
   static const String instagramIcons = "$IMAGE_PATH/instagram_icons.png";
   static const String snapchatIcons = "$IMAGE_PATH/snapchat.png";
   static const String homeGreenBackground = "$IMAGE_PATH/home_green_background.svg";
+  static const String share = "$IMAGE_PATH/share.svg";
 
 }

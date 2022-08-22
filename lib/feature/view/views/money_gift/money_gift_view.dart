@@ -189,11 +189,16 @@ class MoneyGiftView extends StatelessWidget {
 
   bool handleNullPrice() {
     Logger().d(SharedPref.instance.getUserData().balance);
-    if(SharedPref.instance.getUserData().balance  == null ){
-      return false;
-    }else if(SharedPref.instance.getUserData().balance != null && int.tryParse(SharedPref.instance.getUserData().balance.toString().replaceAll("\$", ""))!.toInt() < 1){
-      return false;
-    }else{
+    try {
+      if(SharedPref.instance.getUserData().balance  == null ){
+            return false;
+          }else if(SharedPref.instance.getUserData().balance != null && num.tryParse(SharedPref.instance.getUserData().balance.toString().replaceAll("\$", ""))!.round() < 1){
+            return false;
+          }else{
+            return true;
+          }
+    } catch (e) {
+      Logger().e(e);
       return true;
     }
   }

@@ -6,10 +6,9 @@ import 'package:sporti/util/sh_util.dart';
 abstract class ConstanceNetwork {
   ///todo here insert base_url
   static String baseUrl = "https://sportiapp.com/api/v1/";
-  static String baseImageExercises =
-      "https://sportiapp.com/public/images/exercises/";
-  static String baseVideoExercises =
-      "https://sportiapp.com/public/video/exercises/";
+  static String baseImageExercises = "https://sportiapp.com/public/images/exercises/";
+  static String baseVideoExercises = "https://sportiapp.com/public/video/exercises/";
+  static String baseAdsImage = "https://sportiapp.com/public/images/ads/";
 
   ///todo here insert key Of Request
   static String resultKey = "Result";
@@ -56,9 +55,11 @@ abstract class ConstanceNetwork {
   static String deleteUserApi = "delete_account";
   static String changePasswordApi = "change_password";
   static String activatedAccountFirebaseApi = "activeted_account";
+  static String refreshLoginSocialMediaApi = "refresh_login_social_media";
 
   //exercises end point
   static String exercisesApi = "exercises";
+  static String getAdsApi = "get_ads";
   static String topExercisesApi = "top_exercises";
   static String isFavoriteApi = "is_favorite";
   static String eventExercisesApi = "event_exercises";

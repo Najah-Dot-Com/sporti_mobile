@@ -41,6 +41,7 @@ class SharedPref {
   final String imageSocialKey = "setImageSocial";
   final String idSocialKey = "setIdSocial";
   final String socialTypeKey = "setSocialType";
+  final String adminListKey = "adminList";
 
   final String userNameKey = "userName";
   final String passwordKey = "password";
@@ -224,6 +225,8 @@ class SharedPref {
     _prefs?.remove(idSocialKey);
     _prefs?.remove(socialTypeKey);
     _prefs?.remove(userNameKey);
+    _prefs?.remove(passwordKey);
+
   }
 
   void setUserDataUpdated(json) {
@@ -408,6 +411,18 @@ class SharedPref {
 
   bool getStoreSocialHandler(){
     return  _prefs?.getBool(socialHandlerKey )?? false;
+  }
+
+  adminListHandler(var adminList) {
+    _prefs?.setString(adminListKey, jsonEncode(adminList));
+  }
+  List<String> getAdminListHandler() {
+    var data = _prefs?.getString(adminListKey);
+    var decode = json.decode(data.toString());
+    List items = decode;
+    List<String> list = items.map((e)=> e.toString()).toList();
+    Logger().d(list /*is String*/ );
+   return  list;
   }
 
 }

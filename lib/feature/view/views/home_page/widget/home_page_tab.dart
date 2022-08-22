@@ -8,7 +8,9 @@ import 'package:sporti/feature/model/user_data.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/home_page/widget/widget_home_tab/newly_item_widget.dart';
 import 'package:sporti/feature/view/views/home_page/widget/widget_home_tab/shimmer_newly_item_widget.dart';
+import 'package:sporti/feature/view/views/notifications/notifications_view.dart';
 import 'package:sporti/feature/viewmodel/home_viewmodel.dart';
+import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_color.dart';
 import 'package:sporti/util/app_dimen.dart';
 import 'package:sporti/util/app_font.dart';
@@ -126,6 +128,98 @@ class HomePageTab extends StatelessWidget {
           }
         });
   }
+
+
+  adsListWidget(HomeViewModel logic, ThemeData themeData) {
+    if (logic.isLoading) {
+      return Container(
+        width: double.infinity,
+        margin: const EdgeInsets.all( AppSize.s18),
+        height: AppSize.s200,
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(
+          color: AppColor.white,
+          borderRadius: BorderRadius.circular(AppSize.s12),
+        ),
+        child: Image.asset(
+          AppMedia.loadingShimmer,
+          width: double.infinity,
+          height: AppSize.s200,
+          fit: BoxFit.cover,
+        ),
+      );
+    } else if (!logic.isLoading && logic.adsList.isEmpty) {
+      //todo:// here we will add empty state widget
+      return const SizedBox.shrink();
+    }
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (!logic.isLoading && logic.adsList.isNotEmpty) ...[
+          Padding(
+            padding:
+            const EdgeInsets.symmetric(horizontal: AppSize.s18),
+            child: Row(
+              children: [
+                CustomTextView(
+                  txt: AppStrings.ads.tr,
+                  textAlign: TextAlign.start,
+                  textStyle: themeData.textTheme.headline2
+                      ?.copyWith(color: AppColor.black),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: AppSize.s28,
+          ),
+          CarouselSlider.builder(
+            itemCount: logic.adsList.length,
+            itemBuilder: (BuildContext context, int itemIndex,
+                int pageViewIndex) {
+              return InkWell(
+                onTap: ()async{
+                  var adsList = logic.adsList[itemIndex];
+                  await openBrowser(adsList.url.toString());
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(AppSize.s12),
+                  clipBehavior: Clip.hardEdge,
+                  child: imageNetwork(
+                      width: double.infinity,
+                      height: AppSize.s200,
+                      fit: BoxFit.cover,
+                      url:logic.adsList[itemIndex].image == null ? null: ConstanceNetwork.baseAdsImage  + logic.adsList[itemIndex].image.toString()),
+                ),
+              );
+            },
+            options: CarouselOptions(
+              height: AppSize.s200,
+              aspectRatio: AppSize.s16 / AppSize.s9,
+              viewportFraction: AppSize.s0_8,
+              initialPage: 0,
+              enableInfiniteScroll: true,
+              reverse: false,
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 3),
+              autoPlayAnimationDuration:
+              const Duration(milliseconds: DurationConstant.d800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enlargeCenterPage: true,
+              onPageChanged: (index, corsule) {},
+              scrollDirection: Axis.horizontal,
+            ),
+          ),
+          const SizedBox(
+            height: AppSize.s28,
+          ),
+        ],
+      ],
+    );
+  }
+
+
+
   final String fakeImage =
       "https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/07/1377301-1183869-The-8-Best-Weight-Benches-of-2021-1296x728-Header-c0dcdf.jpg?w=1575";
   var image = [
@@ -133,11 +227,11 @@ class HomePageTab extends StatelessWidget {
     "https://images.unsplash.com/photo-1556817411-31ae72fa3ea0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
     "https://images.unsplash.com/photo-1530549387789-4c1017266635?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
   ];
+
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
     return Scaffold(
-
       // appBar: myAppBar(themeData),
       body: GetBuilder<HomeViewModel>(
           init: HomeViewModel(),
@@ -145,6 +239,7 @@ class HomePageTab extends StatelessWidget {
             WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
               state.controller?.allPackagesExercises();
               state.controller?.allPackagesTopExercises();
+              state.controller?.getAds();
               state.controller?.getBalanceUser();
             });
           },
@@ -171,6 +266,7 @@ class HomePageTab extends StatelessWidget {
                       PositionedDirectional(
                         top: AppSize.s60,
                         start: AppSize.s50,
+                        width: MediaQuery.of(context).size.width,
                         child: InkWell(
                           onTap: _onProfileIconClick,
                           child: Row(
@@ -181,9 +277,10 @@ class HomePageTab extends StatelessWidget {
                                 // borderRadius: BorderRadius.circular(AppPadding.p18),
                                 child: (userData.picture != null &&
                                         userData.picture!.isNotEmpty &&
-                                        !userData.picture!.contains("http"))
+                                        !userData.picture!.contains("http") && !userData.picture!.contains("."))
                                     ? Image.memory(
-                                        base64Decode(userData.picture.toString()),
+                                        base64Decode(
+                                            userData.picture.toString()),
                                         width: AppSize.s50,
                                         height: AppSize.s50,
                                         fit: BoxFit.cover)
@@ -199,12 +296,26 @@ class HomePageTab extends StatelessWidget {
                               const SizedBox(
                                 width: AppSize.s12,
                               ),
-                              CustomTextView(
-                                txt: AppStrings.txtHello.tr +
-                                    " ${SharedPref.instance.getUserData().fullname} ",
-                                textStyle: themeData.textTheme.headline2
-                                    ?.copyWith(color: AppColor.white),
-                              )
+                              Expanded(
+                                child: CustomTextView(
+                                  txt: AppStrings.txtHello.tr +
+                                      " ${SharedPref.instance.getUserData().fullname} ",
+                                  textStyle: themeData.textTheme.headline2
+                                      ?.copyWith(color: AppColor.white),
+                                ),
+                              ),
+                              MaterialButton(
+                                    onPressed: _onNotificationIconClick,
+                                    minWidth: AppSize.s48,
+                                    child: Icon(
+                                      Icons.notifications_rounded, //feed_outlined
+                                      size: AppSize.s24,
+                                      color: AppColor.white,
+                                    ),
+                                  ),
+                              const SizedBox(
+                                width: AppSize.s60,
+                              ),
                             ],
                           ),
                         ),
@@ -242,9 +353,15 @@ class HomePageTab extends StatelessWidget {
                                   width: AppSize.s40,
                                   height: AppSize.s40,
                                 ),
-                                const SizedBox(width: AppSize.s12,),
+                                const SizedBox(
+                                  width: AppSize.s12,
+                                ),
                                 CustomTextView(
-                                  txt: /*formatStringWithCurrency(*/SharedPref.instance.getUserData().finish.toString()/*)*/,
+                                  txt: /*formatStringWithCurrency(*/ SharedPref
+                                      .instance
+                                      .getUserData()
+                                      .finish
+                                      .toString() /*)*/,
                                   textStyle: themeData.textTheme.headline1
                                       ?.copyWith(color: AppColor.primary),
                                 ),
@@ -256,7 +373,12 @@ class HomePageTab extends StatelessWidget {
                             Align(
                               alignment: Alignment.center,
                               child: CustomTextView(
-                                txt: (AppStrings.txtEqualTo.tr + " " + formatStringWithCurrency(SharedPref.instance.getUserData().balance.toString())),
+                                txt: (AppStrings.txtEqualTo.tr +
+                                    " " +
+                                    formatStringWithCurrency(SharedPref.instance
+                                        .getUserData()
+                                        .balance
+                                        .toString())),
                                 textStyle: themeData.textTheme.headline3
                                     ?.copyWith(color: AppColor.black),
                               ),
@@ -269,50 +391,7 @@ class HomePageTab extends StatelessWidget {
                   const SizedBox(
                     height: AppSize.s28,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: AppSize.s18),
-                    child: Row(
-                      children: [
-                        CustomTextView(
-                          txt: "اعلانات",
-                          textAlign: TextAlign.start,
-                          textStyle: themeData.textTheme.headline2
-                              ?.copyWith(color: AppColor.black),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: AppSize.s28,
-                  ),
-                  CarouselSlider.builder(
-                    itemCount: image.length,
-                    itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex){
-                      return  imageNetwork(
-                          width: double.infinity,
-                          height: AppSize.s200,
-                          fit: BoxFit.cover,
-                          url: /*fakeImage*/image[itemIndex]);
-                    },
-                    options: CarouselOptions(
-                      height: AppSize.s200,
-                      aspectRatio: AppSize.s16/AppSize.s9,
-                      viewportFraction:AppSize.s0_8,
-                      initialPage: 0,
-                      enableInfiniteScroll: true,
-                      reverse: false,
-                      autoPlay: true,
-                      autoPlayInterval: const Duration(seconds: 3),
-                      autoPlayAnimationDuration: const Duration(milliseconds: DurationConstant.d800),
-                      autoPlayCurve: Curves.fastOutSlowIn,
-                      enlargeCenterPage: true,
-                      onPageChanged: (index , corsule){},
-                      scrollDirection: Axis.horizontal,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: AppSize.s28,
-                  ),
+                  adsListWidget(logic , themeData),
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: AppSize.s18),
@@ -355,10 +434,13 @@ class HomePageTab extends StatelessWidget {
   }
 
   void _onNotificationIconClick() {
-    _homeViewModel.onTabChange(_homeViewModel.notificationsIndex);
+    Get.to(NotificationsView());
+    //_homeViewModel.onTabChange(_homeViewModel.notificationsIndex);
   }
 
   void _onProfileIconClick() {
     _homeViewModel.onTabChange(_homeViewModel.profileIndex);
   }
+
+
 }

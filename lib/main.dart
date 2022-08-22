@@ -5,6 +5,9 @@ import 'package:country_code_picker/country_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:huawei_iap/IapClient.dart';
+import 'package:huawei_iap/model/PurchaseIntentReq.dart';
+import 'package:huawei_iap/model/PurchaseResultInfo.dart';
 import 'package:logger/logger.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
@@ -21,6 +24,7 @@ import 'package:sporti/util/connectivity_widget.dart';
 import 'package:sporti/util/sh_util.dart';
 import 'feature/viewmodel/privacyPolicy_viewmodel.dart';
 import 'network/api/dio_manager/dio_manage_class.dart';
+import 'network/api/purchases/hawaii_purchases.dart';
 import 'util/app_shaerd_data.dart';
 import 'util/localization/localization_service.dart';
 
@@ -45,10 +49,16 @@ void main() async {
     var hideSocial = await FirebaseRef.instance.isHideSocial();
     await SharedPref.instance.storeSocialHandler(hideSocial);
   }
+  /*var adminList =*/ await FirebaseRef.instance.adminList().then((value) async{
+     await SharedPref.instance.adminListHandler(value?["admin"]??[]);
+  });
+
   try {
-    await PurchasesApi.instance.init() /*.then((value) async{
-          await PurchasesApi.instance.getOffering(isAll: true);
-      })*/;
+    if (Platform.isAndroid || Platform.isIOS) {
+      await PurchasesApi.instance.init() ;
+    }else {
+      await HawaiiPurchasesApi.instance.init();
+    }
   } catch (e) {
     Logger().e(e);
   }

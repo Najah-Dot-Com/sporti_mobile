@@ -17,4 +17,11 @@ class FirebaseRef {
     return data?["hide_social"]??false;
   }
 
+  Future<Map<String , dynamic>?> adminList()async{
+    var documentReference = FirebaseFirestore.instance.collection("condition").doc("condition");
+    var documentSnapshot = await documentReference.get();
+    var data = documentSnapshot.data();
+    return data;
+  }
+
 }

@@ -52,6 +52,8 @@ class AppStrings {
   static const String txtUpdateProfile = "تعديل الملف الشخصي"; //Edit profile
   static const String txtTermsAndConditions = "الشروط والاحكام";
   static const String txtPrivacyPolicies = "Privacy Policies";
+  static const String txtShareApp = "share app";
+  static const String txtWriteMessage = "Write message...";
   static const String txtLogout = "Logout";
   static const String txtDeleteAccount = "Delete Account";
   static const String txtCancel = "cancel";
@@ -60,6 +62,10 @@ class AppStrings {
   static const String txtDeleteAccountHint = "deleteAccountHint";
   static const String txtGallery = "معرض الصور";
   static const String txtCamera = "الكاميرا";
+  static const String day= "day";
+  static const String befor= "before";
+  static const String secondes= "seconds";
+  static const String now= "now";
 
   //TODO: this for verify account view
   static const String txtEnterYourMobileNumber = "EnterYourMobileNumber";
@@ -77,6 +83,10 @@ class AppStrings {
   static const String txtHello = "Hello"; //
   static const String txtProfile = "Profile"; //
   static const String txtNotifications = "Notifications"; //
+  static const String txtForum = "المنتدى"; //
+  static const String txtCreateForum = "انشاء منتدى"; //
+  static const String txtNameForum = "اسم المنتدى"; //
+  static const String txtDescForum = "وصف المنتدى"; //
   static const String txtMyWork = "MyWork"; //
   static const String txtNewlyAddedPackages = "باقات أضيفت حديثا"; //
   static const String txtChooseYourFavoriteExercises =
@@ -129,7 +139,7 @@ class AppStrings {
 
   //CategoryExerciseView
   static const String rememberMeToRepeatExcercise = "ذكرني لاعادة التمرين";
-  static const String iFinishedExcercise = "أتمت التمرين";
+  static const String iFinishedExcercise = "أتممت التمرين";
   static const String hour = "ساعة";
   static const String minute = "دقيقة";
   static const String seconds = "ثواني";//seconds
@@ -167,5 +177,10 @@ class AppStrings {
   static const String socialMedia = "Social Media";
   static const String txtCoins = "You have";
   static const String txtEqualTo = "Equal";
+
+  static const String ads = "اعلانات";
+
+  static const String txtDeleteComment = "حذف التعليق";
+  static const String txtHintForum = "This is a forum for communication between members of the application and to compete among them";
 
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:sporti/util/app_strings.dart';
 
 import 'app_shaerd_data.dart';
 
@@ -51,16 +52,16 @@ class DateUtility {
           }
       var dur = DateTime.now().toLocal().difference(dt);
       if (dur.inDays > 0) {
-            msg = '${dur.inDays} {tr.day}';
-            return dur.inDays == 1 ? '{tr.befor} 1 {tr.day.tr}' : DateFormat("dd MMM",isArabicLang()?'ar':'en').format(dt);
+            msg = '${dur.inDays} ${AppStrings.day.tr}';
+            return dur.inDays == 1 ? '${AppStrings.befor.tr} 1 ${AppStrings.day.tr}' : DateFormat("dd MMM",isArabicLang()?'ar':'en').format(dt);
           } else if (dur.inHours > 0) {
-            msg = '{tr.befor} ${dur.inHours} {tr.hour.tr}';
+            msg = '${AppStrings.befor.tr} ${dur.inHours} ${AppStrings.hour.tr}';
           } else if (dur.inMinutes > 0) {
-            msg = '{tr.befor} ${dur.inMinutes} {tr.minute.tr}';
+            msg = '${AppStrings.befor.tr} ${dur.inMinutes} ${AppStrings.minute.tr}';
           } else if (dur.inSeconds > 0) {
-            msg ='{tr.befor} ${dur.inSeconds} {tr.secondes}';
+            msg ='${AppStrings.befor.tr} ${dur.inSeconds} ${AppStrings.secondes.tr}';
           } else {
-            msg = '{tr.now}';
+            msg = AppStrings.now.tr;
           }
       return msg;
     } catch (e) {

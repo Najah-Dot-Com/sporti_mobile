@@ -104,7 +104,7 @@ class MoneyCollectView extends StatelessWidget {
     if(currentNum >= maxNum) {
       Get.to(()=> const MoneyGiftView());
     }else{
-      snackError("", "${_getMaxBalanceAccount()}");
+      snackError("", _getMaxBalanceAccount());
       Logger().d("$currentNum  $maxNum");
     }
   }

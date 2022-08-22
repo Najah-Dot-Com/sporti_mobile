@@ -9,6 +9,13 @@ Map<String, String> enUS = {
       "You must agree to the Terms and Conditions and Privacy Policies",
   AppStrings.fillYourPhoneNumber: "Fill your phone number ",
   AppStrings.txtForLength: "Username text must be at least 4 characters long",
+  AppStrings.ads: "announcements",
+  AppStrings.txtForum: "Forum",
+  AppStrings.txtCreateForum: "Create Forum",
+  AppStrings.txtNameForum: "The Forum Name",
+  AppStrings.txtDescForum: "The Forum Descriptions ...",
+  AppStrings.txtShareApp: "Share App",
+  AppStrings.txtWriteMessage: "Write message...",
   AppStrings.messageMatcherEmail: "Enter valid mail",
   AppStrings.txtConnectionNote: "Connections was interrupt please check your internet connection",
   AppStrings.fillYourVerificationCode: "Please enter the verification code",
@@ -135,6 +142,12 @@ Map<String, String> enUS = {
   AppStrings.oneMoreTxt : "One more thing!",
   AppStrings.oneMoreHintTxt : "Sporti rewards with coins that can be transferred to you if you complete your packages",
   AppStrings.subscriptionsTxt :"Subscriptions" ,
+  AppStrings.day :"day" ,
+  AppStrings.befor :"before" ,
+  AppStrings.secondes :"seconds" ,
+  AppStrings.now :"now",
+  AppStrings.txtDeleteComment :"Delete Comment",
+  AppStrings.txtHintForum :"This is a forum for communication between members of the application and to compete among them",
   AppStrings.subscriptionsHintTxt :"""Free: Use the app for one month only
                Basic : To get whole benefits of app for 3 months
                Ultimate : Get it now and enjoy the app for one year

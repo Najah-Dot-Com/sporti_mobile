@@ -32,8 +32,8 @@ class _SplashViewState extends State<SplashView>
       initListener();
       if (!isOffline) {
         Timer(const Duration(seconds: 3), () {
-        Logger().i(
-            "${SharedPref.instance.getIsUserLogin()},${SharedPref.instance.getIsUserLogin() is String}");
+        // Logger().i(
+        //     "${SharedPref.instance.getIsUserLogin()},${SharedPref.instance.getIsUserLogin() is String}");
         if (SharedPref.instance.getIsUserLogin()) {
           Get.offAll(const HomePageView());
         } else {

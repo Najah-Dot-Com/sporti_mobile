@@ -144,6 +144,7 @@ class LoginView extends StatelessWidget {
                     child: ListView(
                       // mainAxisAlignment: MainAxisAlignment.start,
                       // crossAxisAlignment: CrossAxisAlignment.start,
+                      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                       children: [
                         CustomTextFormFiled(
                           label: AppStrings.usernameOrEmail.tr,

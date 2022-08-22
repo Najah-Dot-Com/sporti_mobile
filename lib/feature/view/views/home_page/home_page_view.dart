@@ -2,6 +2,7 @@ import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/categories_mywork_list/categories_mywork_list_view.dart';
+import 'package:sporti/feature/view/views/chat/group_view/group_list_view.dart';
 import 'package:sporti/feature/view/views/home_page/widget/bottom_navigation_bar.dart';
 import 'package:sporti/feature/view/views/home_page/widget/home_page_tab.dart';
 import 'package:sporti/feature/view/views/notifications/notifications_view.dart';
@@ -40,7 +41,8 @@ class _HomePageViewState extends State<HomePageView>
   final List<Widget> bottomNavBarList = [
     /*const*/ HomePageTab(), //home page
     const CategoriesMyWorkListView(), //my work
-    NotificationsView(), //notifications
+    // NotificationsView(), //notifications
+    const GroupListView(),
     ProfileView(), //profile
   ];
 
@@ -52,6 +54,7 @@ class _HomePageViewState extends State<HomePageView>
     // _homeViewModel.initTabController(TabController(vsync: this, length: bottomNavBarList.length,initialIndex: 0));
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       _homeViewModel.onTabChange(0);
+      loginAgain();
     });
     super.initState();
   }

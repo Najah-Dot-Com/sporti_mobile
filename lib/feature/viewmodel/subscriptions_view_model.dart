@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -10,6 +11,7 @@ import 'package:sporti/feature/model/plan_data.dart';
 import 'package:sporti/feature/view/appwidget/dialog/gloable_dialog_widget.dart';
 import 'package:sporti/network/api/feature/subscriptions_feature.dart';
 import 'package:sporti/network/api/purchases/constance_purchases.dart';
+import 'package:sporti/network/api/purchases/hawaii_purchases.dart';
 import 'package:sporti/network/api/purchases/purchases_api.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
 import 'package:sporti/util/app_shaerd_data.dart';
@@ -94,14 +96,25 @@ class SubscriptionsViewModel extends GetxController {
   void subscriptions() async {
     // 1 == free plan
     if (subscriptionsList[selectedIndex].id != 1) {
-      var product = await PurchasesApi.instance.getProductById(Platform.isIOS
-          ? subscriptionsList[selectedIndex].iosId
-          : subscriptionsList[selectedIndex].androidId);
-      bool isSuccessful = await PurchasesApi.instance.purchasesSubscriptions(
-          product,
-          androidId: subscriptionsList[selectedIndex].androidId);
-      if (isSuccessful) {
-        _doSubscriptions();
+      // var isSuccessful = await HawaiiPurchasesApi.instance.buyProduct(subscriptionsList[selectedIndex].androidId.toString());
+      // if (isSuccessful) {
+      //   _doSubscriptions();
+      // }
+      if (!Platform.isAndroid && !Platform.isIOS && !kIsWeb ) {
+        var isSuccessful = await HawaiiPurchasesApi.instance.buyProduct(subscriptionsList[selectedIndex].androidId.toString());
+        if (isSuccessful) {
+          _doSubscriptions();
+        }
+      } else {
+        var product = await PurchasesApi.instance.getProductById(Platform.isIOS
+            ? subscriptionsList[selectedIndex].iosId
+            : subscriptionsList[selectedIndex].androidId);
+        bool isSuccessful = await PurchasesApi.instance.purchasesSubscriptions(
+            product,
+            androidId: subscriptionsList[selectedIndex].androidId);
+        if (isSuccessful) {
+          _doSubscriptions();
+        }
       }
     } else {
       //todo this for free
@@ -118,19 +131,18 @@ class SubscriptionsViewModel extends GetxController {
           },
         ));
       });
-
     }
   }
 
-  freeSubscriptions()async{
+  freeSubscriptions() async {
     Map<String, dynamic> map = {
       ConstanceNetwork.isSubscrip: true,
       ConstanceNetwork.planId: subscriptionsList[selectedIndex].id.toString(),
       'plan_start_date':
-      DateFormat("dd-MM-yyyy").format(DateTime.now()).toString(),
+          DateFormat("dd-MM-yyyy").format(DateTime.now()).toString(),
       'plan_end_date': DateFormat("dd-MM-yyyy")
           .format(DateTime.now()
-          .add(const Duration(days: ConstancePurchases.oneMonth)))
+              .add(const Duration(days: ConstancePurchases.oneMonth)))
           .toString()
     };
 

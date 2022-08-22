@@ -41,6 +41,21 @@ class AuthFeature {
     }
   }
 
+  Future<UserData> refreshLoginSocialMediaApi(Map<String, dynamic> body) async {
+    var appResponse = await AuthUseCase.getInstance.refreshLoginSocialMediaApi(
+        body: body,
+        url: ConstanceNetwork.refreshLoginSocialMediaApi,
+        header: ConstanceNetwork.header(3));
+    if (appResponse.status == true) {
+      Logger().d("if refreshLoginSocialMediaApi: ${appResponse.toJson()}");
+      return UserData.fromJson(appResponse.result ?? {});
+    } else {
+      // snackError("",appResponse.message);
+      Logger().d("else ${appResponse.toJson()}");
+      return UserData.fromJson(appResponse.result ?? {});
+    }
+  }
+
 
   Future<UserData> socialLoginUser(Map<String, dynamic> body) async {
     var appResponse = await AuthUseCase.getInstance.socialLoginRequest(

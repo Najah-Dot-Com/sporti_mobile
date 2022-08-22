@@ -67,7 +67,7 @@ class UpdateProfileView extends StatelessWidget {
                       fit: BoxFit.cover)
                   : (userData.picture != null &&
                           userData.picture!.isNotEmpty &&
-                          !userData.picture!.contains("http"))
+                          !userData.picture!.contains("http") && !userData.picture!.contains("."))
                       ? Image.memory(base64Decode(userData.picture.toString()),
                           width: AppSize.s150,
                           height: AppSize.s150,

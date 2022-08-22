@@ -1,4 +1,5 @@
 import 'package:logger/logger.dart';
+import 'package:sporti/feature/model/ads_data.dart';
 import 'package:sporti/feature/model/balance_data.dart';
 import 'package:sporti/feature/model/exercise_details_data.dart';
 import 'package:sporti/feature/model/exercises_package_data.dart';
@@ -146,6 +147,24 @@ class ExercisesFeature {
       // snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
       Logger().d("else ${appResponse.toJson()}");
       return SearchExerciseData.fromJson({});
+    }
+  }
+
+
+  Future<List<AdsData>?> getAdsApi() async{
+    var appResponse = await ExercisesUseCase.getInstance.getAdsApi(
+        url: ConstanceNetwork.getAdsApi,
+        header: ConstanceNetwork.header(0)
+    );
+    if (appResponse.status == true) {
+      Logger().d("if ${appResponse.toJson()}");
+      List result = appResponse.result;
+      List<AdsData> data = result.map((e) => AdsData.fromJson(e)).toList();
+      return data;
+    } else {
+      //snackError("",  appResponse.message??""/*ConstanceNetwork.getErrorStatusCode(appResponse.statusCode)*/);
+      Logger().d("else ${appResponse.toJson()}");
+      return [];
     }
   }
 

@@ -223,46 +223,44 @@ var urlProduct =
     "https://images.unsplash.com/photo-1613177794106-be20802b11d3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xvY2slMjBoYW5kc3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80";
 
 Widget imageNetwork({double? width, double? height, String? url, BoxFit? fit}) {
-  return CachedNetworkImage(
-    imageBuilder: (context, imageProvider) {
-      return Container(
-        decoration: BoxDecoration(
-          // border: Border.all(color: colorBorderLight),
-          image: DecorationImage(
-            image: CachedNetworkImageProvider(url ?? urlUserPlacholder!),
-            fit: fit ?? BoxFit.contain,
+  try {
+    return CachedNetworkImage(
+      imageUrl: url ?? urlUserPlacholder!/*urlUserPlacholder!*/,
+      errorWidget: (context, url, error) {
+        return CachedNetworkImage(
+            width: width , height: height,
+            imageUrl: urlUserPlacholder!, fit: BoxFit.contain);
+      },
+      width: width ?? 74,
+      height: height ?? 74,
+      fit: BoxFit.cover,
+      placeholder: (context, String? url) {
+        return Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(AppMedia
+                  .loadingShimmer) ,
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-      );
-    },
-    imageUrl: urlUserPlacholder!,
-    errorWidget: (context, url, error) {
-      return CachedNetworkImage(
-          imageUrl: urlUserPlacholder!, fit: BoxFit.contain);
-    },
-    width: width ?? 74,
-    height: height ?? 74,
-    fit: BoxFit.cover,
-    placeholder: (context, String? url) {
-      return Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(AppMedia
-                .loadingShimmer) /* CachedNetworkImageProvider(url ?? urlUserPlacholder!)*/,
-            fit: BoxFit.cover,
+          child: const Center(
+            child: SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                )),
           ),
-        ),
-        child: const Center(
-          child: SizedBox(
-              width: 20,
-              height: 20,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-              )),
-        ),
-      );
-    },
-  );
+        );
+      },
+    );
+  } on Exception catch (e) {
+    // TODO
+
+    return CachedNetworkImage(
+        width: width , height: height,
+        imageUrl: urlUserPlacholder!, fit: BoxFit.contain);
+  }
 }
 
 hideFocus(context) {
@@ -400,7 +398,7 @@ Widget profileItem(ThemeData themeData,
                  /* boxShadow: [AppShadow.boxShadow()!]*/),
               child: Row(
                 children: [
-                  SvgPicture.asset(leadingIcon ,color: AppColor.primary,),
+                  SvgPicture.asset(leadingIcon ,color: AppColor.primary, width: AppSize.s20,),
                   const SizedBox(
                     width: AppSize.s20,
                   ),
@@ -549,26 +547,45 @@ loginAgain() {
       ConstanceNetwork.fcmToken: SharedPref.instance.getFCMToken().toString(),
     };
     AuthFeature.getInstance.loginUser(map);
-  }
-
-  var userNameSocial = SharedPref.instance.getUserNameSocial();
-  var emailSocial = SharedPref.instance.getEmailSocial();
-  var imageSocial = SharedPref.instance.getImageSocial();
-  var idSocial = SharedPref.instance.getIdSocial();
-  var socialType = SharedPref.instance.getSocialType();
-
-  if (userNameSocial.toString().isNotEmpty && emailSocial.toString().isNotEmpty &&
-      idSocial.toString().isNotEmpty && socialType.toString().isNotEmpty &&
-      imageSocial.toString().isNotEmpty) {
+  }else {
     Map<String, dynamic> map = {
-      ConstanceNetwork.socialTypeKey: socialType,
-      ConstanceNetwork.socialIdKey: idSocial,
-      ConstanceNetwork.imageKey: imageSocial,
-      ConstanceNetwork.fullNameKey: userNameSocial,
-      ConstanceNetwork.emailKey: emailSocial,
+      ConstanceNetwork.socialIdKey: SharedPref.instance.getIdSocial(),
       ConstanceNetwork.fcmToken: SharedPref.instance.getFCMToken().toString(),
     };
-    AuthFeature.getInstance.socialLoginUser(map);
+    AuthFeature.getInstance.refreshLoginSocialMediaApi(map);
   }
 
+  // var userNameSocial = SharedPref.instance.getUserNameSocial();
+  // var emailSocial = SharedPref.instance.getEmailSocial();
+  // var imageSocial = SharedPref.instance.getImageSocial();
+  // var idSocial = SharedPref.instance.getIdSocial();
+  // var socialType = SharedPref.instance.getSocialType();
+  //
+  // if (userNameSocial.toString().isNotEmpty && emailSocial.toString().isNotEmpty &&
+  //     idSocial.toString().isNotEmpty && socialType.toString().isNotEmpty &&
+  //     imageSocial.toString().isNotEmpty) {
+  //   Map<String, dynamic> map = {
+  //     ConstanceNetwork.socialTypeKey: socialType,
+  //     ConstanceNetwork.socialIdKey: idSocial,
+  //     ConstanceNetwork.imageKey: imageSocial,
+  //     ConstanceNetwork.fullNameKey: userNameSocial,
+  //     ConstanceNetwork.emailKey: emailSocial,
+  //     ConstanceNetwork.fcmToken: SharedPref.instance.getFCMToken().toString(),
+  //   };
+  //   AuthFeature.getInstance.socialLoginUser(map);
+  // }
+
+
+
+}
+Future pickImage(ImageSource imageSource, double maxWidth, double maxHeight) async {
+  ImagePicker _picker = ImagePicker();
+  XFile? pickImage = await _picker.pickImage(
+      source: imageSource, maxWidth: maxWidth, maxHeight: maxHeight);
+  if (pickImage != null) {
+    File file = File(pickImage.path.toString());
+    var uint8list = await file.readAsBytes();
+    return uint8list;
+  }
+  throw "null file";
 }

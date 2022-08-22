@@ -75,6 +75,7 @@ import 'app_style.dart';
 
         // input decoration theme (text form field)
 
+        cursorColor: AppColor.primary,
         inputDecorationTheme: InputDecorationTheme(
           contentPadding: const EdgeInsets.all(AppPadding.p8),
           // hint style

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:sporti/feature/model/ads_data.dart';
 import 'package:sporti/feature/model/exercises_package_data.dart';
 import 'package:sporti/network/api/feature/exercises_feature.dart';
 import 'package:sporti/network/utils/constance_netwoek.dart';
@@ -20,6 +21,7 @@ class HomeViewModel extends GetxController with GetSingleTickerProviderStateMixi
   List<ExercisesData> packageDetailsExercisesList = [];//packages
   List<ExercisesData> exercisesListRecentlyAll = [];//packages
   List<ExercisesData> exercisesListFavorite = [];//packages
+  List<AdsData> adsList = [];//packages
   @override
   void onInit() {
     super.onInit();
@@ -58,6 +60,36 @@ class HomeViewModel extends GetxController with GetSingleTickerProviderStateMixi
         if (value != null && value.isNotEmpty) {
           exercisesListAll.clear();
           exercisesListAll = value;
+          isLoading = false;
+          update();
+        } else {
+          isLoading = false;
+          update();
+        }
+      }).catchError((onError) {
+        //handle error from value
+        snackError("", onError.toString());
+        Logger().d(onError.toString());
+        isLoading = false;
+        update();
+      });
+    } catch (e) {
+      Logger().d(e.toString());
+      isLoading = false;
+      update();
+    }
+  }
+ //this for all packages
+  Future<void> getAds() async{
+    try {
+      isLoading = true;
+      update();
+      await ExercisesFeature.getInstance.getAdsApi().then((value) async {
+        //handle object from value || [save in sharedPreferences]
+        Logger().d(value);
+        if (value != null && value.isNotEmpty) {
+          adsList.clear();
+          adsList = value;
           isLoading = false;
           update();
         } else {

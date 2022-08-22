@@ -42,8 +42,8 @@ class BottomNavigationBarWidget extends StatelessWidget {
                           onIconClick: () => _onProfileClick(logic)),
                       const SizedBox(height: AppSize.s10,),
                       IconNavBar(
-                          title: AppStrings.txtNotifications.tr,
-                          icon: Icons.notifications_rounded,
+                          title:AppStrings.txtForum.tr/*AppStrings.txtNotifications.tr*/,
+                          icon: Icons.public,
                           color: logic.tabControllerIndex == 2
                               ? AppColor.primary
                               : AppColor.grey,

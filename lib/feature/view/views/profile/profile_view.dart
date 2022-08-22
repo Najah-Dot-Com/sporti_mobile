@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sporti/feature/model/user_data.dart';
 import 'package:sporti/feature/view/appwidget/bottom_sheet/language_bottom_sheet.dart';
 import 'package:sporti/feature/view/appwidget/bottom_sheet/logout_bottom_sheet.dart';
 import 'package:sporti/feature/view/appwidget/bottom_sheet/social_bottom_sheet.dart';
 import 'package:sporti/feature/view/appwidget/custome_text_view.dart';
 import 'package:sporti/feature/view/views/account_verfiy/account_verfiy_view.dart';
+import 'package:sporti/feature/view/views/chat/admin/create_group/create_group_view.dart';
 import 'package:sporti/feature/view/views/money_collect/money_collect_view.dart';
 import 'package:sporti/feature/view/views/privacy_policy/privacy_policy_view.dart';
 import 'package:sporti/feature/view/views/subscriptions/my_current_subscriptions/my_cureent_subscriptions_view.dart';
@@ -51,7 +53,7 @@ class ProfileView extends StatelessWidget {
                           fit: BoxFit.cover)
                       : (userData.picture != null &&
                               userData.picture!.isNotEmpty &&
-                              !userData.picture!.contains("http"))
+                              !userData.picture!.contains("http") && !userData.picture!.contains("."))
                           ? Image.memory(
                               base64Decode(userData.picture.toString()),
                               width: AppSize.s90,
@@ -310,6 +312,13 @@ class ProfileView extends StatelessWidget {
               const SizedBox(
                 height: AppSize.s12,
               ),
+              if(SharedPref.instance.getAdminListHandler().contains(SharedPref.instance.getUserData().email.toString()))
+              profileItem(themeData,
+                onClick:  _onCreateForum,
+                title: AppStrings.txtCreateForum.tr,
+                trailingIcon: AppMedia.arrowIos,
+                leadingIcon: "",
+              ),
               profileItem(themeData,
                   onClick: _termsAndCondition,
                   leadingIcon: AppMedia.termsAndConditions,
@@ -325,6 +334,11 @@ class ProfileView extends StatelessWidget {
                 onClick: _onChangeLang,
                 title: AppStrings.chooseLanguage.tr,
               ),
+              profileItem(themeData,
+                  onClick: _onShareApp,
+                  leadingIcon: AppMedia.share,
+                  title: AppStrings.txtShareApp.tr,
+                  trailingIcon: /*AppMedia.arrowIos*/""),
               // profileItem(themeData,
               //     onClick: _onLogout,
               //     leadingIcon: AppMedia.logout,
@@ -470,10 +484,18 @@ class ProfileView extends StatelessWidget {
   }
 
   void _onWebsiteClick() async{
-    await openBrowser("https://hiconception.com");/*https://naja7.net*/
+    await openBrowser("https://hiconception.com/index.php/sporti/");/*https://naja7.net*/
   }
 
   void _onSocialMediaClick() {
     Get.bottomSheet(const SocialBottomSheet());
+  }
+
+  void _onCreateForum() {
+    Get.to(const CreateGroupView());
+  }
+
+  _onShareApp() {
+    Share.share('https://hiconception.com/index.php/sporti/');
   }
 }

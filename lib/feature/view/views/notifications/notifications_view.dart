@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -36,13 +38,13 @@ class NotificationsView extends StatelessWidget {
           textStyle:
               themeData.textTheme.headline2?.copyWith(color: AppColor.black),
         ),
-        // leading: IconButton(
-        //   onPressed: () => Get.back(),
-        //   icon: Icon(
-        //     Platform.isIOS? Icons.arrow_back_ios:Icons.arrow_back,
-        //     color: AppColor.black,
-        //   ),
-        // ),
+        leading: IconButton(
+          onPressed: () => Get.back(),
+          icon: Icon(
+            Platform.isIOS? Icons.arrow_back_ios:Icons.arrow_back,
+            color: AppColor.black,
+          ),
+        ),
       );
 
   @override
